@@ -1,0 +1,5 @@
+<ul class="lesson-grid">
+  <li *ngFor="let lesson of lessons$ | async">
+    <app-grid-lesson-item [lesson]="lesson"></app-grid-lesson-item>
+  </li>
+</ul>

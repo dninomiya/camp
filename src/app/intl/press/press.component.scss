@@ -1,0 +1,31 @@
+:host {
+  margin-bottom: 40px;
+  display: block;
+}
+
+h1 {
+  margin: 40px 0;
+  font-weight: normal;
+}
+
+h2 {
+  font-weight: normal;
+  font-size: 16px;
+  margin: 40px 0 24px;
+}
+
+.logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  img {
+    max-width: 100%;
+  }
+  &__black {
+    background: #000;
+  }
+}
+
+p {
+  margin-bottom: 24px;
+}

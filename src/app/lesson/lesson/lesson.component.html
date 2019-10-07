@@ -1,0 +1,92 @@
+<ng-container *ngIf="channel$ | async as channel">
+  <div class="wrap" *ngIf="lesson$ | async as lesson">
+    <div class="lesson">
+      <app-vimeo *ngIf="lesson.videoId && (permission$ | async)" class="video" [id]="lesson.videoId"></app-vimeo>
+      <h1 class="title">{{lesson.title}}</h1>
+      <div class="video-footer">
+        <p class="count">{{ lesson.viewCount | number }} 回視聴</p>
+        <div class="actions">
+          <button class="actions__item actions__item--accent" color="accent" mat-button matTooltip="いいね"
+            *ngIf="isLiked$ | async; else unlikeStatus" (click)="unlike(lesson.id)">
+            <mat-icon class="mat-18">thumb_up</mat-icon>
+            <span>{{lesson.likeCount + likeBuff}}</span>
+          </button>
+          <ng-template #unlikeStatus>
+            <button class="actions__item" mat-button matTooltip="いいね" (click)="like(lesson.id)">
+              <mat-icon class="mat-18">thumb_up</mat-icon>
+              <span>{{lesson.likeCount + likeBuff}}</span>
+            </button>
+          </ng-template>
+          <button *ngIf="!lesson.premium || (isOwner$ | async)" class="actions__item" mat-button (click)="openListDialog(lesson.id, channel.id)">
+            <mat-icon class="mat-18">playlist_add</mat-icon>
+            <span>コース</span>
+          </button>
+          <a href="https://twitter.com/intent/tweet?url={{lessonURL}}&text={{lesson.title}}%0a&hashtags=3ML" target="_blank" class="actions__item" mat-button>
+            <mat-icon class="mat-18">share</mat-icon>
+            <span>共有</span>
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-V5Whsflq2ZSfOdFOOzxMLySC9FlNoAVUUZXmNtamxhYeGA/viewform?usp=pp_url&entry.1634212803=https://update.jp/lesson?v={{lesson.id}}"
+            target="_blank" rel="noopener" class="actions__item" mat-button>
+            <mat-icon class="mat-18">flag</mat-icon>
+            <span>報告</span>
+          </a>
+          <button class="actions__item" *ngIf="uid == lesson.authorId" mat-button [routerLink]="['/edit']"
+            [queryParams]="{v: lesson.id}">
+            <mat-icon class="mat-18">edit</mat-icon>
+            <span>編集</span>
+          </button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="channel-box" [style.opacity]="isLoading ? 0 : 1">
+        <div class="channel">
+          <a class="channel__avatar" [routerLink]="['/channel', channel.id]">
+            <img [src]="channel.avatarURL" alt="" />
+          </a>
+          <div class="channel__body">
+            <a class="channel__title" [routerLink]="['/channel', channel.id]">{{channel.title}}</a>
+            <p class="channel__date">{{lesson.updatedAt?.toDate() | date:'yyyy/MM/dd'}} に更新</p>
+          </div>
+        </div>
+        <div class="channel-actions">
+          <button class="weak" *ngIf="isFollow$ | async; else noFollow" (click)="unfollow(channel.id)"
+            mat-flat-button>フォロー中 {{channel.followerCount + followerBuff}}</button>
+          <ng-template #noFollow>
+            <button (click)="follow(channel.id)" mat-flat-button color="primary">フォロー
+              {{channel.followerCount + followerBuff}}</button>
+          </ng-template>
+        </div>
+      </div>
+
+      <article class="article" *ngIf="permission$ | async">
+        <markdown [data]="lesson.body"></markdown>
+      </article>
+
+      <div class="permission" *ngIf="(permission$ | async) === false">
+        <h1 class="permission__title">このレッスンを表示する権限がありません。</h1>
+        <p class="permission__description">「{{lesson.title}}」 は有料レッスンです。レッスン、あるいはこのレッスンが含まれるコースを購入してください。</p>
+
+        <mat-list class="permission__action">
+          <mat-list-item>
+            <span matLine>レッスンを購入</span>
+            <button mat-stroked-button (click)="chargeLesson(lesson)" color="primary">{{lesson.amount | number}}円</button>
+          </mat-list-item>
+          <mat-list-item *ngIf="getParentCause$ | async as parentCause">
+            <span matLine>{{parentCause.title}}コースを購入</span>
+            <button [disabled]="settlementStatus" mat-stroked-button color="primary">{{parentCause.amount | number}}円</button>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+
+    <div class="side" [class.loading]="loading">
+      <app-cause-widget *ngIf="cause$ | async" [cause$]="cause$"></app-cause-widget>
+      <app-plan-list (loaded)="loading = false" [channel]="channel"></app-plan-list>
+      <mat-card *ngIf="channel.ads && channel.ads.public" class="ads">
+        <a [href]="channel.ads.url" target="_blank" matCardImage>
+          <img [src]="channel.ads.imageURL | safe:'url'" alt="">
+        </a>
+      </mat-card>
+    </div>
+  </div>
+</ng-container>

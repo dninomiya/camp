@@ -1,0 +1,4 @@
+<a *ngIf="isConnected; else connect" (click)="rejectStripe()" class="stripe-connect light-blue"><span>Stripeとの連携を解除</span></a>
+<ng-template #connect>
+  <a  (click)="connectStripe()" class="stripe-connect"><span>Stripeと連携</span></a>
+</ng-template>

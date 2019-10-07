@@ -1,0 +1,222 @@
+<ng-container *ngIf="channel$ | async as channel">
+  <h2>基本情報</h2>
+
+  <mat-card>
+    <h3>アバター画像</h3>
+
+    <div class="avatar-field">
+      <label
+        class="avatar"
+        [class.over]="isOver['avatar']"
+        (dragover)="onDragOver($event, 'avatar')"
+        (dragleave)="onDragLeave($event, 'avatar')"
+        (drop)="onDrop($event, 'avatar')"
+        [style.background-image]="src.avatar ? 'url(' + src.avatar + ')' : null"
+      >
+        <input
+          type="file"
+          (change)="getFile(avatar.files[0], 'avatar')"
+          #avatar
+          style="display: none"
+          accept="image/*"
+        />
+      </label>
+
+      <div class="avatar-field__body">
+        <p>
+          アバターの最低サイズ: {{ size.avatar.width }} X
+          {{ size.avatar.height }}
+        </p>
+        <p>ファイルサイズ: 最大 {{ size.avatar.limitMb }} MB</p>
+      </div>
+    </div>
+  </mat-card>
+
+  <form [formGroup]="form" (ngSubmit)="update(channel.id)">
+    <mat-card>
+      <h3>タイトルと説明</h3>
+      <mat-form-field>
+        <mat-label>チャンネル名</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="title"
+          autocomplete="off"
+          required
+          #titleInput
+        />
+        <mat-hint
+          >{{ titleInput.value.length }} / {{ maxLength.title }}</mat-hint
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>チャンネル概要</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          autocomplete="off"
+          required
+          #descriptionInput
+        ></textarea>
+        <mat-hint
+          >{{ descriptionInput.value.length }} /
+          {{ maxLength.description }}</mat-hint
+        >
+      </mat-form-field>
+    </mat-card>
+
+    <mat-card>
+      <h3>宣伝</h3>
+
+      <p>レッスンのサイドバーで宣伝したいバナーを設定してください。</p>
+
+      <form [formGroup]="adsForm" (ngSubmit)="updateAdsStatus()">
+      <div class="ads" *ngIf="adsOptions.path">
+        <app-input-image
+          [options]="adsOptions"
+          [oldSrc]="adsSrc"
+          (uploaded)="uploadAds($event)"
+        ></app-input-image>
+      </div>
+
+      <mat-form-field>
+        <mat-label>リンク先</mat-label>
+        <input type="text" matInput formControlName="url" autocomplete="off" placeholder="https://" required>
+      </mat-form-field>
+
+      <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
+
+      <button mat-flat-button color="primary" [disabled]="adsForm.invalid || adsForm.pristine">保存</button>
+      </form>
+    </mat-card>
+
+    <mat-card>
+      <h3>ジョブカード</h3>
+
+      <p>希望の条件で案件相談窓口を表示します。</p>
+
+      <form [formGroup]="job" (ngSubmit)="saveJob()">
+        <mat-form-field>
+          <mat-label>1日の単価</mat-label>
+          <input
+            type="text"
+            matInput
+            type="number"
+            formControlName="amount"
+            autocomplete="off"
+            placeholder="50000"
+          />
+          <span matSuffix>円</span>
+        </mat-form-field>
+
+        <h4>ワークスタイル</h4>
+        <mat-checkbox formControlName="office">出社</mat-checkbox>
+        <mat-checkbox formControlName="remote">リモート</mat-checkbox>
+        <mat-checkbox formControlName="employee">正社員</mat-checkbox>
+
+        <h4>対応可能ポジション</h4>
+        <mat-checkbox formControlName="ui">UIデザイン</mat-checkbox>
+        <mat-checkbox formControlName="pm">PM</mat-checkbox>
+        <mat-checkbox formControlName="manage">開発マネジメント</mat-checkbox>
+        <mat-checkbox formControlName="front">フロントエンド</mat-checkbox>
+        <mat-checkbox formControlName="ai">AI</mat-checkbox>
+        <mat-checkbox formControlName="infra">インフラ</mat-checkbox>
+        <mat-checkbox formControlName="server">サーバーサイド</mat-checkbox>
+        <mat-checkbox formControlName="native">ネイティブアプリ</mat-checkbox>
+        <mat-checkbox formControlName="fullstack">フルスタック</mat-checkbox>
+        <mat-checkbox formControlName="ar">AR</mat-checkbox>
+        <mat-checkbox formControlName="desing">デザイン</mat-checkbox>
+        <mat-checkbox formControlName="vr">VR</mat-checkbox>
+        <mat-checkbox formControlName="mentor">技術顧問（メンター）</mat-checkbox>
+        <mat-checkbox formControlName="startup"
+          >新規アプリ（Web、ネイティブ）開発</mat-checkbox
+        >
+        <mat-checkbox formControlName="cto">CTO</mat-checkbox>
+
+        <mat-form-field>
+          <mat-label>主要スキルセット</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="skills"
+            placeholder="AngularとFirebaseとSaaSを用いた超高速SPA開発、リリース"
+            autocomplete="off"
+          />
+          <mat-hint>フレームワークや言語</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>マッチする案件</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="target"
+            placeholder="要件定義からコミットできる新規Webアプリ開発案件"
+            autocomplete="off"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>PR</mat-label>
+          <textarea
+            matInput
+            formControlName="pr"
+            placeholder="公式ドキュメント、ガイドラインに準拠しつつ一人で超高速リリースが可能です。"
+          ></textarea>
+        </mat-form-field>
+
+        <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
+
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="job.invalid || job.pristine"
+        >
+          保存
+        </button>
+      </form>
+    </mat-card>
+
+    <mat-card>
+      <h3>リンク</h3>
+
+      <div formArrayName="links">
+        <div class="link" *ngFor="let item of links.controls; let i = index">
+          <mat-form-field class="link__form">
+            <mat-label>リンク</mat-label>
+            <input
+              type="text"
+              placeholder="https://"
+              required
+              matInput
+              [formControlName]="i"
+              autocomplete="off"
+            />
+            <mat-hint>Twitter、Webサイトなど</mat-hint>
+          </mat-form-field>
+          <div class="link__close">
+            <button (click)="removeLinkForm(i)" mat-icon-button>
+              <mat-icon class="mat-18">close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button mat-stroked-button type="button" (click)="addLinkForm()">
+        <span>追加</span>
+        <mat-icon inline class="mat-18">add_circle_outline</mat-icon>
+      </button>
+    </mat-card>
+
+    <div class="actions">
+      <button
+        [disabled]="form.invalid || form.pristine"
+        mat-raised-button
+        color="primary"
+      >
+        更新
+      </button>
+    </div>
+  </form>
+</ng-container>

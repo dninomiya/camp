@@ -1,0 +1,41 @@
+<ng-container *ngIf="user$ | async as user">
+  <h1>アカウント</h1>
+
+  <div class="section">
+    <h3>メール通知</h3>
+
+    <form class="mail-form" [formGroup]="mailForm" (ngSubmit)="udpateMailSettings(user.id)">
+      <div class="mail-form__item">
+        <mat-checkbox formControlName="forum">リクエスト、クローズ、リプライ</mat-checkbox>
+      </div>
+      <div class="mail-form__item">
+        <mat-checkbox formControlName="premium">有料コンテンツ購入、販売</mat-checkbox>
+      </div>
+      <button color="primary" [disabled]="mailForm.pristine" mat-flat-button>更新</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h3>退会</h3>
+
+    <ul>
+      <li>退会すると利用データが完全に削除され、復元できません。</li>
+      <li>退会するとすべての定期購入が停止します。</li>
+    </ul>
+
+    <mat-form-field class="input">
+      <mat-label>ユーザー名を入力</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="uidInput"
+        required
+        autocomplete="off"
+      />
+      <mat-hint>{{ user.name }}</mat-hint>
+    </mat-form-field>
+    <button mat-button [disabled]="uidInput.invalid" (click)="deleteAccount()">
+      退会
+    </button>
+  </div>
+</ng-container>

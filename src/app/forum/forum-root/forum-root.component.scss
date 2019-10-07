@@ -1,0 +1,46 @@
+:host {
+  display: grid;
+  grid-template-columns: 490px 1fr;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.side {
+  overflow: hidden;
+  border-right: 1px solid rgba(black, .12);
+}
+
+.nav {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  &__list {
+    flex: 1;
+    overflow: auto;
+  }
+}
+
+.thread {
+  position: relative;
+  overflow: auto;
+}
+
+.alert {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  z-index: 100;
+  align-items: center;
+  justify-content: space-between;
+  background: #fafafa;
+  padding: 24px;
+  button {
+    margin-left: 16px;
+  }
+}

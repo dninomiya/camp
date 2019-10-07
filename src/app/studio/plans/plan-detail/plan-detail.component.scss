@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  padding: 24px;
+}
+
+h1, h2 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+mat-form-field {
+  display: block;
+  margin: 16px 0;
+  &.inline {
+    display: inline-block;
+  }
+}
+
+mat-divider {
+  margin: 24px 0;
+}
+
+textarea {
+  height: 240px;
+}
+
+.group {
+  h2 {
+    font-size: 16px;
+    font-weight: normal;
+  }
+  mat-slide-toggle {
+    margin-right: 24px;
+  }
+}
+
+.notice {
+  font-size: 13px;
+  color: rgba(black, .6);
+  margin-bottom: 16px;
+}

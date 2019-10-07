@@ -1,0 +1,103 @@
+<div class="wrap">
+  <div class="lists">
+    <div class="toolbar">
+      <h2>コース</h2>
+      <button mat-icon-button color="primary" (click)="openAddListDialog()">
+        <mat-icon class="mat-18">add</mat-icon>
+      </button>
+    </div>
+    <mat-list dense>
+      <mat-list-item
+        (click)="getLessons(list.id)"
+        *ngFor="let list of lists$ | async"
+        [class.active]="list.id === activeList.id"
+      >
+        <mat-icon matListIcon class="privacy">{{
+          list.private ? 'lock' : 'public'
+        }}</mat-icon>
+        <span matLine>
+          {{ list.title }}
+        </span>
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          (click)="$event.stopPropagation()"
+        >
+          <mat-icon class="mat-18">more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openEditDialog(list)">
+            <mat-icon class="mat-18">edit</mat-icon>
+            <span>編集</span>
+          </button>
+          <button mat-menu-item (click)="openDeleteDialog(list)">
+            <mat-icon class="mat-18">delete</mat-icon>
+            <span>削除</span>
+          </button>
+        </mat-menu>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div>
+    <div class="toolbar">
+      <h2>レッスン</h2>
+      <button mat-icon-button routerLink="/new">
+        <mat-icon class="mat-18">add</mat-icon>
+      </button>
+    </div>
+    <div
+      *ngIf="lessons$ | async as lessons"
+      class="lessons"
+      [class.hide]="isLessonLoading"
+    >
+      <p class="empty" *ngIf="!lessons.length; else lessonsBlock">
+        レッスンはありません
+      </p>
+      <ng-template #lessonsBlock>
+        <mat-list dense cdkDropList (cdkDropListDropped)="drop($event)">
+          <mat-list-item class="lesson" *ngFor="let lesson of lessons" cdkDrag>
+            <mat-icon class="mat-18" matListIcon class="privacy">
+              {{ lesson.public | privacyIcon }}
+            </mat-icon>
+            <span matLine class="lesson__title">
+              <a [routerLink]="['/lesson']" [queryParams]="{ v: lesson.id }" *ngIf="!lesson.deleted; else deleted">
+                {{ lesson.title }}
+              </a>
+              <ng-template #deleted>
+                このレッスンは削除されました
+              </ng-template>
+            </span>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon class="mat-18">more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                [routerLink]="['/edit']"
+                [queryParams]="{ v: lesson.id }"
+                *ngIf="!lesson.deleted"
+              >
+                <mat-icon class="mat-18">edit</mat-icon>
+                <span>編集</span>
+              </button>
+              <button mat-menu-item (click)="removeLessonFromList(lesson.id)">
+                <mat-icon class="mat-18">remove</mat-icon>
+                <span>リストから削除</span>
+              </button>
+              <button mat-menu-item (click)="openLessonDeleteDialog(lesson)" *ngIf="!lesson.deleted">
+                <mat-icon class="mat-18">delete</mat-icon>
+                <span>削除</span>
+              </button>
+            </mat-menu>
+            <button mat-icon-button cdkDragHandle>
+              <mat-icon class="handle">dehaze</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </ng-template>
+    </div>
+    <div class="lesson-loading" *ngIf="isLessonLoading" #lessonLoading>
+      <mat-spinner [diameter]="32"></mat-spinner>
+    </div>
+  </div>
+</div>

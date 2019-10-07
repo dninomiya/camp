@@ -1,0 +1,21 @@
+{
+  "stripe": {
+    "key": "sk_test_TdlSeweulwOYLNfw7Nj6ebMd"
+  },
+  "twitter": {
+    "consumer_secret": "UTmlqToRLJSW2YnwWngPM8IFhvVsGAMzalM5GYMgQZVPxhljQc",
+    "access_token_key": "632665203-QDpMXNHRnErDkioC1rxOxFa5giqGYj04IJPSzVix",
+    "consumer_key": "XZhTvWX3Wk1HYavwaEscvxEg6",
+    "access_token_secret": "4LQZM8quDgmrLjYm6k9MDvZUgat8Fs9flT5uTTsFodC5I"
+  },
+  "sendgrid": {
+    "key": "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"
+  },
+  "algolia": {
+    "app_id": "WVB08E3GUS",
+    "api_key": "54fa63c47006c79945a504c6f996929c"
+  },
+  "fb": {
+    "token": "1/IqBSRxEFXTJNcnXAy8kqpDNhMKmJ53QIaatq2PLbXK4"
+  }
+}

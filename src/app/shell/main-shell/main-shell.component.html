@@ -1,0 +1,10 @@
+<app-header></app-header>
+<mat-progress-bar
+  *ngIf="isLoading$ | async"
+  color="accent"
+  class="loading"
+  mode="indeterminate"
+></mat-progress-bar>
+<div class="main">
+<router-outlet></router-outlet>
+</div>

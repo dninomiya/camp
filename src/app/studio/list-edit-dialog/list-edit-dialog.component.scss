@@ -1,0 +1,27 @@
+h2 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+mat-form-field {
+  width: 100%;
+  textarea {
+    height: 80px;
+  }
+}
+
+h3 {
+  font-size: 11px;
+  color: rgba(0,0,0,.54);
+  font-weight: normal;
+}
+
+.cover {
+  padding-bottom: 50%;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.premium {
+  margin-bottom: 16px;
+}

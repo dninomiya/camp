@@ -1,0 +1,114 @@
+:host {
+  display: block;
+}
+
+.form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-flow: column;
+}
+
+.form-header {
+  display: grid;
+  grid-template-columns: 1fr 200px 200px;
+  gap: 0 16px;
+  padding: 8px 24px;
+  position: relative;
+  background: #fafafa;
+  border-bottom: 1px solid rgba(black, .12);
+  z-index: 10;
+  mat-form-field {
+    display: block;
+    a {
+      text-decoration: underline;
+    }
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+}
+
+.wrap {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.preview {
+  position: relative;
+  border-left: 1px solid #ddd;
+  background: #fafafa;
+  .article {
+    padding: 24px;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.body {
+  display: block;
+  position: relative;
+}
+
+.body ::ng-deep {
+  .editor-toolbar {
+    border-radius: 0;
+    border: none;
+  }
+}
+
+.footer {
+  text-align: right;
+  padding: 16px 24px;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(black, .12);
+  mat-form-field {
+    display: inline-block;
+     margin-left: 16px;
+  }
+  mat-slide-toggle {
+    margin-left: 16px;
+  }
+  button {
+    margin-left: 16px;
+  }
+}
+
+:host ::ng-deep .CodeMirror {
+  border-radius: 0;
+  position: absolute;
+  top: 51px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 0;
+  border-top: 1px solid rgba(black, .12);
+  .cm-header {
+    font-size: 1em;
+    font-weight: normal;
+  }
+}
+
+.add-list {
+  line-height: 42px;
+  padding: 0 24px;
+  display: block;
+  border-top: 1px solid rgba(black, .12);
+  cursor: pointer;
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.price {
+  width: 160px;
+}

@@ -1,0 +1,27 @@
+<h1 matDialogTitle>レッスンを有料にします</h1>
+
+<mat-dialog-content>
+
+  <form [formGroup]="form">
+    <p>{{count}}本のレッスンを編集します。</p>
+
+    <mat-slide-toggle formControlName="premium">有料</mat-slide-toggle>
+
+    <mat-form-field>
+      <mat-label>金額</mat-label>
+      <mat-select formControlName="amount" [required]="form.get('premium').value">
+        <mat-option *ngFor="let amount of amounts" [value]="amount">
+          {{amount | number}}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="amount">{{amount * 0.85 | number}}円の利益（手数料15%）</mat-hint>
+      <mat-hint *ngIf="!amount">手数料15%が引かれます</mat-hint>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button color="primary" [disabled]="form.invalid" [matDialogClose]="form.value" mat-button>更新</button>
+</mat-dialog-actions>

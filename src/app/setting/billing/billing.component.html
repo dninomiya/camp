@@ -1,0 +1,43 @@
+<h1>請求とお支払い</h1>
+
+<h2>クレジットカード</h2>
+あああ
+<p class="info">クレジットカードは世界的な決済サービスStripeによって厳重に保管されており、漏洩の心配はありません。</p>
+
+<ng-container *ngIf="payment$ | async as payment; else new">
+
+<div class="card" *ngIf="card$ | async as card">
+  <p class="card__number" >
+    <i class="fab fa-cc-{{ card.brand.toLowerCase() }}"></i>**** ****
+    **** {{ card.last4 }}
+  </p>
+
+  <button
+    class="card__button"
+    mat-icon-button
+    (click)="openCardDialog(payment.customerId)"
+  >
+    <mat-icon class="mat-18">edit</mat-icon>
+  </button>
+</div>
+
+<h2>支払い履歴</h2>
+
+<mat-list *ngFor="let settlement of settlements$ | async" dense>
+  <mat-list-item>
+    <span matLine>{{settlement.type | planTitleLabel}}の購入 - {{settlement.title}}</span>
+    <span matLine>{{settlement.amount | number}}円 - {{settlement.createdAt.toDate() | date:'yyyy/MM/dd'}}</span>
+    <a mat-icon-button href="/receipts/{{settlement.contentId}}" target="_blank">
+      <mat-icon class="mat-18">receipt</mat-icon>
+    </a>
+  </mat-list-item>
+</mat-list>
+
+
+</ng-container>
+
+<ng-template #new>
+  <div *ngIf="!loading" class="create-card" (click)="openCardDialog()">
+    <button mat-raised-button color="primary">新しくカードを作成</button>
+  </div>
+</ng-template>

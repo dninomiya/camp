@@ -1,0 +1,180 @@
+<div class="wrap" [class.wrap--toolbar]="selection.selected.length">
+  <div class="edit-toolbar">
+    <div class="edit-toolbar__label">
+      {{ selection.selected.length }} 件選択しました
+    </div>
+    <mat-divider vertical></mat-divider>
+    <div class="edit-toolbar__select">
+      <div class="edit-menu" [matMenuTriggerFor]="editMenu">
+        <span class="edit-label">
+          <span>編集</span>
+          <mat-icon class="mat-18">arrow_drop_down</mat-icon>
+        </span>
+      </div>
+      <mat-menu #editMenu="matMenu">
+        <button mat-menu-item (click)="togglePublic(false)">
+          <mat-icon class="mat-18">lock</mat-icon>
+          <span>非公開にする</span>
+        </button>
+        <button mat-menu-item (click)="togglePublic(true)">
+          <mat-icon class="mat-18">public</mat-icon>
+          <span>公開する</span>
+        </button>
+        <button mat-menu-item (click)="openMultipleEditor()">
+          <mat-icon class="mat-18">monetization_on</mat-icon>
+          <span>有料設定</span>
+        </button>
+        <button mat-menu-item (click)="deleteLessons()">
+          <mat-icon class="mat-18">delete</mat-icon>
+          <span>削除</span>
+        </button>
+      </mat-menu>
+    </div>
+    <div class="edit-toolbar__select">
+      <div
+        class="edit-menu"
+        [matMenuTriggerFor]="causeMenu"
+        (menuOpened)="onenCouseSelector()"
+      >
+        <span class="edit-label">
+          <span>コースに追加</span>
+          <mat-icon class="mat-18">arrow_drop_down</mat-icon>
+        </span>
+      </div>
+      <mat-menu #causeMenu="matMenu">
+        <div class="cause-menu">
+          <label
+            (click)="$event.stopPropagation()"
+            *ngFor="let cause of causeOptions$ | async; let i = index"
+          >
+            <mat-checkbox
+              [(ngModel)]="causeOptions[cause.id].status"
+              [indeterminate]="cause.indeterminate"
+              [checked]="cause.status?.checked"
+              [value]="cause.id"
+              >{{ cause.title }}</mat-checkbox
+            >
+          </label>
+          <mat-divider></mat-divider>
+          <div class="cause-menu__actions">
+            <button mat-button>キャンセル</button>
+            <button mat-button color="primary" (click)="updateCauses()">
+              保存
+            </button>
+          </div>
+        </div>
+      </mat-menu>
+    </div>
+    <div class="edit-toolbar__close">
+      <button mat-icon-button (click)="selection.clear()">
+        <mat-icon class="mat-18">close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <ais-instantsearch [config]="algoliaConfig" class="list">
+
+    <app-search-lesson-input></app-search-lesson-input>
+
+    <ais-configure [searchParameters]="searchParameters"> </ais-configure>
+    <ais-hits [transformItems]="buildLists">
+      <ng-template let-hits="hits" let-results="results">
+        <table mat-table matSort [dataSource]="hits">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>レッスン</th>
+            <td mat-cell *matCellDef="let element" class="title">
+              <mat-icon class="mat-18" inline *ngIf="element.public"
+                >public</mat-icon
+              >
+              <mat-icon class="mat-18" inline *ngIf="!element.public"
+                >lock</mat-icon
+              >
+              <mat-icon class="mat-18" inline *ngIf="element.premium"
+                >monetization_on</mat-icon
+              >
+              <a [routerLink]="['/lesson']" [queryParams]="{ v: element.id }">{{
+                element.title
+              }}</a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="private">
+            <th mat-header-cell *matHeaderCellDef>公開設定</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.public ? '公開' : '非公開' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>日付</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.createdAt | date: 'yyyy/MM/dd' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="viewCount">
+            <th mat-header-cell *matHeaderCellDef>視聴回数</th>
+            <td mat-cell *matCellDef="let element">{{ element.viewCount }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menuRef">
+                <mat-icon class="mat-18">more_vert</mat-icon>
+              </button>
+
+              <mat-menu #menuRef="matMenu">
+                <button
+                  mat-menu-item
+                  [routerLink]="['/edit']"
+                  [queryParams]="{ v: element.id }"
+                >
+                  <mat-icon class="mat-18">edit</mat-icon>
+                  <span>編集</span>
+                </button>
+                <button mat-menu-item (click)="deleteLesson(element)">
+                  <mat-icon class="mat-18">delete</mat-icon>
+                  <span>削除</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator
+          [length]="hits?.length"
+          [pageSize]="searchParameters.hitsPerPage"
+          [pageSizeOptions]="[searchParameters.hitsPerPage, 30, 50]"
+          showFirstLastButtons
+          (page)="changePager($event)"
+        ></mat-paginator>
+      </ng-template>
+    </ais-hits>
+  </ais-instantsearch>
+</div>

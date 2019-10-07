@@ -1,0 +1,17 @@
+.header {
+  position: relative;
+  background: #444;
+  color: #ffffff;
+  margin: -24px -24px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__title {
+    font-size: 20px;
+    padding: 24px;
+    margin: 0;
+  }
+  &__close {
+    padding: 0 24px;
+  }
+}

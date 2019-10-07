@@ -1,0 +1,124 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
+    }
+    function isFrontRunnerAdmin() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.frontRunnerAdmin == true;
+    }
+
+    function isValidUser() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.plan != 'free';
+    }
+
+    match /users/{uid} {
+      allow read: if request.auth.uid != null;
+      allow update, delete: if request.auth.uid == uid || isAdmin();
+      allow create: if request.auth.uid != null;
+      allow delete: if request.auth.uid == uid || isAdmin();
+      match /notifications/{nid} {
+        allow read, write: if request.auth.uid == uid || isAdmin();
+      }
+      match /activities/{aid} {
+        allow read: if request.auth.uid != null;
+        allow write: if request.auth.uid == uid || isAdmin();
+      }
+      match /private/{privateData} {
+        allow read, write: if request.auth.uid == uid || isAdmin();
+      }
+      match /likes/{lessonId} {
+        allow read: if true;
+        allow write: if request.auth.uid == uid;
+      }
+      match /settlements/{lessonId} {
+        allow read: if true;
+      }
+      match /subscriptions/{pid} {
+        allow read, write: if request.auth.uid == uid;
+      }
+    }
+    match /githubUsers/{doc} {
+      allow create: if request.auth.uid != null;
+      allow read, delete, update: if request.auth.uid == resource.data.uid || isAdmin();
+    }
+    match /threads/{threadId} {
+      allow create: if request.auth.uid != null;
+      allow update: if request.auth.uid == resource.data.targetId;
+      allow read: if request.auth.uid == resource.data.authorId || request.auth.uid == resource.data.targetId;
+      match /replies/{replieId} {
+        allow read, write: if true;
+      }
+    }
+    match /forcedSithdrawals/{doc} {
+      allow create: if request.auth.uid != null;
+    }
+    match /stripeCSRF/{doc} {
+      allow create: if request.auth.uid == request.resource.data.uid;
+      allow read, delete: if request.auth.uid == resource.data.uid;
+    }
+    match /channels/{channelId} {
+      allow read: if true;
+      allow write: if request.auth.uid == resource.data.authorId;
+      match /likes/{lessonId} {
+        allow read, write: if request.auth.uid == channelId;
+      }
+      match /followers/{uid} {
+        allow read: if true
+        allow write: if request.auth.uid == uid;
+      }
+      match /follows/{uid} {
+        allow read: if true
+        allow write: if request.auth.uid == channelId;
+      }
+      match /plans/{planId} {
+        allow read: if true;
+        allow write: if request.auth.uid == channelId;
+        match /members/{document=**} {
+          allow read, write: if request.auth.uid == channelId;
+        }
+      }
+      match /forum/unread {
+        allow read, write: if true;
+      }
+      match /job/body {
+        allow read, write: if true;
+      }
+      match /reviews/{reviewId} {
+        allow read, write: if true;
+      }
+    }
+    match /lessons/{document=**} {
+      allow read: if true;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid == resource.data.authorId;
+    }
+    match /lists/{cid} {
+      allow read: if true;
+      allow create: if request.auth.uid != null;
+      allow write: if request.auth.uid == resource.data.authorId;
+    }
+    match /inviters/{uid} {
+      allow create, update, read: if true;
+      match /targets/{targetId} {
+        allow create: if request.auth.uid != null;
+        allow read: if request.auth.uid == uid;
+      }
+    }
+    match /repos/{id} {
+      allow read: if request.auth.uid != null;
+    }
+    match /inviteCodes/{id} {
+      allow read, delete: if request.auth.uid != null;
+      allow read, write: if isAdmin() || isFrontRunnerAdmin();
+    }
+    match /causes/{document=**} {
+      allow read: if isValidUser();
+      allow write: if isAdmin();
+    }
+    match /camps/{document=**} {
+      allow read: if isValidUser();
+      allow write: if isAdmin();
+    }
+  }
+}

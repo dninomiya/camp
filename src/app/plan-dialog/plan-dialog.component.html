@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>
+  <span>{{ plan.type | planTitleLabel }}</span>
+  <span class="cost">{{ plan.amount | number }}円 / {{plan.per | planPerLabel}}</span>
+</h1>
+<div mat-dialog-content>
+  <ng-container *ngIf="plan.type !== 'premium'; else premiumSection">
+    <p>{{ plan.description }}</p>
+    <h2>リクエストの例</h2>
+    <div [ngSwitch]="plan.type">
+      <div *ngSwitchCase="'question'">
+        <ul class="examples">
+          <li>この要件の場合、どういった技術スタックが妥当でしょうか？</li>
+          <li>ReactとVueは何が違うのでしょうか？</li>
+          <li>技術顧問はどんなことをどれくらいの金額でしていますか？</li>
+        </ul>
+      </div>
+      <div *ngSwitchCase="'review'">
+        <ul class="examples">
+          <li>カルーセルプラグインをスクラッチしてみました。レビューお願いします。</li>
+          <li>Firestoreの構造レビューをお願いします。</li>
+          <li>このコードにセキュリティ的な懸念はありますか？</li>
+        </ul>
+        <p>
+          このリクエストに関してはリポジトリURLかソースコードの添付が必須となります。
+        </p>
+      </div>
+      <div *ngSwitchCase="'trouble'">
+        <ul class="examples">
+          <li>エラーの内容が理解できません。何が原因でしょうか？</li>
+          <li>カルーセルのループが機能しません。何が原因でしょうか？</li>
+          <li>IEで崩れが解決できません。見ていただけますか？</li>
+        </ul>
+
+        <p>
+          このリクエストに関してはリポジトリURLかエラー全文の添付が必須となります。
+        </p>
+      </div>
+      <div *ngSwitchCase="'coaching'">
+        <ul class="examples">
+          <li>ハンズオンでFlutterを教えてくれませんか？</li>
+          <li>キャリア相談をしてもらうことはできますか？</li>
+          <li>新規プロジェクトの技術選定について相談したいです</li>
+        </ul>
+
+        <p>コーチングは予定調整の上、<a href="https://hangouts.google.com" target="_blank">Hangout</a>などの通話ツールで行ってください。</p>
+      </div>
+      <div *ngSwitchDefault></div>
+    </div>
+    <ul class="notice">
+      <li>重すぎたり対応に必要な情報が不足している場合リクエストは承認されません。</li>
+      <li>リクエストが承認された時点で対応内容に関わらず費用が発生します。</li>
+      <li>リクエストが承認されない場合料金は発生しません。</li>
+      <li>リクエストに連ねて別の対応を求めることはできません。</li>
+      <li>対応後は相互レビューを行います。</li>
+    </ul>
+  </ng-container>
+  <ng-template #premiumSection>
+    <ul class="list">
+      <li>
+        {{ channel.lessonCount }}
+        本の有料レッスンとコースが見放題になります。
+      </li>
+    </ul>
+  </ng-template>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>キャンセル</button>
+  <button mat-button color="primary" cdkFocusInitial>
+    {{plan.type === 'premium' ? '登録' : 'リクエスト'}}
+  </button>
+</div>

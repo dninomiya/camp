@@ -1,0 +1,14 @@
+.side {
+  width: 240px;
+}
+
+.main {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  @media print {
+    top: 0;
+  }
+}

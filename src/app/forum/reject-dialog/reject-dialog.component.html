@@ -1,0 +1,17 @@
+<h1 matDialogTitle>スレッドをクローズしますか？</h1>
+
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>理由</mat-label>
+    <mat-select [formControl]="reasonControl">
+      <mat-option *ngFor="let reason of reasons" [value]="reason.value">
+        {{reason.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button mat-button [disabled]="reasonControl.invalid" (click)="rejectThread()" matDialogClose="true">クローズ</button>
+</mat-dialog-actions>

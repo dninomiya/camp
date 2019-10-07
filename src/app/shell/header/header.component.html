@@ -1,0 +1,150 @@
+<mat-toolbar class="header mat-elevation-z2">
+  <mat-toolbar-row>
+    <button
+      class="menu"
+      mat-icon-button
+      aria-label="メニューを開く"
+      (click)="toggleSideNav()"
+      *ngIf="sideNav"
+    >
+      <mat-icon class="mat-18">menu</mat-icon>
+    </button>
+    <a class="logo" routerLink="/">
+      <span>3ML<sup>β</sup></span>
+    </a>
+    <ais-instantsearch
+      *ngIf="!isMobile"
+      [config]="algoliaConfig"
+      class="search"
+    >
+      <ais-configure [searchParameters]="searchParameters"> </ais-configure>
+      <app-search-kit></app-search-kit>
+    </ais-instantsearch>
+    <ng-container *ngIf="user$ | async as user; else loginButton">
+      <div class="btns">
+        <div class="toolbar">
+          <button
+            class="toolbar__item"
+            mat-icon-button
+            routerLink="/new"
+            matTooltip="レッスンを作成"
+          >
+            <mat-icon class="mat-18">video_call</mat-icon>
+          </button>
+          <button
+            class="toolbar__item"
+            mat-icon-button
+            [routerLink]="['/forum']"
+            [queryParams]="{status: 'request'}"
+            matTooltip="リクエスト"
+          >
+            <mat-icon class="mat-18">question_answer</mat-icon>
+          </button>
+        </div>
+        <div class="notification">
+          <button
+            mat-icon-button
+            matTooltip="通知"
+            (menuClosed)="clearNotifications()"
+            [matMenuTriggerFor]="alertList"
+          >
+            <mat-icon
+              class="mat-18"
+              matBadgeColor="accent"
+              [matBadge]="unreadCount || null"
+              >notifications</mat-icon
+            >
+          </button>
+          <mat-menu #alertList="matMenu">
+            <ng-container *ngIf="notifications$ | async as notifications">
+              <div *ngIf="notifications?.length; else blankNotification">
+                <mat-list dense>
+                  <mat-list-item
+                    *ngFor="let item of notifications"
+                    class="alert"
+                  >
+                    <h4 mat-line class="alert__title">
+                      {{ item.title
+                      }}<i *ngIf="!item.isRead" class="alert__new"></i>
+                    </h4>
+                    <p mat-line class="alert__date">
+                      {{ item.createdAt | fromNow }}
+                    </p>
+                    <div class="notification-item__point" *ngIf="item.point">
+                      +{{ item.point }}P
+                    </div>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+            </ng-container>
+            <ng-template #blankNotification>
+              <p class="blank-notification">お知らせはありません</p>
+            </ng-template>
+          </mat-menu>
+        </div>
+        <button
+          class="avatar"
+          mat-mini-fab
+          [matMenuTriggerFor]="menu"
+          [style.background-image]="
+            'url(' + user.avatarURL + ')' | safe: 'style'
+          "
+        ></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/channel/{{ user.id }}">
+            <mat-icon>account_box</mat-icon>
+            <span>チャンネル</span>
+          </button>
+          <button *ngIf="isStudio" mat-menu-item routerLink="/">
+            <mat-icon>compare_arrows</mat-icon>
+            <span>Update</span>
+          </button>
+          <button
+            *ngIf="!isStudio"
+            mat-menu-item
+            routerLink="/studio/{{ user.id }}"
+          >
+            <mat-icon>compare_arrows</mat-icon>
+            <span>Update Studio</span>
+          </button>
+          <button *ngIf="user.admin" mat-menu-item routerLink="/admin">
+            <mat-icon>account_circle</mat-icon>
+            <span>管理</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>ログアウト</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/setting">
+            <mat-icon>settings</mat-icon>
+            <span>設定</span>
+          </button>
+          <button mat-menu-item routerLink="/intl/help">
+            <mat-icon>help</mat-icon>
+            <span>ヘルプ</span>
+          </button>
+          <a
+            href="https://forms.gle/D4cpNkyfq87xbL3H9"
+            target="_blank"
+            rel="noopener"
+            mat-menu-item
+          >
+            <mat-icon>feedback</mat-icon>
+            <span>フィードバックの送信</span>
+          </a>
+        </mat-menu>
+      </div>
+    </ng-container>
+    <ng-template #loginButton>
+      <button
+        color="primary"
+        *ngIf="!isLoading"
+        mat-flat-button
+        (click)="login()"
+      >
+        ログイン
+      </button>
+    </ng-template>
+  </mat-toolbar-row>
+</mat-toolbar>

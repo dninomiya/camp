@@ -1,0 +1,13 @@
+<div class="lesson">
+  <div>
+    <figure class="lesson__thumbnail"></figure>
+  </div>
+  <div class="lesson__body">
+    <h3 class="lesson__title">Jim & Dwight: The Best of FRENEMIES - The Office US</h3>
+    <p class="lesson__channel">でもチャンネル</p>
+    <p class="lesson__channel" *ngIf="isRecommend; else count">あなたへのおすすめ</p>
+    <ng-template #count>
+      <p class="lesson__channel">861万 回視聴</p>
+    </ng-template>
+  </div>
+</div>

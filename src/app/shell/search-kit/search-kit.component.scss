@@ -1,0 +1,41 @@
+.search {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+  &__input {
+    font-size: 13px;
+    line-height: 32px;
+    border-radius: 16px;
+    padding: 0 42px 0 16px;
+    box-sizing: border-box;
+    border: 1px solid rgba(black, .12);
+    margin: 0;
+    outline: none;
+    width: 100%;
+    display: block;
+    background: none;
+    color: rgba(black, .87);
+  }
+  &__btn {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 8px;
+    line-height: 32px;
+    outline: none;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(black, .32);
+  }
+}
+
+.option {
+  font-size: 13px;
+}

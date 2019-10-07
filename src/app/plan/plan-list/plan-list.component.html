@@ -1,0 +1,56 @@
+<ng-container *ngIf="plans$ | async as plans">
+  <mat-card *ngIf="plans.length" class="card">
+    <div matCardImage class="header" (click)="openReviewDialog()">
+      <img class="header__avatar" [src]="channel.avatarURL | safe: 'url'" alt="">
+    </div>
+
+    <div class="profile">
+      <p class="profile__name">{{ channel.title }}</p>
+      <p class="rate">
+        <span class="rate__star">
+          <app-mat-star-rating
+            [readonly]="true"
+            [rating]="rate"
+          ></app-mat-star-rating>
+        </span>
+        <span class="rate__review-count"
+          >{{ channel.reviewCount | number }}件のレビュー</span
+        >
+      </p>
+
+      <div class="profile__links">
+        <a [href]="link" class="profile__link" *ngFor="let link of channel.links">
+          <i [class]="link | linkIcon"></i>
+        </a>
+        <a [href]="channel.email" class="profile__link">
+          <i class="far fa-envelope"></i>
+        </a>
+      </div>
+      <p class="profile__description">{{ channel.description }}</p>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="plans">
+      <mat-nav-list dense>
+        <h3 mat-subheader>プラン</h3>
+        <mat-list-item
+          *ngFor="let plan of plans"
+          (click)="openPlanDialog(plan)"
+        >
+          <span matLine>{{ plan.type | planTitleLabel }}</span>
+          <span matLine class="cost"
+            >{{ plan.amount | number }}円/{{ plan.per | planPerLabel }}</span
+          >
+          <button
+            mat-icon-button
+            (click)="openPlanHelpDialog(plan, $event)"
+            (mousedown)="$event.stopPropagation()"
+          >
+            <mat-icon class="icon">info</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+  </mat-card>
+</ng-container>

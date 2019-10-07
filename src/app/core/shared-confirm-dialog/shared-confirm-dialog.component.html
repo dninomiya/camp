@@ -1,0 +1,10 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+
+<mat-dialog-content>
+  <p>{{data.description}}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>いいえ</button>
+  <button mat-flat-button cdkFocusInitial color="primary" [matDialogClose]="true">はい</button>
+</mat-dialog-actions>

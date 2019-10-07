@@ -1,0 +1,28 @@
+<mat-card class="cause" *ngIf="cause$ | async as cause">
+  <div matCardImage class="cause__cover" [style.background-image]="'url(' + cause.coverURL + ')' | safe:'style'"></div>
+  <div class="cause__header">
+    <div class="cause__header-body">
+      <h1 class="cause__title">{{ cause.title }} コース</h1>
+      <p class="cause__description">{{ cause.description }}</p>
+    </div>
+    <ng-container *ngIf="isPurchased$ | async">
+      <button disabled mat-button>購入済み</button>
+    </ng-container>
+    <ng-container *ngIf="(isPurchased$ | async) === false">
+      <div class="cause__header-icon" *ngIf="cause.amount">
+        <button [disabled]="isRunning" mat-stroked-button (click)="openConfirmDialog(cause)" color="primary">{{cause.amount | number}}円</button>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="list">
+    <mat-nav-list dense>
+      <mat-list-item *ngFor="let lesson of lessons$ | async" [routerLink]="['./']" [queryParams]="{v: lesson.id}" queryParamsHandling="merge"  routerLinkActive="active">
+        <h2 class="item__title" matLine>{{ lesson.title }}</h2>
+        <p class="item__info" *ngIf="lesson.amount" matLine>
+          {{ lesson.amount | number }}円
+        </p>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+</mat-card>

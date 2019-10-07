@@ -1,0 +1,27 @@
+h2 {
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 16px;
+}
+
+.body {
+  padding-bottom: 16px;
+  mat-form-field {
+    width: 400px;
+  }
+}
+
+.btns {
+  padding-top: 16px;
+  text-align: right;
+  button {
+    margin-left: 16px;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+  textarea {
+    height: 80px;
+  }
+}

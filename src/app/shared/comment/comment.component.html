@@ -1,0 +1,45 @@
+<div class="comment" *ngIf="!editMode; else edit">
+  <div class="comment__avatar">
+    <img [src]="comment.author.avatarURL" />
+  </div>
+  <div class="comment__main">
+    <div class="comment__body">
+      <p class="comment__name">
+        {{ comment.author.name }}
+        <span class="comment__date">{{
+          comment.updatedAt?.toDate() | fromNow
+        }}</span>
+      </p>
+      <p>{{ comment.body }}</p>
+    </div>
+  </div>
+  <div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon class="mat-18">more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="editStart()">
+        <mat-icon class="mat-18">edit</mat-icon>
+        <span>編集</span>
+      </button>
+      <button mat-menu-item (click)="deleteComment(comment.id)">
+        <mat-icon class="mat-18">delete</mat-icon>
+        <span>削除</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+
+<ng-template #edit>
+  <form [formGroup]="form" (ngSubmit)="updateComment()" class="edit">
+    <mat-form-field>
+      <mat-label>本文</mat-label>
+      <textarea matInput formControlName="body" required autofocus></textarea>
+    </mat-form-field>
+    <div class="edit__actions">
+      <button mat-button (click)="editMode = false">キャンセル</button>
+      <button [disabled]="form.invalid || form.pristine" mat-raised-button color="primary">更新</button>
+    </div>
+  </form>
+</ng-template>

@@ -1,0 +1,64 @@
+<mat-drawer-container class="in-intl">
+  <mat-drawer
+    #drawer
+    [mode]="'over'"
+    class="side"
+    [autoFocus]="false"
+  >
+    <div class="side__close">
+      <button mat-icon-button (click)="drawer.close()">
+        <mat-icon class="mat-18">close</mat-icon>
+      </button>
+    </div>
+    <mat-nav-list>
+      <a routerLink="/intl/about" mat-list-item routerLinkActive="active" (click)="drawer.close()">
+        3MLについて
+      </a>
+      <a routerLink="/intl/guideline" mat-list-item routerLinkActive="active" (click)="drawer.close()">
+        ガイドライン
+      </a>
+      <a routerLink="/intl/help" mat-list-item routerLinkActive="active" (click)="drawer.close()">
+        ヘルプ
+      </a>
+      <a routerLink="/intl/press" mat-list-item routerLinkActive="active" (click)="drawer.close()">
+        プレスルーム
+      </a>
+      <a routerLink="/intl/contact_us" mat-list-item routerLinkActive="active" (click)="drawer.close()">
+        お問い合わせ
+      </a>
+    </mat-nav-list>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <a routerLink="/intl/terms" mat-list-item routerLinkActive="active" (click)="drawer.close()">
+        利用規約
+      </a>
+      <a routerLink="/intl/privacypolicy" mat-list-item routerLinkActive="active" (click)="drawer.close()">
+        プライバシーポリシー
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-toolbar class="header">
+    <mat-toolbar-row>
+      <button
+        class="menu"
+        mat-icon-button
+        aria-label="メニューを開く"
+        (click)="drawer.open()"
+      >
+        <mat-icon class="mat-18">menu</mat-icon>
+      </button>
+      <a class="logo" routerLink="/">
+        <span>3ML<sup>β</sup></span>
+      </a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-progress-bar
+    *ngIf="isLoading$ | async"
+    color="accent"
+    class="loading"
+    mode="indeterminate"
+  ></mat-progress-bar>
+
+  <router-outlet></router-outlet>
+</mat-drawer-container>

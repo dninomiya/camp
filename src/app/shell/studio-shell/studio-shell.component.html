@@ -1,0 +1,43 @@
+<app-header [sideNav]="sideNav" [isStudio]="true"></app-header>
+<mat-progress-bar
+  *ngIf="isLoading$ | async"
+  color="accent"
+  class="loading"
+  mode="indeterminate"
+></mat-progress-bar>
+<mat-sidenav-container>
+  <mat-sidenav
+    opened
+    mode="side"
+    class="side"
+    #sideNav
+    [fixedInViewport]="true"
+    [fixedTopGap]="56"
+  >
+    <app-drawer>
+      <mat-nav-list dense>
+        <a mat-list-item routerLinkActive="active" routerLink="about">
+          <mat-icon class="mat-18" mat-list-icon>info</mat-icon>
+          <span mat-line>基本情報</span>
+        </a>
+        <a mat-list-item routerLinkActive="active" routerLink="lessons">
+          <mat-icon class="mat-18" mat-list-icon>video_library</mat-icon>
+          <span mat-line>レッスン</span>
+        </a>
+        <a mat-list-item routerLinkActive="active" routerLink="lists">
+          <mat-icon class="mat-18" mat-list-icon>list</mat-icon>
+          <span mat-line>コース</span>
+        </a>
+        <a mat-list-item routerLinkActive="active" routerLink="plans">
+          <mat-icon class="mat-18" mat-list-icon>shop</mat-icon>
+          <span mat-line>プラン</span>
+        </a>
+      </mat-nav-list>
+    </app-drawer>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

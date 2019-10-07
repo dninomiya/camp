@@ -1,0 +1,9 @@
+<div *ngIf="list">
+  <p>{{ list.title }}を本当に削除しますか？</p>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="false">キャンセル</button>
+    <button mat-raised-button color="primary" (click)="delete()" [mat-dialog-close]="true" cdkFocusInitial>
+      削除
+    </button>
+  </div>
+</div>

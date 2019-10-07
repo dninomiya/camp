@@ -1,0 +1,16 @@
+<ais-instantsearch [config]="algoliaConfig" class="list">
+  <ais-configure [searchParameters]="searchParameters"> </ais-configure>
+  <ais-infinite-hits>
+    <ng-template let-hits="hits" let-results="results" let-refine="showMore">
+      <ng-container *ngIf="hits && hits.length">
+        <div class="lesson-grid">
+          <app-grid-lesson-item
+            *ngFor="let hit of hits | attachmentUser | async"
+            [lesson]="hit"
+          ></app-grid-lesson-item>
+        </div>
+        <div appVisible (visible)="refine($event)"></div>
+      </ng-container>
+    </ng-template>
+  </ais-infinite-hits>
+</ais-instantsearch>

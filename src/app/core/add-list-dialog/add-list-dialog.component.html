@@ -1,0 +1,21 @@
+<h1 matDialogTitle>保存先</h1>
+
+<mat-dialog-content>
+  <mat-selection-list (selectionChange)="selectItem($event)">
+    <mat-list-option
+      *ngFor="let list of lists$ | async as lists; let i = index"
+      [value]="list"
+      checkboxPosition="before"
+      [selected]="list.lessonIds?.includes(data.lessonId)"
+    >
+      <span matLine>{{ list.title }}</span>
+      <mat-icon class="mat-18" matListIcon class="privacy-icon">{{
+        list.private ? 'lock' : 'public'
+      }}</mat-icon>
+    </mat-list-option>
+  </mat-selection-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>閉じる</button>
+</mat-dialog-actions>

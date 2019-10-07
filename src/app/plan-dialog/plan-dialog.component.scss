@@ -1,0 +1,38 @@
+h1 {
+  font-size: 16px;
+  .cost {
+    font-weight: normal;
+    font-size: 13px;
+    color: rgba(black, .6);
+    margin-left: 8px;
+  }
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 24px 0 16px;
+}
+
+.examples {
+  margin-bottom: 24px;
+  li {
+    &:before {
+      content: "「";
+    }
+    &:after {
+      content: "」";
+    }
+  }
+}
+
+.notice {
+  list-style: disc;
+  padding-left: 2em;
+  font-size: 13px;
+  color: rgba(black, .6);
+}
+
+.list {
+  margin: 0 0 16px;
+}

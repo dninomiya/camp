@@ -1,0 +1,44 @@
+<h1 matDialogTitle>トラブルシューティング<small>{{plan.amount | number}}円/回</small></h1>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>タイトル</mat-label>
+      <input type="text" placeholder="カルーセルが正常に動かなくなりました" matInput formControlName="title" autocomplete="off">
+      <mat-hint>具体的なタイトルにする</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>本文</mat-label>
+      <textarea matInput formControlName="body" required></textarea>
+      <mat-hint>マークダウンが使えます</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>リポジトリ</mat-label>
+      <input type="text" placeholder="https://" matInput formControlName="repository" autocomplete="off">
+      <mat-hint>GitHubやサンドボックスがある場合</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>ブラウザ</mat-label>
+      <mat-select formControlName="browsers" multiple place>
+        <mat-option *ngFor="let browser of browsers" [value]="browser">
+          {{browser}}
+        </mat-option>
+      </mat-select>
+      <mat-hint>ブラウザ表崩れ系の場合選択してください</mat-hint>
+    </mat-form-field>
+    <div class="confirm">
+      <h3>エラーの全文を記載しましたか？</h3>
+      <p>ブラウザで様子がおかしい場合、Chromeでコンソールエラーが出ていないかも確認してください。エラーが出ている場合スクリーンショットやエラーテキストを必ず添付してください。</p>
+      <mat-radio-group [formControl]="confirm" class="radios">
+        <mat-radio-button [value]="1">はい</mat-radio-button>
+        <mat-radio-button [value]="false">いいえ</mat-radio-button>
+        <mat-radio-button [value]="2">エラーは出てない</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button mat-raised-button (click)="submit()" [disabled]="form.invalid || !confirm.value" color="primary">リクエスト</button>
+</mat-dialog-actions>

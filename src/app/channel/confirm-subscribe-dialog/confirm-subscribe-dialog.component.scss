@@ -1,0 +1,26 @@
+h1, h2 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+mat-divider {
+  margin: 24px 0;
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+.features {
+  margin: 24px 0;
+  font-size: 13px;
+  color: rgba(black, .6);
+}
+
+.is-loading {
+  text-align: center;
+  color: rgba(black, .38);
+  mat-spinner {
+    margin: 24px auto;
+  }
+}

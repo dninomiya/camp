@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: auto;
+}
+
+.side ::ng-deep {
+  mat-nav-list {
+    padding: 8px 0;
+    a {
+      font-size: 14px;
+    }
+  }
+
+  .mat-list-icon {
+    color: #909090;
+  }
+
+  .mat-line {
+    color: #0d0d0d;
+  }
+}
+
+.footer-navs {
+  padding: 16px 16px 0 16px;
+  color: rgba(black, .6);
+  font-size: 13px;
+  a {
+    margin-right: 8px;
+    display: inline-block;
+    line-height: 18px;
+    font-weight: 500;
+  }
+}
+
+.copyright {
+  color: rgba(black, .38);
+  font-size: 13px;
+  padding: 16px;
+}

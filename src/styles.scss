@@ -1,0 +1,72 @@
+@import "variables";
+@import "mixins";
+@import "material";
+@import "init";
+@import "article";
+@import "chart";
+
+.container {
+  max-width: 1200px;
+  padding: 0 24px;
+  margin: 0 auto;
+  @include sp {
+    padding: 0 16px;
+  }
+  &--wide {
+    max-width: 100%;
+  }
+  &--sm {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+body .loading {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.page-header {
+  color: rgba(black, .87);
+  font-size: 16px;
+  margin: 40px 0;
+  text-align: center;
+  @include sp {
+    &__body {
+      font-size: 24px;
+      margin: 0;
+    }
+  }
+}
+
+.lesson-grid {
+  display: grid;
+  gap: 24px 4px;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  margin: 0;
+}
+
+.plane-dialog .mat-dialog-container {
+  padding: 0;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  padding: 0 16px;
+  border: none;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  .mat-list-item-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .mat-list-text {
+    padding-left: 16px;
+    flex: 1;
+  }
+}

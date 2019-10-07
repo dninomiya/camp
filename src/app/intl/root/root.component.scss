@@ -1,0 +1,65 @@
+@import "mixins";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: #fff;
+  border-bottom: 1px solid rgba(black, .12);
+}
+
+.side {
+  width: 320px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  &__close {
+    margin-bottom: 24px;
+    padding: 16px;
+  }
+  @include sp {
+    padding-top: 56px;
+  }
+}
+
+.main {
+  position: relative;
+}
+
+.menu {
+  margin-right: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  letter-spacing: 2px;
+  sup {
+    font-size: 12px;
+    color: rgba(black, .6);
+    font-weight: normal;
+    margin-left: 4px;
+    line-height: 1;
+  }
+}
+
+mat-nav-list {
+  padding: 16px 0;
+  a {
+    font-size: 14px;
+  }
+}
+
+.in-intl {
+  padding-top: 64px;
+}
+
+.active {
+  background: #ddd;
+}

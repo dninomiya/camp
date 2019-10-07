@@ -1,0 +1,35 @@
+<div class="side">
+  <div class="nav">
+    <nav mat-tab-nav-bar mat-stretch-tabs>
+      <a
+        *ngFor="let tab of tabs"
+        mat-tab-link
+        routerLink="./"
+        [queryParams]="{ status: tab.status }"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [active]="rla.isActive"
+      >
+        <span
+          [matBadge]="tab.badge"
+          [matBadgeHidden]="!tab.badge"
+          matBadgeSize="small"
+          matBadgeOverlap="false"
+          >{{ tab.label }}</span
+        >
+      </a>
+    </nav>
+    <app-thread-list class="nav__list"></app-thread-list>
+  </div>
+</div>
+
+<div class="thread">
+  <router-outlet></router-outlet>
+  <div class="alert" *ngIf="isAlert">
+    <p>通知を有効にしてメッセージの見落としを防ぎましょう</p>
+    <div>
+    <button mat-flat-button (click)="stopFCM()">無視</button>
+    <button mat-flat-button (click)="requestPermission()" color="primary">有効</button>
+    </div>
+  </div>
+</div>

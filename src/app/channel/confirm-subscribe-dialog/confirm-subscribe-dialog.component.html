@@ -1,0 +1,42 @@
+<ng-container *ngIf="!isLoading; else loading">
+<h1>{{ data.plan.nickname }}に登録しますか？</h1>
+
+<p>
+  {{ data.plan.description }}
+</p>
+<p>￥{{ data.plan.amount }} /月</p>
+
+<ul class="features">
+  <li *ngIf="data.plan.forum?.read">フォーラム閲覧</li>
+  <li *ngIf="data.plan.forum?.write">
+    フォーラム投稿（{{ data.plan.forum.writeLimit | limit }}）
+  </li>
+  <li *ngIf="data.plan.review?.write">
+    レビュー（{{ data.plan.review.writeLimit | limit }}）
+  </li>
+  <li *ngIf="data.plan.coaching?.appointment">
+    コーチング{{ data.plan.coaching.appointmentLimit | limit }}）
+  </li>
+</ul>
+
+<mat-divider></mat-divider>
+
+<h2>注意事項</h2>
+
+<ul class="notice">
+  <li>登録後のキャンセル、返金が必要な場合チャンネルオーナーに直接お問い合わせください。（チャンネル概要に連絡先の記載があります）</li>
+  <li>Updateによる個別ケースに応じた返金対応などはできかねる点、あらかじめご了承ください。</li>
+</ul>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button mat-raised-button (click)="subscribe()" color="primary">登録</button>
+</mat-dialog-actions>
+</ng-container>
+
+<ng-template #loading>
+  <div class="is-loading">
+    <mat-spinner [diameter]="40"></mat-spinner>
+    <p>登録しています。</p>
+  </div>
+</ng-template>

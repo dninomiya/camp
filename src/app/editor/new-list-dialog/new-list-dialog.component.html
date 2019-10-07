@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>新しいリストを作成する</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>リスト名</mat-label>
+      <input type="text" autocomplete="off" matInput formControlName="title" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>概要</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>閲覧権限</mat-label>
+      <mat-select formControlName="permissions" multiple>
+        <mat-option *ngFor="let plan of plans$ | async" [value]="plan.id">{{plan.nickname}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-slide-toggle formControlName="private">非公開</mat-slide-toggle>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">キャンセル</button>
+  <button
+    mat-raised-button
+    color="primary"
+    mat-dialog-close
+    [disabled]="form.invalid || form.pristine"
+    (click)="createList()"
+  >
+    追加
+  </button>
+</mat-dialog-actions>

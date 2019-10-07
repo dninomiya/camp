@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  margin: 40px;
+}
+
+@import "mixins";
+
+h1 {
+  font-weight: normal;
+  margin: 40px 0;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 24px 0 16px;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.date {
+  margin-top: 24px;
+}
+
+a {
+  text-decoration: underline;
+}

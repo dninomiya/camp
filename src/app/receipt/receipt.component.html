@@ -1,0 +1,23 @@
+<div class="wrap" *ngIf="item$ | async as item">
+  <h1>領収書</h1>
+
+  <p class="to">{{ to }} 御中</p>
+
+  <p class="amount">金額 {{ item.amount | number }}円</p>
+
+  <div class="footer">
+    <div class="body">
+      <p>但し、 {{item.type | planTitleLabel}} 利用料金 として</p>
+      <p>{{item.createdAt.toDate() | date:'yyyy年M月d日'}}</p>
+      <p>上記、正に領収いたしました。</p>
+    </div>
+
+    <div class="address">
+      <p>〒160-0022</p>
+      <p>東京都 新宿区 新宿1-36-2 3F</p>
+      <p>株式会社Deer</p>
+    </div>
+  </div>
+</div>
+
+<p class="notice">このページを印刷（もしくはPDF出力）してご利用ください。</p>

@@ -1,0 +1,26 @@
+.lesson {
+  display: flex;
+  cursor: pointer;
+  &__thumbnail {
+    width: 168px;
+    padding-bottom: 55%;
+    background: #000 center/cover;
+    margin-right: 8px;
+  }
+  &__body {
+    flex: 1;
+  }
+  &__title {
+    font-weight: 500;
+    margin: 0 0 4px;
+    font-size: 14px;
+  }
+  &__channel {
+    font-size: 13px;
+    color: rgba(black, .38);
+  }
+  &__count {
+    font-size: 13px;
+    color: rgba(black, .38);
+  }
+}

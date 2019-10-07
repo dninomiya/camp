@@ -1,0 +1,41 @@
+.wrap {
+  position: absolute;
+  top: 0;
+  width: 900px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+.title {
+  font-size: 80px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  line-height: 1;
+}
+
+.note {
+  font-size: 24px;
+  margin-bottom: 32px;
+}
+
+.btn {
+  font-size: 18px;
+  line-height: 64px;
+  border-radius: 32px;
+  padding: 0 40px
+}
+
+.update-man {
+  height: 400px;
+  display: block;
+}
+
+.clip {
+  img {
+    max-width: 100%;
+  }
+}

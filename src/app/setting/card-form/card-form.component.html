@@ -1,0 +1,41 @@
+<ng-container *ngIf="user$ | async as user">
+  <form
+    class="form"
+    novalidate
+    (ngSubmit)="submit(user.id, customerId)"
+    [formGroup]="stripeForm"
+    [class.is-loading]="isLoading"
+  >
+    <div id="card-element" class="field"></div>
+
+    <mat-form-field class="name">
+      <mat-label>カードの名義</mat-label>
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        formControlName="name"
+        placeholder="TARO YAMADA"
+      />
+    </mat-form-field>
+
+    <p class="form__notice">
+      <a href="https://stripe.com" target="_blank" rel="noopener">
+        <img src="/assets/images/powered-by-stripe.svg" alt="powered by stripe">
+      </a>
+    </p>
+
+    <div class="form__footer">
+      <button type="submit" mat-raised-button color="accent" [disabled]="invalid">
+        {{ customerId ? '変更' : '登録' }}
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="isLoading">
+    <div class="doing">
+      <mat-spinner [diameter]="32"></mat-spinner>
+      <p>カード登録中です。</p>
+    </div>
+  </div>
+</ng-container>

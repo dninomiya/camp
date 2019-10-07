@@ -1,0 +1,155 @@
+:host {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-flow: column;
+}
+
+.main {
+  padding: 24px;
+  border-bottom: 1px solid rgba(black, .12);
+  flex: 1;
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 24px;
+  &__avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 16px;
+    display: block;
+  }
+  &__title {
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: normal;
+  }
+  &__date {
+    font-size: 13px;
+    color: rgba(black, .38);
+    margin-left: 8px;
+  }
+  &__subline {
+    color: rgba(black, .6);
+    line-height: 1;
+  }
+}
+
+.body {
+  margin-bottom: 24px;
+}
+
+.actions {
+  margin: 24px 0;
+  button {
+    margin-right: 16px;
+  }
+}
+
+
+.form {
+  display: flex;
+  textarea {
+    flex: 1;
+    outline: none;
+    resize: none;
+  }
+  .send {
+    width: 40px;
+    align-items: center;
+  }
+}
+
+.replies {
+  margin: 24px 0;
+}
+
+.reply {
+  display: flex;
+  margin-bottom: 24px;
+  &__avatar img {
+    width: 40px;
+    height: 40px;
+    display: block;
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+  &__body {
+    margin-bottom: 8px;
+  }
+  &__footer {
+    font-size: 13px;
+    color: rgba(black, .6);
+    line-height: 1;
+    span {
+      margin-right: 8px;
+    }
+  }
+}
+
+.form {
+  display: flex;
+  align-items: flex-end;
+  textarea {
+    padding: 16px;
+    outline: none;
+    border: none;
+    flex: 1;
+    font-size: 14px;
+  }
+  &__button {
+    width: 40px;
+    text-align: center;
+  }
+}
+
+.day {
+  margin-top: 8px;
+  &__sub {
+    font-size: 13px;
+    color: rgba(black, .6);
+    button {
+      margin-right: 8px;
+      margin-top: 8px;
+    }
+  }
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.option {
+  margin: 24px 0;
+  border: 1px solid rgba(black, .12);
+  padding: 24px;
+}
+
+.browser {
+  & + & {
+    &:before {
+      content: '/';
+      margin: 0 4px;
+    }
+  }
+}
+
+.article {
+  margin-bottom: 24px;
+  display: block;
+}
+
+.link {
+  mat-icon {
+    color: rgba(black, .6);
+    margin-left: 8px;
+  }
+}

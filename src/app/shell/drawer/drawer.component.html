@@ -1,0 +1,22 @@
+<div class="side">
+<ng-content></ng-content>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="footer">
+  <div class="footer-navs">
+    <a routerLink="/intl/about">Update について</a>
+    <a routerLink="/intl/guideline">ガイドライン</a>
+    <a routerLink="/intl/help">ヘルプ</a>
+    <a routerLink="/intl/press">プレスルーム</a>
+    <a routerLink="/intl/contact">お問い合わせ</a>
+  </div>
+
+  <div class="footer-navs">
+    <a routerLink="/intl/terms">利用規約</a>
+    <a routerLink="/intl/privacypolicy">プライバシー</a>
+  </div>
+
+  <p class="copyright">© {{ date | date: 'yyyy' }} Deer, inc</p>
+</div>

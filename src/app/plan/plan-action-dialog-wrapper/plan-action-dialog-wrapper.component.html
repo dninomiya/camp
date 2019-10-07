@@ -1,0 +1,18 @@
+<ng-container [ngSwitch]="params.plan.type">
+  <ng-container *ngSwitchCase="'question'">
+    <app-question-dialog (data)="createThread($event)" [params]="params"></app-question-dialog>
+  </ng-container>
+  <ng-container *ngSwitchCase="'trouble'">
+    <app-trouble-dialog (data)="createThread($event)" [plan]="params.plan"></app-trouble-dialog>
+  </ng-container>
+  <ng-container *ngSwitchCase="'review'">
+    <app-review-dialog (data)="createThread($event)" [plan]="params.plan"></app-review-dialog>
+  </ng-container>
+  <ng-container *ngSwitchCase="'coaching'">
+    <app-coaching-dialog (data)="createThread($event)" [plan]="params.plan"></app-coaching-dialog>
+  </ng-container>
+  <ng-container *ngSwitchCase="'premium'">
+    <app-premium-dialog [channel]="params.channel" [plan]="params.plan"></app-premium-dialog>
+  </ng-container>
+  <ng-container *ngSwitchDefault></ng-container>
+</ng-container>

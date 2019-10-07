@@ -1,0 +1,204 @@
+@import "mixins";
+
+.article, .editor-preview {
+  line-height: 1.8;
+  letter-spacing: 0.2px;
+  & &__body {
+    padding: 40px;
+  }
+  a {
+    color: $brand-primary;
+  }
+  .note {
+    margin: 2em 0;
+    background: #fafafa;
+    padding: 16px;
+    border-left: 4px solid $brand-primary;
+    position: relative;
+    p {
+      font-size: 14px;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  h1 {
+    font-size: 32px;
+    margin: 16px 0 24px;
+    @include sp {
+      font-size: 24px;
+      margin: 8px 0 16px;
+    }
+  }
+  h2 {
+    margin: 56px 0 24px;
+    font-size: 25.6px;
+    border-bottom: 1px solid rgba(black, .12);
+    &:first-child {
+      margin-top: 0;
+    }
+    @include sp {
+      font-size: 18px;
+      margin: 16px 0;
+      line-height: 1.4;
+    }
+  }
+  h3 {
+    margin: 50px 0 24px;
+    font-size: 22.4px;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  h3, li, p {
+    code {
+      font-size: 14px;
+      background: #f1f3f4;
+      padding: 1px 4px;
+      color: #37474f;
+    }
+  }
+  ol {
+    list-style-type: decimal;
+    padding-left: 2em;
+  }
+  blockquote {
+    border-left: 4px solid rgba(black, .12);
+    margin: 16px 0;
+    padding: 8px 0 8px 16px;
+  }
+  li ul {
+    margin: 8px 0;
+  }
+  pre {
+    margin: 2em 0;
+    padding: 40px 16px 16px;
+    &.no-lang {
+      padding-top: 16px;
+    }
+  }
+  code {
+    font-size: 12px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 16px 0;
+    font-size: 16px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    th, td {
+      border: 1px solid rgba(black, .12);
+      padding: 8px;
+    }
+    th {
+      font-weight: normal;
+    }
+  }
+  p, ul, ol {
+    margin: 24px 0;
+    font-size: 16px;
+    line-height: 1.9;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+    @include sp {
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+
+  ul {
+    list-style: disc;
+    padding-left: 40px;
+  }
+
+  ol {
+    list-style: decimal;
+    padding-left: 40px;
+  }
+
+  & &__date {
+    font-size: 12px;
+    color: rgba(black, .37);
+    text-align: right;
+    margin-bottom: 0;
+  }
+  pre {
+    position: relative;
+    border-radius: 0;
+    .lang {
+      text-shadow: none;
+      font-family: "roboto";
+      font-size: 11px;
+      color: rgba(white, .87);
+      box-sizing: border-box;
+      padding: 0 16px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      line-height: 24px;
+      background: #111;
+    }
+  }
+  .material-icons {
+    margin-right: 4px;
+    margin-left: 2px;
+    font-size: 16px;
+    vertical-align: -2px;
+  }
+  figure {
+    max-width: 640px;
+    margin: 24px auto;
+    img {
+      display: block;
+      border-radius: 4px;
+      box-shadow: 0 2px 16px rgba(black, .3);
+      overflow: hidden;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    figcaption {
+      font-size: 12px;
+      margin-top: 8px;
+      color: rgba(black, .6);
+      text-align: center;
+    }
+  }
+  .ogp {
+    display: flex;
+    overflow: hidden;
+    border: 1px solid rgba(black, .12);
+    border-radius: 2px;
+    &__thumbnail {
+      width: 184px;
+      background: center/cover;
+      margin: 0;
+    }
+    &__title {
+      font-size: 14px;
+      margin: 0 0 8px;
+      color: rgba(black, .87);
+    }
+    &__body {
+      flex: 1;
+      padding: 16px;
+    }
+    &__description {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: rgba(black, .6);
+    }
+    &__url {
+      font-size: 12px;
+      color: rgba(black, .38);
+      margin: 0;
+    }
+  }
+}

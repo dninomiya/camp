@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "dev": "dev-update"
+  },
+  "targets": {
+    "dev-update": {
+      "hosting": {
+        "dev-update": [
+          "dev-update"
+        ]
+      }
+    }
+  }
+}

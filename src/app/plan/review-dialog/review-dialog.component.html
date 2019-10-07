@@ -1,0 +1,26 @@
+<h1 matDialogTitle>レビュー<small>{{plan.amount | number}}円/回</small></h1>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>タイトル</mat-label>
+      <input type="text" placeholder="自作プラグインのコードレビューをお願いします" matInput formControlName="title" autocomplete="off">
+      <mat-hint>具体的なタイトルにする</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>本文</mat-label>
+      <textarea matInput placeholder="レビュー範囲とレビューポイントを具体的に記載してください。レビュー量が多すぎると承認されづらくなります。" formControlName="body" required></textarea>
+      <mat-hint>マークダウンが使えます</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>リポジトリ</mat-label>
+      <input type="text" placeholder="https://" matInput formControlName="repository" autocomplete="off">
+      <mat-hint>GitHubやSandbox</mat-hint>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button mat-raised-button (click)="submit()" [disabled]="form.invalid" color="primary">リクエスト</button>
+</mat-dialog-actions>

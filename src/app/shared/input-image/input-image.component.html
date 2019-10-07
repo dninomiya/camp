@@ -1,0 +1,22 @@
+<label
+  class="placeholder"
+  [class.over]="isOver"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  [style.background-image]="src ? 'url(' + src + ')' : null"
+>
+  <ng-container *ngIf="!src">
+    <div class="placeholder__icon">
+      <mat-icon class="mat-18" inline>cloud_upload</mat-icon>
+      <span>ここをクリックorドロップしてください</span>
+    </div>
+  </ng-container>
+  <input
+    type="file"
+    (change)="getFile(input.files[0])"
+    #input
+    accept="image/*"
+    style="display: none"
+  />
+</label>

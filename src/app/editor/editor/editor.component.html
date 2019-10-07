@@ -1,0 +1,89 @@
+<ng-container *ngIf="user$ | async as user">
+  <form
+    class="form"
+    [formGroup]="form"
+    (ngSubmit)="submit(user.id)"
+    *ngIf="!isLoading"
+  >
+    <div class="form-header">
+      <mat-form-field>
+        <mat-label>タイトル</mat-label>
+        <input
+          type="text"
+          formControlName="title"
+          matInput
+          placeholder="レッスンタイトル"
+          [appAutofocus]="!opts.autofocus"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>コース</mat-label>
+        <mat-select [formControl]="listControl" multiple (selectionChange)="changeList($event)">
+          <mat-option *ngFor="let list of lists$ | async" [value]="list.id">
+            {{ list.title }}
+          </mat-option>
+          <a class="add-list" (click)="openNewListDialog(user.id)">新しくコースを作成</a>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>動画ID</mat-label>
+        <mat-hint><a (click)="openLessonGuide()">ガイドライン</a></mat-hint>
+        <input
+          type="text"
+          formControlName="videoId"
+          matInput
+          placeholder="12345"
+          autocomplete="off"
+          required
+        />
+        <mat-icon (click)="openVideoUploader()" matSuffix>help_outline</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="wrap">
+      <simplemde
+        class="body"
+        #body
+        (paste)="onPaste($event)"
+        (keydown)="shortCut($event, user.id)"
+        formControlName="body"
+        [options]="opts"
+        [codemirror]="codemirrorOpts"
+      ></simplemde>
+      <div class="preview">
+        <div class="article">
+          <markdown [data]="body.value || ' '"></markdown>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <mat-form-field class="price">
+        <mat-label>金額</mat-label>
+        <mat-select #priceInput formControlName="amount" required>
+          <mat-option *ngFor="let price of prices" [value]="price">{{price | number}}</mat-option>
+        </mat-select>
+        <span matSuffix>円</span>
+        <mat-hint *ngIf="priceInput.value">{{priceInput.value * 0.85 | number}}円の利益（手数料15%）</mat-hint>
+        <mat-hint *ngIf="!priceInput.value">手数料15%が引かれます</mat-hint>
+      </mat-form-field>
+
+      <mat-slide-toggle formControlName="premium">有料</mat-slide-toggle>
+      <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
+
+      <button type="button" *ngIf="isEdit" mat-button (click)="deleteLesson()">
+        削除
+      </button>
+      <button type="button" mat-button (click)="cancel()">
+        キャンセル
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="form.invalid || form.pristine"
+      >
+        {{ oldLesson ? '変更' : '作成' }}
+      </button>
+    </div>
+  </form>
+</ng-container>

@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  margin-bottom: 40px;
+}
+
+h1 {
+  margin: 40px 0;
+  font-weight: normal;
+}
+
+h2 {
+  font-weight: normal;
+  margin: 40px 0 24px;
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 2em;
+}
+
+.items {
+  margin: 24px 0;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  h3 {
+    font-weight: normal;
+  }
+  p a {
+    text-decoration: underline;
+  }
+
+  a mat-icon {
+    margin-left: 4px;
+  }
+}

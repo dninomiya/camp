@@ -1,0 +1,96 @@
+.wrap {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.toolbar {
+  padding: 8px 16px;
+  align-items: center;
+  border-bottom: 1px solid rgba(black, .12);
+  display: flex;
+  justify-content: space-between;
+  background: #f4f4f4;
+  h2 {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+  }
+}
+
+.lists {
+  height: 100%;
+  overflow: auto;
+  border-right: 1px solid rgba(black, .12);
+  mat-icon {
+    color: rgba(black, .6);
+  }
+  .privacy {
+    color: rgba(black, .38);
+  }
+  mat-list-item {
+    cursor: pointer;
+    &:hover {
+      background: #fafafa;
+    }
+  }
+}
+
+.lessons {
+  &__header {
+    padding: 16px;
+    border-bottom: 1px solid rgba(black, .12);
+    text-align: right;
+  }
+}
+
+.lesson {
+  border-bottom: 1px solid rgba(black, .12);
+  mat-icon {
+    color: rgba(black, .6);
+  }
+  .privacy {
+    color: rgba(black, .38);
+  }
+  .handle {
+    color: rgba(black, .38);
+    cursor: move;
+  }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drop-list-dragging .lesson:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.lesson-loading {
+  padding: 24px;
+  mat-spinner {
+    margin: 0 auto;
+  }
+}
+
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: rgba(black, .38);
+}
+
+.hide {
+  display: none;
+}
+
+.active {
+  background: rgba(0, 0, 0, 0.04);
+}

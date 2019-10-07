@@ -1,0 +1,40 @@
+.lesson {
+  * {
+    cursor: pointer;
+  }
+  &__thumbnail {
+    padding-bottom: 56%;
+    background: #fafafa center/cover;
+    margin-bottom: 12px;
+  }
+  &__title {
+    font-size: 14px;
+    line-height: 16px;
+    margin: 0 0 8px;
+    font-weight: 500;
+    max-height: 32px;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    width: 100%;
+  }
+  &__sub {
+    font-size: 13px;
+    color: rgba(black, .6);
+    line-height: 1;
+  }
+  &__meta {
+    display: flex;
+    align-items: center;
+  }
+  &__body {
+    flex: 1;
+  }
+  &__avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: block;
+    margin-right: 16px;
+  }
+}

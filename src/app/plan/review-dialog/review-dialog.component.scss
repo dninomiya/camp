@@ -1,0 +1,39 @@
+h1 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+  small {
+    font-size: 13px;
+    color: rgba(black, .6);
+    margin-left: 8px;
+  }
+}
+
+mat-form-field {
+  display: block;
+  margin: 16px 0;
+}
+
+textarea {
+  height: 240px;
+}
+
+.radios {
+  mat-radio-button {
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+.confirm {
+  h3 {
+    font-size: 16px;
+    line-height: 1;
+    font-weight: normal;
+    margin: 24px 0 16px;
+  }
+  p {
+    margin-bottom: 16px;
+    color: rgba(black, .6);
+  }
+}

@@ -1,0 +1,19 @@
+h1 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+  small {
+    font-size: 13px;
+    color: rgba(black, .6);
+    margin-left: 8px;
+  }
+}
+
+mat-form-field {
+  display: block;
+  margin: 16px 0;
+}
+
+textarea {
+  height: 240px;
+}

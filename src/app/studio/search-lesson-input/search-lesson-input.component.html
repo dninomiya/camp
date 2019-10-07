@@ -1,0 +1,18 @@
+<div class="search">
+<mat-form-field>
+  <mat-label>検索</mat-label>
+  <input
+    type="text"
+    #input
+    matInput
+    (keyup)="this.state.refine(input.value)"
+    [value]="this.state.query"
+    autofocus
+    placeholder="レッスンを検索"
+    autocomplete="off"
+  />
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+</div>
+
+<mat-divider></mat-divider>

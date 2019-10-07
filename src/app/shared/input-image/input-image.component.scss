@@ -1,0 +1,29 @@
+.placeholder {
+  position: absolute;
+  cursor: pointer;
+  display: block;
+  background: #fafafa center/cover;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate((-50%, -50%));
+    font-size: 40px;
+    color: rgba(black, .38);
+    text-align: center;
+    line-height: 1;
+    mat-icon {
+      line-height: 1;
+    }
+    span {
+      line-height: 1;
+      display: block;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+}

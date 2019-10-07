@@ -1,0 +1,13 @@
+<div class="header">
+  <h2 class="header__title">クレジットカードを{{isEdit ? '変更' : '登録'}}</h2>
+  <div class="header__close">
+    <button mat-icon-button matDialogClose>
+      <mat-icon class="mat-18">close</mat-icon>
+    </button>
+  </div>
+</div>
+
+<app-card-form
+  [customerId]="data.customerId"
+  (saveCard)="saved()"
+></app-card-form>

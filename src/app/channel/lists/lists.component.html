@@ -1,0 +1,25 @@
+<div class="items" *ngIf="lists$ | async as lists; else blank">
+  <div class="item" *ngFor="let item of lists">
+    <div [routerLink]="['/lesson']" [queryParams]="{
+      v: item.firstLessonId,
+      cause: item.id
+    }">
+      <figure class="item__thumbnail" [style.background-image]="'url(' + item.coverURL + ')' | safe:'style'"></figure>
+    </div>
+    <div class="item__body">
+      <h3 class="item__title">
+        {{ item.title }}
+      </h3>
+      <p class="item__link">{{item.lessonIds.length}} 本のレッスン</p>
+      <p class="item__description">{{ item.description }}</p>
+      <button mat-button [routerLink]="['/lesson']" [queryParams]="{
+        v: item.firstLessonId,
+        cause: item.id
+      }">コースを見る</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #blank>
+  <p class="blank">コースはありません</p>
+</ng-template>

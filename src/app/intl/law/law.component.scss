@@ -1,0 +1,42 @@
+@import "mixins";
+
+.content {
+  padding: 40px;
+  margin-bottom: 40px;
+  @include sp {
+    padding: 16px;
+  }
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+table {
+  border-collapse: collapse;
+  @include sp {
+    display: block;
+  }
+  th, td {
+    padding: 8px 16px;
+    vertical-align: top;
+    line-height: 1.8;
+    letter-spacing: 0.2px;
+    @include sp {
+      padding: 8px;
+      display: block;
+    }
+  }
+  th {
+    text-align: right;
+    @include sp {
+      text-align-last: left;
+    }
+  }
+  h3 {
+    font-size: 1em;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}

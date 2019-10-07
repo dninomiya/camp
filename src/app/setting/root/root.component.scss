@@ -1,0 +1,33 @@
+:host {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+
+.nav {
+  background: #f5f5f5;
+  min-height: calc(100vh - 56px);
+}
+
+.content {
+  padding: 24px;
+}
+
+::ng-deep {
+  h1 {
+    font-size: 16px;
+    margin-bottom: 30px;
+    font-weight: normal;
+  }
+  h2 {
+    font-size: 24px;
+    font-weight: normal;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: normal;
+    margin: 24px 0;
+  }
+  .section {
+    padding-bottom: 32px;
+  }
+}

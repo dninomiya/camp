@@ -1,0 +1,53 @@
+.reviews {
+  margin: 24px 0;
+}
+
+.header {
+  h1 {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1;
+  }
+  p {
+    font-size: 13px;
+    color: rgba(black, .6);
+    line-height: 1;
+    margin-left: 8px;
+  }
+  &__rate {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.review {
+  display: flex;
+  margin-bottom: 24px;
+  &__avatar img {
+    width: 40px;
+    height: 40px;
+    display: block;
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+  &__body {
+    margin-bottom: 8px;
+  }
+  &__footer {
+    font-size: 13px;
+    color: rgba(black, .6);
+    line-height: 1;
+    span {
+      margin-right: 8px;
+    }
+  }
+  &__type {
+    font-size: 11px;
+    color: rgba(black, .6);
+    display: block;
+  }
+}
+
+mat-spinner {
+  margin: 24px auto;
+}

@@ -1,0 +1,31 @@
+.cause {
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  &__cover {
+    padding-bottom: 50%;
+    background: center/cover;
+  }
+  &__header-body {
+    flex: 1;
+  }
+  &__header-icon {
+    margin-left: 16px;
+  }
+  &__title {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  &__description {
+    font-size: 13px;
+    color: rgba(black, .6);
+  }
+}
+
+.active {
+  background: #fafafa;
+}

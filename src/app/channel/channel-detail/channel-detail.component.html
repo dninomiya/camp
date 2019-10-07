@@ -1,0 +1,68 @@
+<ng-container *ngIf="channel$ | async as channel">
+  <div class="header">
+    <div class="container">
+      <div class="header__row">
+        <div class="profile">
+          <figure class="profile__avatar">
+            <img src="{{ channel.avatarURL }}" />
+          </figure>
+          <div class="profile__body">
+            <p class="profile__name">{{ channel.title }}</p>
+            <p class="profile__info">
+              フォロワー {{ channel.followerCount }}人
+            </p>
+          </div>
+        </div>
+        <div class="actions">
+          <button
+            mat-flat-button
+            color="primary"
+            [routerLink]="['/studio', channel.id]"
+          >
+            Update Studio
+          </button>
+          <ng-container *ngIf="channel.authorId !== uid">
+            <button
+              class="weak"
+              *ngIf="isFollow$ | async; else noFollow"
+              (click)="unfollow(channel.id)"
+              mat-flat-button
+            >
+              登録済み {{ followerCount + followerBuff }}
+            </button>
+            <ng-template #noFollow>
+              <button
+                (click)="follow(channel.id)"
+                mat-raised-button
+                color="primary"
+              >
+                チャンネル登録 {{ followerCount + followerBuff }}
+              </button>
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+      <p *ngIf="channel.description" class="description">{{ channel.description }}</p>
+
+      <nav mat-tab-nav-bar>
+          <a
+            *ngFor="let tab of tabs"
+            mat-tab-link
+            [routerLink]="tab.path"
+            routerLinkActive
+            #rla="routerLinkActive"
+            [active]="rla.isActive"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            {{ tab.label }}
+          </a>
+        </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="tab-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</ng-container>
