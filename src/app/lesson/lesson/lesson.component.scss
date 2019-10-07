@@ -75,7 +75,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 40px;
 }
 
 .channel {
@@ -133,14 +133,15 @@
   grid-auto-rows: min-content;
   gap: 16px;
   transition: .3s;
+  opacity: 0;
   @media print {
     display: none;
   }
   > * {
     transition: .8s;
   }
-  &.side-loading {
-    opacity: 0;
+  &.show {
+    opacity: 1;
   }
 }
 
