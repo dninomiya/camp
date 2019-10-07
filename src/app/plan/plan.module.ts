@@ -10,6 +10,7 @@ import { CoachingDialogComponent } from './coaching-dialog/coaching-dialog.compo
 import { PremiumDialogComponent } from './premium-dialog/premium-dialog.component';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_LOCALE, MatDatepickerModule } from '@angular/material';
+import { JobListComponent } from './job-list/job-list.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MAT_DATE_LOCALE, MatDatepickerModule } from '@angular/material';
     ReviewDialogComponent,
     CoachingDialogComponent,
     PremiumDialogComponent,
+    JobListComponent,
   ],
   imports: [
     SharedModule,
@@ -28,7 +30,8 @@ import { MAT_DATE_LOCALE, MatDatepickerModule } from '@angular/material';
     MatMomentDateModule
   ],
   exports: [
-    PlanListComponent
+    PlanListComponent,
+    JobListComponent
   ],
   entryComponents: [
     PlanDialogComponent,

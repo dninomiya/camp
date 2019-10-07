@@ -1,0 +1,40 @@
+<mat-card class="card">
+  <div matCardImage class="header" (click)="openReviewDialog()">
+    <img class="header__avatar" [src]="channel.avatarURL | safe: 'url'" alt="">
+  </div>
+
+  <div class="profile">
+    <p class="profile__name">{{ channel.title }}</p>
+    <p class="rate">
+      <span class="rate__star">
+        <app-mat-star-rating
+          [readonly]="true"
+          [rating]="rate"
+        ></app-mat-star-rating>
+      </span>
+      <span class="rate__review-count"
+        >{{ channel.reviewCount | number }}件のレビュー</span
+      >
+    </p>
+
+    <div class="profile__links">
+      <a [href]="link" class="profile__link" *ngFor="let link of channel.links">
+        <i [class]="link | linkIcon"></i>
+      </a>
+      <a [href]="channel.email" class="profile__link">
+        <i class="far fa-envelope"></i>
+      </a>
+    </div>
+    <p class="profile__description">{{ channel.description }}</p>
+  </div>
+
+  <ng-container *ngIf="plans && plans.length">
+    <mat-divider></mat-divider>
+    <app-plan-list [channel]="channel" [plans]="plans"></app-plan-list>
+  </ng-container>
+
+  <ng-container *ngIf="jobs && jobs.length">
+    <mat-divider></mat-divider>
+    <app-job-list [channel]="channel" [jobs]="jobs"></app-job-list>
+  </ng-container>
+</mat-card>

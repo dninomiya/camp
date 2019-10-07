@@ -1,18 +1,15 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { PlanDialogComponent } from 'src/app/plan-dialog/plan-dialog.component';
 import { Plan } from 'src/app/interfaces/plan';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { PlanActionDialogWrapperComponent } from '../plan-action-dialog-wrapper/plan-action-dialog-wrapper.component';
-import { PlanService } from 'src/app/services/plan.service';
-import { map, switchMap, tap } from 'rxjs/operators';
-import { PaymentService } from 'src/app/services/payment.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Subscription, of } from 'rxjs';
 import { CardDialogComponent } from 'src/app/shared/card-dialog/card-dialog.component';
 import { Router } from '@angular/router';
-import { ChannelReviewDialogComponent } from 'src/app/core/channel-review-dialog/channel-review-dialog.component';
-import { ChannelService } from 'src/app/services/channel.service';
+import { switchMap } from 'rxjs/operators';
+import { PaymentService } from 'src/app/services/payment.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-plan-list',
@@ -22,56 +19,34 @@ import { ChannelService } from 'src/app/services/channel.service';
 export class PlanListComponent implements OnInit, OnDestroy {
 
   @Input() channel: ChannelMeta;
-  @Output() loaded = new EventEmitter<boolean>();
+  @Input() plans: Plan[];
 
-  plans$;
   customerId: string;
-  subs = new Subscription();
-  rate: number;
-  job$;
+  notLogin: boolean;
 
   constructor(
     private dialog: MatDialog,
-    private planService: PlanService,
-    private paymentService: PaymentService,
     private authService: AuthService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private channelService: ChannelService
-  ) {
-    this.subs.add(
-      this.authService.authUser$.pipe(
-        switchMap(user => {
-          if (user) {
-            return this.paymentService.getUserPayment(user.id);
-          } else {
-            return of(null);
-          }
-        })
-      ).subscribe(data => {
-        this.customerId = data && data.customerId;
+    private paymentService: PaymentService
+  ) { }
+
+  ngOnInit() { }
+
+  checkCustomer() {
+    this.authService.authUser$.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.paymentService.getUserPayment(user.id);
+        } else {
+          this.notLogin = true;
+          return of(null);
+        }
       })
-    );
-  }
-
-  ngOnInit() {
-    this.plans$ = this.planService.getPlansByChannelId(
-      this.channel.id
-    ).pipe(
-      map(plans => plans.filter(plan => plan.active)),
-      tap(() => this.loaded.emit(true))
-    );
-
-    this.job$ = this.channelService.getJobCard(this.channel.id);
-    this.rate = this.getRate();
-  }
-
-  getRate(): number {
-    if (this.channel.totalRate && this.channel.totalRate) {
-      return this.channel.totalRate / this.channel.reviewCount;
-    } else {
-      return 0;
-    }
+    ).subscribe(data => {
+      this.customerId = data && data.customerId;
+    });
   }
 
   openPlanHelpDialog(plan: Plan, event) {
@@ -108,27 +83,15 @@ export class PlanListComponent implements OnInit, OnDestroy {
           });
         }
       });
-    } else {
+    } else if (!this.notLogin) {
       this.dialog.open(CardDialogComponent, {
         width: '560px'
       });
+    } else {
+      alert('ログインしてください');
     }
   }
 
   ngOnDestroy() {
-    this.subs.unsubscribe();
   }
-
-  openReviewDialog() {
-    this.dialog.open(ChannelReviewDialogComponent, {
-      width: '640px',
-      autoFocus: false,
-      restoreFocus: false,
-      data: {
-        channel: this.channel,
-        rate: this.rate
-      }
-    });
-  }
-
 }

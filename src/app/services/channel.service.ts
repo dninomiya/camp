@@ -55,14 +55,33 @@ export class ChannelService {
       );
   }
 
-  updateJob(id: string, jobCard: JobCard): Promise<void> {
-    return this.db.doc(`channels/${id}/job/body`).set(jobCard, {
+  createJob(channelId: string, jobCard: JobCard): Promise<void> {
+    const id = this.db.createId();
+    return this.db.doc(`channels/${channelId}/jobs/${id}`).set({
+      id,
+      ...jobCard
+    }, {
       merge: true
     });
   }
 
-  getJobCard(id: string): Observable<JobCard> {
-    return this.db.doc<JobCard>(`channels/${id}/job/body`)
+  updateJob(channelId: string, jobCard: JobCard, jobId: string): Promise<void> {
+    const id = this.db.createId();
+    return this.db.doc(`channels/${channelId}/jobs/${id}`).set({
+      id,
+      ...jobCard
+    }, {
+      merge: true
+    });
+  }
+
+  getJob(channelId: string, jobId: string): Observable<JobCard> {
+    return this.db.doc<JobCard>(`channels/${channelId}/jobs/${jobId}`)
+      .valueChanges().pipe(take(1));
+  }
+
+  getJobs(channelId): Observable<JobCard[]> {
+    return this.db.collection<JobCard>(`channels/${channelId}/jobs`)
       .valueChanges().pipe(take(1));
   }
 }

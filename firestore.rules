@@ -81,7 +81,7 @@ service cloud.firestore {
       match /forum/unread {
         allow read, write: if true;
       }
-      match /job/body {
+      match /jobs/{jobId} {
         allow read, write: if true;
       }
       match /reviews/{reviewId} {
