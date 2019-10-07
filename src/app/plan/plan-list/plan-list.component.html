@@ -50,6 +50,14 @@
             <mat-icon class="icon">info</mat-icon>
           </button>
         </mat-list-item>
+        <ng-container *ngIf="job$ | async as job">
+          <mat-divider></mat-divider>
+          <h3 mat-subheader>案件相談</h3>
+          <mat-list-item>
+            <span matLine>新規Webサービス開発</span>
+            <span matLine class="cost">{{job.amount | number}}円 / 人日</span>
+          </mat-list-item>
+        </ng-container>
       </mat-nav-list>
     </div>
   </mat-card>

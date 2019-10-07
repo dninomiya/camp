@@ -12,6 +12,7 @@ import { Subscription, of } from 'rxjs';
 import { CardDialogComponent } from 'src/app/shared/card-dialog/card-dialog.component';
 import { Router } from '@angular/router';
 import { ChannelReviewDialogComponent } from 'src/app/core/channel-review-dialog/channel-review-dialog.component';
+import { ChannelService } from 'src/app/services/channel.service';
 
 @Component({
   selector: 'app-plan-list',
@@ -27,6 +28,7 @@ export class PlanListComponent implements OnInit, OnDestroy {
   customerId: string;
   subs = new Subscription();
   rate: number;
+  job$;
 
   constructor(
     private dialog: MatDialog,
@@ -34,7 +36,8 @@ export class PlanListComponent implements OnInit, OnDestroy {
     private paymentService: PaymentService,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private channelService: ChannelService
   ) {
     this.subs.add(
       this.authService.authUser$.pipe(
@@ -59,6 +62,7 @@ export class PlanListComponent implements OnInit, OnDestroy {
       tap(() => this.loaded.emit(true))
     );
 
+    this.job$ = this.channelService.getJobCard(this.channel.id);
     this.rate = this.getRate();
   }
 
