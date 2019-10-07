@@ -79,7 +79,7 @@
       </div>
     </div>
 
-    <div class="side" [class.loading]="loading">
+    <div class="side" [class.side-loading]="loading">
       <app-cause-widget *ngIf="cause$ | async" [cause$]="cause$"></app-cause-widget>
       <app-plan-list (loaded)="loading = false" [channel]="channel"></app-plan-list>
       <mat-card *ngIf="channel.ads && channel.ads.public" class="ads">
