@@ -3,7 +3,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/services/payment.service';
-import { JobCard } from 'src/app/interfaces/job-card';
+import { Job } from 'src/app/interfaces/job';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 
 @Component({
@@ -13,7 +13,7 @@ import { ChannelMeta } from 'src/app/interfaces/channel';
 })
 export class JobListComponent implements OnInit {
 
-  @Input() jobs: JobCard[];
+  @Input() jobs: Job[];
   @Input() channel: ChannelMeta;
 
   constructor(

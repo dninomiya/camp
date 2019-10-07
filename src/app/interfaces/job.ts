@@ -1,7 +1,7 @@
 export type jobStyle = 'remote' | 'office';
 export type jobPosition = 'CTO' | 'UIデザイン';
 
-export interface JobCard {
+export interface Job {
   userId: string;
   amount: number;
   office: boolean;

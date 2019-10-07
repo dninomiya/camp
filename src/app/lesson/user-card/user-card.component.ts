@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { ChannelService } from 'src/app/services/channel.service';
 import { PlanService } from 'src/app/services/plan.service';
 import { map, take } from 'rxjs/operators';
-import { JobCard } from 'src/app/interfaces/job-card';
+import { Job } from 'src/app/interfaces/job';
 import { Plan } from 'src/app/interfaces/plan';
 import { ChannelReviewDialogComponent } from 'src/app/core/channel-review-dialog/channel-review-dialog.component';
 import { MatDialog } from '@angular/material';
@@ -19,7 +19,7 @@ export class UserCardComponent implements OnInit {
   @Input() channel: ChannelMeta;
   @Output() loaded = new EventEmitter<boolean>();
 
-  job: JobCard;
+  jobs: Job[];
   plans: Plan[];
   rate: number;
 
@@ -31,13 +31,13 @@ export class UserCardComponent implements OnInit {
 
   ngOnInit() {
     forkJoin([
-      this.channelService.getJobCard(this.channel.id).pipe(take(1)),
+      this.channelService.getJobs(this.channel.id).pipe(take(1)),
       this.planService.getPlansByChannelId(this.channel.id).pipe(
         map(plans => plans.filter(plan => plan.active)),
         take(1)
       ),
     ]).subscribe(([job, plans]) => {
-      this.job = job;
+      this.jobs = job;
       this.plans = plans;
       this.loaded.emit(true);
     });

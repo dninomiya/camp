@@ -115,7 +115,7 @@ export class AboutComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.channelService.getJobCard(
+    this.channelService.getJobs(
       this.authService.user.id
     ).subscribe(jobCard => {
       if (jobCard) {
@@ -267,15 +267,15 @@ export class AboutComponent implements OnInit {
 
   saveJob() {
     const id = this.authService.user.id;
-    this.channelService.updateJob(id, {
-      id,
-      ...this.job.value
-    }).then(() => {
-      this.job.markAsPristine();
-      this.snackBar.open('ジョブカードを更新しました', null, {
-        duration: 2000
-      });
-    });
+    // this.channelService.updateJob(id, {
+    //   id,
+    //   ...this.job.value
+    // }).then(() => {
+    //   this.job.markAsPristine();
+    //   this.snackBar.open('ジョブカードを更新しました', null, {
+    //     duration: 2000
+    //   });
+    // });
   }
 
   uploadAds(imageURL) {
