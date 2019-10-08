@@ -8,6 +8,7 @@ import { NgxPicaService } from '@digitalascetic/ngx-pica';
 import { StorageService } from 'src/app/services/storage.service';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { AuthService } from 'src/app/services/auth.service';
+import { Job } from 'src/app/interfaces/job';
 
 @Component({
   selector: 'app-about',
@@ -69,31 +70,7 @@ export class AboutComponent implements OnInit {
     })
   );
 
-  job = this.fb.group({
-    amount: [null, Validators.required],
-    office: [false],
-    employee: [false],
-    mentor: [false],
-    remote: [false],
-    ui: [false],
-    pm: [false],
-    manage: [false],
-    front: [false],
-    ai: [false],
-    infra: [false],
-    server: [false],
-    native: [false],
-    fullstack: [false],
-    ar: [false],
-    desing: [false],
-    vr: [false],
-    startup: [false],
-    cto: [false],
-    skills: ['', Validators.required],
-    target: ['', Validators.required],
-    pr: ['', Validators.required],
-    public: [false],
-  });
+  jobForm = this.fb.array([]);
 
   adsOptions = {
     path: '',
@@ -117,9 +94,11 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
     this.channelService.getJobs(
       this.authService.user.id
-    ).subscribe(jobCard => {
-      if (jobCard) {
-        this.job.patchValue(jobCard);
+    ).subscribe(jobs => {
+      if (jobs && jobs.length) {
+        jobs.forEach(job => this.addJob(job));
+      } else {
+        this.addJob();
       }
     });
   }
@@ -266,16 +245,13 @@ export class AboutComponent implements OnInit {
   }
 
   saveJob() {
-    const id = this.authService.user.id;
-    // this.channelService.updateJob(id, {
-    //   id,
-    //   ...this.job.value
-    // }).then(() => {
-    //   this.job.markAsPristine();
-    //   this.snackBar.open('ジョブカードを更新しました', null, {
-    //     duration: 2000
-    //   });
-    // });
+    const channelId = this.authService.user.id;
+    this.channelService.updateJobs(channelId, this.jobForm.value).then(() => {
+      this.jobForm.markAsPristine();
+      this.snackBar.open('案件相談窓口を更新しました', null, {
+        duration: 2000
+      });
+    });
   }
 
   uploadAds(imageURL) {
@@ -303,6 +279,20 @@ export class AboutComponent implements OnInit {
         duration: 2000
       });
     });
+  }
+
+  addJob(job?: Job) {
+    this.jobForm.push(this.fb.group({
+      title: [job && job.title, Validators.required],
+      amount: [job && job.amount, Validators.required],
+      style: [job && job.style, Validators.required],
+      description: [job && job.description, Validators.required],
+      public: [job && job.public],
+    }));
+  }
+
+  removeJob(i: number) {
+    this.jobForm.removeAt(i);
   }
 
 }

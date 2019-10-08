@@ -5,6 +5,8 @@
 .video {
   position: relative;
   padding-bottom: 62.5%;
+  overflow: hidden;
+  border-radius: 4px;
   background: #000;
   iframe {
     position: absolute;

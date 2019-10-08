@@ -137,3 +137,30 @@ button {
   height: 240px;
   margin: 24px auto;
 }
+
+.radios {
+  margin-bottom: 16px;
+  display: block;
+  mat-radio-button {
+    margin-right: 16px;
+  }
+}
+
+.description {
+  height: 80px;
+  line-height: 1.6;
+}
+
+.job-item-actions {
+  margin-bottom: 16px;
+  > * {
+    margin-right: 16px;
+  }
+}
+
+.job-form-actions {
+  margin-top: 16px;
+  > * {
+    margin-right: 16px;
+  }
+}

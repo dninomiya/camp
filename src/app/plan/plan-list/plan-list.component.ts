@@ -32,7 +32,9 @@ export class PlanListComponent implements OnInit, OnDestroy {
     private paymentService: PaymentService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.checkCustomer();
+  }
 
   checkCustomer() {
     this.authService.authUser$.pipe(
