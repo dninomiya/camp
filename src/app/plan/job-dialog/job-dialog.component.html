@@ -1,0 +1,20 @@
+<div matDialogTitle class="header">
+  <img src="/assets/images/job-card-header.png" alt="">
+</div>
+
+<mat-dialog-content>
+  <div *ngIf="job" class="wrap">
+    <h1>{{ job.title }}</h1>
+    <div class="amount">
+      <p *ngIf="job.amount">{{ job.amount | number }}円/日</p>
+      <p *ngIf="!job.amount">費用は応相談</p>
+    </div>
+    <p class="description">{{ job.description }}</p>
+    <p>希望ワークスタイル: {{ job.style }}</p>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button mat-button color="primary">相談</button>
+</mat-dialog-actions>

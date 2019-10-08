@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { PaymentService } from 'src/app/services/payment.service';
 import { Job } from 'src/app/interfaces/job';
 import { ChannelMeta } from 'src/app/interfaces/channel';
+import { JobDialogComponent } from '../job-dialog/job-dialog.component';
 
 @Component({
   selector: 'app-job-list',
@@ -18,13 +19,19 @@ export class JobListComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private authService: AuthService,
-    private snackBar: MatSnackBar,
-    private router: Router,
-    private paymentService: PaymentService
   ) { }
 
   ngOnInit() {
+  }
+
+  openJobDialog(data: Job) {
+    this.dialog.open(JobDialogComponent, {
+      autoFocus: false,
+      restoreFocus: false,
+      data,
+      width: '400px',
+      panelClass: 'no-padding',
+    });
   }
 
 }

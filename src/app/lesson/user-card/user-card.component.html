@@ -1,11 +1,11 @@
 <mat-card class="card">
-  <div matCardImage class="header" (click)="openReviewDialog()">
+  <div matCardImage class="header">
     <img class="header__avatar" [src]="channel.avatarURL | safe: 'url'" alt="">
   </div>
 
   <div class="profile">
     <p class="profile__name">{{ channel.title }}</p>
-    <p class="rate">
+    <p class="rate" (click)="openReviewDialog()">
       <span class="rate__star">
         <app-mat-star-rating
           [readonly]="true"

@@ -1,0 +1,39 @@
+.wrap {
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.header {
+  margin: -24px -24px 0;
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+.cover {
+  text-align: center;
+  margin-bottom: 24px;
+  img {
+    width: 160px;
+  }
+}
+
+h1 {
+  font-size: 16px;
+  margin-bottom: 24px;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.amount {
+  color: rgba(black, .6);
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+
+.description {
+  color: rgba(black, .6);
+  margin-bottom: 24px;
+}
+

@@ -11,6 +11,7 @@ import { PremiumDialogComponent } from './premium-dialog/premium-dialog.componen
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_LOCALE, MatDatepickerModule } from '@angular/material';
 import { JobListComponent } from './job-list/job-list.component';
+import { JobDialogComponent } from './job-dialog/job-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { JobListComponent } from './job-list/job-list.component';
     CoachingDialogComponent,
     PremiumDialogComponent,
     JobListComponent,
+    JobDialogComponent,
   ],
   imports: [
     SharedModule,
@@ -31,11 +33,12 @@ import { JobListComponent } from './job-list/job-list.component';
   ],
   exports: [
     PlanListComponent,
-    JobListComponent
+    JobListComponent,
   ],
   entryComponents: [
     PlanDialogComponent,
-    PlanActionDialogWrapperComponent
+    PlanActionDialogWrapperComponent,
+    JobDialogComponent
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'ja-JP'},
