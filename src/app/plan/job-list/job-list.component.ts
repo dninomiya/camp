@@ -24,11 +24,14 @@ export class JobListComponent implements OnInit {
   ngOnInit() {
   }
 
-  openJobDialog(data: Job) {
+  openJobDialog(job: Job) {
     this.dialog.open(JobDialogComponent, {
       autoFocus: false,
       restoreFocus: false,
-      data,
+      data: {
+        job,
+        channel: this.channel
+      },
       width: '400px',
       panelClass: 'no-padding',
     });

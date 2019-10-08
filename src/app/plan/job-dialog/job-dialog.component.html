@@ -3,18 +3,28 @@
 </div>
 
 <mat-dialog-content>
-  <div *ngIf="job" class="wrap">
-    <h1>{{ job.title }}</h1>
+  <div *ngIf="data.job" class="wrap">
+    <h1>{{ data.job.title }}</h1>
     <div class="amount">
-      <p *ngIf="job.amount">{{ job.amount | number }}円/日</p>
-      <p *ngIf="!job.amount">費用は応相談</p>
+      <p *ngIf="data.job.amount">{{ data.job.amount | number }}円/日</p>
+      <p *ngIf="!data.job.amount">費用は応相談</p>
     </div>
-    <p class="description">{{ job.description }}</p>
-    <p>希望ワークスタイル: {{ job.style }}</p>
+    <p class="description">{{ data.job.description }}</p>
+    <p>希望ワークスタイル: {{ data.job.style }}</p>
+
+    <a href="mailto:{{data.channel.email}}?subject={{data.job.title}}に関する案件相談（from 3ML）&body=はじめまして。3MLを見てご連絡させていただきました。%0D%0Aあああ" target="_blank" mat-raised-button color="primary">メールで相談</a>
+
+    <p>初回連絡時に以下の情報を含めてください</p>
+
+    <ul>
+      <li>予算: 提示金額と乖離がないこと</li>
+      <li>概要: 開発フェーズ、採用技術、メンバー体制など</li>
+      <li>希望納期</li>
+      <li>希望参画形態： 正社員、業務委託、請負</li>
+    </ul>
   </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button matDialogClose>キャンセル</button>
-  <button mat-button color="primary">相談</button>
+  <button mat-button matDialogClose>閉じる</button>
 </mat-dialog-actions>
