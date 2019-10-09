@@ -14,6 +14,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
   @Output() formChanged = new EventEmitter<{
     valid: boolean;
     value: any;
+    dirty: boolean;
   }>();
 
   form = this.fb.group({
@@ -46,7 +47,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
       town: ['', [
         Validators.required,
         Validators.maxLength(40),
-        Validators.pattern('^[ァ-ンヴーｧ-ﾝﾞﾟ0-9０-９\-]*$'),
+        Validators.pattern('^[ァ-ンヴーｧ-ﾝﾞﾟ]*[ァ-ンヴーｧ-ﾝﾞﾟ0-9０-９\-]*?$'),
       ]],
       line1: ['', [
         Validators.required,
@@ -81,18 +82,24 @@ export class AddressFormComponent implements OnInit, OnDestroy {
         })
     );
 
+    if (this.data) {
+      this.form.patchValue(this.data);
+      this.formChanged.emit({
+        valid: this.form.valid,
+        value: this.form.value,
+        dirty: false
+      });
+    }
+
     this.subs.add(
       this.form.valueChanges.subscribe(value => {
         this.formChanged.emit({
           valid: this.form.valid,
-          value: this.form.value
+          value: this.form.value,
+          dirty: true
         });
       })
     );
-
-    if (this.data) {
-      this.form.patchValue(this.data);
-    }
   }
 
   ngOnDestroy() {

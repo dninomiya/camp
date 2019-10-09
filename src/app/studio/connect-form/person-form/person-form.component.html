@@ -98,5 +98,5 @@
   <h3>住所</h3>
   <app-address-form [data]="addressBefore" (formChanged)="getAddress($event)"></app-address-form>
 
-  <button color="primary" mat-raised-button [disabled]="form.invalid || form.pristine || !address?.valid">保存</button>
+  <button color="primary" mat-raised-button [disabled]="form.invalid || (form.pristine && !address?.dirty) || !address?.valid">保存</button>
 </form>

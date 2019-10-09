@@ -136,8 +136,8 @@ export class StripeAccountEditorComponent implements OnInit {
       this.defaultData.external_account
     ) {
       const data = {
+        external_account: this.defaultData.external_account,
         ...this.form.value,
-        ...this.defaultData.external_account,
         ...this.defaultData
       };
 
@@ -145,20 +145,20 @@ export class StripeAccountEditorComponent implements OnInit {
 
       console.log(data);
 
-      // const waiting = this.snackBar.open('アカウントを作成しています。');
+      const waiting = this.snackBar.open('アカウントを作成しています。');
 
-      // this.paymentService.createAccount(data).then(() => {
-      //   waiting.dismiss();
-      //   this.snackBar.open('アカウントを作成しました', null, {
-      //     duration: 2000
-      //   });
-      // }).catch(error => {
-      //   console.log(error);
-      //   waiting.dismiss();
-      //   this.snackBar.open('エラーが発生しました', null, {
-      //     duration: 2000
-      //   });
-      // });
+      this.paymentService.createAccount(data).then(() => {
+        waiting.dismiss();
+        this.snackBar.open('アカウントを作成しました', null, {
+          duration: 2000
+        });
+      }).catch(error => {
+        console.log(error);
+        waiting.dismiss();
+        this.snackBar.open('エラーが発生しました', null, {
+          duration: 2000
+        });
+      });
     }
   }
 

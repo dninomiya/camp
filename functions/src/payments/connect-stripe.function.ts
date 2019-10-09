@@ -40,7 +40,6 @@ export const connectStripe = functions.https.onCall(async (data, context) => {
     const account = await stripe.accounts.create({
       country: 'JP',
       type: 'custom',
-      requested_capabilities: ['card_payments'],
       ...data
     });
 
