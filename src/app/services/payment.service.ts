@@ -44,18 +44,9 @@ export class PaymentService {
     return callable(params).toPromise();
   }
 
-  async createAccount(user: User): Promise<void> {
-    const isExsist = !!(await this.db.doc(`users/${user.id}/private/payment`).ref.get());
-    if (!isExsist) {
-      throw new Error('すでに存在します');
-    } else {
-      const callable = this.fns.httpsCallable('createStripeAccount');
-      const account = await callable(user).toPromise();
-
-      return this.db.doc(`users/${user.id}/private/payment`).set({
-        accountId: account.id
-      }, {merge: true});
-    }
+  async createAccount(data): Promise<void> {
+    const callable = this.fns.httpsCallable('connectStripe');
+    return callable(data).toPromise();
   }
 
   subscribePlan(body: {
@@ -75,14 +66,6 @@ export class PaymentService {
   }): Promise<void> {
     const callable = this.fns.httpsCallable('unsubscribePlan');
     await callable(body);
-  }
-
-  useCoupon(uid: string, params: {sid: string, couponId: string}): Promise<void> {
-    const callable = this.fns.httpsCallable('useCoupon');
-    return callable({
-      uid,
-      ...params
-    }).toPromise();
   }
 
   getUserPayment(uid: string): Observable<UserPayment> {
@@ -116,18 +99,6 @@ export class PaymentService {
           }
         })
       );
-  }
-
-  async createStripeSCRF(body: {
-    uid: string,
-    path: string
-  }): Promise<string> {
-    const id = this.db.createId();
-    await this.db.doc(`stripeCSRF/${id}`).set({
-      ...body,
-      createdAt: new Date()
-    });
-    return id;
   }
 
   async disconnectStripe(clientId: string): Promise<void> {

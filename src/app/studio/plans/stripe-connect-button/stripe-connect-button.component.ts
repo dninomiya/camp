@@ -29,19 +29,19 @@ export class StripeConnectButtonComponent implements OnInit {
   connectStripe() {
     const domain = environment.production ? 'update.jp' : 'localhost:4200';
 
-    this.paymentService.createStripeSCRF({
-      uid: this.authService.user.id,
-      path: this.router.url
-    }).then((id) => {
-      const url =  'https://dashboard.stripe.com/oauth/authorize?' +
-        'response_type=code&' +
-        `client_id=${environment.stripe.clientId}&` +
-        'scope=read_write&' +
-        `redirect_uri=http://${domain}/connect-stripe&` +
-        `state=${id}`;
+    // this.paymentService.createStripeSCRF({
+    //   uid: this.authService.user.id,
+    //   path: this.router.url
+    // }).then((id) => {
+    //   const url =  'https://dashboard.stripe.com/oauth/authorize?' +
+    //     'response_type=code&' +
+    //     `client_id=${environment.stripe.clientId}&` +
+    //     'scope=read_write&' +
+    //     `redirect_uri=http://${domain}/connect-stripe&` +
+    //     `state=${id}`;
 
-      location.href = url;
-    });
+    //   location.href = url;
+    // });
   }
 
   async rejectStripe() {
