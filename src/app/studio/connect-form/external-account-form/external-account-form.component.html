@@ -7,13 +7,13 @@
     <mat-label>口座名義</mat-label>
     <input
       type="text"
-      [placeholder]="type === 'company' ? '株式会社サンプル' : 'サンプル太郎'"
+      [placeholder]="type === 'company' ? 'ｶ)サンプル' : 'サンプル　タロウ'"
       [autocomplete]="type === 'company' ? 'organization' : 'name'"
       formControlName="account_holder_name"
       matInput
       required
     />
-    <mat-hint>正確に入力してください</mat-hint>
+    <mat-hint>カタカナ</mat-hint>
   </mat-form-field>
 
   <mat-form-field>
@@ -29,7 +29,7 @@
     <mat-autocomplete
       #bankName="matAutocomplete"
       [displayWith]="bankValueMapper"
-      (optionSelected)="selectedBank($event)"
+      (optionSelected)="selectedBank($event.option.value)"
     >
       <mat-option
         *ngFor="let option of filteredBankOptions$ | async"

@@ -47,12 +47,12 @@ export class AddressFormComponent implements OnInit, OnDestroy {
       town: ['', [
         Validators.required,
         Validators.maxLength(40),
-        Validators.pattern('^[ァ-ンヴーｧ-ﾝﾞﾟ]*[ァ-ンヴーｧ-ﾝﾞﾟ0-9０-９\-]*?$'),
+        Validators.pattern('^[ァ-ンヴーｧ-ﾝﾞﾟ]+[ァ-ンヴーｧ-ﾝﾞﾟ0-9０-９ 　\-]*?$'),
       ]],
       line1: ['', [
         Validators.required,
         Validators.maxLength(40),
-        Validators.pattern('^[ァ-ンヴーｧ-ﾝﾞﾟ0-9０-９\-]*$'),
+        Validators.pattern('^[ァ-ンヴーｧ-ﾝﾞﾟ0-9０-９\-]+$'),
       ]],
     })
   });

@@ -87,8 +87,11 @@ export class StripeAccountEditorComponent implements OnInit {
 
   ngOnInit() {
     this.connectService.getAccount(this.authService.user.id)
-      .pipe(take(1)).subscribe(data => {
+      .subscribe(data => {
         this.defaultData = data;
+        if (!this.loading) {
+          this.form.markAsDirty();
+        }
         this.loading = false;
       });
   }

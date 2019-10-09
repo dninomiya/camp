@@ -5,6 +5,7 @@ import { startWith, map } from 'rxjs/operators';
 import { ConnectService } from 'src/app/services/connect.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import { environment } from 'src/environments/environment';
 
 interface GinCode {
   code: string;
@@ -13,11 +14,13 @@ interface GinCode {
   hira: string;
   roma: string;
   branches?: {
-    code: string;
-    name: string;
-    kana: string;
-    hira: string;
-    roma: string;
+    [key: string]: {
+      code: string;
+      name: string;
+      kana: string;
+      hira: string;
+      roma: string;
+    }
   };
 }
 
@@ -28,7 +31,7 @@ interface GinCode {
 })
 export class ExternalAccountFormComponent implements OnInit {
   @Input() type: string;
-  @Input() data?: object;
+  @Input() data?: any;
 
   zenginCodeArray: GinCode[] = Object.values(zenginCode);
   branchOptions: GinCode[] = [];
@@ -42,7 +45,8 @@ export class ExternalAccountFormComponent implements OnInit {
     account_holder_name: ['', [
       Validators.required,
       Validators.minLength(2),
-      Validators.maxLength(40)
+      Validators.maxLength(40),
+      Validators.pattern('^[ァ-ンヴーｧ-ﾝﾞﾟ 　]*$'),
     ]],
     account_number: ['', [
       Validators.required,
@@ -95,11 +99,39 @@ export class ExternalAccountFormComponent implements OnInit {
     private connectService: ConnectService,
     private authService: AuthService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+    if (!environment.production) {
+      const testBank = {
+        code: '1100',
+        hira: 'てすと',
+        kana: 'テスト',
+        name: 'テストＴＥＳＴ',
+        roma: 'test',
+        branches: {
+          '000': {
+            code: '000',
+            hira: 'てすと',
+            kana: 'テスト',
+            name: 'テストＴＥＳＴ',
+            roma: 'test',
+          }
+        }
+      };
+      this.zenginCodeArray.push(testBank);
+      zenginCode[testBank.code] = testBank;
+    }
+  }
 
   ngOnInit() {
     if (this.data) {
       this.form.patchValue(this.data);
+
+      if (this.data.routing_number) {
+        const bankCode = this.data.routing_number.slice(0, 4);
+        this.bankNameControl.patchValue(bankCode);
+        this.selectedBank(bankCode);
+        this.branchNameControl.patchValue(this.data.routing_number.slice(4));
+      }
     }
   }
 
@@ -115,8 +147,7 @@ export class ExternalAccountFormComponent implements OnInit {
     }
   }
 
-  selectedBank(event) {
-    const code = event.option.value;
+  selectedBank(code) {
     this.bankCode = code;
     const branches = zenginCode[code].branches;
     if (branches) {
@@ -128,6 +159,7 @@ export class ExternalAccountFormComponent implements OnInit {
   selectedBranch(event) {
     const code = event.option.value;
     this.form.get('routing_number').patchValue(this.bankCode + code);
+    this.form.markAsDirty();
   }
 
   bankValueMapper(code: string) {
