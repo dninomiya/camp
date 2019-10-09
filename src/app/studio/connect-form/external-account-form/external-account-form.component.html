@@ -1,0 +1,85 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <input type="hidden" formControlName="object" required />
+  <input type="hidden" formControlName="country" required />
+  <input type="hidden" formControlName="currency" required />
+  <div class="wrap">
+  <mat-form-field>
+    <mat-label>口座名義</mat-label>
+    <input
+      type="text"
+      [placeholder]="type === 'company' ? '株式会社サンプル' : 'サンプル太郎'"
+      [autocomplete]="type === 'company' ? 'organization' : 'name'"
+      formControlName="account_holder_name"
+      matInput
+      required
+    />
+    <mat-hint>正確に入力してください</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>金融機関</mat-label>
+    <input
+      type="text"
+      placeholder="銀行名を入力してください"
+      matInput
+      [formControl]="bankNameControl"
+      [matAutocomplete]="bankName"
+      required
+    />
+    <mat-autocomplete
+      #bankName="matAutocomplete"
+      [displayWith]="bankValueMapper"
+      (optionSelected)="selectedBank($event)"
+    >
+      <mat-option
+        *ngFor="let option of filteredBankOptions$ | async"
+        [value]="option.code"
+      >
+        {{ option.name }}銀行
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>支店番号</mat-label>
+    <input
+      type="text"
+      placeholder="XX支店"
+      matInput
+      [formControl]="branchNameControl"
+      [matAutocomplete]="branchName"
+      required
+    />
+    <mat-autocomplete
+      #branchName="matAutocomplete"
+      [displayWith]="branchValueMapper()"
+      (optionSelected)="selectedBranch($event)"
+    >
+      <mat-option
+        *ngFor="let option of filteredBranchOptions$ | async"
+        [value]="option.code"
+      >
+        {{ option.name }}支店
+      </mat-option>
+    </mat-autocomplete>
+    <mat-hint>支店名で検索できます</mat-hint>
+  </mat-form-field>
+
+  <input type="hidden" formControlName="routing_number" required />
+
+  <mat-form-field>
+    <mat-label>口座番号</mat-label>
+    <input
+      type="text"
+      placeholder="1234567"
+      formControlName="account_number"
+      matInput
+      required
+      maxlength="7"
+      autocomplete="off"
+    />
+  </mat-form-field>
+  </div>
+
+  <button color="primary" mat-raised-button [disabled]="form.invalid || form.pristine">保存</button>
+</form>

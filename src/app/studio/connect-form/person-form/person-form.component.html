@@ -1,0 +1,102 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="name-group">
+    <mat-form-field>
+      <mat-label>姓 (漢字)</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="last_name_kanji"
+        autocomplete="family-name"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>名 (漢字)</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="first_name_kanji"
+        autocomplete="given-name"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>姓 (カナ)</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="last_name_kana"
+        autocomplete="family-name"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>名 (カナ)</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="first_name_kana"
+        autocomplete="off"
+        required
+      />
+    </mat-form-field>
+  </div>
+  <h3>性別</h3>
+  <mat-radio-group formControlName="gender">
+    <mat-radio-button value="male">男性</mat-radio-button>
+    <mat-radio-button value="female">女性</mat-radio-button>
+  </mat-radio-group>
+
+  <h3>誕生日</h3>
+  <div formGroupName="dob" class="dob-group">
+    <mat-form-field>
+      <mat-label>年</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="year"
+        autocomplete="bday-year"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>月</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="month"
+        autocomplete="bday-month"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>日</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="day"
+        autocomplete="bday-day"
+        required
+      />
+    </mat-form-field>
+  </div>
+
+  <h3>連絡先</h3>
+
+  <mat-form-field>
+    <mat-label>電話番号</mat-label>
+    <span matPrefix>+81&nbsp;</span>
+    <input
+      type="tel"
+      matInput
+      formControlName="phone"
+      autocomplete="tel"
+      required
+    />
+  </mat-form-field>
+
+  <h3>住所</h3>
+  <app-address-form [data]="addressBefore" (formChanged)="getAddress($event)"></app-address-form>
+
+  <button color="primary" mat-raised-button [disabled]="form.invalid || form.pristine || !address?.valid">保存</button>
+</form>

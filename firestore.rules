@@ -34,6 +34,9 @@ service cloud.firestore {
       match /settlements/{lessonId} {
         allow read: if true;
       }
+      match /connect/account {
+        allow read, write: if request.auth.uid == uid;
+      }
       match /subscriptions/{pid} {
         allow read, write: if request.auth.uid == uid;
       }

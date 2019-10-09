@@ -1,0 +1,62 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="company-group">
+    <mat-form-field>
+      <mat-label>会社名 (漢字)</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="name_kanji"
+        autocomplete="organization"
+        placeholder="株式会社サンプル"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>会社名 (ローマ字または英語表記)</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="name"
+        autocomplete="off"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>会社名 (カナ)</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="name_kana"
+        placeholder="サンプル"
+        autocomplete="off"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="tax">
+      <mat-label>登記番号 (会社法人等番号)</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="tax_id"
+        autocomplete="off"
+        placeholder="0000000000000"
+        maxlength="13"
+        required
+      />
+    </mat-form-field>
+  </div>
+
+  <h3>住所</h3>
+  <app-address-form
+    [data]="addressBefore"
+    (formChanged)="getAddress($event)"
+  ></app-address-form>
+
+  <button
+    color="primary"
+    mat-raised-button
+    [disabled]="form.invalid || form.pristine || !address?.valid"
+  >
+    保存
+  </button>
+</form>

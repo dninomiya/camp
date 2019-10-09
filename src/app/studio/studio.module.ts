@@ -24,6 +24,7 @@ import { MultipleLessonEditDialogComponent } from './multiple-lesson-edit-dialog
 import { NgAisModule } from 'angular-instantsearch';
 import { SearchLessonInputComponent } from './search-lesson-input/search-lesson-input.component';
 import { StripeAccountEditorComponent } from './stripe-account-editor/stripe-account-editor.component';
+import { ConnectFormModule } from './connect-form/connect-form.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { StripeAccountEditorComponent } from './stripe-account-editor/stripe-acc
     MatPaginatorModule,
     MatDialogModule,
     DragDropModule,
-    NgAisModule
+    NgAisModule,
+    ConnectFormModule
   ],
   entryComponents: [
     ListEditDialogComponent,

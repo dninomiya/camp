@@ -4,14 +4,6 @@ h1, h2 {
   margin-bottom: 24px;
 }
 
-mat-form-field {
-  display: block;
-  margin-bottom: 16px;
-  mat-divider + & {
-    padding-top: 16px;
-  }
-}
-
 .info {
   margin-bottom: 24px;
 }
@@ -31,4 +23,14 @@ mat-card {
 
 mat-radio-button {
   margin-right: 16px;
+}
+
+h3 {
+  font-size: 14px;
+  margin-top: 24px;
+  font-weight: normal;
+}
+
+mat-card {
+  padding: 40px;
 }
