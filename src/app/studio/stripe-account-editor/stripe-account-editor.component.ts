@@ -118,33 +118,47 @@ export class StripeAccountEditorComponent implements OnInit {
     return this.form.get('business_type').value;
   }
 
-  submit() {
-    if (this.form.valid) {
-      const data = this.form.value;
+  get valid(): boolean {
+    return !this.form.pristine &&
+    this.form.valid &&
+    this.defaultData &&
+    this.defaultData.external_account &&
+    (
+      this.defaultData ||
+      (this.defaultData.company && this.defaultData.relationship)
+    );
+  }
 
-      if (this.accountType === 'individual') {
-        data.individual.phone = '+81' + data.individual.phone;
-      } else {
-        data.relationship.representative.phone = '+81' + data.relationship.representative.phone;
-      }
+  submit() {
+    if (
+      this.form.valid &&
+      this.defaultData &&
+      this.defaultData.external_account
+    ) {
+      const data = {
+        ...this.form.value,
+        ...this.defaultData.external_account,
+        ...this.defaultData
+      };
+
       data.tos_acceptance.date = Math.floor(Date.now() / 1000);
 
       console.log(data);
 
-      const waiting = this.snackBar.open('アカウントを作成しています。');
+      // const waiting = this.snackBar.open('アカウントを作成しています。');
 
-      this.paymentService.createAccount(data).then(() => {
-        waiting.dismiss();
-        this.snackBar.open('アカウントを作成しました', null, {
-          duration: 2000
-        });
-      }).catch(error => {
-        console.log(error);
-        waiting.dismiss();
-        this.snackBar.open('エラーが発生しました', null, {
-          duration: 2000
-        });
-      });
+      // this.paymentService.createAccount(data).then(() => {
+      //   waiting.dismiss();
+      //   this.snackBar.open('アカウントを作成しました', null, {
+      //     duration: 2000
+      //   });
+      // }).catch(error => {
+      //   console.log(error);
+      //   waiting.dismiss();
+      //   this.snackBar.open('エラーが発生しました', null, {
+      //     duration: 2000
+      //   });
+      // });
     }
   }
 

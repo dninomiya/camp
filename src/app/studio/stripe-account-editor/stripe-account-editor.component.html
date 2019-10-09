@@ -29,7 +29,7 @@
   </mat-card>
 
   <button
-    [disabled]="form.invalid || form.pristine"
+    [disabled]="!valid"
     mat-raised-button
     color="primary"
   >

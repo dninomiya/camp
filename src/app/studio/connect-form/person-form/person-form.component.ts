@@ -60,6 +60,14 @@ export class PersonFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.form.get('phone').valueChanges.subscribe(phone => {
+      if (phone.match(/^\+81/)) {
+        this.form.get('phone').patchValue(phone.replace('+81', ''), {
+          emitEvent: false
+        });
+      }
+    });
+
     if (this.data) {
       if (this.type === 'individual') {
         this.form.patchValue(this.data.individual);
@@ -69,14 +77,6 @@ export class PersonFormComponent implements OnInit {
         this.addressBefore = this.data.relationship.representative;
       }
     }
-
-    this.form.get('phone').valueChanges.subscribe(phone => {
-      if (phone.match(/^\+81/)) {
-        this.form.get('phone').patchValue(phone.replace('+81', ''), {
-          emitEvent: false
-        });
-      }
-    });
   }
 
   getAddress(data) {
