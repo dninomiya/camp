@@ -3,6 +3,9 @@
   padding: 24px;
   text-align: center;
   position: relative;
+  background: #fafafa;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .page-loader {
@@ -14,23 +17,28 @@
 
 mat-card {
   padding: 40px;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .manage {
   margin-bottom: 40px;
   &__logo {
-    margin: 40px 0;
+    margin: 40px 0 24px;
     img {
       height: 80px;
       vertical-align: bottom;
     }
   }
   &__description {
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     color: rgba(black, .6);
   }
   &__button {
     margin-bottom: 40px;
+    mat-icon {
+      margin-left: 4px;
+    }
   }
 }
 
