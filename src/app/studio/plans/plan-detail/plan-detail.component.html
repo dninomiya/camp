@@ -1,38 +1,28 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <mat-dialog-content>
-    <input type="hidden" #typeInput formControlName="type" readonly>
-    <mat-form-field>
-      <mat-label>タイプ</mat-label>
-      <input type="text" matInput [value]="typeInput.value | planTitleLabel" readonly disabled>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>料金（税別）</mat-label>
-      <mat-select formControlName="amount" required>
-        <mat-option *ngFor="let cost of costs" [value]="cost"
-          >{{ cost | number }}円</mat-option
-        >
-      </mat-select>
-      <mat-hint *ngIf="form.get('amount').value">{{form.get('amount').value * 0.85 | number}}円の利益（手数料15%）</mat-hint>
-      <mat-hint *ngIf="!form.get('amount').value">手数料15%が引かれます</mat-hint>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>対応内容</mat-label>
-      <textarea
-        matInput
-        required
-        formControlName="description"
-        placeholder="受け付ける内容や注意点など"
-      ></textarea>
-    </mat-form-field>
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="form.invalid || form.pristine"
-    >
-    保存
-    </button>
-    <button mat-button matDialogClose>キャンセル</button>
-  </mat-dialog-actions>
-</form>
+<mat-card>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+      <input type="hidden" #typeInput formControlName="type" readonly>
+      <div class="meta">
+        <mat-form-field>
+          <mat-label>タイプ</mat-label>
+          <input type="text" matInput [value]="typeInput.value | planTitleLabel" readonly disabled>
+        </mat-form-field>
+        <mat-form-field class="short">
+          <mat-label>料金（税別）</mat-label>
+          <mat-select formControlName="amount" required>
+            <mat-option *ngFor="let cost of costs" [value]="cost">{{ cost | number }}円</mat-option>
+          </mat-select>
+          <span matSuffix>&nbsp;/&nbsp;{{plan?.per | planPerLabel}}</span>
+          <mat-hint *ngIf="form.get('amount').value">{{form.get('amount').value * 0.85 | number}}円の利益（手数料15%）</mat-hint>
+          <mat-hint *ngIf="!form.get('amount').value">手数料15%が引かれます</mat-hint>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>対応内容</mat-label>
+        <textarea matInput required formControlName="description" placeholder="受け付ける内容や注意点など"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="form.invalid || form.pristine">
+        保存
+      </button>
+      <button mat-button matDialogClose>キャンセル</button>
+  </form>
+</mat-card>

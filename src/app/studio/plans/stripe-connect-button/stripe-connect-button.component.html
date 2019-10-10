@@ -1,8 +1,2 @@
-<ng-container *ngIf="accountId; else connect">
-  <a (click)="rejectStripe()" class="stripe-connect light-blue"><span>Stripeとの連携を解除</span></a>
 
-  <a *ngIf="dashboardURL" [href]="dashboardURL | safe:'url'" class="mat-flat-button">ダッシュボードを開く</a>
-</ng-container>
-<ng-template #connect>
-  <a (click)="connectStripe()" class="stripe-connect"><span>Stripeと連携</span></a>
-</ng-template>
+<a (click)="connectStripe()" class="stripe-connect light-blue"><span>Stripeと連携</span></a>

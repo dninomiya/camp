@@ -16,7 +16,9 @@ import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
 })
 export class PlansComponent implements OnInit {
 
-
+  stripeAccount$ = this.paymentService.getStirpeAccountId(
+    this.authService.user.id
+  );
   plans$: Observable<Plan[]> = this.planService.getPlansByChannelId(
     this.authService.user.id
   );

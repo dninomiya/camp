@@ -23,7 +23,6 @@ import { ConfirmDisconnectStripeDialogComponent } from './confirm-disconnect-str
 import { MultipleLessonEditDialogComponent } from './multiple-lesson-edit-dialog/multiple-lesson-edit-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
 import { SearchLessonInputComponent } from './search-lesson-input/search-lesson-input.component';
-import { StripeAccountEditorComponent } from './stripe-account-editor/stripe-account-editor.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +40,6 @@ import { StripeAccountEditorComponent } from './stripe-account-editor/stripe-acc
     ConfirmDisconnectStripeDialogComponent,
     MultipleLessonEditDialogComponent,
     SearchLessonInputComponent,
-    StripeAccountEditorComponent
   ],
   imports: [
     SharedModule,

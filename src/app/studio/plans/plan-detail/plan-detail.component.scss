@@ -1,6 +1,14 @@
 :host {
   display: block;
   padding: 24px;
+  background: #fafafa;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+mat-card {
+  padding: 40px;
 }
 
 h1, h2 {
@@ -10,10 +18,16 @@ h1, h2 {
 
 mat-form-field {
   display: block;
-  margin: 16px 0;
+  margin-bottom: 24px;
   &.inline {
     display: inline-block;
   }
+}
+
+.meta {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr 1fr;
 }
 
 mat-divider {
@@ -22,6 +36,7 @@ mat-divider {
 
 textarea {
   height: 240px;
+  line-height: 1.6;
 }
 
 .group {

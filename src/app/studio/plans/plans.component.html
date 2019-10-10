@@ -3,7 +3,7 @@
     <div class="plans" [class.is-loading]="isLoading">
       <mat-nav-list dense>
         <h3 matSubheader>プラン</h3>
-        <ng-container *ngIf="isConnect$ | async">
+        <ng-container *ngIf="stripeAccount$ | async">
           <mat-list-item *ngFor="let plan of plans$ | async" routerLinkActive="active" [routerLink]="[plan.type]">
             <span matLine>{{ plan.type | planTitleLabel }}</span>
             <span matLine class="subline">{{ plan.amount | number }}円/{{plan.per | planPerLabel}}</span>

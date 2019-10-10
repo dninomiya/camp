@@ -16,25 +16,13 @@ export class StripeConnectButtonComponent implements OnInit {
 
   @Input() accountId: string;
 
-  dashboardURL: string;
-
   constructor(
     private paymentService: PaymentService,
     private authService: AuthService,
     private router: Router,
-    private dialog: MatDialog
   ) { }
 
-  ngOnInit() {
-    if (this.accountId) {
-      console.log(this.accountId);
-      this.getDashboardURL();
-    }
-  }
-
-  async getDashboardURL() {
-    this.dashboardURL = (await this.paymentService.getDashboardURL(this.accountId)).url;
-  }
+  ngOnInit() {}
 
   connectStripe() {
     const domain = environment.production ? 'https://3ml.app' : 'http://localhost:4200';
@@ -51,18 +39,4 @@ export class StripeConnectButtonComponent implements OnInit {
       location.href = url;
     });
   }
-
-  async rejectStripe() {
-    const clientId = await this.paymentService.getStripeUserId(
-      this.authService.user.id
-    );
-
-    this.dialog.open(ConfirmDisconnectStripeDialogComponent, {
-      autoFocus: false,
-      data: {
-        clientId
-      }
-    });
-  }
-
 }

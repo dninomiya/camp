@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PlanService } from 'src/app/services/plan.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
+import { PlanPer, Plan } from 'src/app/interfaces/plan';
 
 @Component({
   selector: 'app-plan-detail',
@@ -23,6 +24,8 @@ export class PlanDetailComponent implements OnInit {
     50000,
     100000,
   ];
+
+  plan: Plan;
 
   form = this.fb.group({
     type: [{
@@ -48,6 +51,7 @@ export class PlanDetailComponent implements OnInit {
         );
       })
     ).subscribe(plan => {
+      this.plan = plan;
       this.form.patchValue(plan);
     });
   }
