@@ -6,3 +6,4 @@ export { db, TimeStamp } from './db';
 export { updateDailyProgress } from './update-daily-progress';
 export { addPointHelper } from './add-point-helper';
 export { sendEmail } from './sendgrid';
+export { sendFCM } from './fcm';

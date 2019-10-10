@@ -4,10 +4,8 @@ import { Plan } from './plan';
 export interface Thread {
   authorId: string;
   id: string;
-  data: {
-    title: string;
-    body: string;
-  };
+  title: string;
+  body: string;
   createdAt: Date;
   targetId: string;
   isOwner?: boolean;

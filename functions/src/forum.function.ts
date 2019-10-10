@@ -1,6 +1,8 @@
 import * as functions from 'firebase-functions';
-import { db } from './utils';
-import * as admin from 'firebase-admin';
+import {
+  db,
+  sendFCM
+} from './utils';
 
 export const createReply = functions.firestore
   .document('threads/{threadId}/replies/{rid}')
@@ -15,25 +17,63 @@ export const createReply = functions.firestore
     const targetData = target.data();
 
     if (targetData && targetData.fcmToken) {
-      const message = {
+      return sendFCM({
+        token: targetData.fcmToken,
         notification: {
-          'title': `${data.thread.data.title}に返信がありました`,
-          'body': data.body
-        },
-        android: {
-          ttl: 8000,
-        },
-        token: targetData.fcmToken
-      };
+          title: `${data.thread.title}に返信がありました`,
+          body: data.body
+        }
+      });
+    }
+  });
 
-      return admin.messaging().send(message)
-        .then((response) => {
-          console.log('Successfully sent message:', response);
-        })
-        .catch((error) => {
-          console.log('Error sending message:', error);
+export const createThread = functions.firestore
+  .document('threads/{threadId}')
+  .onCreate(async (snapshot) => {
+    const thread = snapshot.data();
+
+    if (!thread) {
+      throw new Error('data is broken');
+    }
+
+    const target = await db.doc(`users/${thread.targetId}`).get();
+    const targetData = target.data();
+
+    if (targetData && targetData.fcmToken) {
+      return sendFCM({
+        token: targetData.fcmToken,
+        notification: {
+          title: `リクエストが届きました`,
+          body: thread.title
+        }
+      });
+    }
+  });
+
+export const updateThread = functions.firestore
+  .document('threads/{threadId}')
+  .onUpdate(async (change) => {
+    const before = change.before.data();
+    const after = change.after.data();
+
+    if (!before || !after) {
+      throw new Error('data is broken');
+    }
+
+    if (before.status !== after.status) {
+      const thread = after;
+      const target = await db.doc(`users/${thread.authorId}`).get();
+      const targetData = target.data();
+      const action = after.status === 'open' ? 'オープン' : 'クローズ';
+
+      if (targetData && targetData.fcmToken) {
+        return sendFCM({
+          token: targetData.fcmToken,
+          notification: {
+            title: `リクエストが${action}しました！`,
+            body: thread.title
+          }
         });
-    } else {
-      return 'none';
+      }
     }
   });

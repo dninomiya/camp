@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, combineLatest, of } from 'rxjs';
-import { Thread, ThreadReply, ForumUnreadCount, ThreadStatus } from '../interfaces/thread';
+import { Thread, ThreadReply } from '../interfaces/thread';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { switchMap, map, take, tap, first } from 'rxjs/operators';
+import { switchMap, map, take } from 'rxjs/operators';
 import { User } from '../interfaces/user';
 import { ChannelMeta } from '../interfaces/channel';
 import { Plan } from '../interfaces/plan';
@@ -250,20 +250,5 @@ export class ForumService {
           });
         })
       );
-  }
-
-  testMail() {
-    const collable = this.fns.httpsCallable('sendEmail');
-    collable({
-      to: 'daichi.ninomiya@deer.co.jp',
-      templateId: 'register',
-      dynamicTemplateData: {
-        name: 'Tom'
-      },
-    }).toPromise().then(status => {
-      console.log(status);
-    }).catch(error => {
-      console.log(error);
-    });
   }
 }
