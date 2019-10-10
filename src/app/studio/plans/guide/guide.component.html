@@ -24,7 +24,7 @@
 
   <p>売り上げの15%がUpdateの手数料となります。</p>
 
-  <ng-container *ngIf="!(isConnected$ | async) as isConnected">
+  <ng-container *ngIf="!(accountId$ | async) as accountId">
     <ng-container *ngIf="!isLoading">
     <h2>プランをはじめる</h2>
     <p>

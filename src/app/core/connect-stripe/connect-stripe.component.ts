@@ -23,13 +23,17 @@ export class ConnectStripeComponent implements OnInit {
             this.router.navigateByUrl(path);
           })
           .catch(error => {
-            const data = error.split(':');
-            const errorMessage = data[0];
-            const path = data[1];
-            this.snackBar.open(errorMessage, null, {
-              duration: 2000
-            });
-            this.router.navigateByUrl(path);
+            if (error) {
+              console.log(error);
+              console.error(error);
+              const data = error.split(':');
+              const errorMessage = data[0];
+              const path = data[1];
+              this.snackBar.open(errorMessage, null, {
+                duration: 2000
+              });
+              this.router.navigateByUrl(path);
+            }
           });
       } else {
         this.router.navigate(['studio', this.authService.user.id, 'plans']);

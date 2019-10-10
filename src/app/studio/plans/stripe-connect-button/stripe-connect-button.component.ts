@@ -14,7 +14,9 @@ import { ConfirmDisconnectStripeDialogComponent } from '../../confirm-disconnect
 })
 export class StripeConnectButtonComponent implements OnInit {
 
-  @Input() isConnected: boolean;
+  @Input() accountId: string;
+
+  dashboardURL: string;
 
   constructor(
     private paymentService: PaymentService,
@@ -24,24 +26,30 @@ export class StripeConnectButtonComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.accountId) {
+      console.log(this.accountId);
+      this.getDashboardURL();
+    }
+  }
+
+  async getDashboardURL() {
+    this.dashboardURL = (await this.paymentService.getDashboardURL(this.accountId)).url;
   }
 
   connectStripe() {
-    const domain = environment.production ? 'update.jp' : 'localhost:4200';
+    const domain = environment.production ? 'https://3ml.app' : 'http://localhost:4200';
 
-    // this.paymentService.createStripeSCRF({
-    //   uid: this.authService.user.id,
-    //   path: this.router.url
-    // }).then((id) => {
-    //   const url =  'https://dashboard.stripe.com/oauth/authorize?' +
-    //     'response_type=code&' +
-    //     `client_id=${environment.stripe.clientId}&` +
-    //     'scope=read_write&' +
-    //     `redirect_uri=http://${domain}/connect-stripe&` +
-    //     `state=${id}`;
+    this.paymentService.createStripeSCRF({
+      uid: this.authService.user.id,
+      path: this.router.url
+    }).then((id) => {
+      const url =  'https://connect.stripe.com/express/oauth/authorize?' +
+        `client_id=${environment.stripe.clientId}&` +
+        `redirect_uri=${domain}/connect-stripe&` +
+        `state=${id}`;
 
-    //   location.href = url;
-    // });
+      location.href = url;
+    });
   }
 
   async rejectStripe() {

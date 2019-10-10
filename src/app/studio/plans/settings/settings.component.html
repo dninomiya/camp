@@ -1,1 +1,6 @@
-<app-stripe-account-editor></app-stripe-account-editor>
+<ng-container *ngIf="accountId$ | async as accountId; else connectButton">
+  <app-stripe-connect-button [accountId]="accountId"></app-stripe-connect-button>
+</ng-container>
+<ng-template #connectButton>
+  <app-stripe-connect-button></app-stripe-connect-button>
+</ng-template>

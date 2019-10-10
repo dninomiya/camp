@@ -10,7 +10,7 @@ import { tap } from 'rxjs/operators';
 })
 export class GuideComponent implements OnInit {
 
-  isConnected$ = this.paymentService.isConnected(
+  accountId$ = this.paymentService.getStirpeAccountId(
     this.authService.user.id
   ).pipe(tap(() => this.isLoading = false));
 

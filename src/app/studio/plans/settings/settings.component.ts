@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class SettingsComponent implements OnInit {
 
-  isConnected = this.paymentService.isConnected(
+  accountId$ = this.paymentService.getStirpeAccountId(
     this.authService.user.id
   );
 

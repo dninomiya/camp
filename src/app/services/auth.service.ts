@@ -83,12 +83,13 @@ export class AuthService {
 
     if (data) {
       await this.db.doc(`stripeCSRF/${scrf}`).delete();
-      const now = moment();
-      const diffHours = now.diff(moment(data.createdAt.toDate()), 'hours');
 
       if (data.uid !== this.user.id) {
         throw new Error('ユーザーが不正です');
       }
+
+      const now = moment();
+      const diffHours = now.diff(moment(data.createdAt.toDate()), 'hours');
 
       if (diffHours > 4) {
         throw new Error(`トークンの有効期限が切れました:${data.path}`);

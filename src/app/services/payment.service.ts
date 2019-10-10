@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { User, UserPayment, UserConnect } from '../interfaces/user';
+import { UserPayment, UserConnect } from '../interfaces/user';
 import { Observable, forkJoin, of } from 'rxjs';
-import { Plan } from '../interfaces/plan';
 import { map, take, first, switchMap } from 'rxjs/operators';
 import { UserSubscription } from '../interfaces/user-subscription';
 import { Settlement } from '../interfaces/settlement';
@@ -87,15 +86,15 @@ export class PaymentService {
       ).toPromise();
   }
 
-  isConnected(uid: string): Observable<boolean> {
+  getStirpeAccountId(uid: string): Observable<string> {
     return this.db.doc<UserConnect>(`users/${uid}/private/connect`)
       .valueChanges()
       .pipe(
         map(connect => {
           if (connect) {
-            return !!connect.stripeUserId;
+            return connect.stripeUserId;
           } else {
-            return false;
+            return null;
           }
         })
       );
@@ -162,7 +161,24 @@ export class PaymentService {
     );
   }
 
+  async createStripeSCRF(body: {
+    uid: string,
+    path: string
+  }): Promise<string> {
+    const id = this.db.createId();
+    await this.db.doc(`stripeCSRF/${id}`).set({
+      ...body,
+      createdAt: new Date()
+    });
+    return id;
+  }
+
   getReceipt(uid: string, id: string): Observable<Settlement> {
     return this.db.doc<Settlement>(`users/${uid}/settlements/${id}`).valueChanges();
+  }
+
+  getDashboardURL(accountId: string) {
+    const collable = this.fns.httpsCallable('getDashboardURL');
+    return collable(accountId).toPromise();
   }
 }

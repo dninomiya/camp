@@ -21,7 +21,7 @@ export class PlansComponent implements OnInit {
     this.authService.user.id
   );
 
-  isConnect$: Observable<boolean> = this.paymentService.isConnected(
+  accountId$: Observable<string> = this.paymentService.getStirpeAccountId(
     this.authService.user.id
   );
 
