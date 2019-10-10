@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Plan } from 'src/app/interfaces/plan';
 import { ForumService } from 'src/app/services/forum.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { Thread } from 'src/app/interfaces/thread';
 
 @Component({
   selector: 'app-plan-action-dialog-wrapper',
@@ -23,9 +24,9 @@ export class PlanActionDialogWrapperComponent implements OnInit {
 
   ngOnInit() {}
 
-  createThread(data) {
+  createThread(data: Pick<Thread, 'title' | 'body'>) {
     this.forumService.createThread({
-      data,
+      ...data,
       ...this.params
     }).then(result => {
       this.notificationService.addNotification(result.targetId, {

@@ -2,13 +2,13 @@ import { ChannelMeta } from './channel';
 import { Plan } from './plan';
 
 export interface Thread {
+  readonly id: string;
+  readonly createdAt: Date;
+
   authorId: string;
-  id: string;
   title: string;
   body: string;
-  createdAt: Date;
   targetId: string;
-  isOwner?: boolean;
   user: ChannelMeta;
   status: ThreadStatus;
   plan: Plan;

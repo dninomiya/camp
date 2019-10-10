@@ -79,7 +79,7 @@ export class ThreadComponent implements OnInit {
       this.notificationService.addNotification(
         this.getNotificationTargetUID(),
         {
-          title: `「${this.thread.data.title}」に返信がありました`
+          title: `「${this.thread.title}」に返信がありました`
         }
       );
 
@@ -119,7 +119,7 @@ export class ThreadComponent implements OnInit {
           this.notificationService.addNotification(
             thread.authorId,
             {
-              title: `「${thread.data.title}」が承認されました`
+              title: `「${thread.title}」が承認されました`
             }
           );
 

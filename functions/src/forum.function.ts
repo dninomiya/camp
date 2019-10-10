@@ -21,7 +21,8 @@ export const createReply = functions.firestore
         token: targetData.fcmToken,
         notification: {
           title: `${data.thread.title}に返信がありました`,
-          body: data.body
+          body: data.body,
+          click_action: `http://localhost:4200/forum/${data.thread.id}`
         }
       });
     }

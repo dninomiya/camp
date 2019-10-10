@@ -52,7 +52,7 @@ export class RejectDialogComponent implements OnInit {
       this.notificationService.addNotification(
         notificationUID,
         {
-          title: `「${this.data.thread.data.title}」が却下されました`
+          title: `「${this.data.thread.title}」が却下されました`
         }
       );
     });
