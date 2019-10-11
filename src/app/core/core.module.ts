@@ -25,6 +25,8 @@ import { SharedConfirmDialogComponent } from './shared-confirm-dialog/shared-con
 import { ChannelReviewDialogComponent } from './channel-review-dialog/channel-review-dialog.component';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { NgxJsonLdModule } from '@ngx-lite/json-ld';
+import { MailDialogComponent } from './mail-dialog/mail-dialog.component';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { NgxJsonLdModule } from '@ngx-lite/json-ld';
     ConnectStripeComponent,
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
-    ChannelReviewDialogComponent
+    ChannelReviewDialogComponent,
+    MailDialogComponent
   ],
   imports: [
     SharedModule,
@@ -47,6 +50,7 @@ import { NgxJsonLdModule } from '@ngx-lite/json-ld';
     AngularFireFunctionsModule,
     AngularFireMessagingModule,
     HttpClientModule,
+    RecaptchaModule,
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {
@@ -77,7 +81,8 @@ import { NgxJsonLdModule } from '@ngx-lite/json-ld';
     NewListDialogComponent,
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
-    ChannelReviewDialogComponent
+    ChannelReviewDialogComponent,
+    MailDialogComponent
   ]
 })
 export class CoreModule { }

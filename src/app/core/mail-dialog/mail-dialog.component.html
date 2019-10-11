@@ -1,0 +1,18 @@
+<h1 matDialogTitle>メール</h1>
+
+<mat-dialog-content>
+  <p>このフォームは返金交渉やビジネス相談に用います。技術的な質問やトラブルシューティングは有料プランから行ってください。</p>
+
+  <re-captcha
+    class="cap"
+    (resolved)="resolved()"
+    [siteKey]="siteKey"
+    *ngIf="!valid"
+  ></re-captcha>
+
+  <a *ngIf="valid" href="mailto:{{email}}&subject=3MLをみてご連絡しました" target="_blank" mat-raised-button color="primary" matDialogClose>メール</a>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+</mat-dialog-actions>

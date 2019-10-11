@@ -18,10 +18,10 @@
     </p>
 
     <div class="profile__links">
-      <a [href]="link" class="profile__link" *ngFor="let link of channel.links">
+      <a [href]="link" target="_blank" class="profile__link" *ngFor="let link of channel.links">
         <i [class]="link | linkIcon"></i>
       </a>
-      <a [href]="channel.email" class="profile__link">
+      <a (click)="openMailDialog(channel.email)" class="profile__link">
         <i class="far fa-envelope"></i>
       </a>
     </div>

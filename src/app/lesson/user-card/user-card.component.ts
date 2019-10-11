@@ -8,6 +8,7 @@ import { Job } from 'src/app/interfaces/job';
 import { Plan } from 'src/app/interfaces/plan';
 import { ChannelReviewDialogComponent } from 'src/app/core/channel-review-dialog/channel-review-dialog.component';
 import { MatDialog } from '@angular/material';
+import { MailDialogComponent } from 'src/app/core/mail-dialog/mail-dialog.component';
 
 @Component({
   selector: 'app-user-card',
@@ -62,6 +63,15 @@ export class UserCardComponent implements OnInit {
         channel: this.channel,
         rate: this.rate
       }
+    });
+  }
+
+  openMailDialog(email: string) {
+    this.dialog.open(MailDialogComponent, {
+      width: '640px',
+      restoreFocus: false,
+      autoFocus: false,
+      data: this.channel.email
     });
   }
 
