@@ -15,7 +15,7 @@
       >
         <img [src]="item.user.avatarURL | safe: 'url'" />
       </figure>
-      <span matLine>{{ item.data.title }}</span>
+      <span matLine>{{ item.title }}</span>
       <span matLine class="subline"
         >{{ item.user.title }}{{ item.isOwner ? 'へ' : 'から' }}の{{
           item.plan.type | planTitleLabel

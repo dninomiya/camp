@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import { db } from './utils';
+import { db, sendEmail } from './utils';
 import * as admin from 'firebase-admin';
 import { deleteCustomer } from './payments/shared';
 import { checkAdmin } from './utils/db';
@@ -62,6 +62,15 @@ export const deleteUser = functions.runWith({
     yes: true,
     token: functions.config().fb.token
   });
+
+  if (data && data.email) {
+    return sendEmail({
+      to: data.email,
+      templateId: 'deleteAccount'
+    });
+  } else {
+    return;
+  }
 
   return admin.auth().deleteUser(uid).then(() => {
     console.log(`ID: ${uid} を完全に削除しました`);

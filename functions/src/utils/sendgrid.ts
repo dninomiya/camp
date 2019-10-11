@@ -8,11 +8,11 @@ sgMail.setApiKey(API_KEY);
 
 export const sendEmail = (data: {
   to: string;
-  templateId: 'register';
+  templateId: string;
   dynamicTemplateData?: { [key: string]: any },
 }) => {
   return sgMail.send({
-    from: 'update@deer.co.jp',
+    from: 'noreply@3ml.app',
     ...data,
     templateId: config.mailTemplate[data.templateId]
   });

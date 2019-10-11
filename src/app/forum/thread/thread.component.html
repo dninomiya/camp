@@ -5,7 +5,7 @@
       <img [src]="thread.author.avatarURL | safe: 'url'" />
     </div>
     <div class="header__body">
-      <h1 class="header__title">{{ thread.data.title }}</h1>
+      <h1 class="header__title">{{ thread.title }}</h1>
       <p class="header__subline">
         <span>{{ thread.author.title }}</span>
         <span class="header__date">{{
@@ -16,27 +16,27 @@
   </div>
 
   <div class="body">
-    <markdown [data]="thread.data.body" class="article"></markdown>
+    <markdown [data]="thread.body" class="article"></markdown>
 
-    <div *ngIf="thread.data.browsers">
+    <div *ngIf="thread.data?.browsers">
       <h2>対象ブラウザ</h2>
       <p>
-        <span class="browser" *ngFor="let browser of thread.data.browsers">
+        <span class="browser" *ngFor="let browser of thread.data?.browsers">
           {{browser}}
         </span>
       </p>
     </div>
 
-    <div *ngIf="thread.data.repository">
-      <a class="link" [href]="thread.data.repository" target="_blank" mat-stroked-button>
+    <div *ngIf="thread.data?.repository">
+      <a class="link" [href]="thread.data?.repository" target="_blank" mat-stroked-button>
         <span>リソース</span>
         <mat-icon class="mat-18">open_in_new</mat-icon>
       </a>
     </div>
 
-    <div *ngIf="thread.data.days && thread.status === 'request'">
+    <div *ngIf="thread.data?.days && thread.status === 'request'">
       <h2>コーチング対応日を選択</h2>
-      <div *ngFor="let day of thread.data.days" class="day">
+      <div *ngFor="let day of thread.data?.days" class="day">
         <p class="day__date">{{day.date.toDate() | date:'yyyy/MM/dd (EE)'}}</p>
         <div class="day__sub">
           <p *ngIf="day.time">

@@ -14,7 +14,6 @@ export const sendFCM = (params: {
       notification: {
         ...params.notification,
         icon: 'https://free.update.jp/imgs/logo-400x400.png',
-        badge: 'https://free.update.jp/imgs/logo-400x400.png',
       }
     }
   };

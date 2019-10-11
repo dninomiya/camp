@@ -1,7 +1,8 @@
 import * as functions from 'firebase-functions';
 import {
   db,
-  sendFCM
+  sendFCM,
+  sendEmail
 } from './utils';
 
 export const createReply = functions.firestore
@@ -15,6 +16,17 @@ export const createReply = functions.firestore
 
     const target = await db.doc(`users/${data.thread.targetId}`).get();
     const targetData = target.data();
+
+    if (targetData) {
+      await sendEmail({
+        to: targetData.email,
+        templateId: 'reply',
+        dynamicTemplateData: {
+          id: data.thread.id,
+          title: data.thread.title
+        }
+      })
+    }
 
     if (targetData && targetData.fcmToken) {
       return sendFCM({
@@ -39,6 +51,17 @@ export const createThread = functions.firestore
 
     const target = await db.doc(`users/${thread.targetId}`).get();
     const targetData = target.data();
+
+    if (targetData) {
+      await sendEmail({
+        to: targetData.email,
+        templateId: 'request',
+        dynamicTemplateData: {
+          id: thread.id,
+          title: thread.title
+        }
+      })
+    }
 
     if (targetData && targetData.fcmToken) {
       return sendFCM({
@@ -66,6 +89,17 @@ export const updateThread = functions.firestore
       const target = await db.doc(`users/${thread.authorId}`).get();
       const targetData = target.data();
       const action = after.status === 'open' ? 'オープン' : 'クローズ';
+
+      if (targetData) {
+        await sendEmail({
+          to: targetData.email,
+          templateId: thread.status,
+          dynamicTemplateData: {
+            id: thread.id,
+            title: thread.title
+          }
+        })
+      }
 
       if (targetData && targetData.fcmToken) {
         return sendFCM({

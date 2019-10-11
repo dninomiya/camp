@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import { db } from './utils';
+import { db, sendEmail } from './utils';
 import { UserRecord } from 'firebase-functions/lib/providers/auth';
 
 const createChannel = (user: UserRecord) => {
@@ -40,4 +40,12 @@ const createAccount = (user: UserRecord) => {
 export const createUser = functions.auth.user().onCreate(async (user) => {
   await createAccount(user);
   await createChannel(user);
+  if (user && user.email) {
+    return sendEmail({
+      to: user.email,
+      templateId: 'register'
+    });
+  } else {
+    return;
+  }
 });
