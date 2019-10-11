@@ -35,5 +35,17 @@ h1 {
 .description {
   color: rgba(black, .6);
   margin-bottom: 24px;
+  white-space: pre-wrap;
 }
 
+mat-dialog-content {
+  margin-top: -24px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+textarea {
+  height: 240px;
+}

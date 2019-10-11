@@ -32,7 +32,8 @@ export class JobListComponent implements OnInit {
         job,
         channel: this.channel
       },
-      width: '400px',
+      width: '640px',
+      maxHeight: '90%',
       panelClass: 'no-padding',
     });
   }
