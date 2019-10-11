@@ -13,6 +13,10 @@
 
     <form [formGroup]="form">
       <mat-form-field appearance="outline">
+        <mat-label>名前</mat-label>
+        <input type="text" autocomplete="name" formControlName="name" matInput placeholder="山田太郎">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>予算</mat-label>
         <input type="text" autocomplete="off" formControlName="budget" matInput placeholder="800,000円/月">
       </mat-form-field>
@@ -38,7 +42,7 @@
       </mat-form-field>
     </form>
 
-    <a href="mailto:{{data.channel.email}}?subject={{data.job.title}}に関する案件相談（from 3ML）&body=はじめまして。3MLを見てご連絡させていただきました。%0D%0Aあああ" target="_blank" mat-raised-button color="primary">メールで相談</a>
+    <a [disabled]="form.invalid" href="mailto:{{data.channel.email}}?subject={{data.job.title}}に関する案件相談（from 3ML）&body={{body}}" target="_blank" mat-raised-button color="primary">メールで相談</a>
   </div>
 </mat-dialog-content>
 
