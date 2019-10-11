@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Thread, ThreadReply, REJECT_REASON_TEMPLATE } from 'src/app/interfaces/thread';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, tap, take } from 'rxjs/operators';
+import { switchMap, tap, take, shareReplay } from 'rxjs/operators';
 import { ForumService } from 'src/app/services/forum.service';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,12 +13,19 @@ import { AddReviewDialogComponent } from '../add-review-dialog/add-review-dialog
 import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PaymentService } from 'src/app/services/payment.service';
+import { ChannelService } from 'src/app/services/channel.service';
+import { ChannelMeta } from 'src/app/interfaces/channel';
+import { PlanTitleLabelPipe } from 'src/app/shared/plan-title-label.pipe';
 
 @Component({
   selector: 'app-thread',
   templateUrl: './thread.component.html',
   styleUrls: ['./thread.component.scss'],
-  providers: [DecimalPipe, DatePipe]
+  providers: [
+    DecimalPipe,
+    DatePipe,
+    PlanTitleLabelPipe
+  ]
 })
 export class ThreadComponent implements OnInit {
   thread: Thread;
@@ -33,8 +40,18 @@ export class ThreadComponent implements OnInit {
         this.authService.user.id,
         thread
       );
-    })
+    }),
+    shareReplay(1)
   );
+
+  channel$ = this.thread$.pipe(
+    switchMap(thread => {
+      return this.channelService.getChannel(thread.targetId);
+    }),
+    shareReplay(1)
+  );
+
+  channel: ChannelMeta;
 
   replies$: Observable<ThreadReply[]>;
 
@@ -43,17 +60,20 @@ export class ThreadComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private channelService: ChannelService,
     private route: ActivatedRoute,
     private forumService: ForumService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private decimalPipe: DecimalPipe,
     private datePipe: DatePipe,
+    private planTitleLabelPipe: PlanTitleLabelPipe,
     private paymentService: PaymentService,
     private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
+    this.channel$.pipe(take(1)).subscribe(channel => this.channel = channel);
   }
 
   getNotificationTargetUID(): string {
@@ -110,7 +130,10 @@ export class ThreadComponent implements OnInit {
           userId: thread.authorId,
           contentId: thread.id,
           type: thread.plan.type,
-          targetId: thread.targetId
+          targetId: thread.targetId,
+          sellerEmail: this.channel.email,
+          title: this.planTitleLabelPipe.transform(thread.plan.type),
+          contentPath: `forum/${thread.id}`
         }).then(() => {
           this.forumService.updateThread(thread.id, {
             status: 'open'
@@ -124,6 +147,11 @@ export class ThreadComponent implements OnInit {
           );
 
           this.snackBar.open('承認しました', null, {
+            duration: 2000
+          });
+        }).catch(error => {
+          console.error(error);
+          this.snackBar.open('処理に失敗しました', null, {
             duration: 2000
           });
         });

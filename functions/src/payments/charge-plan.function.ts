@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import { db } from '../utils';
+import { db, sendEmail } from '../utils';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
@@ -9,7 +9,9 @@ export const chargePlan = functions.https.onCall(async (data: {
   channelId: string;
   contentId: string;
   type: string;
-  content: any;
+  sellerEmail: string;
+  contentPath: string;
+  title: string;
 }, context) => {
 
   if (!context.auth) {
@@ -18,6 +20,15 @@ export const chargePlan = functions.https.onCall(async (data: {
 
   const connectData: any = (await db.doc(`users/${data.channelId}/private/connect`).get()).data();
   const userPayment: any = (await db.doc(`users/${data.userId}/private/payment`).get()).data();
+
+  await sendEmail({
+    to: data.sellerEmail,
+    templateId: 'charged',
+    dynamicTemplateData: {
+      path: data.contentPath,
+      title: data.title
+    }
+  });
 
   await stripe.charges.create({
     amount: data.amount,

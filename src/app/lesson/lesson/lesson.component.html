@@ -80,7 +80,7 @@
     </div>
 
     <div class="side" [class.show]="!loading">
-      <app-cause-widget *ngIf="cause$ | async" [cause$]="cause$"></app-cause-widget>
+      <app-cause-widget *ngIf="cause$ | async" [channel]="channel" [cause$]="cause$"></app-cause-widget>
       <app-user-card (loaded)="loading = false" [channel]="channel"></app-user-card>
       <mat-card *ngIf="channel.ads && channel.ads.public" class="ads">
         <a [href]="channel.ads.url" target="_blank" matCardImage>

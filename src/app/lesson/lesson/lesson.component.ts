@@ -354,6 +354,9 @@ export class LessonComponent implements OnInit, OnDestroy {
           channelId: this.channel.id,
           contentId: lesson.id,
           type: 'lesson',
+          sellerEmail: this.channel.email,
+          title: lesson.title,
+          contentPath: `lesson?v=${lesson.id}`,
           lesson
         }).then(() => {
           snackBar.dismiss();

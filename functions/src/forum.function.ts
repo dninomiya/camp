@@ -90,10 +90,16 @@ export const updateThread = functions.firestore
       const targetData = target.data();
       const action = after.status === 'open' ? 'オープン' : 'クローズ';
 
+      let templateId = thread.status;
+
+      if (templateId === 'closed' && thread.isReject) {
+        templateId = 'reject';
+      }
+
       if (targetData) {
         await sendEmail({
           to: targetData.email,
-          templateId: thread.status,
+          templateId,
           dynamicTemplateData: {
             id: thread.id,
             title: thread.title

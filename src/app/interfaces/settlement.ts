@@ -7,6 +7,8 @@ export interface Settlement {
   readonly lesson?: Lesson;
   readonly title?: string;
 
+  sellerEmail: string;
+  contentPath: string;
   amount: number;
   userId: string;
   channelId: string;

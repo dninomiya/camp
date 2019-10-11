@@ -11,6 +11,7 @@ import { DecimalPipe } from '@angular/common';
 import { PaymentService } from 'src/app/services/payment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Lesson } from 'src/app/interfaces/lesson';
+import { ChannelMeta } from 'src/app/interfaces/channel';
 
 @Component({
   selector: 'app-cause-widget',
@@ -21,6 +22,7 @@ import { Lesson } from 'src/app/interfaces/lesson';
 export class CauseWidgetComponent implements OnInit {
 
   @Input() cause$: Observable<LessonList>;
+  @Input() channel: ChannelMeta;
 
   isPurchased$: Observable<boolean>;
   lessons$: Observable<Lesson[]>;
@@ -82,6 +84,9 @@ export class CauseWidgetComponent implements OnInit {
           channelId: cause.authorId,
           contentId: cause.id,
           type: 'cause',
+          title: cause.title,
+          sellerEmail: this.channel.email,
+          contentPath: `lesson?=${cause.firstLessonId}&cause=${cause.id}`,
           targetId: cause.authorId
         }).then(() => {
           loading.dismiss();
