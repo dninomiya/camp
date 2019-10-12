@@ -161,18 +161,6 @@ export class PaymentService {
     );
   }
 
-  async createStripeSCRF(body: {
-    uid: string,
-    path: string
-  }): Promise<string> {
-    const id = this.db.createId();
-    await this.db.doc(`stripeCSRF/${id}`).set({
-      ...body,
-      createdAt: new Date()
-    });
-    return id;
-  }
-
   getReceipt(uid: string, id: string): Observable<Settlement> {
     return this.db.doc<Settlement>(`users/${uid}/settlements/${id}`).valueChanges();
   }

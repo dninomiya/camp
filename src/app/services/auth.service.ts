@@ -29,7 +29,7 @@ export class AuthService {
       switchMap((afUser: AfUser) => {
         this.afUser = afUser;
         if (afUser) {
-          return this.db.doc(`users/${afUser.uid}`).valueChanges();
+          return this.db.doc<User>(`users/${afUser.uid}`).valueChanges();
         } else {
           return of(null);
         }
@@ -79,10 +79,10 @@ export class AuthService {
   }
 
   async connectStripe(code: string, scrf: string): Promise<string> {
-    const data = (await this.db.doc(`stripeCSRF/${scrf}`).ref.get()).data();
+    const data = (await this.db.doc(`csrf/${scrf}`).ref.get()).data();
 
     if (data) {
-      await this.db.doc(`stripeCSRF/${scrf}`).delete();
+      await this.db.doc(`csrf/${scrf}`).delete();
 
       if (data.uid !== this.user.id) {
         throw new Error('ユーザーが不正です');
@@ -91,10 +91,35 @@ export class AuthService {
       const now = moment();
       const diffHours = now.diff(moment(data.createdAt.toDate()), 'hours');
 
-      if (diffHours > 4) {
+      if (diffHours > 2) {
         throw new Error(`トークンの有効期限が切れました:${data.path}`);
       } else {
         const callable = this.fns.httpsCallable('connectStripe');
+        await callable({code}).toPromise();
+        return data.path;
+      }
+    } else {
+      throw new Error(`トークンが存在しません:/studio/${this.user.id}/plans`);
+    }
+  }
+
+  async connectVimeo(code: string, scrf: string): Promise<string> {
+    const data = (await this.db.doc(`csrf/${scrf}`).ref.get()).data();
+
+    if (data) {
+      await this.db.doc(`csrf/${scrf}`).delete();
+
+      if (data.uid !== this.user.id) {
+        throw new Error('ユーザーが不正です');
+      }
+
+      const now = moment();
+      const diffHours = now.diff(moment(data.createdAt.toDate()), 'hours');
+
+      if (diffHours > 2) {
+        throw new Error(`トークンの有効期限が切れました:${data.path}`);
+      } else {
+        const callable = this.fns.httpsCallable('connectVimeo');
         await callable({code}).toPromise();
         return data.path;
       }
@@ -107,5 +132,17 @@ export class AuthService {
     return this.db.doc(`users/${this.user.id}`).update({
       fcmToken
     });
+  }
+
+  async createSCRF(body: {
+    uid: string,
+    path: string
+  }): Promise<string> {
+    const id = this.db.createId();
+    await this.db.doc(`csrf/${id}`).set({
+      ...body,
+      createdAt: new Date()
+    });
+    return id;
   }
 }

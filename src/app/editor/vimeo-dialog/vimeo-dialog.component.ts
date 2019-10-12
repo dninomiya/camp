@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vimeo-dialog',
@@ -15,6 +16,10 @@ import { VimeoService } from 'src/app/services/vimeo.service';
 })
 export class VimeoDialogComponent implements OnInit {
 
+  private clientId = '45622d0c9345317a2482c24ecbdc9f3552eda034';
+  private redirectURI = 'http://localhost:4200/connect-vimeo';
+  private scopes = 'private,edit,upload,public';
+  authURL: string;
   uploadURL: string;
   size: number;
   unit: string;
@@ -26,27 +31,13 @@ export class VimeoDialogComponent implements OnInit {
   constructor(
     private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) private user: User,
-    private vimeoService: VimeoService
+    private vimeoService: VimeoService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.vimeoAccount$ = this.vimeoService.getVimeoAccount(this.user.id);
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
   }
 
   handleFileSelected(event) {
@@ -70,37 +61,16 @@ export class VimeoDialogComponent implements OnInit {
       file: this.file,
       videoId: this.videoId
     });
-    // this.http.patch(
-    //   this.uploadURL,
-    //   this.file,
-    //   {
-    //     headers: {
-    //       'Tus-Resumable': '1.0.0',
-    //       'Upload-Offset': '0',
-    //       'Content-Type': 'application/offset+octet-stream',
-    //       Accept: 'application/vnd.vimeo.*+json;version=3.4'
-    //     },
-    //     observe: 'response'
-    //   }
-    // ).toPromise().then(res => {
-    //   console.log(res.headers.get('Upload-Offset'));
-    // });
   }
 
-  check() {
-    this.http.head(
-      this.uploadURL,
-      {
-        headers: {
-          'Tus-Resumable': '1.0.0',
-          Accept: 'application/vnd.vimeo.*+json;version=3.4'
-        },
-        observe: 'response'
-      }
-    ).subscribe(res => {
-      console.log(res.headers.get('Upload-Length'));
-      console.log(res.headers.get('Upload-Offset'));
+  connectVimeo() {
+    this.authService.createSCRF({
+      uid: this.authService.user.id,
+      path: this.router.url
+    }).then((id) => {
+      window.open(`https://api.vimeo.com/oauth/authorize?response_type=code&` +
+      `client_id=${this.clientId}&redirect_uri=${this.redirectURI}` +
+      `&state=${id}&scope=${this.scopes}`);
     });
   }
-
 }

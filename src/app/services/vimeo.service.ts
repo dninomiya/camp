@@ -44,7 +44,8 @@ export class VimeoService {
           if (vimeo) {
             return {
               token: tmpToken,
-              account: vimeo.account
+              account: vimeo.account,
+              uploadQuota: vimeo.upload_quota
             };
           } else {
             return null;

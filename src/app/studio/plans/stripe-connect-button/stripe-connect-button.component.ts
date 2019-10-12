@@ -17,7 +17,6 @@ export class StripeConnectButtonComponent implements OnInit {
   @Input() accountId: string;
 
   constructor(
-    private paymentService: PaymentService,
     private authService: AuthService,
     private router: Router,
   ) { }
@@ -27,7 +26,7 @@ export class StripeConnectButtonComponent implements OnInit {
   connectStripe() {
     const domain = environment.production ? 'https://3ml.app' : 'http://localhost:4200';
 
-    this.paymentService.createStripeSCRF({
+    this.authService.createSCRF({
       uid: this.authService.user.id,
       path: this.router.url
     }).then((id) => {

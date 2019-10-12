@@ -1,24 +1,39 @@
 import * as functions from 'firebase-functions';
+import * as request from 'request';
+import { db } from './utils';
 
-const Vimeo = require('vimeo').Vimeo;
+const clientId = '45622d0c9345317a2482c24ecbdc9f3552eda034';
+const clientSecret = 'EIpT+LS5j1ioGaFWINFiVKBw7S1KYsyq68o6C+8r1zjIk2rqBAjA4g15iY/l0j2wAtTlooInbVwiTzIEZcs/ZsRLFhcBG+5bK0VzSqT96jVTLhjjSCGOHL8Yyed8LDrL';
 
-const client = new Vimeo(
-  '45622d0c9345317a2482c24ecbdc9f3552eda034',
-  'EIpT+LS5j1ioGaFWINFiVKBw7S1KYsyq68o6C+8r1zjIk2rqBAjA4g15iY/l0j2wAtTlooInbVwiTzIEZcs/ZsRLFhcBG+5bK0VzSqT96jVTLhjjSCGOHL8Yyed8LDrL',
-  'a9f84bcdfeaab4ab297e001bc4faa79a'
-);
+export const connectVimeo = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new Error('認証エラー');
+  }
 
-export const connectVimeo = functions.https.onCall(() => {
-  return new Promise((resolve, reject) => {
-    client.request({
-      method: 'GET',
-      path: '/tutorial'
-    }, function (error: any, body: any) {
-      if (error) {
+  const token = await new Promise((resolve, reject) => {
+    request.post({
+      url: 'https://api.vimeo.com/oauth/access_token',
+      headers: {
+        Authorization: btoa(`${clientId}:${clientSecret}`),
+        'Content-Type': 'application/json',
+        Accept: 'application/vnd.vimeo.*+json;version=3.4'
+      },
+      body: {
+        code: data.code,
+        grant_type: 'authorization_code',
+        redirect_uri: 'http://localhost:4200/connect-vimeo'
+      }
+    }, (error, res, body) => {
+      if (!error && res.statusCode === 200) {
+        const result = JSON.parse(body);
+        resolve(result.access_token);
+      } else {
         reject(error);
       }
+    });
+  });
 
-      resolve(body);
-    })
+  return db.doc(`users/${context.auth.uid}/private/vimeo`).set({
+    token
   });
 });

@@ -27,6 +27,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { NgxJsonLdModule } from '@ngx-lite/json-ld';
 import { MailDialogComponent } from './mail-dialog/mail-dialog.component';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { ConnectVimeoComponent } from './connect-vimeo/connect-vimeo.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { RecaptchaModule } from 'ng-recaptcha';
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
     ChannelReviewDialogComponent,
-    MailDialogComponent
+    MailDialogComponent,
+    ConnectVimeoComponent
   ],
   imports: [
     SharedModule,
@@ -69,7 +71,8 @@ import { RecaptchaModule } from 'ng-recaptcha';
     DeviceDetectorModule,
     ConnectStripeComponent,
     NgxJsonLdModule,
-    ShellModule
+    ShellModule,
+    ConnectVimeoComponent
   ],
   providers: [
     { provide: FunctionsRegionToken, useValue: 'us-central1' },

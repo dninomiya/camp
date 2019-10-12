@@ -258,4 +258,5 @@ interface Transcode {
 export interface VimeoUser {
   token: string;
   account: string;
+  uploadQuota: UploadQuota;
 }

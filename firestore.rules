@@ -56,7 +56,7 @@ service cloud.firestore {
     match /forcedSithdrawals/{doc} {
       allow create: if request.auth.uid != null;
     }
-    match /stripeCSRF/{doc} {
+    match /csrf/{doc} {
       allow create: if request.auth.uid == request.resource.data.uid;
       allow read, delete: if request.auth.uid == resource.data.uid;
     }
