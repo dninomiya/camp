@@ -19,4 +19,5 @@ export * from './review.function';
 export * from './email.function';
 export * from './forum.function';
 export * from './render.function';
+export * from './vimeo.function';
 
