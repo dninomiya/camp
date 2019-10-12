@@ -9,14 +9,17 @@ import { VideoUploaderComponent } from './video-uploader/video-uploader.componen
 import { MatDialogModule } from '@angular/material/dialog';
 import { LessonGuideComponent } from './lesson-guide/lesson-guide.component';
 import { EditorHelpComponent } from './editor-help/editor-help.component';
+import { NgxFilesizeModule } from 'ngx-filesize';
+import { VimeoDialogComponent } from './vimeo-dialog/vimeo-dialog.component';
 
 
 @NgModule({
-  declarations: [EditorComponent, VideoUploaderComponent, LessonGuideComponent, EditorHelpComponent],
+  declarations: [EditorComponent, VideoUploaderComponent, LessonGuideComponent, EditorHelpComponent, VimeoDialogComponent],
   imports: [
     SharedModule,
     EditorRoutingModule,
     NgxPicaModule,
+    NgxFilesizeModule,
     MatDialogModule,
     SimplemdeModule.forRoot({
       provide: SIMPLEMDE_CONFIG,
@@ -41,6 +44,7 @@ import { EditorHelpComponent } from './editor-help/editor-help.component';
     VideoUploaderComponent,
     LessonGuideComponent,
     EditorHelpComponent,
+    VimeoDialogComponent
   ]
 })
 export class EditorModule { }

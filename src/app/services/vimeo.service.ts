@@ -1,0 +1,149 @@
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { throwError, Observable, of, forkJoin } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map, switchMap, catchError } from 'rxjs/operators';
+import { VimeoPostResponse, VimeoUser } from '../interfaces/vimeo';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class VimeoService {
+
+  constructor(
+    private db: AngularFirestore,
+    private http: HttpClient,
+  ) { }
+
+  getVimeoAccount(uid: string): Observable<VimeoUser> {
+    let tmpToken: string;
+    return this.db.doc(`users/${uid}/private/vimeo`)
+      .valueChanges().pipe(
+        switchMap((vimeo: {token: string}) => {
+          if (vimeo.token) {
+            tmpToken = vimeo.token;
+            return this.http.get(
+              'https://api.vimeo.com/me',
+              {
+                headers: {
+                  Authorization: `bearer ${vimeo.token}`,
+                  'Content-Type': 'application/json',
+                  Accept: 'application/vnd.vimeo.*+json;version=3.4'
+                }
+              }
+            ).pipe(
+              catchError(this.handleError)
+            );
+          } else {
+            return of(null);
+          }
+        }),
+        map(vimeo => {
+          if (vimeo) {
+            return {
+              token: tmpToken,
+              account: vimeo.account
+            };
+          } else {
+            return null;
+          }
+        })
+      );
+  }
+
+  createVideo(user: VimeoUser, videoSize: number): Observable<{
+    videoId: string;
+    uploadURL: string;
+  }> {
+    return this.http.post(
+      'https://api.vimeo.com/me/videos',
+      {
+        upload: {
+          approach: 'tus',
+          size: Math.ceil(videoSize)
+        },
+        name: new Date().toString(),
+        privacy: {
+          view: user.account === 'basic' ? 'anybody' : 'nobody',
+          embed: user.account === 'basic' ? 'public' : 'whitelist',
+          download: false
+        }
+      },
+      {
+        headers: {
+          Authorization: `bearer ${user.token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/vnd.vimeo.*+json;version=3.4'
+        }
+      }
+    ).pipe(
+      map((res: VimeoPostResponse) => {
+        return {
+          videoId: res.upload.upload_link,
+          uploadURL: res.upload.upload_link
+        };
+      })
+    );
+  }
+
+  addWhiteList(videoId: string, token: string, domains: string[]): Observable<any> {
+    return forkJoin(domains.map(domain => {
+      return this.http.put(
+        `https://api.vimeo.com/videos/${videoId}/privacy/domains/${domain}`,
+        null,
+        {
+          headers: {
+            Authorization: `bearer ${token}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/vnd.vimeo.*+json;version=3.4'
+          }
+        }
+      );
+    }));
+  }
+
+  uploadVideo(params: {
+    user: VimeoUser;
+    uploadURL: string;
+    file: File;
+    videoId: string;
+  }): Observable<any> {
+    const isBasic = params.user.account === 'basic';
+    return forkJoin([
+      isBasic ? this.addWhiteList(params.videoId, params.user.token, [
+        '3ml.app', 'localhost'
+      ]) : of(null),
+      this.http.patch(
+        params.uploadURL,
+        params.file,
+        {
+          headers: {
+            'Tus-Resumable': '1.0.0',
+            'Upload-Offset': '0',
+            'Content-Type': 'application/offset+octet-stream',
+            Accept: 'application/vnd.vimeo.*+json;version=3.4'
+          },
+          observe: 'response'
+        }
+      ).pipe(
+        map(res => res.headers.get('Upload-Offset'))
+      )
+    ]);
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
+}

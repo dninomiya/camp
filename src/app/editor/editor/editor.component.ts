@@ -19,6 +19,7 @@ import { ListService } from 'src/app/services/list.service';
 import { LessonGuideComponent } from '../lesson-guide/lesson-guide.component';
 import { EditorHelpComponent } from '../editor-help/editor-help.component';
 import { PlanService } from 'src/app/services/plan.service';
+import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
 
 @Component({
   selector: 'app-editor',
@@ -312,9 +313,14 @@ export class EditorComponent implements OnInit {
   }
 
   openVideoUploader() {
-    this.dialog.open(VideoUploaderComponent, {
+    // this.dialog.open(VideoUploaderComponent, {
+    //   width: '600px',
+    //   maxHeight: '80vh'
+    // });
+    this.dialog.open(VimeoDialogComponent, {
       width: '600px',
-      maxHeight: '80vh'
+      maxHeight: '80vh',
+      data: this.authService.user
     });
   }
 

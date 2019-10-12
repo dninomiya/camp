@@ -1,0 +1,13 @@
+<div *ngIf="vimeoAccount$ | async as vimeo; else createVimeo">
+  <input type="file" (change)="handleFileSelected($event)" />
+
+  <p>ファイルサイズ: {{ size | filesize }}</p>
+
+  <p><button *ngIf="size" (click)="post()">動画を作成</button></p>
+
+  <button *ngIf="uploadURL" (click)="patch()">動画をアップロード</button>
+  <button *ngIf="uploadURL" (click)="check()">進行状況をチェック</button>
+</div>
+<ng-template #createVimeo>
+  <p>Vimeoアカウントを作成してください</p>
+</ng-template>
