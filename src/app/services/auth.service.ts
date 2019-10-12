@@ -107,7 +107,7 @@ export class AuthService {
     const data = (await this.db.doc(`csrf/${scrf}`).ref.get()).data();
 
     if (data) {
-      await this.db.doc(`csrf/${scrf}`).delete();
+      // await this.db.doc(`csrf/${scrf}`).delete();
 
       if (data.uid !== this.user.id) {
         throw new Error('ユーザーが不正です');

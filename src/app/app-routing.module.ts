@@ -5,6 +5,7 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 import { StudioGuard } from './guards/studio.guard';
 import { MainShellComponent } from './shell/main-shell/main-shell.component';
 import { ConnectStripeComponent } from './core/connect-stripe/connect-stripe.component';
+import { ConnectVimeoComponent } from './core/connect-vimeo/connect-vimeo.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,11 @@ const routes: Routes = [
   {
     path: 'connect-stripe',
     component: ConnectStripeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'connect-vimeo',
+    component: ConnectVimeoComponent,
     canActivate: [AuthGuard]
   },
   {

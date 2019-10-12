@@ -25,13 +25,9 @@ export class ConnectVimeoComponent implements OnInit {
           .catch(error => {
             if (error) {
               console.error(error);
-              const data = error.split(':');
-              const errorMessage = data[0];
-              const path = data[1];
-              this.snackBar.open(errorMessage, null, {
-                duration: 2000
-              });
-              this.router.navigateByUrl(path);
+              // this.snackBar.open(errorMessage, null, {
+              //   duration: 2000
+              // });
             }
           });
       } else {

@@ -1,8 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { VimeoPostResponse, VimeoUser } from 'src/app/interfaces/vimeo';
-import { catchError } from 'rxjs/operators';
-import { throwError, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { VimeoUser } from 'src/app/interfaces/vimeo';
+import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,6 +18,7 @@ export class VimeoDialogComponent implements OnInit {
   private clientId = '45622d0c9345317a2482c24ecbdc9f3552eda034';
   private redirectURI = 'http://localhost:4200/connect-vimeo';
   private scopes = 'private,edit,upload,public';
+
   authURL: string;
   uploadURL: string;
   size: number;
@@ -29,7 +29,6 @@ export class VimeoDialogComponent implements OnInit {
   videoId: string;
 
   constructor(
-    private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) private user: User,
     private vimeoService: VimeoService,
     private authService: AuthService,
@@ -67,10 +66,10 @@ export class VimeoDialogComponent implements OnInit {
     this.authService.createSCRF({
       uid: this.authService.user.id,
       path: this.router.url
-    }).then((id) => {
+    }).then((csrf) => {
       window.open(`https://api.vimeo.com/oauth/authorize?response_type=code&` +
       `client_id=${this.clientId}&redirect_uri=${this.redirectURI}` +
-      `&state=${id}&scope=${this.scopes}`);
+      `&state=${csrf}&scope=${this.scopes}`);
     });
   }
 }
