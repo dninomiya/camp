@@ -5,6 +5,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { VimeoPostResponse, VimeoUser } from '../interfaces/vimeo';
 
+import * as tus from 'tus-js-client';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -79,7 +81,7 @@ export class VimeoService {
     ).pipe(
       map((res: VimeoPostResponse) => {
         return {
-          videoId: res.upload.upload_link,
+          videoId: res.uri.match(/\d+/)[0],
           uploadURL: res.upload.upload_link
         };
       })
@@ -107,28 +109,34 @@ export class VimeoService {
     uploadURL: string;
     file: File;
     videoId: string;
-  }): Observable<any> {
-    const isBasic = params.user.account === 'basic';
-    return forkJoin([
-      isBasic ? this.addWhiteList(params.videoId, params.user.token, [
-        '3ml.app', 'localhost'
-      ]) : of(null),
-      this.http.patch(
-        params.uploadURL,
-        params.file,
-        {
-          headers: {
-            'Tus-Resumable': '1.0.0',
-            'Upload-Offset': '0',
-            'Content-Type': 'application/offset+octet-stream',
-            Accept: 'application/vnd.vimeo.*+json;version=3.4'
-          },
-          observe: 'response'
-        }
-      ).pipe(
-        map(res => res.headers.get('Upload-Offset'))
-      )
-    ]);
+  }) {
+    if (params.user.account !== 'basic') {
+      this.addWhiteList(
+        params.videoId,
+        params.user.token,
+        ['3ml.app', 'localhost']
+      );
+    }
+
+    console.log(params.uploadURL);
+
+    const uploader = new tus.Upload(params.file, {
+      uploadUrl: params.uploadURL,
+      endpoint: params.uploadURL,
+      retryDelays: [0, 3000, 5000, 10000, 20000],
+      onError: (error) => {
+        console.log('Failed because: ' + error);
+      },
+      onProgress: (bytesUploaded, bytesTotal) => {
+        const percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
+        console.log(bytesUploaded, bytesTotal, percentage + '%');
+      },
+      onSuccess: () => {
+        console.log('アップロード完了');
+      }
+    });
+
+    uploader.start();
   }
 
   private handleError(error: HttpErrorResponse) {

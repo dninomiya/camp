@@ -59,6 +59,7 @@ export class VimeoDialogComponent implements OnInit {
       .subscribe(res => {
         this.uploadURL = res.uploadURL;
         this.videoId = res.videoId;
+        this.uploadVideo(user);
       });
   }
 
@@ -69,21 +70,21 @@ export class VimeoDialogComponent implements OnInit {
       file: this.file,
       videoId: this.videoId
     });
-    this.http.patch(
-      this.uploadURL,
-      this.file,
-      {
-        headers: {
-          'Tus-Resumable': '1.0.0',
-          'Upload-Offset': '0',
-          'Content-Type': 'application/offset+octet-stream',
-          Accept: 'application/vnd.vimeo.*+json;version=3.4'
-        },
-        observe: 'response'
-      }
-    ).toPromise().then(res => {
-      console.log(res.headers.get('Upload-Offset'));
-    });
+    // this.http.patch(
+    //   this.uploadURL,
+    //   this.file,
+    //   {
+    //     headers: {
+    //       'Tus-Resumable': '1.0.0',
+    //       'Upload-Offset': '0',
+    //       'Content-Type': 'application/offset+octet-stream',
+    //       Accept: 'application/vnd.vimeo.*+json;version=3.4'
+    //     },
+    //     observe: 'response'
+    //   }
+    // ).toPromise().then(res => {
+    //   console.log(res.headers.get('Upload-Offset'));
+    // });
   }
 
   check() {
