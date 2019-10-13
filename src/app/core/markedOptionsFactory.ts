@@ -70,7 +70,8 @@ export function markedOptionsFactory(): MarkedOptions {
     if (info) {
       return `<div class="info info--${info[0]}">${marked(text, {renderer})}</div>`;
     } else if (dod) {
-      return `<pre class="language-${lang} ${dod[0]}"><span class="lang">${dod[0].toUpperCase()}</span><code class="language-${lang}">` + text + '</code></pre>';
+      return `<pre class="language-${lang} ${dod[0]}">` +
+      `<span class="lang">${dod[0].toUpperCase()}</span><code class="language-${lang}">` + text + '</code></pre>';
     } else if (lang) {
       if (/editorconfig|gitignore/.test(lang)) {
         lang = 'bash';

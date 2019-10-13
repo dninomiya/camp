@@ -12,11 +12,13 @@ import { AuthService } from '../services/auth.service';
 })
 export class ReceiptComponent implements OnInit {
 
+  to: string;
   item$ = combineLatest([
     this.route.paramMap,
     this.authService.authUser$
   ]).pipe(
     switchMap(([params, user]) => {
+      this.to = user.name;
       return this.paymentService.getReceipt(user.id, params.get('id'));
     })
   );
