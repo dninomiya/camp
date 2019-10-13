@@ -21,14 +21,4 @@ export class ImageDialogComponent implements OnInit {
   imageCropped(event: ImageCroppedEvent) {
     this.image = event.base64;
   }
-  imageLoaded() {
-    // show cropper
-  }
-  cropperReady() {
-    // cropper ready
-  }
-  loadImageFailed() {
-    // show message
-  }
-
 }
