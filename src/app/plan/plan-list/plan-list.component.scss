@@ -9,3 +9,8 @@
 .icon {
   color: rgba(black, .38);
 }
+
+.disabled {
+  opacity: .38;
+  cursor: not-allowed!important;
+}

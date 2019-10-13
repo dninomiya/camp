@@ -16,6 +16,7 @@ export class JobListComponent implements OnInit {
 
   @Input() jobs: Job[];
   @Input() channel: ChannelMeta;
+  @Input() isOwner: boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -25,6 +26,9 @@ export class JobListComponent implements OnInit {
   }
 
   openJobDialog(job: Job) {
+    if (this.isOwner) {
+      return;
+    }
     this.dialog.open(JobDialogComponent, {
       autoFocus: false,
       restoreFocus: false,

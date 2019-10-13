@@ -1,7 +1,7 @@
 <div class="jobs">
-  <mat-nav-list dense>
+  <mat-nav-list dense [disableRipple]="isOwner">
     <h3 mat-subheader>相談窓口</h3>
-    <mat-list-item *ngFor="let job of jobs" (click)="openJobDialog(job)">
+    <mat-list-item *ngFor="let job of jobs" (click)="openJobDialog(job)" matTooltip="あなたがオーナーです" [matTooltipDisabled]="!isOwner" [class.disabled]="isOwner">
       <span matLine>{{job.title}}</span>
       <span matLine class="cost">{{ job.amount ? (job.amount | number) + '円/日' : '費用は応相談' }}</span>
     </mat-list-item>

@@ -1,7 +1,7 @@
 <div class="plans">
-  <mat-nav-list dense>
+  <mat-nav-list dense [disableRipple]="isOwner">
     <h3 mat-subheader>プラン</h3>
-    <mat-list-item *ngFor="let plan of plans" (click)="openPlanDialog(plan)">
+    <mat-list-item *ngFor="let plan of plans" (click)="openPlanDialog(plan)" matTooltip="あなたがオーナーです" [matTooltipDisabled]="!isOwner" [class.disabled]="isOwner">
       <span matLine>{{ plan.type | planTitleLabel }}</span>
       <span matLine class="cost"
         >{{ plan.amount | number }}円/{{ plan.per | planPerLabel }}</span

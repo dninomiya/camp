@@ -64,13 +64,16 @@ export class PlanListComponent implements OnInit, OnDestroy {
   }
 
   openPlanDialog(plan: Plan) {
+    if (this.isOwner) {
+      return;
+    }
+
     if (this.customerId) {
       this.dialog.open(PlanActionDialogWrapperComponent, {
         data: {
           plan,
           targetId: this.channel.id,
           authorId: this.authService.user.id,
-          isOwner: this.isOwner
         },
         width: '800px',
         restoreFocus: false
