@@ -1,7 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { NgxPicaErrorInterface, NgxPicaService } from '@digitalascetic/ngx-pica';
 import { of, Observable, combineLatest } from 'rxjs';
-import { switchMap, tap, take, shareReplay } from 'rxjs/operators';
+import { switchMap, tap, take, shareReplay, debounceTime } from 'rxjs/operators';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,6 +21,8 @@ import { EditorHelpComponent } from '../editor-help/editor-help.component';
 import { PlanService } from 'src/app/services/plan.service';
 import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
 import { VimeoService } from 'src/app/services/vimeo.service';
+import { type } from 'os';
+import { Simplemde } from 'ng2-simplemde';
 
 @Component({
   selector: 'app-editor',
@@ -28,6 +30,9 @@ import { VimeoService } from 'src/app/services/vimeo.service';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
+  @ViewChild('body', {
+    static: false
+  }) simplemde: Simplemde;
   prices: number[] = [
     100,
     500,
@@ -167,6 +172,10 @@ export class EditorComponent implements OnInit {
         this.form.get('amount').clearValidators();
       }
     });
+
+    this.form.get('body').valueChanges.pipe(debounceTime(500)).subscribe(res => {
+      ( window as any).twttr.widgets.load();
+    });
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -245,24 +254,30 @@ export class EditorComponent implements OnInit {
     }
   }
 
+  upload(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader: FileReader = new FileReader();
+      reader.addEventListener('load', (e: any) => {
+        const image = e.target.result;
+        this.storageService.upload(`lesson/${Date.now()}`, image).then((url: string) => {
+          resolve(url);
+        });
+      }, false);
+      reader.readAsDataURL(blob);
+    });
+  }
+
   resizeFile(file: any): Promise<string> {
     return new Promise((resolve, reject) => {
       this.ngxPicaService.resizeImage(file, 840, 400, {
         aspectRatio: {
           keepAspectRatio: true,
-        }
+        },
+        alpha: true
       }).subscribe((imageResized: File) => {
-        const reader: FileReader = new FileReader();
-
-        reader.addEventListener('load', (e: any) => {
-          const image = e.target.result;
-          this.storageService.upload(`lesson/${Date.now()}`, image).then((url: string) => {
-            resolve(url);
-          });
-        }, false);
-
-        reader.readAsDataURL(imageResized);
-
+        this.upload(imageResized).then(url => {
+          resolve(url);
+        });
       }, (err: NgxPicaErrorInterface) => {
         throw err.err;
       });
@@ -302,8 +317,19 @@ export class EditorComponent implements OnInit {
     const input = document.createElement('input');
     input.type = 'file';
 
-    input.onchange = (e: any) => {
+    input.onchange = async (e: any) => {
       const file = e.target.files[0];
+
+      if (file.type.indexOf('image') === 0) {
+        let url: string;
+        if (file.type.match('.gif')) {
+          url = await this.upload(file);
+        } else {
+          url = await this.resizeFile(file);
+        }
+        const oldValue = this.form.get('body').value;
+        this.form.get('body').patchValue(oldValue + `\n\n![](${url})`);
+      }
     };
 
     input.click();

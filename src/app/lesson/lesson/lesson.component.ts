@@ -273,6 +273,20 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    combineLatest([
+      this.permission$,
+      this.lesson$
+    ]).subscribe(([permission]) => {
+      if (permission) {
+        setTimeout(() => {
+          ( window as any).twttr.widgets.load();
+        }, 500);
+      }
+    });
+  }
+
+  onLoadMarkdown() {
+    ( window as any).twttr.widgets.load();
   }
 
   /**

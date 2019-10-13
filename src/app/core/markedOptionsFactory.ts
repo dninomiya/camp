@@ -28,6 +28,16 @@ export function markedOptionsFactory(): MarkedOptions {
         return '<p>' + newText + '</p>';
     }
   };
+
+  renderer.html = (html) => {
+    const gist = html.match(/https:\/\/gist\.github\.com.*\.js/m);
+    if (gist) {
+      return `<iframe frameborder=0 style="height: 460px;" scrolling="no" seamless="seamless" srcdoc='<html><body><style type="text/css">.gist .gist-data { height: 400px; }</style><script src="${gist[0]}"></script></body></html>'></iframe>`;
+    } else {
+      return html;
+    }
+  };
+
   renderer.link = (href: string, title: string, text: string) => {
     if (/http/.test(href)) {
       return `<a target="_blank" rel="noopener" href="${href}">${text}</a><i class="material-icons">open_in_new</i>`;
