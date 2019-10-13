@@ -20,6 +20,7 @@ export class PlanListComponent implements OnInit, OnDestroy {
 
   @Input() channel: ChannelMeta;
   @Input() plans: Plan[];
+  @Input() isOwner: boolean;
 
   customerId: string;
   notLogin: boolean;
@@ -68,7 +69,8 @@ export class PlanListComponent implements OnInit, OnDestroy {
         data: {
           plan,
           targetId: this.channel.id,
-          authorId: this.authService.user.id
+          authorId: this.authService.user.id,
+          isOwner: this.isOwner
         },
         width: '800px',
         restoreFocus: false

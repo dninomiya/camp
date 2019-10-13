@@ -18,6 +18,7 @@ import { MailDialogComponent } from 'src/app/core/mail-dialog/mail-dialog.compon
 export class UserCardComponent implements OnInit {
 
   @Input() channel: ChannelMeta;
+  @Input() isOwner: boolean;
   @Output() loaded = new EventEmitter<boolean>();
 
   jobs: Job[];
