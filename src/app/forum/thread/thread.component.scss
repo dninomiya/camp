@@ -60,10 +60,12 @@
     flex: 1;
     outline: none;
     resize: none;
+    line-height: 1.6;
   }
-  .send {
+  &__button {
     width: 40px;
     align-items: center;
+    margin: 16px;
   }
 }
 

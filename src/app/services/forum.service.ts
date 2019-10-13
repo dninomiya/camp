@@ -5,7 +5,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { switchMap, map, take } from 'rxjs/operators';
 import { User } from '../interfaces/user';
 import { ChannelMeta } from '../interfaces/channel';
-import { Plan } from '../interfaces/plan';
 import { Review } from '../interfaces/review';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
@@ -123,26 +122,27 @@ export class ForumService {
   getReplies(threadId: string): Observable<ThreadReply[]> {
     let tmpReplies;
 
-    return this.db.collection<ThreadReply>(`threads/${threadId}/replies`)
-      .valueChanges().pipe(
-        switchMap(replies => {
-          tmpReplies = replies;
-          return forkJoin(
-            replies
-            .map(reply => reply.authorId)
-            .filter((uid, i, self) => self.indexOf(uid) === i)
-            .map(uid => {
-              return this.db.doc<ChannelMeta>(`channels/${uid}`).valueChanges().pipe(take(1));
-            })
-          );
-        }),
-        map(users => {
-          return tmpReplies.map(reply => {
-            reply.author = users.find(user => user.id === reply.authorId);
-            return reply;
-          });
-        })
-      );
+    return this.db.collection<ThreadReply>(`threads/${threadId}/replies`, ref => {
+      return ref.orderBy('createdAt', 'asc');
+    }).valueChanges().pipe(
+      switchMap(replies => {
+        tmpReplies = replies;
+        return forkJoin(
+          replies
+          .map(reply => reply.authorId)
+          .filter((uid, i, self) => self.indexOf(uid) === i)
+          .map(uid => {
+            return this.db.doc<ChannelMeta>(`channels/${uid}`).valueChanges().pipe(take(1));
+          })
+        );
+      }),
+      map(users => {
+        return tmpReplies.map(reply => {
+          reply.author = users.find(user => user.id === reply.authorId);
+          return reply;
+        });
+      })
+    );
   }
 
   async createThread(params: Pick<

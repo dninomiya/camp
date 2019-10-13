@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Thread, ThreadReply, REJECT_REASON_TEMPLATE } from 'src/app/interfaces/thread';
 import { ActivatedRoute } from '@angular/router';
@@ -30,9 +30,6 @@ import { PlanTitleLabelPipe } from 'src/app/shared/plan-title-label.pipe';
 export class ThreadComponent implements OnInit {
   thread: Thread;
   thread$ = this.route.paramMap.pipe(
-    tap(params => {
-      this.replies$ = this.forumService.getReplies(params.get('id'));
-    }),
     switchMap(params => this.forumService.getThread(params.get('id')).pipe(take(1))),
     tap(thread => {
       this.thread = thread;
@@ -44,6 +41,10 @@ export class ThreadComponent implements OnInit {
     shareReplay(1)
   );
 
+  @ViewChild('threadBottom', {
+    static: false
+  }) threadBottom: ElementRef;
+
   channel$ = this.thread$.pipe(
     switchMap(thread => {
       return this.channelService.getChannel(thread.targetId);
@@ -53,7 +54,16 @@ export class ThreadComponent implements OnInit {
 
   channel: ChannelMeta;
 
-  replies$: Observable<ThreadReply[]>;
+  replies$: Observable<ThreadReply[]> = this.route.paramMap.pipe(
+    switchMap(params => {
+      return this.forumService.getReplies(params.get('id'));
+    }),
+    tap(() => {
+      setTimeout(() => {
+        this.threadBottom.nativeElement.scrollIntoView({ block: 'start' });
+      }, 100);
+    })
+  );
 
   commentForm = new FormControl('', [Validators.required]);
   uid = this.authService.user.id;

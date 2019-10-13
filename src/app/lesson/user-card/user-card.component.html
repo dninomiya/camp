@@ -35,6 +35,6 @@
 
   <ng-container *ngIf="jobs && jobs.length">
     <mat-divider></mat-divider>
-    <app-job-list [channel]="channel" [jobs]="jobs"></app-job-list>
+    <app-job-list [isOwner]="isOwner" [channel]="channel" [jobs]="jobs"></app-job-list>
   </ng-container>
 </mat-card>

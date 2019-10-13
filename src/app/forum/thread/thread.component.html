@@ -91,6 +91,7 @@
         </p>
       </div>
     </div>
+    <div #threadBottom></div>
   </div>
 </div>
 
@@ -98,7 +99,6 @@
   <textarea
     [placeholder]="thread.status === 'request' ? '承認前の確認事項' : 'マークダウンが使えます'"
     [formControl]="commentForm"
-    autofocus
     [appAutofocus]="true"
   ></textarea>
   <button [disabled]="commentForm.invalid" (click)="submit()" mat-icon-button class="form__button">
