@@ -54,8 +54,13 @@ export function markedOptionsFactory(): MarkedOptions {
 
     let text = t;
 
-    if (lang === 'note') {
-      return `<div class="note">${marked(text, {renderer})}</div>`;
+    const info = lang.match(/note|denger|notice/);
+    const dod = label.match(/dont|do/);
+
+    if (info) {
+      return `<div class="info info--${info[0]}">${marked(text, {renderer})}</div>`;
+    } else if (dod) {
+      return `<pre class="language-${lang} ${dod[0]}"><span class="lang">${dod[0].toUpperCase()}</span><code class="language-${lang}">` + text + '</code></pre>';
     } else if (lang) {
       if (/editorconfig|gitignore/.test(lang)) {
         lang = 'bash';

@@ -9,12 +9,23 @@
   a {
     color: $brand-primary;
   }
-  .note {
+  .info {
     margin: 2em 0;
-    background: #fafafa;
     padding: 16px;
     border-left: 4px solid $brand-primary;
     position: relative;
+    &--note {
+      border-color: $brand-primary;
+      background: rgba($brand-primary, .12);
+    }
+    &--denger {
+      border-color: #d32f2f;
+      background: rgba(#d32f2f, .12);
+    }
+    &--notice {
+      border-color: #e0c62e;
+      background: rgba(#e0c62e, .12);
+    }
     p {
       font-size: 14px;
     }
@@ -72,13 +83,20 @@
   }
   pre {
     margin: 2em 0;
-    padding: 40px 16px 16px;
+    padding: 0;
+    border: 1px solid rgba(black, .12);
     &.no-lang {
       padding-top: 16px;
     }
   }
   code {
     font-size: 12px;
+    display: block;
+    padding: 16px;
+    text-shadow: none;
+    .token.operator {
+      background: none;
+    }
   }
   table {
     border-collapse: collapse;
@@ -131,20 +149,31 @@
   }
   pre {
     position: relative;
-    border-radius: 0;
+    border-radius: 3px;
+    &.do {
+      border-color: #4caf50;
+      .lang {
+        background: #4caf50;
+        color: white;
+      }
+    }
+    &.dont {
+      border-color: #d32f2f;
+      .lang {
+        background: #d32f2f;
+        color: #fff;
+      }
+    }
     .lang {
       text-shadow: none;
       font-family: "roboto";
-      font-size: 11px;
-      color: rgba(white, .87);
+      font-size: 13px;
+      color: rgba(black, .6);
       box-sizing: border-box;
-      padding: 0 16px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      line-height: 24px;
-      background: #111;
+      display: block;
+      padding: 8px 16px;
+      background: #eee;
+      border-bottom: 1px solid rgba(black, .12);
     }
   }
   .material-icons {

@@ -93,9 +93,18 @@
   right: 0;
   border: 0;
   border-top: 1px solid rgba(black, .12);
-  .cm-header {
-    font-size: 1em;
-    font-weight: normal;
+  .CodeMirror-scroll {
+    margin: 0;
+    padding: 0;
+  }
+  * {
+    font-size: 1em!important;
+    background: none!important;
+    line-height: 1.6!important;
+    font-weight: normal!important;
+  }
+  .CodeMirror-selected {
+    background: #eee!important;
   }
 }
 
