@@ -25,12 +25,12 @@
             <mat-icon class="mat-18">share</mat-icon>
             <span>共有</span>
           </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-V5Whsflq2ZSfOdFOOzxMLySC9FlNoAVUUZXmNtamxhYeGA/viewform?usp=pp_url&entry.1634212803=https://update.jp/lesson?v={{lesson.id}}"
+          <a *ngIf="!(isOwner$ | async)" href="https://docs.google.com/forms/d/e/1FAIpQLSd-V5Whsflq2ZSfOdFOOzxMLySC9FlNoAVUUZXmNtamxhYeGA/viewform?usp=pp_url&entry.1634212803=https://update.jp/lesson?v={{lesson.id}}"
             target="_blank" rel="noopener" class="actions__item" mat-button>
             <mat-icon class="mat-18">flag</mat-icon>
             <span>報告</span>
           </a>
-          <button class="actions__item" *ngIf="uid == lesson.authorId" mat-button [routerLink]="['/edit']"
+          <button class="actions__item" *ngIf="(isOwner$ | async)" mat-button [routerLink]="['/edit']"
             [queryParams]="{v: lesson.id}">
             <mat-icon class="mat-18">edit</mat-icon>
             <span>編集</span>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <mat-divider></mat-divider>
-      <div class="channel-box" [style.opacity]="isLoading ? 0 : 1">
+      <div class="channel-box">
         <div class="channel">
           <a class="channel__avatar" [routerLink]="['/channel', channel.id]">
             <img [src]="channel.avatarURL" alt="" />
@@ -48,13 +48,15 @@
             <p class="channel__date">{{lesson.updatedAt?.toDate() | date:'yyyy/MM/dd'}} に更新</p>
           </div>
         </div>
-        <div class="channel-actions">
-          <button class="weak" *ngIf="isFollow$ | async; else noFollow" (click)="unfollow(channel.id)"
-            mat-flat-button>フォロー中 {{channel.followerCount + followerBuff}}</button>
-          <ng-template #noFollow>
-            <button (click)="follow(channel.id)" mat-flat-button color="primary">フォロー
-              {{channel.followerCount + followerBuff}}</button>
-          </ng-template>
+        <div class="channel-actions" *ngIf="!(isOwner$ | async)">
+          <div [style.opacity]="isLoading ? 0 : 1">
+            <button class="weak" *ngIf="isFollow$ | async; else noFollow" (click)="unfollow(channel.id)"
+              mat-flat-button>フォロー中 {{channel.followerCount + followerBuff}}</button>
+            <ng-template #noFollow>
+              <button (click)="follow(channel.id)" mat-flat-button color="primary">フォロー
+                {{channel.followerCount + followerBuff}}</button>
+            </ng-template>
+          </div>
         </div>
       </div>
 
