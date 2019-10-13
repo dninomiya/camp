@@ -7,7 +7,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { MatDialog } from '@angular/material/dialog';
-import { VideoUploaderComponent } from '../video-uploader/video-uploader.component';
 import { ChannelService } from 'src/app/services/channel.service';
 import { Lesson } from 'src/app/interfaces/lesson';
 import { LessonList } from 'src/app/interfaces/lesson-list';
@@ -21,7 +20,6 @@ import { EditorHelpComponent } from '../editor-help/editor-help.component';
 import { PlanService } from 'src/app/services/plan.service';
 import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
 import { VimeoService } from 'src/app/services/vimeo.service';
-import { type } from 'os';
 import { Simplemde } from 'ng2-simplemde';
 
 @Component({
