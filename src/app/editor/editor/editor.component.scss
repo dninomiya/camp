@@ -65,11 +65,13 @@
 }
 
 .footer {
-  text-align: right;
   padding: 16px 24px;
   position: relative;
+  justify-content: space-between;
   z-index: 10;
   border-top: 1px solid rgba(black, .12);
+  display: flex;
+  align-items: center;
   mat-form-field {
     display: inline-block;
      margin-left: 16px;
@@ -110,4 +112,22 @@
 
 .price {
   width: 160px;
+}
+
+.uploader {
+  width: 400px;
+  &__label {
+    color: rgba(black, .6);
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  &__step {
+    text-align: right;
+    color: rgba(black, .38);
+    font-size: 12px;
+  }
+}
+
+.actions {
+  margin-left: auto;
 }

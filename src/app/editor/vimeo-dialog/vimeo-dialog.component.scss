@@ -1,0 +1,97 @@
+h1 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.placeholder {
+  height: 240px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  display: block;
+  background: #fafafa center/cover;
+  position: relative;
+  &__ready {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: rgba(black, .6);
+    line-height: 1.8;
+    transform: translate((-50%, -50%));
+    span {
+      display: block;
+      text-align: center;
+      &:last-child {
+        color: rgba(black, .38);
+        font-size: 13px;
+      }
+    }
+  }
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate((-50%, -50%));
+    font-size: 40px;
+    color: rgba(black, .38);
+    text-align: center;
+    line-height: 1;
+    i {
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    span {
+      line-height: 1;
+      display: block;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+}
+
+.info {
+  margin: 16px 0 24px;
+  font-size: 12px;
+  color: rgba(black, .38);
+}
+
+.dialog-loading {
+  padding: 40px 0;
+  mat-spinner {
+    margin: 0 auto;
+  }
+}
+
+.status {
+  margin-bottom: 16px;
+  &__account {
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    small {
+      font-size: 12px;
+      margin-left: 4px;
+    }
+  }
+  &__size {
+    margin-top: 4px;
+    font-size: 12px;
+    color: rgba(black, .38);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.vimeo {
+  text-align: center;
+  margin-bottom: 56px;
+  &__logo {
+    display: inline-block;
+    vertical-align: bottom;
+    max-width: 240px;
+  }
+  &__info {
+    color: rgba(black, .6);
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+}

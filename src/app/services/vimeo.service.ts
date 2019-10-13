@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
-import { throwError, Observable, of, forkJoin } from 'rxjs';
+import { throwError, Observable, of, forkJoin, Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { VimeoPostResponse, VimeoUser } from '../interfaces/vimeo';
 
 import * as tus from 'tus-js-client';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VimeoService {
 
+  uploadStepSource = new ReplaySubject<number>();
+  uploadStep$ = this.uploadStepSource.asObservable();
+
   constructor(
     private db: AngularFirestore,
     private http: HttpClient,
+    private snackBar: MatSnackBar
   ) { }
 
   getVimeoAccount(uid: string): Observable<VimeoUser> {
@@ -119,21 +124,25 @@ export class VimeoService {
       );
     }
 
-    console.log(params.uploadURL);
-
     const uploader = new tus.Upload(params.file, {
       uploadUrl: params.uploadURL,
       endpoint: params.uploadURL,
       retryDelays: [0, 3000, 5000, 10000, 20000],
       onError: (error) => {
-        console.log('Failed because: ' + error);
+        console.error('Failed because: ' + error);
+        this.snackBar.open('アップロードがエラーで中断しました', null, {
+          duration: 2000
+        });
       },
       onProgress: (bytesUploaded, bytesTotal) => {
-        const percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
-        console.log(bytesUploaded, bytesTotal, percentage + '%');
+        const percentage = Math.round(bytesUploaded / bytesTotal * 100);
+        this.uploadStepSource.next(percentage);
       },
       onSuccess: () => {
-        console.log('アップロード完了');
+        this.snackBar.open('アップロードが完了しました！', null, {
+          duration: 2000
+        });
+        this.uploadStepSource.next(null);
       }
     });
 

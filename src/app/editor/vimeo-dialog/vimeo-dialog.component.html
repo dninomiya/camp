@@ -1,12 +1,75 @@
-<div *ngIf="vimeoAccount$ | async as user; else createVimeo">
-  <input type="file" (change)="handleFileSelected($event)" />
+<h1 matDialogTitle>動画アップロード</h1>
 
-  <p *ngIf="size">ファイルサイズ: {{ size | filesize }}</p>
+<mat-dialog-content>
+  <div *ngIf="vimeoAccount$ | async as user; else getVimeo">
+    <div class="status">
+      <p class="status__account">{{ user.account }}<small>プラン</small></p>
+      <mat-progress-bar
+        [value]="(uploadQuota.used / uploadQuota.max) * 100"
+        color="primary"
+      ></mat-progress-bar>
+      <p class="status__size">
+        <span
+          >{{ uploadQuota.used | filesize }} /
+          {{ uploadQuota.max | filesize }}</span
+        >
+        <span>{{ uploadQuota.reset_date | date: 'M月d日' }}にリセット</span>
+      </p>
+    </div>
+    <label
+      class="placeholder"
+      [class.over]="isOver"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+    >
+      <p *ngIf="file" class="placeholder__ready">
+        <span>アップロード準備が整いました</span>
+        <span>ファイルサイズ: {{ size | filesize }}</span>
+      </p>
+      <div class="placeholder__icon" *ngIf="!file">
+        <i class="fab fa-vimeo-v"></i>
+        <span>クリックか動画をドロップ</span>
+      </div>
+      <input
+        type="file"
+        (change)="handleFileSelected($event)"
+        #input
+        accept="video/*"
+        style="display: none"
+      />
+    </label>
+  </div>
+  <ng-template #getVimeo>
+    <div *ngIf="!loading">
+      <div class="vimeo">
+        <img
+          src="/assets/images/vimeo-logo.pnt"
+          alt="vimeo"
+          class="vimeo__logo"
+        />
+        <p class="vimeo__info">
+          動画をアップロードするためにVimeoに登録して3MLと連携してください。有料レッスンを販売するためにはPROプラン以上である必要があります。
+        </p>
+        <button
+          class="vimeo__button"
+          color="primary"
+          (click)="connectVimeo(user)"
+          mat-raised-button
+        >
+          Vimeo登録＆連携
+        </button>
+      </div>
+    </div>
+  </ng-template>
+  <div class="dialog-loading" *ngIf="loading">
+    <mat-spinner [diameter]="40"></mat-spinner>
+  </div>
+</mat-dialog-content>
 
-  <p><button *ngIf="size" (click)="createVideo(user)">動画を作成</button></p>
-</div>
-<ng-template #createVimeo>
-  <p>Vimeoアカウントを作成してください</p>
-</ng-template>
-
-<button color="primary" (click)="connectVimeo()" mat-raised-button>Vimeo認証</button>
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button [disabled]="!size" color="primary" mat-raised-button>
+    アップロード
+  </button>
+</mat-dialog-actions>

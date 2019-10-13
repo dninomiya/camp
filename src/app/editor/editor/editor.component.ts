@@ -20,6 +20,7 @@ import { LessonGuideComponent } from '../lesson-guide/lesson-guide.component';
 import { EditorHelpComponent } from '../editor-help/editor-help.component';
 import { PlanService } from 'src/app/services/plan.service';
 import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
+import { VimeoService } from 'src/app/services/vimeo.service';
 
 @Component({
   selector: 'app-editor',
@@ -39,6 +40,7 @@ export class EditorComponent implements OnInit {
     100000,
   ];
 
+  uploadStep$ = this.vimeoService.uploadStep$;
   user$ = this.authService.authUser$;
   lists$: Observable<LessonList[]> = this.user$.pipe(
     switchMap(user => {
@@ -118,7 +120,8 @@ export class EditorComponent implements OnInit {
     private channelService: ChannelService,
     private lessonService: LessonService,
     private location: Location,
-    private listService: ListService
+    private listService: ListService,
+    private vimeoService: VimeoService
   ) {}
 
   ngOnInit() {
@@ -313,14 +316,16 @@ export class EditorComponent implements OnInit {
   }
 
   openVideoUploader() {
-    // this.dialog.open(VideoUploaderComponent, {
-    //   width: '600px',
-    //   maxHeight: '80vh'
-    // });
     this.dialog.open(VimeoDialogComponent, {
       width: '600px',
       maxHeight: '80vh',
-      data: this.authService.user
+      data: this.authService.user,
+      autoFocus: false,
+      restoreFocus: false
+    }).afterClosed().subscribe(videoId => {
+      if (videoId) {
+        this.form.get('videoId').setValue('videoId');
+      }
     });
   }
 

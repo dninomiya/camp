@@ -2,11 +2,12 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { VimeoUser } from 'src/app/interfaces/vimeo';
 import { Observable } from 'rxjs';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
 import { Router } from '@angular/router';
+import { shareReplay, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vimeo-dialog',
@@ -17,8 +18,9 @@ export class VimeoDialogComponent implements OnInit {
 
   private clientId = '45622d0c9345317a2482c24ecbdc9f3552eda034';
   private redirectURI = 'http://localhost:4200/connect-vimeo';
-  private scopes = 'private,edit,upload,public';
+  private scopes = 'private edit upload public';
 
+  isOver: boolean;
   authURL: string;
   uploadURL: string;
   size: number;
@@ -27,16 +29,23 @@ export class VimeoDialogComponent implements OnInit {
   isBasic: boolean;
   vimeoAccount$: Observable<VimeoUser>;
   videoId: string;
+  loading = true;
+  uploadQuota;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private user: User,
     private vimeoService: VimeoService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialogRef<VimeoDialogComponent>
   ) { }
 
   ngOnInit() {
-    this.vimeoAccount$ = this.vimeoService.getVimeoAccount(this.user.id);
+    this.vimeoAccount$ = this.vimeoService.getVimeoAccount(this.user.id)
+      .pipe(tap(user => {
+        this.loading = false;
+        this.uploadQuota = user.uploadQuota.periodic;
+      }));
   }
 
   handleFileSelected(event) {
@@ -50,6 +59,7 @@ export class VimeoDialogComponent implements OnInit {
         this.uploadURL = res.uploadURL;
         this.videoId = res.videoId;
         this.uploadVideo(user);
+        this.dialog.close(res.videoId);
       });
   }
 
@@ -67,9 +77,27 @@ export class VimeoDialogComponent implements OnInit {
       uid: this.authService.user.id,
       path: this.router.url
     }).then((csrf) => {
-      window.open(`https://api.vimeo.com/oauth/authorize?response_type=code&` +
+      location.href = `https://api.vimeo.com/oauth/authorize?response_type=code&` +
       `client_id=${this.clientId}&redirect_uri=${this.redirectURI}` +
-      `&state=${csrf}&scope=${this.scopes}`);
+      `&state=${csrf}&scope=${this.scopes}`;
     });
+  }
+
+  onDrop(event) {
+    this.file = event.dataTransfer.files[0];
+    this.size = this.file.size;
+    event.preventDefault();
+    this.isOver = false;
+  }
+
+  onDragOver(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.isOver = true;
+  }
+
+  onDragLeave(event) {
+    event.preventDefault();
+    this.isOver = false;
   }
 }
