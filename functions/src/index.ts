@@ -1,10 +1,3 @@
-export { githubWebhook } from './github-webhook';
-export { discordWebHook } from './discord-webhook';
-export { addActivityToDiscord } from './add-activity-to-discord';
-export { tweetLog } from './tweet';
-export { addPoint } from './add-point';
-export { removePoint } from './remove-point';
-
 export * from './delete-user.function';
 export * from './ogp.function';
 export * from './create-user.function';
