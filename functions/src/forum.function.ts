@@ -2,7 +2,8 @@ import * as functions from 'firebase-functions';
 import {
   db,
   sendFCM,
-  sendEmail
+  sendEmail,
+  addNotification
 } from './utils';
 
 export const createReply = functions.firestore
@@ -26,6 +27,14 @@ export const createReply = functions.firestore
           title: data.thread.title
         }
       })
+
+      await addNotification(
+        target.id,
+        {
+          title: `「${data.thread.title}」に返信がありました`,
+          url: `/forum/${data.thread.id}?status=${data.thread.status}`
+        }
+      );
     }
 
     if (targetData && targetData.fcmToken) {
@@ -53,6 +62,11 @@ export const createThread = functions.firestore
     const targetData = target.data();
 
     if (targetData) {
+      await addNotification(target.id, {
+        title: 'リクエストが届きました',
+        url: `/forum/${thread.id}?status=request`
+      });
+
       await sendEmail({
         to: targetData.email,
         templateId: 'request',
@@ -105,6 +119,14 @@ export const updateThread = functions.firestore
             title: thread.title
           }
         })
+
+        await addNotification(
+          target.id,
+          {
+            title: `「${thread.title}」が${action}しました`,
+            url: `/forum/${thread.id}?status=${thread.status}`
+          }
+        );
       }
 
       if (targetData && targetData.fcmToken) {

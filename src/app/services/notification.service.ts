@@ -21,20 +21,6 @@ export class NotificationService {
     }).valueChanges();
   }
 
-  addNotification(uid: string, params: {
-    title: string;
-    url?: string;
-    point?: number;
-  }): Promise<void> {
-    const id = this.db.createId();
-    return this.db.doc(`users/${uid}/notifications/${id}`).set({
-      id,
-      createdAt: firestore.Timestamp.now(),
-      isRead: false,
-      ...params
-    });
-  }
-
   async clearNotifications(uid: string): Promise<void[]> {
     const items = await this.db.collection<Notification>(`users/${uid}/notifications`)
       .valueChanges().pipe(first()).toPromise();

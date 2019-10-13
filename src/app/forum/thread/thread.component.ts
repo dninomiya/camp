@@ -96,13 +96,6 @@ export class ThreadComponent implements OnInit {
         this.thread
       );
 
-      this.notificationService.addNotification(
-        this.getNotificationTargetUID(),
-        {
-          title: `「${this.thread.title}」に返信がありました`
-        }
-      );
-
       this.snackBar.open('投稿しました', null, {
         duration: 2000
       });
@@ -138,13 +131,6 @@ export class ThreadComponent implements OnInit {
           this.forumService.updateThread(thread.id, {
             status: 'open'
           });
-
-          this.notificationService.addNotification(
-            thread.authorId,
-            {
-              title: `「${thread.title}」が承認されました`
-            }
-          );
 
           this.snackBar.open('承認しました', null, {
             duration: 2000

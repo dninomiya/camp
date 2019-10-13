@@ -5,7 +5,6 @@ export const addNotification = (
   params: {
     title: string;
     url?: string;
-    point?: number;
   }
 ): Promise<any> => {
   const id = db.collection(`users/${uid}/notifications`).doc().id;

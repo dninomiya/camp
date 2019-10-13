@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
-import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, tap, first } from 'rxjs/operators';
+import { switchMap, tap, first, take } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxPicaService } from '@digitalascetic/ngx-pica';
 import { StorageService } from 'src/app/services/storage.service';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { AuthService } from 'src/app/services/auth.service';
 import { Job } from 'src/app/interfaces/job';
-import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { MatDialog } from '@angular/material';
 import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 
@@ -72,14 +71,12 @@ export class AboutComponent implements OnInit {
   adsSrc: string;
   channel: ChannelMeta;
   channel$ = this.route.parent.params.pipe(
-    switchMap(({ id }) => this.channelService.getChannel(id)),
+    switchMap(({ id }) => this.channelService.getChannel(id).pipe(take(1))),
     tap(channel => {
       this.channel = channel;
       this.form.patchValue(channel);
       this.adsOptions.path = `ads/${channel.id}`;
-      this.src = {
-        avatar: channel.avatarURL,
-      };
+      this.avatarImage = channel.avatarURL;
       if (channel.ads) {
         this.adsSrc = channel.ads.imageURL;
         this.adsForm.patchValue(channel.ads, {
@@ -306,8 +303,19 @@ export class AboutComponent implements OnInit {
       width: '400px',
       autoFocus: false,
       restoreFocus: false
-    }).afterClosed().subscribe(image => {
+    }).afterClosed().subscribe(async (image) => {
       this.avatarImage = image;
+      const path = await this.storageService.upload(`channels/${this.channel.id}/avatar`, image);
+      this.channelService.updateChannel(
+        this.channel.id,
+        {
+          ['avatarURL']: path
+        }
+      ).then(() => {
+        this.snackBar.open('イメージをアップロードしました', null, {
+          duration: 2000
+        });
+      });
     });
   }
 

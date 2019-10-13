@@ -29,9 +29,6 @@ export class PlanActionDialogWrapperComponent implements OnInit {
       ...data,
       ...this.params
     }).then(result => {
-      this.notificationService.addNotification(result.targetId, {
-        title: 'リクエストが届きました'
-      });
       this.dialogRef.close(result.id);
     }).catch(() => {
       this.dialogRef.close();

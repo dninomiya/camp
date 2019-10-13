@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatSnackBarRef, MatSnackBar } from '@angular/material';
+import { MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Thread, REJECT_REASON_TEMPLATE } from 'src/app/interfaces/thread';
 import { ForumService } from 'src/app/services/forum.service';
 import { FormControl, Validators } from '@angular/forms';
@@ -48,13 +48,6 @@ export class RejectDialogComponent implements OnInit {
       this.snackBar.open('クローズしました', null, {
         duration: 2000
       });
-
-      this.notificationService.addNotification(
-        notificationUID,
-        {
-          title: `「${this.data.thread.title}」が却下されました`
-        }
-      );
     });
   }
 
