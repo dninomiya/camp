@@ -22,7 +22,9 @@ import { StripeConnectButtonComponent } from './plans/stripe-connect-button/stri
 import { ConfirmDisconnectStripeDialogComponent } from './confirm-disconnect-stripe-dialog/confirm-disconnect-stripe-dialog.component';
 import { MultipleLessonEditDialogComponent } from './multiple-lesson-edit-dialog/multiple-lesson-edit-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { SearchLessonInputComponent } from './search-lesson-input/search-lesson-input.component';
+import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { SearchLessonInputComponent } from './search-lesson-input/search-lesson-
     ConfirmDisconnectStripeDialogComponent,
     MultipleLessonEditDialogComponent,
     SearchLessonInputComponent,
+    ImageDialogComponent,
   ],
   imports: [
     SharedModule,
@@ -52,12 +55,14 @@ import { SearchLessonInputComponent } from './search-lesson-input/search-lesson-
     MatDialogModule,
     DragDropModule,
     NgAisModule,
+    ImageCropperModule
   ],
   entryComponents: [
     ListEditDialogComponent,
     ListDeleteDialogComponent,
     ConfirmDisconnectStripeDialogComponent,
-    MultipleLessonEditDialogComponent
+    MultipleLessonEditDialogComponent,
+    ImageDialogComponent
   ]
 })
 export class StudioModule {}

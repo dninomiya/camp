@@ -9,6 +9,9 @@ import { StorageService } from 'src/app/services/storage.service';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { AuthService } from 'src/app/services/auth.service';
 import { Job } from 'src/app/interfaces/job';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { MatDialog } from '@angular/material';
+import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-about',
@@ -16,6 +19,23 @@ import { Job } from 'src/app/interfaces/job';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
+
+  avatarImage;
+
+  constructor(
+    private route: ActivatedRoute,
+    private channelService: ChannelService,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private ngxPicaService: NgxPicaService,
+    private storageService: StorageService,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) { }
+
+  get links() {
+    return this.form.get('links') as FormArray;
+  }
 
   src = {};
   maxLength = {
@@ -29,7 +49,6 @@ export class AboutComponent implements OnInit {
       limitMb: 1
     }
   };
-  isOver = {};
   form = this.fb.group({
     title: ['', [
       Validators.required,
@@ -81,15 +100,8 @@ export class AboutComponent implements OnInit {
     }
   };
 
-  constructor(
-    private route: ActivatedRoute,
-    private channelService: ChannelService,
-    private fb: FormBuilder,
-    private snackBar: MatSnackBar,
-    private ngxPicaService: NgxPicaService,
-    private storageService: StorageService,
-    private authService: AuthService
-  ) { }
+    imageChangedEvent: any = '';
+    croppedImage: any = '';
 
   ngOnInit() {
     this.channelService.getJobs(
@@ -120,22 +132,19 @@ export class AboutComponent implements OnInit {
   onDrop(event, type: string) {
     const files = event.dataTransfer.files;
     event.preventDefault();
-    this.isOver[type] = false;
 
     if (files && files[0]) {
-      this.getFile(files[0], type);
+      this.openImageDialog(files[0]);
     }
   }
 
   onDragOver(event, type: string) {
     event.stopPropagation();
     event.preventDefault();
-    this.isOver[type] = true;
   }
 
   onDragLeave(event, type: string) {
     event.preventDefault();
-    this.isOver[type] = false;
   }
 
   resizeImage(file: any, size: {
@@ -232,10 +241,6 @@ export class AboutComponent implements OnInit {
     }
   }
 
-  get links() {
-    return this.form.get('links') as FormArray;
-  }
-
   addLinkForm() {
     this.links.push(this.fb.control(''));
   }
@@ -293,6 +298,17 @@ export class AboutComponent implements OnInit {
 
   removeJob(i: number) {
     this.jobForm.removeAt(i);
+  }
+
+  openImageDialog(file: File) {
+    this.dialog.open(ImageDialogComponent, {
+      data: file,
+      width: '400px',
+      autoFocus: false,
+      restoreFocus: false
+    }).afterClosed().subscribe(image => {
+      this.avatarImage = image;
+    });
   }
 
 }

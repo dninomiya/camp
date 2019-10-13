@@ -1,0 +1,28 @@
+<h1 matDialogTitle>画像を調整</h1>
+
+<mat-dialog-content>
+  <div *ngIf="imageFile" class="cropper">
+    <image-cropper
+      [imageFile]="imageFile"
+      [resizeToWidth]="400"
+      format="png"
+      [roundCropper]="true"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded()"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button
+    color="primary"
+    mat-raised-button
+    [matDialogClose]="image"
+    [disabled]="!image"
+  >
+    保存
+  </button>
+</mat-dialog-actions>

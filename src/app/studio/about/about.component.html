@@ -7,15 +7,14 @@
     <div class="avatar-field">
       <label
         class="avatar"
-        [class.over]="isOver['avatar']"
-        (dragover)="onDragOver($event, 'avatar')"
-        (dragleave)="onDragLeave($event, 'avatar')"
-        (drop)="onDrop($event, 'avatar')"
-        [style.background-image]="src.avatar ? 'url(' + src.avatar + ')' : null"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+        [style.background-image]="avatarImage ? 'url(' + avatarImage + ')' : null"
       >
         <input
           type="file"
-          (change)="getFile(avatar.files[0], 'avatar')"
+          (change)="openImageDialog(avatar.files[0])"
           #avatar
           style="display: none"
           accept="image/*"
@@ -69,7 +68,7 @@
     <mat-card>
       <h3>宣伝</h3>
 
-      <p>レッスンのサイドバーで宣伝したいバナーを設定してください。</p>
+      <p>レッスンのサイドバーで宣伝したいバナーを設定してください。(400 x 240px）</p>
 
       <form [formGroup]="adsForm" (ngSubmit)="updateAdsStatus()">
         <div class="ads" *ngIf="adsOptions.path">
