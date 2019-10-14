@@ -4,6 +4,9 @@
 :host {
   display: block;
   padding: 24px;
+  @include sp {
+    padding: 16px;
+  }
 }
 
 .wrap {
@@ -17,7 +20,7 @@
     width: 100%;
   }
   @include sp {
-    grid-template-columns: 1fr;
+    display: block;
   }
 }
 
@@ -25,6 +28,9 @@
   margin-bottom: 20px;
   @media print {
     display: none;
+  }
+  @include sp {
+    margin: -16px -16px 16px;
   }
 }
 
@@ -42,6 +48,10 @@
   font-size: 18px;
   line-height: 24px;
   font-weight: normal;
+  @include sp {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
 }
 
 .channel-actions {
@@ -69,6 +79,9 @@
 .count {
   font-size: 16px;
   color: rgba(black, .6);
+  @include sp {
+    font-size: 12px;
+  }
 }
 
 .channel-box {
@@ -77,6 +90,9 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
+  @include sp {
+    margin-bottom: 24px;
+  }
 }
 
 .channel {

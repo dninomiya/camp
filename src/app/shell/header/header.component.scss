@@ -13,10 +13,13 @@
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 56px;
+  min-height: 0;
   .mat-toolbar-row {
     height: 56px;
     justify-content: space-between;
+    @include sp {
+      height: 48px;
+    }
   }
 }
 
@@ -28,14 +31,23 @@
 .logo {
   height: 56px;
   font-weight: bold;
+  @include sp {
+    height: 48px;
+  }
   &__text {
     color: #333;
     display: inline-block;
     vertical-align: -18px;
+    @include sp {
+      vertical-align: -8px;
+    }
   }
   .big {
     color: #25A5DE;
     font-size: 40px;
+    @include sp {
+      font-size: 24px;
+    }
   }
   .small {
     font-size: 24px;
@@ -81,18 +93,7 @@
     }
   }
   @include sp {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #000;
-    color: #ffffff;
-    &__item {
-      flex: 1;
-      margin-left: 0;
-      text-align: center;
-      height: 100%;
-    }
+    display: none;
   }
 }
 

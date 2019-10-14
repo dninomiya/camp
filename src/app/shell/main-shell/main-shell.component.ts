@@ -1,10 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
-import { UiService } from 'src/app/services/ui.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
-import { ChannelService } from 'src/app/services/channel.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { Router, ActivationEnd, ActivatedRoute } from '@angular/router';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-main-shell',
@@ -15,16 +13,21 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('sideNav', {static: true}) sideNav: MatSidenav;
 
   isLoading$ = this.loadingService.isLoading$;
+  noHeader: boolean;
+  isMobile = this.uiService.isMobile;
 
   constructor(
-    private uiService: UiService,
     private loadingService: LoadingService,
     private cd: ChangeDetectorRef,
-    private route: ActivatedRoute,
+    private uiService: UiService,
     private router: Router,
-    private channelService: ChannelService,
-    private authService: AuthService
+    private route: ActivatedRoute
   ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof ActivationEnd) {
+        this.noHeader = this.route.firstChild.snapshot.data.noHeader;
+      }
+    });
   }
 
   ngOnInit() {

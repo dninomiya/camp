@@ -16,6 +16,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { SharedConfirmDialogComponent } from 'src/app/core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { MatSnackBar } from '@angular/material';
 import { SeoService } from 'src/app/services/seo.service';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-lesson',
@@ -32,6 +33,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   lessonId?: string;
   settlementStatus: boolean;
   channel: ChannelMeta;
+  isMobile = this.uiService.isMobile;
   cause$: Observable<LessonList> = this.route.queryParamMap.pipe(
     switchMap(params => {
       const causeId = params.get('cause');
@@ -205,7 +207,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     private paymentService: PaymentService,
     private snackBar: MatSnackBar,
     private seoService: SeoService,
-    private router: Router
+    private router: Router,
+    private uiService: UiService
   ) {
     this.lesson$.subscribe(lesson => {
       this.setMeta(lesson);

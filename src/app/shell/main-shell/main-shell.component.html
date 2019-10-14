@@ -1,10 +1,29 @@
-<app-header></app-header>
+<app-header *ngIf="!isMobile || !noHeader"></app-header>
 <mat-progress-bar
   *ngIf="isLoading$ | async"
   color="accent"
   class="loading"
   mode="indeterminate"
 ></mat-progress-bar>
-<div class="main">
+<div class="main" [class.full]="isMobile && noHeader">
 <router-outlet></router-outlet>
+</div>
+
+<div *ngIf="isMobile" class="bottom-nav">
+  <div class="bottom-nav-item" routerLink="/">
+    <mat-icon class="bottom-nav-item__icon">home</mat-icon>
+    <span class="bottom-nav-item__label">ホーム</span>
+  </div>
+  <div class="bottom-nav-item" routerLink="/search">
+    <mat-icon class="bottom-nav-item__icon">search</mat-icon>
+    <span class="bottom-nav-item__label">検索</span>
+  </div>
+  <div class="bottom-nav-item" [routerLink]="['/forum']" [queryParams]="{ status: 'request' }">
+    <mat-icon class="bottom-nav-item__icon">question_answer</mat-icon>
+    <span class="bottom-nav-item__label">メッセージ</span>
+  </div>
+  <div class="bottom-nav-item" routerLink="/notifications">
+    <mat-icon class="bottom-nav-item__icon">notifications</mat-icon>
+    <span class="bottom-nav-item__label">通知</span>
+  </div>
 </div>

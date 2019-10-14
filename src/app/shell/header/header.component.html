@@ -39,52 +39,54 @@
             class="toolbar__item"
             mat-icon-button
             [routerLink]="['/forum']"
-            [queryParams]="{status: 'request'}"
+            [queryParams]="{ status: 'request' }"
             matTooltip="リクエスト"
           >
             <mat-icon class="mat-18">question_answer</mat-icon>
           </button>
-        </div>
-        <div class="notification">
-          <button
-            mat-icon-button
-            matTooltip="通知"
-            (menuClosed)="clearNotifications()"
-            [matMenuTriggerFor]="alertList"
-          >
-            <mat-icon
-              class="mat-18"
-              matBadgeColor="accent"
-              [matBadge]="unreadCount || null"
-              >notifications</mat-icon
+          <div class="notification">
+            <button
+              mat-icon-button
+              matTooltip="通知"
+              (menuClosed)="clearNotifications()"
+              [matMenuTriggerFor]="alertList"
             >
-          </button>
-          <mat-menu #alertList="matMenu">
-            <ng-container *ngIf="notifications$ | async as notifications">
-              <div *ngIf="notifications?.length; else blankNotification">
-                <mat-list dense>
-                  <mat-list-item
-                    *ngFor="let item of notifications"
-                    class="alert"
-                  >
-                    <h4 mat-line class="alert__title">
-                      {{ item.title
-                      }}<i *ngIf="!item.isRead" class="alert__new"></i>
-                    </h4>
-                    <p mat-line class="alert__date">
-                      {{ item.createdAt | fromNow }}
-                    </p>
-                    <button mat-icon-button *ngIf="item.link">
-                      <mat-icon class="mat-18" [routerLink]="item.link">link</mat-icon>
-                    </button>
-                  </mat-list-item>
-                </mat-list>
-              </div>
-            </ng-container>
-            <ng-template #blankNotification>
-              <p class="blank-notification">お知らせはありません</p>
-            </ng-template>
-          </mat-menu>
+              <mat-icon
+                class="mat-18"
+                matBadgeColor="accent"
+                [matBadge]="unreadCount || null"
+                >notifications</mat-icon
+              >
+            </button>
+            <mat-menu #alertList="matMenu">
+              <ng-container *ngIf="notifications$ | async as notifications">
+                <div *ngIf="notifications?.length; else blankNotification">
+                  <mat-list dense>
+                    <mat-list-item
+                      *ngFor="let item of notifications"
+                      class="alert"
+                    >
+                      <h4 mat-line class="alert__title">
+                        {{ item.title
+                        }}<i *ngIf="!item.isRead" class="alert__new"></i>
+                      </h4>
+                      <p mat-line class="alert__date">
+                        {{ item.createdAt | fromNow }}
+                      </p>
+                      <button mat-icon-button *ngIf="item.link">
+                        <mat-icon class="mat-18" [routerLink]="item.link"
+                          >link</mat-icon
+                        >
+                      </button>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </ng-container>
+              <ng-template #blankNotification>
+                <p class="blank-notification">お知らせはありません</p>
+              </ng-template>
+            </mat-menu>
+          </div>
         </div>
         <button
           class="avatar"
@@ -104,12 +106,12 @@
             <span>Update</span>
           </button>
           <button
-            *ngIf="!isStudio"
+            *ngIf="!isStudio && !isMobile"
             mat-menu-item
             routerLink="/studio/{{ user.id }}"
           >
             <mat-icon>compare_arrows</mat-icon>
-            <span>Update Studio</span>
+            <span>3ML Studio</span>
           </button>
           <button *ngIf="user.admin" mat-menu-item routerLink="/admin">
             <mat-icon>account_circle</mat-icon>

@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   @Input() sideNav?: MatSidenav;
   @Input() isStudio: boolean;
   isLoading = true;
+  noHeader: boolean;
 
   searchParameters = {
     hitsPerPage: 5,
@@ -53,8 +54,9 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private notificationService: NotificationService,
     private uiService: UiService,
-    private channelService: ChannelService
-  ) { }
+    private channelService: ChannelService,
+  ) {
+  }
 
   login() {
     this.authService.login();

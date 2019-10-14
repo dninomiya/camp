@@ -1,4 +1,6 @@
-:host {
+@import "mixins";
+
+.wrap {
   display: grid;
   grid-template-columns: 490px 1fr;
   position: absolute;
@@ -6,6 +8,10 @@
   left: 0;
   bottom: 0;
   right: 0;
+  @include sp {
+    display: block;
+    grid-template-columns: 100vw 100vw;
+  }
 }
 
 .side {
@@ -22,11 +28,33 @@
     flex: 1;
     overflow: auto;
   }
+  @include sp {
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    transform: translateX(0);
+    .is-thread & {
+      transform: translateX(-15%);
+    }
+  }
 }
 
 .thread {
   position: relative;
   overflow: auto;
+  @include sp {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 41px;
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    transform: translateX(100%);
+    background: #fff;
+    z-index: 10;
+    .is-thread & {
+      transform: translateX(0);
+    }
+  }
 }
 
 .alert {
@@ -43,4 +71,14 @@
   button {
     margin-left: 16px;
   }
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  width: 100%;
+  z-index: 100;
+  border-bottom: 1px solid rgba(black, .12);
 }

@@ -1,3 +1,5 @@
+@import "mixins";
+
 .lesson {
   * {
     cursor: pointer;
@@ -26,6 +28,9 @@
   &__meta {
     display: flex;
     align-items: center;
+    @include sp {
+      padding: 0 16px;
+    }
   }
   &__body {
     flex: 1;

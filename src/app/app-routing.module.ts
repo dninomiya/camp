@@ -15,6 +15,9 @@ const routes: Routes = [
   {
     path: '',
     component: MainShellComponent,
+    data: {
+      root: true,
+    },
     children: [
       {
         path: 'lesson',
@@ -27,6 +30,9 @@ const routes: Routes = [
       {
         path: 'forum',
         canLoad: [AuthGuard],
+        data: {
+          noHeader: true
+        },
         loadChildren: () => import('./forum/forum.module').then(m => m.ForumModule),
       },
       {
@@ -46,6 +52,9 @@ const routes: Routes = [
       },
       {
         path: 'search',
+        data: {
+          noHeader: true
+        },
         loadChildren: () => import('./search/search.module').then(m => m.SearchModule),
       },
       {

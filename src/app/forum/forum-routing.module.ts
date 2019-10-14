@@ -9,6 +9,9 @@ const routes: Routes = [
   {
     path: '',
     component: ForumRootComponent,
+    data: {
+      formRoot: true
+    },
     children: [
       {
         path: ':id',

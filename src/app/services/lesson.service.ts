@@ -40,6 +40,7 @@ export class LessonService {
       authorId,
       channelId: authorId,
       createdAt: firestore.Timestamp.now(),
+      updatedAt: firestore.Timestamp.now(),
       viewCount: 0,
       likeCount: 0,
       ...lesson

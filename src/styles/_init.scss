@@ -9,6 +9,12 @@ body {
   color: rgba(black, .87);
 }
 
+html, body {
+  @include sp {
+    height: auto;
+  }
+}
+
 p {
   margin: 0;
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { ForumService } from 'src/app/services/forum.service';
 import { ForumUnreadCount } from 'src/app/interfaces/thread';
 import { AuthService } from 'src/app/services/auth.service';
 import { AngularFireMessaging } from '@angular/fire/messaging';
 import { MatSnackBar } from '@angular/material';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-forum-root',
@@ -11,6 +13,8 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./forum-root.component.scss']
 })
 export class ForumRootComponent implements OnInit {
+
+  isThread: boolean;
 
   tabs = [
     {
@@ -33,8 +37,16 @@ export class ForumRootComponent implements OnInit {
     private authService: AuthService,
     private forumService: ForumService,
     private afMessaging: AngularFireMessaging,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isThread = !this.route.firstChild.snapshot.data.formRoot;
+      }
+    });
+
     this.forumService.getUnreadCount(
       this.authService.user.id
     ).subscribe((count: ForumUnreadCount) => {
