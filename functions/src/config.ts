@@ -5,6 +5,7 @@ export const config: any = {
   tweetTemplate: '\n#update_jp_log',
   dailyGoal: 100,
   dailyPointLimit: 500,
+  fee: 0.15,
   mailTemplate: {
     register: 'd-77e86a7e25c14e99b87e322101e29147',
     deleteAccount: 'd-5d40871a9f2d484f965de9666cffd2a4',

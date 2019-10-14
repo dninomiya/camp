@@ -31,6 +31,7 @@
     "stripe": "^7.8.0",
     "twitter": "^1.7.1",
     "uninstall": "0.0.0",
+    "uuid": "^3.3.3",
     "vimeo": "^2.1.1"
   },
   "devDependencies": {

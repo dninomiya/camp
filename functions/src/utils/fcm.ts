@@ -13,7 +13,7 @@ export const sendFCM = (params: {
     webpush: {
       notification: {
         ...params.notification,
-        icon: 'https://free.update.jp/imgs/logo-400x400.png',
+        icon: 'https://3ml.app/assets/images/fcm-logo.png',
       }
     }
   };

@@ -1,17 +1,9 @@
-import { PlanType } from './plan';
-import { Lesson } from './lesson';
-
 export interface Settlement {
+  readonly id: string;
   readonly createdAt: Date;
-  readonly targetId?: string;
-  readonly lesson?: Lesson;
-  readonly title?: string;
-
-  sellerEmail: string;
-  contentPath: string;
-  amount: number;
-  userId: string;
-  channelId: string;
-  contentId: string;
-  type: 'lesson' | 'cause' | PlanType;
+  readonly title: string;
+  readonly path: string;
+  readonly sellerEmail: string;
+  readonly amount: number;
+  readonly userId: string;
 }

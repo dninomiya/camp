@@ -3,7 +3,8 @@ import {
   db,
   sendFCM,
   sendEmail,
-  addNotification
+  addNotification,
+  sendNotification
 } from './utils';
 
 export const createReply = functions.firestore
@@ -18,33 +19,25 @@ export const createReply = functions.firestore
     const target = await db.doc(`users/${data.thread.targetId}`).get();
     const targetData = target.data();
 
+    const item = {
+      title: `「${data.thread.title}」に返信がありました`,
+      path: `/forum/${data.thread.id}?status=${data.thread.status}`,
+      body: data.body,
+    };
+
     if (targetData) {
-      await sendEmail({
-        to: targetData.email,
-        templateId: 'reply',
-        dynamicTemplateData: {
-          id: data.thread.id,
-          title: data.thread.title
-        }
-      })
-
-      await addNotification(
-        target.id,
-        {
-          title: `「${data.thread.title}」に返信がありました`,
-          url: `/forum/${data.thread.id}?status=${data.thread.status}`
-        }
-      );
-    }
-
-    if (targetData && targetData.fcmToken) {
-      return sendFCM({
-        token: targetData.fcmToken,
-        notification: {
-          title: `${data.thread.title}に返信がありました`,
-          body: data.body,
-          click_action: `http://localhost:4200/forum/${data.thread.id}`
-        }
+      await sendNotification({
+        item: {
+          type: 'reply',
+          ...item
+        },
+        target: {
+          uid: targetData.id,
+          email: targetData.email,
+          fcmToken: targetData.fcmToken,
+          notification: targetData.notification
+        },
+        dynamicTemplateData: item
       });
     }
   });
@@ -60,31 +53,26 @@ export const createThread = functions.firestore
 
     const target = await db.doc(`users/${thread.targetId}`).get();
     const targetData = target.data();
+    const item = {
+      title: `リクエスト「${thread.thread.title}」がありました`,
+      path: `/forum/${thread.id}?status=request`,
+      body: thread.body,
+    };
 
     if (targetData) {
-      await addNotification(target.id, {
-        title: 'リクエストが届きました',
-        url: `/forum/${thread.id}?status=request`
-      });
-
-      await sendEmail({
-        to: targetData.email,
-        templateId: 'request',
-        dynamicTemplateData: {
-          id: thread.id,
-          title: thread.title
-        }
+      await sendNotification({
+        item: {
+          type: 'reply',
+          ...item
+        },
+        target: {
+          uid: targetData.id,
+          email: targetData.email,
+          fcmToken: targetData.fcmToken,
+          notification: targetData.notification
+        },
+        dynamicTemplateData: item
       })
-    }
-
-    if (targetData && targetData.fcmToken) {
-      return sendFCM({
-        token: targetData.fcmToken,
-        notification: {
-          title: `リクエストが届きました`,
-          body: thread.title
-        }
-      });
     }
   });
 
@@ -103,40 +91,31 @@ export const updateThread = functions.firestore
       const target = await db.doc(`users/${thread.authorId}`).get();
       const targetData = target.data();
       const action = after.status === 'open' ? 'オープン' : 'クローズ';
-
       let templateId = thread.status;
-
       if (templateId === 'closed' && thread.isReject) {
         templateId = 'reject';
       }
 
+      const item = {
+        title: `「${thread.title}」が${action}しました`,
+        path: `/forum/${thread.id}?status=${thread.status}`,
+        body: thread.body,
+      };
+
       if (targetData) {
-        await sendEmail({
-          to: targetData.email,
-          templateId,
-          dynamicTemplateData: {
-            id: thread.id,
-            title: thread.title
-          }
+        await sendNotification({
+          item: {
+            type: 'reply',
+            ...item
+          },
+          target: {
+            uid: targetData.id,
+            email: targetData.email,
+            fcmToken: targetData.fcmToken,
+            notification: targetData.notification
+          },
+          dynamicTemplateData: item
         })
-
-        await addNotification(
-          target.id,
-          {
-            title: `「${thread.title}」が${action}しました`,
-            url: `/forum/${thread.id}?status=${thread.status}`
-          }
-        );
-      }
-
-      if (targetData && targetData.fcmToken) {
-        return sendFCM({
-          token: targetData.fcmToken,
-          notification: {
-            title: `リクエストが${action}しました！`,
-            body: thread.title
-          }
-        });
       }
     }
   });
