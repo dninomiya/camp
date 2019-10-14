@@ -113,6 +113,7 @@ export const connectStripe = functions.https.onCall(async (data, context) => {
 
     await db.doc(`users/${context.auth.uid}/private/connect`).set({
       stripeUserId,
+      email: data.email,
       taxId: await createTax(stripeUserId),
       productId,
     });

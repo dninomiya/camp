@@ -15,10 +15,10 @@ export class PlanActionDialogWrapperComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public params: {
       plan: Plan,
       targetId: string,
-      authorId: string
+      authorId: string,
+      sellerEmail: string
     },
     private forumService: ForumService,
-    private notificationService: NotificationService,
     private dialogRef: MatDialogRef<PlanActionDialogWrapperComponent>
   ) { }
 

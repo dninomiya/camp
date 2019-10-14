@@ -1,11 +1,5 @@
 import * as functions from 'firebase-functions';
-import {
-  db,
-  sendFCM,
-  sendEmail,
-  addNotification,
-  sendNotification
-} from './utils';
+import { db, sendNotification, charge } from './utils';
 
 export const createReply = functions.firestore
   .document('threads/{threadId}/replies/{rid}')
@@ -32,7 +26,7 @@ export const createReply = functions.firestore
           ...item
         },
         target: {
-          uid: targetData.id,
+          id: targetData.id,
           email: targetData.email,
           fcmToken: targetData.fcmToken,
           notification: targetData.notification
@@ -62,11 +56,11 @@ export const createThread = functions.firestore
     if (targetData) {
       await sendNotification({
         item: {
-          type: 'reply',
+          type: 'request',
           ...item
         },
         target: {
-          uid: targetData.id,
+          id: targetData.id,
           email: targetData.email,
           fcmToken: targetData.fcmToken,
           notification: targetData.notification
@@ -105,17 +99,41 @@ export const updateThread = functions.firestore
       if (targetData) {
         await sendNotification({
           item: {
-            type: 'reply',
+            type: templateId,
             ...item
           },
           target: {
-            uid: targetData.id,
+            id: targetData.id,
             email: targetData.email,
             fcmToken: targetData.fcmToken,
             notification: targetData.notification
           },
           dynamicTemplateData: item
-        })
+        });
+
+        if (after.status === 'open') {
+          const customer = (await db.doc(`users/${target.id}/private/payment`).get()).data();
+          const customerId = customer && customer.customerId;
+          const seller = (await db.doc(`users/${thread.targetId}/private/connect`).get()).data();
+          const sellerId = seller && seller.stripeUserId;
+
+          await charge({
+            item: {
+              path: item.path,
+              title: item.title,
+              amount: thread.plan.amount
+            },
+            customer: {
+              id: customerId,
+              uid: target.id
+            },
+            seller: {
+              id: sellerId,
+              email: thread.sellerEmail,
+              uid: thread.targetId
+            }
+          });
+        }
       }
     }
   });

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Lesson } from 'src/app/interfaces/lesson';
 import { Observable, combineLatest, Subscription, of, forkJoin, merge } from 'rxjs';
 import { switchMap, tap, take, shareReplay, map } from 'rxjs/operators';
@@ -204,7 +204,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     private listService: ListService,
     private paymentService: PaymentService,
     private snackBar: MatSnackBar,
-    private seoService: SeoService
+    private seoService: SeoService,
+    private router: Router
   ) {
     this.lesson$.subscribe(lesson => {
       this.setMeta(lesson);
@@ -359,19 +360,17 @@ export class LessonComponent implements OnInit, OnDestroy {
     }).afterClosed().subscribe(status => {
       if (status) {
         const snackBar = this.snackBar.open('レッスンを購入しています');
-
         this.settlementStatus = true;
-
         this.paymentService.createCharge({
-          amount: lesson.amount,
-          userId: this.authService.user.id,
-          channelId: this.channel.id,
-          contentId: lesson.id,
-          type: 'lesson',
-          sellerEmail: this.channel.email,
-          title: lesson.title,
-          contentPath: `lesson?v=${lesson.id}`,
-          lesson
+          item: {
+            path: this.router.url,
+            title: lesson.title,
+            body: lesson.body,
+            amount: lesson.amount,
+            type: 'lesson'
+          },
+          sellerUid: lesson.authorId,
+          customerUid: this.authService.user.id
         }).then(() => {
           snackBar.dismiss();
           this.settlementStatus = false;

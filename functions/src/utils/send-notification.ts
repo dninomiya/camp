@@ -13,7 +13,7 @@ export const sendNotification = async (params: {
   },
   target: {
     email: string;
-    uid: string;
+    id: string;
     fcmToken: string;
     notification: {
       purchase?: boolean;
@@ -54,7 +54,7 @@ export const sendNotification = async (params: {
   }
 
   const id = uuidv1();
-  return db.doc(`users/${target.uid}/notifications/${id}`).set({
+  return db.doc(`users/${target.id}/notifications/${id}`).set({
     id,
     createdAt: TimeStamp.now(),
     isRead: false,

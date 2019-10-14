@@ -110,7 +110,17 @@ export class PaymentService {
     return this.db.collection<UserSubscription>(`users/${uid}/subscriptions`).valueChanges();
   }
 
-  createCharge(params: Omit<Settlement, 'createdAt'>): Promise<void> {
+  createCharge(params: {
+    item: {
+      path: string;
+      title: string;
+      body: string;
+      amount: number;
+      type: string;
+    },
+    sellerUid: string;
+    customerUid: string;
+  }): Promise<void> {
     const collable = this.fns.httpsCallable('chargePlan');
     return collable(params).toPromise();
   }

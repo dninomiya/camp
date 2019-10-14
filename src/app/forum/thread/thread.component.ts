@@ -127,21 +127,9 @@ export class ThreadComponent implements OnInit {
       restoreFocus: false
     }).afterClosed().subscribe(status => {
       if (status) {
-        this.paymentService.createCharge({
-          amount: thread.plan.amount,
-          channelId: thread.targetId,
-          userId: thread.authorId,
-          contentId: thread.id,
-          type: thread.plan.type,
-          targetId: thread.targetId,
-          sellerEmail: this.channel.email,
-          title: this.planTitleLabelPipe.transform(thread.plan.type),
-          contentPath: `forum/${thread.id}`
+        this.forumService.updateThread(thread.id, {
+          status: 'open'
         }).then(() => {
-          this.forumService.updateThread(thread.id, {
-            status: 'open'
-          });
-
           this.snackBar.open('承認しました', null, {
             duration: 2000
           });

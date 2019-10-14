@@ -146,7 +146,7 @@ export class ForumService {
   }
 
   async createThread(params: Pick<
-    Thread, 'title' | 'body'| 'plan' | 'targetId' | 'authorId'>): Promise<{
+    Thread, 'title' | 'body'| 'plan' | 'targetId' | 'authorId' | 'sellerEmail'>): Promise<{
     id: string;
     targetId: string;
   }> {

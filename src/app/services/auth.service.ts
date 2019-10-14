@@ -95,7 +95,10 @@ export class AuthService {
         throw new Error(`トークンの有効期限が切れました:${data.path}`);
       } else {
         const callable = this.fns.httpsCallable('connectStripe');
-        await callable({code}).toPromise();
+        await callable({
+          code,
+          email: this.user.email
+        }).toPromise();
         return data.path;
       }
     } else {

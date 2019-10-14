@@ -74,6 +74,7 @@ export class PlanListComponent implements OnInit, OnDestroy {
           plan,
           targetId: this.channel.id,
           authorId: this.authService.user.id,
+          sellerEmail: this.channel.email
         },
         width: '800px',
         restoreFocus: false

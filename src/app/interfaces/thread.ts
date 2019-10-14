@@ -12,6 +12,7 @@ export interface Thread {
   user: ChannelMeta;
   status: ThreadStatus;
   plan: Plan;
+  sellerEmail: string;
   isComplete?: boolean;
   isReject?: boolean;
   rejectReason: string;
