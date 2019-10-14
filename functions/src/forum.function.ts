@@ -117,6 +117,10 @@ export const updateThread = functions.firestore
           const seller = (await db.doc(`users/${thread.targetId}/private/connect`).get()).data();
           const sellerId = seller && seller.stripeUserId;
 
+          if (!seller) {
+            throw new Error('セラーが存在しません');
+          }
+
           await charge({
             item: {
               path: item.path,
@@ -129,7 +133,7 @@ export const updateThread = functions.firestore
             },
             seller: {
               id: sellerId,
-              email: thread.sellerEmail,
+              email: seller.email,
               uid: thread.targetId
             }
           });

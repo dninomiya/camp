@@ -47,7 +47,7 @@ export const sendNotification = async (params: {
       token: target.fcmToken,
       notification: {
         title: item.title,
-        body: item.body.slice(0, 20),
+        body: item.body && item.body.slice(0, 20),
         click_action: item.path
       }
     });
