@@ -3,12 +3,11 @@
 :host {
   display: block;
   padding: 24px 64px 80px;
-  @include sp {
-    padding: 0;
-    padding-bottom: 90px;
-  }
   @include tablet {
     padding: 24px;
+  }
+  @include sp {
+    padding: 0 0 90px;
   }
 }
 

@@ -9,11 +9,11 @@
   max-width: 1200px;
   padding: 0 24px;
   margin: 0 auto;
-  @include sp {
-    padding: 0 16px;
-  }
   @include tablet {
     padding: 0 24px;
+  }
+  @include sp {
+    padding: 0 16px;
   }
   &--wide {
     max-width: 100%;
