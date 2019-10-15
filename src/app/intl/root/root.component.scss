@@ -19,9 +19,9 @@
   &__close {
     margin-bottom: 24px;
     padding: 16px;
-  }
-  @include sp {
-    padding-top: 56px;
+    @include sp {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -71,6 +71,9 @@ mat-nav-list {
 
 .in-intl {
   padding-top: 64px;
+  @include sp {
+    padding-top: 56px;
+  }
 }
 
 .active {

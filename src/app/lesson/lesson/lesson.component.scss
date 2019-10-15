@@ -23,6 +23,10 @@
   @include sp {
     display: block;
   }
+  @include tablet {
+    display: block;
+    gap: 24px;
+  }
 }
 
 .video {
@@ -155,6 +159,9 @@
   @media print {
     display: none;
   }
+  @include tablet {
+    grid-template-columns: 1fr 1fr;
+  }
   > * {
     transition: .8s;
   }
@@ -241,5 +248,8 @@
 .lesson {
   @include sp {
     margin-bottom: 24px;
+  }
+  @include tablet {
+    margin-bottom: 80px;
   }
 }

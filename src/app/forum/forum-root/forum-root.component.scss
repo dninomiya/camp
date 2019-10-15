@@ -8,7 +8,7 @@
   left: 0;
   bottom: 0;
   right: 0;
-  @include sp {
+  @include tablet {
     display: block;
     grid-template-columns: 100vw 100vw;
   }
@@ -28,7 +28,7 @@
     flex: 1;
     overflow: auto;
   }
-  @include sp {
+  @include tablet {
     transition: transform .3s cubic-bezier(.4,0,.2,1);
     transform: translateX(0);
     .is-thread & {
@@ -40,13 +40,13 @@
 .thread {
   position: relative;
   overflow: auto;
-  @include sp {
+  @include tablet {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    padding-top: 41px;
+    padding-top: 56px;
     transition: transform .3s cubic-bezier(.4,0,.2,1);
     transform: translateX(100%);
     background: #fff;
@@ -54,6 +54,9 @@
     .is-thread & {
       transform: translateX(0);
     }
+  }
+  @include sp {
+    padding-top: 0;
   }
 }
 
@@ -74,6 +77,7 @@
 }
 
 .back {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -81,4 +85,15 @@
   width: 100%;
   z-index: 100;
   border-bottom: 1px solid rgba(black, .12);
+  display: none;
+  line-height: 47px;
+  box-sizing: border-box;
+  @include tablet {
+    display: block;
+    top: 56px;
+  }
+  @include sp {
+    top: 0;
+    position: fixed;
+  }
 }

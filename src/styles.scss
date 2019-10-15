@@ -12,6 +12,9 @@
   @include sp {
     padding: 0 16px;
   }
+  @include tablet {
+    padding: 0 24px;
+  }
   &--wide {
     max-width: 100%;
   }
@@ -19,6 +22,10 @@
     max-width: 560px;
     margin: 0 auto;
   }
+}
+
+html, body {
+  height: 100%;
 }
 
 body .loading {
@@ -50,6 +57,9 @@ body .loading {
   gap: 24px 4px;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   margin: 0;
+  @include tablet {
+    padding: 0;
+  }
 }
 
 .plane-dialog .mat-dialog-container {

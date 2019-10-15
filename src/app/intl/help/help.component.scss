@@ -1,3 +1,5 @@
+@import "mixins";
+
 :host {
   display: block;
   margin-bottom: 40px;
@@ -46,6 +48,9 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 400px;
   gap: 24px;
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
 }
 
 

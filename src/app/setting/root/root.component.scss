@@ -3,7 +3,7 @@
 :host {
   display: grid;
   grid-template-columns: 240px 1fr;
-  @include sp {
+  @include xs {
     display: block;
     padding-bottom: 90px;
   }

@@ -7,6 +7,9 @@
     padding: 0;
     padding-bottom: 90px;
   }
+  @include tablet {
+    padding: 24px;
+  }
 }
 
 h2 {

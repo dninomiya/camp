@@ -22,7 +22,7 @@ h2 {
 
 .item {
   display: flex;
-  @include sp {
+  @include xs {
     display: block;
   }
   &__thumbnail {
@@ -31,7 +31,7 @@ h2 {
     padding-bottom: 56%;
     margin-right: 16px;
     cursor: pointer;
-    @include sp {
+    @include xs {
       padding-bottom: 40%;
       margin-bottom: 16px;
       margin-right: 0;

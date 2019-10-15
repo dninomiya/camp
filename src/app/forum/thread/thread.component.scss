@@ -9,9 +9,6 @@
   bottom: 0;
   display: flex;
   flex-flow: column;
-  @include sp {
-    position: static;
-  }
 }
 
 .main {
@@ -19,8 +16,12 @@
   border-bottom: 1px solid rgba(black, .12);
   flex: 1;
   overflow: auto;
+  @include tablet {
+    padding-top: 48px;
+  }
   @include sp {
     padding: 16px;
+    padding-top: 64px;
   }
 }
 
