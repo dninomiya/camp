@@ -6,6 +6,7 @@ import { Observable, combineLatest, Subject, Subscription } from 'rxjs';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-channel-detail',
@@ -32,6 +33,7 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
   isOwner: boolean;
   followerBuff = 0;
   followerCount: number;
+  isMobile = this.uiService.isMobile;
 
   channel$: Observable<ChannelMeta> = this.route.params.pipe(
     switchMap(({id}) => this.channelService.getChannel(id)),
@@ -67,7 +69,7 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private channelService: ChannelService,
-    private dialog: MatDialog
+    private uiService: UiService
   ) { }
 
   ngOnInit() {

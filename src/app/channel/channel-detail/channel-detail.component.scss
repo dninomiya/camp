@@ -1,16 +1,27 @@
+@import "mixins";
+
 .header {
   padding: 24px 24px 0;
   background: #fafafa;
+  @include sp {
+    padding: 16px 0 0;
+  }
   &__row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 24px;
+    @include sp {
+      margin-bottom: 16px;
+    }
   }
 }
 
 .description {
   margin-bottom: 24px;
+  @include sp {
+    margin-bottom: 0;
+  }
 }
 
 .profile {
@@ -22,6 +33,11 @@
     overflow: hidden;
     border-radius: 50%;
     margin-right: 24px;
+    @include sp {
+      margin-right: 16px;
+      width: 40px;
+      height: 40px;
+    }
     img {
       display: block;
       max-width: 100%
@@ -33,14 +49,25 @@
   &__name {
     font-size: 24px;
     line-height: 30px;
+    @include sp {
+      font-size: 14px;
+      line-height: 1.6;
+    }
   }
   &__info {
     font-size: 14px;
     line-height: 21px;
     color: rgba(black, .6);
+    @include sp {
+      font-size: 12px;
+      line-height: 1.6;
+    }
   }
 }
 
 .tab-content {
   padding: 24px 0;
+  @include sp {
+    padding-top: 16px;
+  }
 }

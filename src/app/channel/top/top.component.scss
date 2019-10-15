@@ -1,0 +1,9 @@
+@import "mixins";
+
+:host {
+  @include sp {
+    margin: -16px;
+    display: block;
+    padding-bottom: 90px;
+  }
+}

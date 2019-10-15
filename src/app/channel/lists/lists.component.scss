@@ -1,3 +1,10 @@
+@import "mixins";
+
+:host {
+  display: block;
+  padding-bottom: 90px;
+}
+
 h2 {
   font-size: 16px;
   font-weight: normal;
@@ -15,12 +22,21 @@ h2 {
 
 .item {
   display: flex;
+  @include sp {
+    display: block;
+  }
   &__thumbnail {
     background: #000 center/cover;
     width: 240px;
     padding-bottom: 56%;
     margin-right: 16px;
     cursor: pointer;
+    @include sp {
+      padding-bottom: 40%;
+      margin-bottom: 16px;
+      margin-right: 0;
+      width: 100%;
+    }
   }
   &__body {
     flex: 1;
@@ -29,6 +45,9 @@ h2 {
     font-weight: normal;
     margin: 0 0 8px;
     font-size: 18px;
+    @include sp {
+      font-size: 16px;
+    }
     mat-icon {
       margin-left: 8px;
       vertical-align: -2px;

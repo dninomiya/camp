@@ -3,7 +3,10 @@
 :host {
   display: block;
   padding: 24px 64px 80px;
-  padding: 0;
+  @include sp {
+    padding: 0;
+    padding-bottom: 90px;
+  }
 }
 
 .list {

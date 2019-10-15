@@ -16,6 +16,7 @@
         <div class="actions">
           <button
             mat-flat-button
+            *ngIf="!isMobile"
             color="primary"
             [routerLink]="['/studio', channel.id]"
           >
