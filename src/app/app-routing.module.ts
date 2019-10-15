@@ -58,6 +58,10 @@ const routes: Routes = [
         loadChildren: () => import('./search/search.module').then(m => m.SearchModule),
       },
       {
+        path: 'notifications',
+        loadChildren: () => import('./notification/notification.module').then(m => m.NotificationModule),
+      },
+      {
         path: '',
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
       },
