@@ -1,6 +1,12 @@
+@import "mixins";
+
 :host {
   display: grid;
   grid-template-columns: 240px 1fr;
+  @include sp {
+    display: block;
+    padding-bottom: 90px;
+  }
 }
 
 .nav {

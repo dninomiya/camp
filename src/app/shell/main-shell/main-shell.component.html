@@ -9,7 +9,7 @@
 <router-outlet></router-outlet>
 </div>
 
-<div *ngIf="isMobile" class="bottom-nav">
+<div *ngIf="isMobile && !noBottomNav" class="bottom-nav">
   <div class="bottom-nav-item" routerLink="/">
     <mat-icon class="bottom-nav-item__icon">home</mat-icon>
     <span class="bottom-nav-item__label">ホーム</span>

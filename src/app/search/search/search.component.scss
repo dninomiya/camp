@@ -4,12 +4,28 @@
   display: block;
   padding: 24px 64px 80px;
   @include sp {
-    padding: 0;
-    padding-bottom: 90px;
+    padding: 40px 0 90px;
   }
 }
 
 .list {
   margin-bottom: 40px;
   display: block;
+}
+
+.saerch-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  z-index: 1;
+  app-search-kit {
+    width: 80%;
+    display: block;
+  }
 }

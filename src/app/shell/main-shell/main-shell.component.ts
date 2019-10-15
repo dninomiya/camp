@@ -14,6 +14,7 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isLoading$ = this.loadingService.isLoading$;
   noHeader: boolean;
+  noBottomNav: boolean;
   isMobile = this.uiService.isMobile;
 
   constructor(
@@ -23,9 +24,14 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    const getLastChild = (parent) => {
+      return parent.firstChild ? getLastChild(parent.firstChild) : parent;
+    };
     this.router.events.subscribe(event => {
       if (event instanceof ActivationEnd) {
-        this.noHeader = this.route.firstChild.snapshot.data.noHeader;
+        const lastChild = getLastChild(route.firstChild).snapshot;
+        this.noHeader = lastChild.data.noHeader;
+        this.noBottomNav = lastChild.data.noBottomNav;
       }
     });
   }

@@ -59,9 +59,9 @@ export class ThreadComponent implements OnInit {
       return this.forumService.getReplies(params.get('id'));
     }),
     tap(() => {
-      // setTimeout(() => {
-      //   this.threadBottom.nativeElement.scrollIntoView({ block: 'start' });
-      // }, 100);
+      setTimeout(() => {
+        this.threadBottom.nativeElement.scrollIntoView({ block: 'start' });
+      }, 100);
     })
   );
 

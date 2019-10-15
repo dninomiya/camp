@@ -1,4 +1,4 @@
-<div class="nav">
+<div class="nav" *ngIf="!isMobile">
   <mat-nav-list dense>
     <p matSubheader>設定</p>
     <a mat-list-item routerLink="/setting/account">
@@ -9,6 +9,21 @@
     </a>
   </mat-nav-list>
 </div>
+
+<nav mat-tab-nav-bar>
+  <a mat-tab-link
+      routerLink="/setting/account"
+      routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive">
+    アカウント
+  </a>
+  <a mat-tab-link
+      routerLink="/setting/billing"
+      routerLinkActive #rla2="routerLinkActive"
+      [active]="rla2.isActive">
+    請求とお支払い
+  </a>
+</nav>
 
 <div class="content">
 <router-outlet></router-outlet>

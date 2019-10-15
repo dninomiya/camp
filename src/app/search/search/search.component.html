@@ -1,7 +1,15 @@
+<ais-instantsearch [config]="algoliaConfig">
+  <ais-configure [searchParameters]="searchParameters"> </ais-configure>
+  <div class="saerch-bar mat-elevation-z2">
+    <app-search-kit></app-search-kit>
+  </div>
+</ais-instantsearch>
+
 <ais-instantsearch [config]="algoliaConfig" class="list">
   <ais-configure [searchParameters]="searchParameters"> </ais-configure>
-  <ais-infinite-hits>
-    <ng-template let-hits="hits" let-results="results" let-refine="showMore">
+
+  <ais-hits>
+    <ng-template let-hits="hits" let-results="results">
       <ng-container *ngIf="hits && hits.length">
         <div class="lesson-grid">
           <app-grid-lesson-item
@@ -9,8 +17,8 @@
             [lesson]="hit"
           ></app-grid-lesson-item>
         </div>
-        <div appVisible (visible)="refine($event)"></div>
+
       </ng-container>
     </ng-template>
-  </ais-infinite-hits>
+  </ais-hits>
 </ais-instantsearch>

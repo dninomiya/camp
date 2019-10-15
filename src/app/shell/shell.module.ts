@@ -4,7 +4,6 @@ import { DrawerComponent } from './drawer/drawer.component';
 import { SharedModule } from '../shared/shared.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MainShellComponent } from './main-shell/main-shell.component';
-import { SearchKitComponent } from './search-kit/search-kit.component';
 import { NgAisModule } from 'angular-instantsearch';
 import { StudioShellComponent } from './studio-shell/studio-shell.component';
 
@@ -13,7 +12,6 @@ import { StudioShellComponent } from './studio-shell/studio-shell.component';
     HeaderComponent,
     DrawerComponent,
     MainShellComponent,
-    SearchKitComponent,
     StudioShellComponent,
   ],
   imports: [

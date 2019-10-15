@@ -10,12 +10,17 @@ const routes: Routes = [
     path: '',
     component: ForumRootComponent,
     data: {
-      formRoot: true
+      formRoot: true,
+      noHeader: true
     },
     children: [
       {
         path: ':id',
-        component: ThreadComponent
+        component: ThreadComponent,
+        data: {
+          noBottomNav: true,
+          noHeader: true
+        }
       },
       {
         path: '',

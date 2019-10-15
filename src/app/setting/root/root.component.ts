@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RootComponent implements OnInit {
 
-  constructor() { }
+  isMobile = this.uiService.isMobile;
+
+  constructor(
+    private uiService: UiService
+  ) { }
 
   ngOnInit() {
   }

@@ -47,6 +47,7 @@ import { AttachmentUserPipe } from './attachment-user.pipe';
 import { PlanPerLabelPipe } from './plan-per-label.pipe';
 import { PlanTitleLabelPipe } from './plan-title-label.pipe';
 import { LinkIconPipe } from './link-icon.pipe';
+import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
 
 
 
@@ -70,6 +71,7 @@ import { LinkIconPipe } from './link-icon.pipe';
     PlanPerLabelPipe,
     PlanTitleLabelPipe,
     LinkIconPipe,
+    SearchKitComponent
   ],
   imports: [
     CommonModule,
@@ -90,6 +92,7 @@ import { LinkIconPipe } from './link-icon.pipe';
     HttpClientModule,
     MatMenuModule,
     HttpClientJsonpModule,
+    MatAutocompleteModule
   ],
   exports: [
     CommonModule,
@@ -143,6 +146,7 @@ import { LinkIconPipe } from './link-icon.pipe';
     PlanPerLabelPipe,
     PlanTitleLabelPipe,
     LinkIconPipe,
+    SearchKitComponent
   ]
 })
 export class SharedModule { }

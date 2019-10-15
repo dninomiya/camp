@@ -19,7 +19,6 @@ export class SearchComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) {
     this.route.queryParamMap.subscribe(query => {
-      console.log(query.get('q'));
       this.searchParameters.query = query.get('q');
     });
   }

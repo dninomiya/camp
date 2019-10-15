@@ -58,4 +58,12 @@ export class SearchKitComponent extends BaseWidget implements OnInit {
     });
   }
 
+  saerch(q: string) {
+    this.router.navigate(['/search'], {
+      queryParams: {
+        q
+      }
+    });
+  }
+
 }
