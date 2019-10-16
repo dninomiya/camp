@@ -1,10 +1,4 @@
 export const config: any = {
-  webhook: {
-    discord: 'https://discordapp.com/api/webhooks/590758037061369856/zs74eLZHU6QF5YjvZGAS43p_A3qw5u7cJscvmI0yLLev1CSlTaQGxGG_TMxyeYYg2Arz'
-  },
-  tweetTemplate: '\n#update_jp_log',
-  dailyGoal: 100,
-  dailyPointLimit: 500,
   fee: 0.15,
   mailTemplate: {
     register: 'd-77e86a7e25c14e99b87e322101e29147',
