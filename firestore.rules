@@ -5,9 +5,17 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
     }
 
+    function isOwner(id) {
+      return request.auth.uid === id;
+    }
+
+    function isSafeId(key) {
+      return request.auth.uid === request.resource.data[key];
+    }
+
     match /users/{uid} {
       allow read: if request.auth.uid != null;
-      allow update, delete: if request.auth.uid == uid;
+      allow update, delete: if isOwner(uid);
       allow create: if request.auth.uid != null;
       allow delete: if request.auth.uid == uid;
       match /notifications/{nid} {
