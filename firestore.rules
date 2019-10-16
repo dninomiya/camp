@@ -5,91 +5,76 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
     }
 
-    function isOwner(id) {
-      return request.auth.uid === id;
+    function isSignIn() {
+      return request.auth.uid != null;
     }
 
-    function isSafeId(key) {
-      return request.auth.uid === request.resource.data[key];
+    function isOwner(id) {
+      return request.auth.uid == id;
+    }
+
+    function safeId() {
+      return request.resource.id == resource.data.id;
+    }
+
+    function safeKey(key) {
+      return request.data[key] == resource.data[key];
     }
 
     match /users/{uid} {
-      allow read: if request.auth.uid != null;
-      allow update, delete: if isOwner(uid);
-      allow create: if request.auth.uid != null;
-      allow delete: if request.auth.uid == uid;
-      match /notifications/{nid} {
-        allow read, write: if request.auth.uid == uid;
-      }
-      match /private/{privateData} {
-        allow read, write: if request.auth.uid == uid;
-      }
-      match /likes/{lessonId} {
-        allow read: if true;
-        allow write: if request.auth.uid == uid;
-      }
-      match /settlements/{lessonId} {
-        allow read: if true;
-      }
-      match /connect/account {
-        allow read, write: if request.auth.uid == uid;
-      }
-      match /subscriptions/{pid} {
-        allow read, write: if request.auth.uid == uid;
-      }
+      allow read, write: if isOwner(uid) && safeId();
     }
+
     match /threads/{threadId} {
       allow create: if request.auth.uid != null;
-      allow update: if request.auth.uid == resource.data.targetId;
+      allow update: if request.auth.uid == resource.data.targetId && safeKey('id') && safeKey('targetId') && safeKey('authorId');
       allow read: if request.auth.uid == resource.data.authorId || request.auth.uid == resource.data.targetId;
       match /replies/{replieId} {
         allow read, write: if true;
       }
     }
+
     match /csrf/{doc} {
       allow create: if request.auth.uid == request.resource.data.uid;
       allow read, delete: if request.auth.uid == resource.data.uid;
     }
+
     match /channels/{channelId} {
       allow read: if true;
-      allow write: if request.auth.uid == resource.data.authorId;
+      allow update: if safeKey('id') && isOwner(channelId) && isOwner(resource.data.authorId);
       match /likes/{lessonId} {
-        allow read, write: if request.auth.uid == channelId;
+        allow read, write: if isOwner(channelId)
       }
       match /followers/{uid} {
         allow read: if true
-        allow write: if request.auth.uid == uid;
+        allow write: if isOwner(channelId);
       }
       match /follows/{uid} {
         allow read: if true
-        allow write: if request.auth.uid == channelId;
+        allow write: if isOwner(channelId)
       }
       match /plans/{planId} {
         allow read: if true;
-        allow write: if request.auth.uid == channelId;
-        match /members/{document=**} {
-          allow read, write: if request.auth.uid == channelId;
-        }
-      }
-      match /forum/unread {
-        allow read, write: if true;
+        allow write: if isOwner(channelId);
       }
       match /jobs/data {
-        allow read, write: if true;
+        allow read: if true;
+        allow read: if isOwner(channelId);
       }
       match /reviews/{reviewId} {
-        allow read, write: if true;
+        allow read: if true;
+        allow write: if isSignIn();
       }
     }
     match /lessons/{document=**} {
       allow read: if true;
-      allow create: if request.auth.uid != null;
-      allow write: if request.auth.uid == resource.data.authorId;
+      allow create: if isSignIn();
+      allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
     }
     match /lists/{cid} {
       allow read: if true;
-      allow create: if request.auth.uid != null;
-      allow write: if request.auth.uid == resource.data.authorId;
+      allow create: if isSignIn();
+      allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
     }
   }
 }
