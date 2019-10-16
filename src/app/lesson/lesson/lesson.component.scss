@@ -13,7 +13,7 @@
 .wrap {
   max-width: 1200px;
   display: grid;
-  gap: 40px;
+  gap: 24px;
   grid-template-columns: 1fr 320px;
   margin: 0 auto;
   @media print {
@@ -22,7 +22,6 @@
   }
   @include tablet {
     display: block;
-    gap: 24px;
   }
 }
 
@@ -43,6 +42,9 @@
   padding-bottom: 8px;
   @media print {
     display: none;
+  }
+  @include sp {
+    display: block;
   }
 }
 

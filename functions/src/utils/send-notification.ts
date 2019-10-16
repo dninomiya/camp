@@ -15,7 +15,7 @@ export const sendNotification = async (params: {
     email: string;
     id: string;
     fcmToken: string;
-    notification: {
+    mailSettings: {
       purchase?: boolean;
       reply?: boolean;
     }
@@ -26,10 +26,10 @@ export const sendNotification = async (params: {
 
   let canMail = false;
 
-  if (target.notification) {
-    if (target.notification.purchase && item.type.match(/open|charged/)) {
+  if (target.mailSettings) {
+    if (target.mailSettings.purchase && item.type.match(/open|charged/)) {
       canMail = true;
-    } else if (target.notification.reply && !item.type.match(/open|charged/)) {
+    } else if (target.mailSettings.purchase && !item.type.match(/open|charged/)) {
       canMail = true;
     }
   }

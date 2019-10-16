@@ -10,6 +10,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ChannelMeta } from 'src/app/interfaces/channel';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-header',

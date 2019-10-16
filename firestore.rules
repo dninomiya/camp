@@ -13,16 +13,16 @@ service cloud.firestore {
       return request.auth.uid == id;
     }
 
-    function safeId() {
-      return request.resource.id == resource.data.id;
-    }
-
     function safeKey(key) {
       return request.data[key] == resource.data[key];
     }
 
     match /users/{uid} {
-      allow read, write: if isOwner(uid) && safeId();
+      allow read: if isOwner(uid);
+      allow write: if safeId();
+      match /{document=**} {
+        allow read, write: if isOwner(uid);
+      }
     }
 
     match /threads/{threadId} {

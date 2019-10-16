@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChannelService } from 'src/app/services/channel.service';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,10 @@ export class HomeComponent implements OnInit {
   isLoading = true;
 
   lessons$: Observable<LessonMeta[]> = this.trendService.getTrend().pipe(
-    tap(() => this.isLoading = false)
+    tap(() => {
+      this.isLoading = false;
+      this.loadingService.endLoading();
+    })
   );
 
   follows$: Observable<string[]> = this.authService.authUser$.pipe(
@@ -43,8 +47,10 @@ export class HomeComponent implements OnInit {
     private trendService: TrendService,
     private authService: AuthService,
     private channelService: ChannelService,
-    private seoService: SeoService
+    private seoService: SeoService,
+    private loadingService: LoadingService
   ) {
+    this.loadingService.startLoading();
     this.follows$.subscribe(follows => {
       if (follows.length) {
         const ids = follows.map(id => {

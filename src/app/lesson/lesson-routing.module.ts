@@ -6,6 +6,9 @@ import { LessonComponent } from './lesson/lesson.component';
 const routes: Routes = [
   {
     path: '',
+    data: {
+      noHeader: true
+    },
     component: LessonComponent
   }
 ];

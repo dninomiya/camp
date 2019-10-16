@@ -29,7 +29,7 @@ export const createReply = functions.firestore
           id: targetData.id,
           email: targetData.email,
           fcmToken: targetData.fcmToken,
-          notification: targetData.notification
+          mailSettings: targetData.notification
         },
         dynamicTemplateData: item
       });
@@ -63,7 +63,7 @@ export const createThread = functions.firestore
           id: targetData.id,
           email: targetData.email,
           fcmToken: targetData.fcmToken,
-          notification: targetData.notification
+          mailSettings: targetData.notification
         },
         dynamicTemplateData: item
       })
@@ -106,7 +106,7 @@ export const updateThread = functions.firestore
             id: targetData.id,
             email: targetData.email,
             fcmToken: targetData.fcmToken,
-            notification: targetData.notification
+            mailSettings: targetData.notification
           },
           dynamicTemplateData: item
         });

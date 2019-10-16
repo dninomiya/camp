@@ -102,7 +102,10 @@ export class CardFormComponent implements OnInit, OnDestroy, AfterViewInit {
             this.saveCard.emit(null);
           });
         } else if (result.error) {
-          console.error(result.error.message);
+          this.snackBar.open(result.error.message, null, {
+            duration: 2000
+          });
+          this.isLoading = false;
         }
       });
 

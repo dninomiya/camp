@@ -5,11 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "precopy-index": "ng build --prod",
     "copy-index": "cp dist/workspace/index.html functions/hosting",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod && firebase deploy --only hosting",
+    "deploy": "ng build --prod && firebase deploy --only hosting && firebase deploy --only functions:render",
     "size": "ng build --prod --source-map && node_modules/.bin/source-map-explorer ./dist/workspace/main.*.js"
   },
   "private": true,

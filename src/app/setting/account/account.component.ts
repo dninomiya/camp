@@ -20,8 +20,8 @@ export class AccountComponent implements OnInit {
   ]);
 
   mailForm = this.fb.group({
-    forum: [false],
-    premium: [false],
+    reply: [false],
+    purchase: [false],
   });
 
   constructor(

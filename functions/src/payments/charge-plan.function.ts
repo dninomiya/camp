@@ -44,7 +44,7 @@ export const chargePlan = functions.https.onCall(async (data: {
         email: seller.email,
         id: seller.id,
         fcmToken: seller.fcmToken,
-        notification: seller.notification
+        mailSettings: seller.notification
       },
       dynamicTemplateData: item
     });

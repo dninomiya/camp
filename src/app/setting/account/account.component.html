@@ -6,10 +6,10 @@
 
     <form class="mail-form" [formGroup]="mailForm" (ngSubmit)="udpateMailSettings(user.id)">
       <div class="mail-form__item">
-        <mat-checkbox formControlName="forum">リクエスト、クローズ、リプライ</mat-checkbox>
+        <mat-checkbox formControlName="reply">リクエストやリプライ</mat-checkbox>
       </div>
       <div class="mail-form__item">
-        <mat-checkbox formControlName="premium">有料コンテンツ購入、販売</mat-checkbox>
+        <mat-checkbox formControlName="purchase">有料コンテンツの販売</mat-checkbox>
       </div>
       <button color="primary" [disabled]="mailForm.pristine" mat-flat-button>更新</button>
     </form>
