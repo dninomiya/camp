@@ -366,6 +366,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.settlementStatus = true;
         this.paymentService.createCharge({
           item: {
+            id: lesson.id,
             path: this.router.url,
             title: lesson.title,
             body: lesson.body,

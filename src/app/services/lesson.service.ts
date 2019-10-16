@@ -22,14 +22,10 @@ export class LessonService {
     private http: HttpClient
   ) { }
 
-  async createLesson(authorId: string, lesson: {
-    title: string;
-    videoId?: string;
-    body: string;
-    public: boolean;
-    premium: boolean,
-    price?: number,
-  }): Promise<string> {
+  async createLesson(authorId: string, lesson: Pick<
+    Lesson,
+    'title' | 'videoId' | 'public' | 'premium' | 'amount' | 'body'
+  >): Promise<string> {
     const id = this.db.createId();
     const body = lesson.body;
 
@@ -43,6 +39,7 @@ export class LessonService {
       updatedAt: firestore.Timestamp.now(),
       viewCount: 0,
       likeCount: 0,
+      deleted: false,
       ...lesson
     };
     await this.db.doc(`lessons/${id}`).set(data);

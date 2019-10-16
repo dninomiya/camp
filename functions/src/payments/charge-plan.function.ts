@@ -4,6 +4,7 @@ import { MailTemplate } from '../interfaces';
 
 export const chargePlan = functions.https.onCall(async (data: {
   item: {
+    id: string;
     path: string;
     title: string;
     body: string;

@@ -112,6 +112,7 @@ export class PaymentService {
 
   createCharge(params: {
     item: {
+      id: string;
       path: string;
       title: string;
       body: string;
@@ -134,41 +135,41 @@ export class PaymentService {
   }
 
   getSettlements(uid: string): Observable<Settlement[]> {
-    let items;
+    // let items;
 
     return this.db.collection<Settlement>(`users/${uid}/settlements`, ref => {
       return ref.orderBy('createdAt', 'desc');
-    }).valueChanges().pipe(
-      switchMap(settlements => {
-        items = settlements;
-        const ids = settlements
-          .map(settlement => {
-            if (settlement.targetId) {
-              return settlement.targetId;
-            } else {
-              return null;
-            }
-          }).filter(item => !!item);
+    }).valueChanges();
+    //   switchMap(settlements => {
+    //     items = settlements;
+    //     const ids = settlements
+    //       .map(settlement => {
+    //         if (settlement.targetId) {
+    //           return settlement.targetId;
+    //         } else {
+    //           return null;
+    //         }
+    //       }).filter(item => !!item);
 
-        if (ids.length) {
-          return forkJoin(
-            ids.map(id => this.db.doc<ChannelMeta>(`channels/${id}`).valueChanges().pipe(take(1)))
-          );
-        } else {
-          return of([]);
-        }
-      }),
-      map(channels => {
-        return items.map(item => {
-          if (item.targetId) {
-            item.title = channels.find(channel => channel.id === item.targetId).title;
-          } else if (item.lesson) {
-            item.title = item.lesson.title;
-          }
-          return item;
-        });
-      })
-    );
+    //     if (ids.length) {
+    //       return forkJoin(
+    //         ids.map(id => this.db.doc<ChannelMeta>(`channels/${id}`).valueChanges().pipe(take(1)))
+    //       );
+    //     } else {
+    //       return of([]);
+    //     }
+    //   }),
+    //   map(channels => {
+    //     return items.map(item => {
+    //       if (item.targetId) {
+    //         item.title = channels.find(channel => channel.id === item.targetId).title;
+    //       } else if (item.lesson) {
+    //         item.title = item.lesson.title;
+    //       }
+    //       return item;
+    //     });
+    //   })
+    // );
   }
 
   getReceipt(uid: string, id: string): Observable<Settlement> {

@@ -6,6 +6,7 @@ const stripe = require('stripe')(functions.config().stripe.key);
 
 export const charge = async (data: {
   item: {
+    id: string;
     path: string;
     title: string;
     amount: number;
@@ -36,6 +37,7 @@ export const charge = async (data: {
     });
 
     return addSettlement({
+      id: item.id,
       userId: customer.uid,
       sellerEmail: seller.email,
       title: item.title,

@@ -7,9 +7,10 @@ export interface LessonMeta {
   readonly channelId: string;
   readonly likeCount: number;
   readonly traction?: LessonTraction;
-  readonly deleted?: boolean;
-  readonly updatedAt?: firestore.Timestamp;
+  readonly deleted: boolean;
+  readonly updatedAt: firestore.Timestamp;
   readonly authorId: string;
+  readonly thumbnailURL?: string;
 
   title: string;
   videoId?: string;

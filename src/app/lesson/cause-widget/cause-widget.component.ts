@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, forkJoin, of } from 'rxjs';
 import { LessonList } from 'src/app/interfaces/lesson-list';
-import { switchMap, take, shareReplay } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { LessonService } from 'src/app/services/lesson.service';
-import { ListService } from 'src/app/services/list.service';
-import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SharedConfirmDialogComponent } from 'src/app/core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { DecimalPipe } from '@angular/common';
@@ -12,6 +10,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Lesson } from 'src/app/interfaces/lesson';
 import { ChannelMeta } from 'src/app/interfaces/channel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cause-widget',
@@ -30,13 +29,12 @@ export class CauseWidgetComponent implements OnInit {
 
   constructor(
     private lessonService: LessonService,
-    private listService: ListService,
-    private route: ActivatedRoute,
     private dialog: MatDialog,
     private decimal: DecimalPipe,
     private paymentService: PaymentService,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -79,15 +77,16 @@ export class CauseWidgetComponent implements OnInit {
         this.isRunning = true;
 
         this.paymentService.createCharge({
-          amount: cause.amount,
-          userId: this.authService.user.id,
-          channelId: cause.authorId,
-          contentId: cause.id,
-          type: 'cause',
-          title: cause.title,
-          sellerEmail: this.channel.email,
-          contentPath: `lesson?=${cause.firstLessonId}&cause=${cause.id}`,
-          targetId: cause.authorId
+          item: {
+            id: cause.id,
+            path: this.router.url,
+            title: cause.title,
+            body: cause.description,
+            amount: cause.amount,
+            type: 'cause'
+          },
+          sellerUid: cause.authorId,
+          customerUid: this.authService.user.id
         }).then(() => {
           loading.dismiss();
           this.snackBar.open('コースを購入しました！', null, {

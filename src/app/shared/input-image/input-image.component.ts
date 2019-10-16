@@ -114,6 +114,9 @@ export class InputImageComponent implements OnInit {
   }
 
   async getFile(file) {
+    if (!file) {
+      return;
+    }
     if (file.size / 1000000 > this.options.size.limitMb) {
       this.snackBar.open(`サイズが${this.options.size.limitMb}MBを超えています`, null, {
         duration: 2000

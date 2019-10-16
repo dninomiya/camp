@@ -8,15 +8,14 @@
 >
   <ng-container *ngIf="!src">
     <div class="placeholder__icon">
-      <mat-icon class="mat-18" inline>cloud_upload</mat-icon>
-      <span>ここをクリックorドロップしてください</span>
+      <mat-icon class="mat-18" inline>add_photo_alternate</mat-icon>
     </div>
   </ng-container>
   <input
     type="file"
     (change)="getFile(input.files[0])"
     #input
-    accept="image/*"
+    accept="image/png, image/jpeg"
     style="display: none"
   />
 </label>

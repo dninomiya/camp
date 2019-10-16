@@ -123,6 +123,7 @@ export const updateThread = functions.firestore
 
           await charge({
             item: {
+              id: thread.id,
               path: item.path,
               title: item.title,
               amount: thread.plan.amount

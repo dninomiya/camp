@@ -43,6 +43,15 @@ export class EditorComponent implements OnInit {
     100000,
   ];
 
+  thumbnailOption = {
+    size: {
+      width: 800,
+      height: 400,
+      limitMb: 1
+    }
+  };
+
+  oldThumbnail: string;
   uploadStep$ = this.vimeoService.uploadStep$;
   user$ = this.authService.authUser$;
   lists$: Observable<LessonList[]> = this.user$.pipe(
@@ -137,11 +146,12 @@ export class EditorComponent implements OnInit {
           return of(null);
         }
       }),
-      tap(lesson => {
+      tap((lesson: Lesson) => {
         if (lesson) {
           this.oldLesson = lesson;
           this.opts.autofocus = true;
           this.form.patchValue(lesson);
+          this.oldThumbnail = lesson.thumbnailURL;
         }
         this.isLoading = false;
       }),
@@ -377,4 +387,8 @@ export class EditorComponent implements OnInit {
       autoFocus: false,
     });
   }
+
+  // uploadThumbnail(event) {
+
+  // }
 }

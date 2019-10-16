@@ -6,6 +6,13 @@
     *ngIf="!isLoading"
   >
     <div class="form-header">
+      <div class="thumbnail" matTooltip="サムネイル">
+        <app-input-image
+          [options]="thumbnailOption"
+          [oldSrc]="oldThumbnail"
+          (uploaded)="uploadThumbnail($event)"
+        ></app-input-image>
+      </div>
       <mat-form-field>
         <mat-label>タイトル</mat-label>
         <input
@@ -44,7 +51,7 @@
           required
         />
         <mat-icon (click)="openVideoUploader()" matSuffix
-          >cloud_upload</mat-icon
+          >video_call</mat-icon
         >
       </mat-form-field>
     </div>
