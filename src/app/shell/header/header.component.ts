@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -41,7 +41,11 @@ export class HeaderComponent implements OnInit {
       }
     }),
     switchMap(user => {
-      return this.channelService.getChannel(user.id);
+      if (user) {
+        return this.channelService.getChannel(user.id);
+      } else {
+        return of(null);
+      }
     })
   );
   notifications$: Observable<Notification[]>;

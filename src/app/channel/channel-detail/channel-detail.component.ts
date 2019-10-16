@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { switchMap, tap, first } from 'rxjs/operators';
-import { Observable, combineLatest, Subject, Subscription } from 'rxjs';
+import { Observable, combineLatest, Subject, Subscription, of } from 'rxjs';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -51,7 +51,11 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
     this.channel$
   ]).pipe(
     switchMap(([user, channel]) => {
-      return this.channelService.isFollow(user.id, channel.id);
+      if (user && channel) {
+        return this.channelService.isFollow(user.id, channel.id);
+      } else {
+        return of(null);
+      }
     }),
     tap(() => {
       this.isLoading = false;
@@ -77,8 +81,10 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
       this.authService.authUser$,
       this.channel$
     ]).subscribe(([user, channel]) => {
-      this.uid = user.id;
-      this.isOwner = user.id === channel.authorId;
+      if (user) {
+        this.uid = user.id;
+        this.isOwner = user.id === channel.authorId;
+      }
     });
   }
 
