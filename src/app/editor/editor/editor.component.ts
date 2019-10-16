@@ -44,10 +44,11 @@ export class EditorComponent implements OnInit {
   ];
 
   thumbnailOption = {
+    path: '',
     size: {
       width: 800,
       height: 400,
-      limitMb: 1
+      limitMb: 3
     }
   };
 
@@ -65,6 +66,7 @@ export class EditorComponent implements OnInit {
   causeId: string;
   oldLesson: Lesson;
   isComplete: boolean;
+  thumbnail: string;
   opts: any = {
     autofocus: true,
     toolbar: [
@@ -148,6 +150,7 @@ export class EditorComponent implements OnInit {
       }),
       tap((lesson: Lesson) => {
         if (lesson) {
+          this.thumbnailOption.path = `lessons/${lesson.id}/thumbnail`;
           this.oldLesson = lesson;
           this.opts.autofocus = true;
           this.form.patchValue(lesson);
@@ -204,7 +207,11 @@ export class EditorComponent implements OnInit {
         ...this.form.value
       });
     } else {
-      action =  this.lessonService.createLesson(id, this.form.value);
+      action =  this.lessonService.createLesson(
+        id,
+        this.form.value,
+        this.thumbnail
+      );
     }
 
     action.then((lessonId?: string) => {
@@ -388,7 +395,16 @@ export class EditorComponent implements OnInit {
     });
   }
 
-  // uploadThumbnail(event) {
-
-  // }
+  uploadThumbnail(image: string) {
+    if (this.oldLesson) {
+      this.lessonService.updateLesson(
+        this.oldLesson.id,
+        {
+          thumbnailURL: image
+        }
+      );
+    } else {
+      this.thumbnail = image;
+    }
+  }
 }

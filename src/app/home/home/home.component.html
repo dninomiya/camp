@@ -1,29 +1,26 @@
 <div class="wrap" [class.home-loading]="isLoading">
+  <div class="lesson-grid">
+    <app-grid-lesson-item
+      *ngFor="let lesson of lessons$ | async"
+      [lesson]="lesson"
+    ></app-grid-lesson-item>
+  </div>
 
-<ais-instantsearch [config]="algoliaConfig" class="list">
-  <ais-configure [searchParameters]="searchParameters"> </ais-configure>
-  <ais-infinite-hits>
-    <ng-template let-hits="hits" let-results="results" let-refine="showMore">
-      <ng-container *ngIf="hits && hits.length">
-        <h2>フォロー</h2>
-        <div class="lesson-grid">
-          <app-grid-lesson-item
-            *ngFor="let hit of hits | attachmentUser | async"
-            [lesson]="hit"
-          ></app-grid-lesson-item>
-        </div>
-        <div appVisible (visible)="refine($event)"></div>
-      </ng-container>
-    </ng-template>
-  </ais-infinite-hits>
-</ais-instantsearch>
-
-<h2>新着</h2>
-
-<div class="lesson-grid">
-  <app-grid-lesson-item
-    *ngFor="let lesson of lessons$ | async"
-    [lesson]="lesson"
-  ></app-grid-lesson-item>
-</div>
+  <ais-instantsearch [config]="algoliaConfig" class="list">
+    <ais-configure [searchParameters]="searchParameters"> </ais-configure>
+    <ais-infinite-hits>
+      <ng-template let-hits="hits" let-results="results" let-refine="showMore">
+        <ng-container *ngIf="hits && hits.length">
+          <h2>フォロー</h2>
+          <div class="lesson-grid">
+            <app-grid-lesson-item
+              *ngFor="let hit of hits | attachmentUser | async"
+              [lesson]="hit"
+            ></app-grid-lesson-item>
+          </div>
+          <div appVisible (visible)="refine($event)"></div>
+        </ng-container>
+      </ng-template>
+    </ais-infinite-hits>
+  </ais-instantsearch>
 </div>

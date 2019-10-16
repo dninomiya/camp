@@ -1,5 +1,5 @@
 <div class="lesson" *ngIf="lesson">
-  <figure [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__thumbnail" [style.background-image]="thumbnailURL ? 'url(' + thumbnailURL + ')' : null"></figure>
+  <figure [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__thumbnail" [style.background-image]="lesson.thumbnailURL ? 'url(' + lesson.thumbnailURL + ')' : null"></figure>
   <div class="lesson__meta">
     <div *ngIf="type !== 'simple'" class="lesson__avatar" [routerLink]="['/channel', lesson.author.id]">
       <img [src]="lesson.author.avatarURL | safe:'url'" alt="">

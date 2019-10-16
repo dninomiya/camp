@@ -10,6 +10,7 @@ import { Settlement } from '../interfaces/settlement';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
 import { firestore } from 'firebase/app';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,18 @@ export class LessonService {
     private db: AngularFirestore,
     private fns: AngularFireFunctions,
     private afAuth: AngularFireAuth,
-    private http: HttpClient
+    private http: HttpClient,
+    private storageService: StorageService
   ) { }
 
-  async createLesson(authorId: string, lesson: Pick<
+  async createLesson(
+    authorId: string,
+    lesson: Pick<
     Lesson,
     'title' | 'videoId' | 'public' | 'premium' | 'amount' | 'body'
-  >): Promise<string> {
+    >,
+    thumbnail?: string
+  ): Promise<string> {
     const id = this.db.createId();
     const body = lesson.body;
 
@@ -42,10 +48,16 @@ export class LessonService {
       deleted: false,
       ...lesson
     };
+
+    let thumbnailURL: string;
+    if (thumbnail) {
+      thumbnailURL = await this.storageService.upload(`lessons/${id}/thumbnail`, thumbnail);
+    }
     await this.db.doc(`lessons/${id}`).set(data);
     await this.db.doc(`lessons/${id}/body/content`).set({
       body,
-      authorId
+      authorId,
+      thumbnailURL
     });
     return id;
   }
@@ -111,7 +123,7 @@ export class LessonService {
     id: string,
     data: Partial<Pick<
       Lesson,
-      'title' | 'videoId' | 'public' | 'premium' | 'amount' | 'body'
+      'title' | 'videoId' | 'public' | 'premium' | 'amount' | 'body' | 'thumbnailURL'
     >>
   ): Promise<void> {
     const body = data.body;
