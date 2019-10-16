@@ -196,7 +196,7 @@ export class LessonService {
 
         return forkJoin(
           settlements.map(settlement => {
-            return this.db.doc<LessonList>(`lists/${settlement.contentId}`)
+            return this.db.doc<LessonList>(`lists/${settlement.id}`)
               .valueChanges().pipe(take(1));
           })
         );
