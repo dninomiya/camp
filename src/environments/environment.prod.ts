@@ -5,19 +5,18 @@ export const environment = {
     clientId: 'ca_FZkfKt7eWT2MuxmwLMFaY5T6QtJvkd1n'
   },
   firebase: {
-    apiKey: 'AIzaSyBBijrIOABVxEsybR5pGvD9Zmjb6lmdsHY',
-    authDomain: 'update-229015.firebaseapp.com',
-    databaseURL: 'https://update-229015.firebaseio.com',
-    projectId: 'update-229015',
-    storageBucket: 'update-229015.appspot.com',
-    messagingSenderId: '56884957766'
+    apiKey: 'AIzaSyD4MlPYXXp9_bjLsGmgzGlRYTSrKUTCqzY',
+    authDomain: 'dev-update.firebaseapp.com',
+    databaseURL: 'https://dev-update.firebaseio.com',
+    projectId: 'dev-update',
+    storageBucket: 'dev-update.appspot.com',
+    messagingSenderId: '11098690567',
+    appId: '1:11098690567:web:50dbe85f0c81793b'
   },
   algolia: {
-    config: {
-      appId: 'WVB08E3GUS',
-      apiKey: '301d11ee1a8d253bace02afb4410422c',
-    },
-    indexName: 'lessons'
+    appId: 'WVB08E3GUS',
+    apiKey: '301d11ee1a8d253bace02afb4410422c',
+    indexName: 'lessons-dev'
   },
   captchaKey: '6LdxgLIUAAAAAG7VOix4btA1S51f5kYqPugCNPeu'
 };
