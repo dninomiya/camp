@@ -4,28 +4,17 @@ service cloud.firestore {
     function isAdmin() {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
     }
-    function isFrontRunnerAdmin() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.frontRunnerAdmin == true;
-    }
-
-    function isValidUser() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.plan != 'free';
-    }
 
     match /users/{uid} {
       allow read: if request.auth.uid != null;
-      allow update, delete: if request.auth.uid == uid || isAdmin();
+      allow update, delete: if request.auth.uid == uid;
       allow create: if request.auth.uid != null;
-      allow delete: if request.auth.uid == uid || isAdmin();
+      allow delete: if request.auth.uid == uid;
       match /notifications/{nid} {
-        allow read, write: if request.auth.uid == uid || isAdmin();
-      }
-      match /activities/{aid} {
-        allow read: if request.auth.uid != null;
-        allow write: if request.auth.uid == uid || isAdmin();
+        allow read, write: if request.auth.uid == uid;
       }
       match /private/{privateData} {
-        allow read, write: if request.auth.uid == uid || isAdmin();
+        allow read, write: if request.auth.uid == uid;
       }
       match /likes/{lessonId} {
         allow read: if true;
@@ -41,10 +30,6 @@ service cloud.firestore {
         allow read, write: if request.auth.uid == uid;
       }
     }
-    match /githubUsers/{doc} {
-      allow create: if request.auth.uid != null;
-      allow read, delete, update: if request.auth.uid == resource.data.uid || isAdmin();
-    }
     match /threads/{threadId} {
       allow create: if request.auth.uid != null;
       allow update: if request.auth.uid == resource.data.targetId;
@@ -52,9 +37,6 @@ service cloud.firestore {
       match /replies/{replieId} {
         allow read, write: if true;
       }
-    }
-    match /forcedSithdrawals/{doc} {
-      allow create: if request.auth.uid != null;
     }
     match /csrf/{doc} {
       allow create: if request.auth.uid == request.resource.data.uid;
@@ -100,28 +82,6 @@ service cloud.firestore {
       allow read: if true;
       allow create: if request.auth.uid != null;
       allow write: if request.auth.uid == resource.data.authorId;
-    }
-    match /inviters/{uid} {
-      allow create, update, read: if true;
-      match /targets/{targetId} {
-        allow create: if request.auth.uid != null;
-        allow read: if request.auth.uid == uid;
-      }
-    }
-    match /repos/{id} {
-      allow read: if request.auth.uid != null;
-    }
-    match /inviteCodes/{id} {
-      allow read, delete: if request.auth.uid != null;
-      allow read, write: if isAdmin() || isFrontRunnerAdmin();
-    }
-    match /causes/{document=**} {
-      allow read: if isValidUser();
-      allow write: if isAdmin();
-    }
-    match /camps/{document=**} {
-      allow read: if isValidUser();
-      allow write: if isAdmin();
     }
   }
 }
