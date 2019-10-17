@@ -164,4 +164,20 @@ export class VimeoService {
     return throwError(
       'Something bad happened; please try again later.');
   }
+
+  checkVimeoId(params: {
+    id: string;
+    token: string;
+  }) {
+    return this.http.get(
+      `https://api.vimeo.com/me/videos/${params.id}?fields=name`,
+      {
+        headers: {
+          Authorization: `bearer ${params.token}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/vnd.vimeo.*+json;version=3.4'
+        }
+      }
+    );
+  }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { NgxPicaErrorInterface, NgxPicaService } from '@digitalascetic/ngx-pica';
-import { of, Observable, combineLatest } from 'rxjs';
-import { switchMap, tap, take, shareReplay, debounceTime } from 'rxjs/operators';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { of, Observable, combineLatest, throwError } from 'rxjs';
+import { switchMap, tap, take, shareReplay, debounceTime, map, catchError, delay, distinctUntilChanged, startWith } from 'rxjs/operators';
+import { FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
@@ -21,6 +21,9 @@ import { PlanService } from 'src/app/services/plan.service';
 import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
 import { VimeoService } from 'src/app/services/vimeo.service';
 import { Simplemde } from 'ng2-simplemde';
+import { updatedDiff } from 'deep-object-diff';
+import { VimeoUser } from 'src/app/interfaces/vimeo';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-editor',
@@ -54,7 +57,7 @@ export class EditorComponent implements OnInit {
 
   oldThumbnail: string;
   uploadStep$ = this.vimeoService.uploadStep$;
-  user$ = this.authService.authUser$;
+  user$ = this.authService.authUser$.pipe(shareReplay(1));
   lists$: Observable<LessonList[]> = this.user$.pipe(
     switchMap(user => {
       return this.channelService.getListByChannelId(user.id);
@@ -103,14 +106,20 @@ export class EditorComponent implements OnInit {
     lineNumbers: false,
   };
 
+  vimeoUser: VimeoUser;
   oldLesson$: Observable<Lesson>;
+  isValidWaiting: boolean;
 
   readyImages = [];
 
   form = this.fb.group({
     title: ['', Validators.required],
     body: ['', Validators.required],
-    videoId: ['', Validators.required],
+    videoId: ['', {
+      validators: [Validators.required],
+      asyncValidators: [this.validateVimeoId.bind(this)],
+      updateOn: 'blur'
+    }],
     public: [true, Validators.required],
     premium: [false],
     amount: [{
@@ -135,8 +144,30 @@ export class EditorComponent implements OnInit {
     private lessonService: LessonService,
     private location: Location,
     private listService: ListService,
-    private vimeoService: VimeoService
-  ) {}
+    private vimeoService: VimeoService,
+  ) {
+    this.user$.pipe(
+      switchMap(user => this.vimeoService.getVimeoAccount(user.id))
+    ).subscribe(vimeoUser => {
+      this.vimeoUser = vimeoUser;
+    });
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
 
   ngOnInit() {
     this.isLoading = true;
@@ -196,14 +227,32 @@ export class EditorComponent implements OnInit {
     }
   }
 
+  validateVimeoId(control: AbstractControl) {
+    if (this.vimeoUser) {
+      this.isValidWaiting = true;
+      return this.vimeoService.checkVimeoId({
+        id: control.value,
+        token: this.vimeoUser.token
+      }).pipe(
+        tap(() => this.isValidWaiting = false),
+        map(data => null),
+        catchError(() => of({videoId: true}))
+      );
+    } else {
+      return of(null);
+    }
+  }
+
   submit(id: string) {
     let action;
     const activeListIds = this.listControl.value || [];
 
     if (this.oldLesson) {
+      const newValue = updatedDiff(this.oldLesson, this.form.value);
+
       action = this.lessonService.updateLesson(
         this.oldLesson.id, {
-        ...this.form.value
+        ...newValue
       });
     } else {
       action =  this.lessonService.createLesson(

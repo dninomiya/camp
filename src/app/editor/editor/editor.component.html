@@ -39,9 +39,10 @@
           >
         </mat-select>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="vimeoUser; else connectVimeo">
         <mat-label>動画ID</mat-label>
         <mat-hint><a (click)="openLessonGuide()">ガイドライン</a></mat-hint>
+        <mat-error *ngIf="form.get('videoId').hasError('videoId')">自分の動画ではありません</mat-error>
         <input
           type="text"
           formControlName="videoId"
@@ -54,6 +55,11 @@
           >video_call</mat-icon
         >
       </mat-form-field>
+      <ng-template #connectVimeo>
+        <div class="connect-vimeo">
+          <button mat-raised-button color="primary">Vimeoと接続</button>
+        </div>
+      </ng-template>
     </div>
     <div class="wrap">
       <simplemde
@@ -111,7 +117,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="form.invalid || form.pristine"
+          [disabled]="form.invalid || form.pristine || isValidWaiting"
         >
           {{ oldLesson ? '変更' : '作成' }}
         </button>

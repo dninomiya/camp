@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LessonMeta } from 'src/app/interfaces/lesson';
-import { LessonService } from 'src/app/services/lesson.service';
 
 @Component({
   selector: 'app-grid-lesson-item',
@@ -13,18 +12,8 @@ export class GridLessonItemComponent implements OnInit {
 
   thumbnailURL: string;
 
-  constructor(
-    private lessonService: LessonService
-  ) { }
+  constructor() { }
 
-  ngOnInit() {
-    if (this.lesson.videoId) {
-      this.getThumbnail(this.lesson.videoId);
-    }
-  }
-
-  private async getThumbnail(id: string) {
-    this.thumbnailURL = await this.lessonService.getThumbnail(id);
-  }
+  ngOnInit() {}
 
 }
