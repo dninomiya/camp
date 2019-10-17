@@ -203,7 +203,6 @@ export class EditorComponent implements OnInit {
     if (this.oldLesson) {
       action = this.lessonService.updateLesson(
         this.oldLesson.id, {
-        ...this.oldLesson,
         ...this.form.value
       });
     } else {

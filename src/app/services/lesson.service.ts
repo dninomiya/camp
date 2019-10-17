@@ -197,7 +197,7 @@ export class LessonService {
             .valueChanges();
         }
       }),
-      switchMap((settlements) => {
+      switchMap((settlements: Settlement[] | boolean) => {
         if (settlements === true) {
           return of(true);
         }
@@ -217,7 +217,11 @@ export class LessonService {
         if (causes === false || causes === true) {
           return causes;
         } else {
+
           const inCause =  causes.find(cause => {
+            if (!cause) {
+              return false;
+            }
             if (cause.authorId !== causeAuthorId) {
               return false;
             }

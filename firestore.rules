@@ -70,10 +70,15 @@ service cloud.firestore {
         allow write: if isSignIn();
       }
     }
-    match /lessons/{document=**} {
+    match /lessons/{lessonId} {
       allow read: if true;
       allow create: if isSignIn();
       allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
+      match /body/content {
+        allow read: if true;
+        allow create: if isSignIn();
+        allow update: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.authorId == request.auth.uid;
+      }
     }
     match /lists/{listId} {
       allow read: if true;
