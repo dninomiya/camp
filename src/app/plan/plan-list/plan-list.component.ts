@@ -64,10 +64,6 @@ export class PlanListComponent implements OnInit, OnDestroy {
   }
 
   openPlanDialog(plan: Plan) {
-    if (this.isOwner) {
-      return;
-    }
-
     if (this.customerId) {
       this.dialog.open(PlanActionDialogWrapperComponent, {
         data: {
@@ -96,7 +92,7 @@ export class PlanListComponent implements OnInit, OnDestroy {
         width: '560px'
       });
     } else {
-      alert('ログインしてください');
+      this.authService.openLoginDialog();
     }
   }
 

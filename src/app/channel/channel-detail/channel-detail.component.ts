@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { switchMap, tap, first } from 'rxjs/operators';
-import { Observable, combineLatest, Subject, Subscription, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { Observable, combineLatest, Subscription, of } from 'rxjs';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { UiService } from 'src/app/services/ui.service';
 
 @Component({
@@ -96,6 +95,8 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
     if (this.uid) {
       this.followerBuff++;
       this.channelService.follow(cid, this.uid);
+    } else {
+      this.authService.openLoginDialog();
     }
   }
 

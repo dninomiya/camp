@@ -29,15 +29,15 @@
               (click)="unfollow(channel.id)"
               mat-flat-button
             >
-              登録済み {{ followerCount + followerBuff }}
+              フォロー中{{ followerCount + followerBuff }}
             </button>
             <ng-template #noFollow>
               <button
                 (click)="follow(channel.id)"
-                mat-raised-button
+                mat-flat-button
                 color="primary"
               >
-                チャンネル登録 {{ followerCount + followerBuff }}
+              フォロー {{ followerCount + followerBuff }}
               </button>
             </ng-template>
           </ng-container>

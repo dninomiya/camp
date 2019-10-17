@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material';
 import { SeoService } from 'src/app/services/seo.service';
 import { UiService } from 'src/app/services/ui.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { LoginDialogComponent } from 'src/app/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-lesson',
@@ -311,7 +312,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     if (this.uid) {
       this.lessonService.like(this.uid, id);
     } else {
-      console.log('open dialog');
+      this.authService.openLoginDialog();
     }
   }
 
@@ -324,6 +325,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     if (this.uid) {
       this.followerBuff++;
       this.channelService.follow(cid, this.uid);
+    } else {
+      this.authService.openLoginDialog();
     }
   }
 
@@ -342,15 +345,19 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   openListDialog(lessonId: string, channelId: string) {
-    this.dialog.open(AddListDialogComponent, {
-      width: '400px',
-      autoFocus: false,
-      restoreFocus: false,
-      data: {
-        lessonId,
-        channelId
-      }
-    });
+    if (this.uid) {
+      this.dialog.open(AddListDialogComponent, {
+        width: '400px',
+        autoFocus: false,
+        restoreFocus: false,
+        data: {
+          lessonId,
+          channelId
+        }
+      });
+    } else {
+      this.authService.openLoginDialog();
+    }
   }
 
   chargeLesson(lesson: Lesson) {

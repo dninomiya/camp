@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { User } from '../interfaces/user';
 import * as moment from 'moment';
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,8 @@ export class AuthService {
     private db: AngularFirestore,
     private router: Router,
     private fns: AngularFireFunctions,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.authUser$ = this.afAuth.authState.pipe(
       switchMap((afUser: AfUser) => {
@@ -147,5 +151,20 @@ export class AuthService {
       createdAt: new Date()
     });
     return id;
+  }
+
+  openLoginDialog() {
+    this.dialog.open(LoginDialogComponent, {
+      restoreFocus: false,
+      width: '400px'
+    }).afterClosed().subscribe(status => {
+      if (status) {
+        this.login().then(() => {
+          this.snackBar.open('3MLへようこそ！', null, {
+            duration: 2000
+          });
+        });
+      }
+    });
   }
 }

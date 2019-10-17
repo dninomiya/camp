@@ -28,6 +28,7 @@ import { NgxJsonLdModule } from '@ngx-lite/json-ld';
 import { MailDialogComponent } from './mail-dialog/mail-dialog.component';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ConnectVimeoComponent } from './connect-vimeo/connect-vimeo.component';
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ConnectVimeoComponent } from './connect-vimeo/connect-vimeo.component';
     SharedConfirmDialogComponent,
     ChannelReviewDialogComponent,
     MailDialogComponent,
-    ConnectVimeoComponent
+    ConnectVimeoComponent,
+    LoginDialogComponent
   ],
   imports: [
     SharedModule,
@@ -85,7 +87,8 @@ import { ConnectVimeoComponent } from './connect-vimeo/connect-vimeo.component';
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
     ChannelReviewDialogComponent,
-    MailDialogComponent
+    MailDialogComponent,
+    LoginDialogComponent
   ]
 })
 export class CoreModule { }
