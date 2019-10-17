@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ChannelMeta } from 'src/app/interfaces/channel';
-import { forkJoin, combineLatest } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { ChannelService } from 'src/app/services/channel.service';
 import { PlanService } from 'src/app/services/plan.service';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Job } from 'src/app/interfaces/job';
 import { Plan } from 'src/app/interfaces/plan';
 import { ChannelReviewDialogComponent } from 'src/app/core/channel-review-dialog/channel-review-dialog.component';

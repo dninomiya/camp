@@ -6,13 +6,13 @@
       <div class="video-footer">
         <p class="count">{{ lesson.viewCount | number }} 回視聴</p>
         <div class="actions">
-          <button class="actions__item actions__item--accent" color="accent" mat-button matTooltip="いいね"
+          <button [disabled]="isOwner$ | async" class="actions__item actions__item--accent" color="accent" mat-button matTooltip="いいね"
             *ngIf="isLiked$ | async; else unlikeStatus" (click)="unlike(lesson.id)">
             <mat-icon class="mat-18">thumb_up</mat-icon>
             <span>{{lesson.likeCount + likeBuff}}</span>
           </button>
           <ng-template #unlikeStatus>
-            <button class="actions__item" mat-button matTooltip="いいね" (click)="like(lesson.id)">
+            <button [disabled]="isOwner$ | async" class="actions__item" mat-button matTooltip="いいね" (click)="like(lesson.id)">
               <mat-icon class="mat-18">thumb_up</mat-icon>
               <span>{{lesson.likeCount + likeBuff}}</span>
             </button>
