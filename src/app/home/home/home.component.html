@@ -8,8 +8,8 @@
 
   <ais-instantsearch [config]="algoliaConfig" class="list">
     <ais-configure [searchParameters]="searchParameters"> </ais-configure>
-    <ais-infinite-hits>
-      <ng-template let-hits="hits" let-results="results" let-refine="showMore">
+    <ais-hits>
+      <ng-template let-hits="hits" let-results="results">
         <ng-container *ngIf="hits && hits.length">
           <h2>フォロー</h2>
           <div class="lesson-grid">
@@ -18,9 +18,8 @@
               [lesson]="hit"
             ></app-grid-lesson-item>
           </div>
-          <div appVisible (visible)="refine($event)"></div>
         </ng-container>
       </ng-template>
-    </ais-infinite-hits>
+    </ais-hits>
   </ais-instantsearch>
 </div>

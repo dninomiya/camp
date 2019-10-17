@@ -21,6 +21,7 @@ export class PlanService {
     return this.db.collection<Plan>(`channels/${cid}/plans`)
       .valueChanges().pipe(
         map(plans => {
+          console.log(plans);
           return this.sort
             .map(type => plans.find(plan => plan.type === type))
             .filter(plan => !!plan);

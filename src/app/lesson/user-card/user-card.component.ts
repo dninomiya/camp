@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ChannelMeta } from 'src/app/interfaces/channel';
-import { forkJoin } from 'rxjs';
+import { forkJoin, combineLatest } from 'rxjs';
 import { ChannelService } from 'src/app/services/channel.service';
 import { PlanService } from 'src/app/services/plan.service';
 import { map, take } from 'rxjs/operators';
@@ -32,11 +32,10 @@ export class UserCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    forkJoin([
-      this.channelService.getJobs(this.channel.id).pipe(take(1)),
+    combineLatest([
+      this.channelService.getJobs(this.channel.id),
       this.planService.getPlansByChannelId(this.channel.id).pipe(
         map(plans => plans.filter(plan => plan.active)),
-        take(1)
       ),
     ]).subscribe(([job, plans]) => {
       this.jobs = job;

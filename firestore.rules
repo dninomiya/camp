@@ -14,7 +14,11 @@ service cloud.firestore {
     }
 
     function safeKey(key) {
-      return request.data[key] == resource.data[key];
+      return request.resource.data[key] == resource.data[key];
+    }
+
+    function safeId() {
+      return request.resource.data.id == resource.data.id;
     }
 
     match /users/{uid} {
@@ -71,7 +75,7 @@ service cloud.firestore {
       allow create: if isSignIn();
       allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
     }
-    match /lists/{cid} {
+    match /lists/{listId} {
       allow read: if true;
       allow create: if isSignIn();
       allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
