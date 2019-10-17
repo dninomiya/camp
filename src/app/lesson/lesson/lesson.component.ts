@@ -222,7 +222,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   async setSchema(lesson: Lesson, channel: ChannelMeta) {
-    const image = lesson.videoId ? await this.lessonService.getThumbnail(lesson.videoId) : null;
+    const image = lesson.thumbnailURL;
     this.seoService.setSchema({
       '@type': 'Article',
       mainEntityOfPage: {
@@ -251,7 +251,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   async setMeta(lesson: Lesson) {
-    const image = lesson.videoId ? await this.lessonService.getThumbnail(lesson.videoId) : null;
+    const image = lesson.thumbnailURL;
     this.seoService.generateTags({
       title: lesson.title,
       image,
