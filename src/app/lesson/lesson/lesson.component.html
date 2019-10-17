@@ -1,6 +1,7 @@
 <ng-container *ngIf="channel$ | async as channel">
   <div class="wrap" *ngIf="lesson$ | async as lesson" [class.loading-lesson]="isLoading$ | async">
     <div class="lesson">
+      <ng-container *ngIf="permission$ | async">
       <app-vimeo
         *ngIf="lesson.videoId && (permission$ | async)"
         class="video"
@@ -121,19 +122,20 @@
         <markdown [data]="lesson.body"></markdown>
       </article>
 
+      </ng-container>
+
       <mat-card class="permission" *ngIf="(permission$ | async) === false">
         <h1 class="permission__title">
-          このレッスンを表示する権限がありません。
+          「{{lesson.title}}」は有料です
         </h1>
         <p class="permission__description">
-          「{{ lesson.title }}」
-          は有料レッスンです。レッスン、あるいはこのレッスンが含まれるコースを購入してください。
+          レッスン、あるいはこのレッスンが含まれるコースを購入してください。
         </p>
 
         <div class="permission__items">
           <div class="permission__item">
-            <figure class="permission__icon" style="background-image: url(/assets/images/plan-bg-1.png)">
-              <mat-icon inline class="mat-18">ondemand_video</mat-icon>
+            <figure class="permission__icon" [style.background-image]="'url(' + lesson.thumbnailURL + ')'">
+              <mat-icon inline class="mat-18">lock</mat-icon>
             </figure>
             <h2 class="permission__item-title">レッスンを購入</h2>
             <p class="permission__item-description">購入したレッスンは無期限で見放題になります。</p>
@@ -143,12 +145,12 @@
             color="primary"
             [disabled]="settlementStatus"
           >
-            {{ lesson.amount | number }}円
+            {{ lesson.amount | number }}円<small>税込</small>
           </button>
           </div>
           <div class="permission__item" *ngIf="getParentCause$ | async as parentCause">
-              <figure class="permission__icon" style="background-image: url(/assets/images/plan-bg-2.png)">
-                <mat-icon inline class="mat-18">video_library</mat-icon>
+              <figure class="permission__icon" [style.background-image]="'url(' + parentCause.coverURL + ')'">
+                <mat-icon inline class="mat-18">lock</mat-icon>
               </figure>
               <h2 class="permission__item-title" matLine>{{ parentCause.title }}コースを購入</h2>
               <p class="permission__item-description">コースに含まれているすべてのレッスンが見放題になります。</p>
@@ -157,7 +159,7 @@
                 mat-raised-button
                 color="primary"
               >
-                {{ parentCause.amount | number }}円
+                {{ parentCause.amount | number }}円<small>税込</small>
               </button>
             </div>
         </div>
