@@ -37,7 +37,7 @@ const routes: Routes = [
         component: TermsComponent
       },
       {
-        path: 'contact_us',
+        path: 'contact',
         component: ContactComponent
       },
       {

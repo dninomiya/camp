@@ -17,6 +17,7 @@ import { SharedConfirmDialogComponent } from 'src/app/core/shared-confirm-dialog
 import { MatSnackBar } from '@angular/material';
 import { SeoService } from 'src/app/services/seo.service';
 import { UiService } from 'src/app/services/ui.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-lesson',
@@ -29,7 +30,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   uid: string;
   isCause: boolean;
   causeId?: string;
-  loading = true;
+  loading$ = this.loadingService.isLoading$;
   lessonId?: string;
   settlementStatus: boolean;
   channel: ChannelMeta;
@@ -47,7 +48,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   );
   lesson$: Observable<Lesson> = this.route.queryParamMap.pipe(
     tap(params => {
-      this.isLoading = true;
+      this.loadingService.startLoading();
       this.isCause = !!params.get('cause');
       this.causeId = params.get('cause');
       this.lessonId = params.get('v');
@@ -87,6 +88,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         return of(lesson);
       }
     }),
+    tap(() => this.loadingService.endLoading()),
     shareReplay(1)
   );
 
@@ -162,7 +164,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   );
   followerBuff = 0;
   likeBuff = 0;
-  isLoading = true;
 
   isFollow$: Observable<boolean> = combineLatest([
     this.user$,
@@ -174,9 +175,6 @@ export class LessonComponent implements OnInit, OnDestroy {
       } else {
         return of(null);
       }
-    }),
-    tap(() => {
-      this.isLoading = false;
     })
   );
 
@@ -208,7 +206,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private seoService: SeoService,
     private router: Router,
-    private uiService: UiService
+    private uiService: UiService,
+    private loadingService: LoadingService
   ) {
     this.lesson$.subscribe(lesson => {
       this.setMeta(lesson);

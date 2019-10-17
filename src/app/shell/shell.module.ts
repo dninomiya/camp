@@ -6,6 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MainShellComponent } from './main-shell/main-shell.component';
 import { NgAisModule } from 'angular-instantsearch';
 import { StudioShellComponent } from './studio-shell/studio-shell.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { StudioShellComponent } from './studio-shell/studio-shell.component';
     DrawerComponent,
     MainShellComponent,
     StudioShellComponent,
+    FooterComponent,
   ],
   imports: [
     SharedModule,
