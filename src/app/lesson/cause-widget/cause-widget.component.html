@@ -3,7 +3,6 @@
   <div class="cause__header">
     <div class="cause__header-body">
       <h1 class="cause__title">{{ cause.title }} コース</h1>
-      <p class="cause__description">{{ cause.description }}</p>
     </div>
     <ng-container *ngIf="isPurchased$ | async">
       <button disabled mat-button>購入済み</button>
@@ -17,11 +16,10 @@
 
   <div class="list">
     <mat-nav-list dense>
-      <mat-list-item *ngFor="let lesson of lessons$ | async" [routerLink]="['./']" [queryParams]="{v: lesson.id}" queryParamsHandling="merge"  routerLinkActive="active">
+      <mat-list-item *ngFor="let lesson of lessons$ | async" [routerLink]="['./']" [queryParams]="{v: lesson.id}" queryParamsHandling="merge" routerLinkActive #rla="routerLinkActive">
+        <mat-icon class="mat-18" *ngIf="rla.isActive" matListIcon>double_arrow</mat-icon>
         <h2 class="item__title" matLine>{{ lesson.title }}</h2>
-        <p class="item__info" *ngIf="lesson.amount" matLine>
-          {{ lesson.amount | number }}円
-        </p>
+        <mat-icon class="mat-18" *ngIf="lesson.premium">lock</mat-icon>
       </mat-list-item>
     </mat-nav-list>
   </div>

@@ -38,12 +38,20 @@ export class CauseWidgetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isPurchased$ = this.cause$.pipe(
-      switchMap(cause => {
-        return this.paymentService.checkPurchased(
-          this.authService.user.id,
-          cause.id
-        );
+    this.isPurchased$ = this.authService.authUser$.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.cause$.pipe(
+            switchMap(cause => {
+              return this.paymentService.checkPurchased(
+                this.authService.user.id,
+                cause.id
+              );
+            })
+          );
+        } else {
+          return of(false);
+        }
       })
     );
 

@@ -2,7 +2,12 @@
   &__header {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    background: #f2f2f2;
+    margin: -16px -16px 8px;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(black, .12);
   }
   &__cover {
     padding-bottom: 50%;
@@ -18,7 +23,7 @@
     font-size: 14px;
     font-weight: normal;
     line-height: 1;
-    margin-bottom: 8px;
+    margin: 0;
   }
   &__description {
     font-size: 13px;
@@ -28,4 +33,10 @@
 
 .active {
   background: #fafafa;
+}
+
+.list {
+  mat-icon {
+    color: rgba(black, .38);
+  }
 }

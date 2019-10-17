@@ -134,7 +134,7 @@
 
         <div class="permission__items">
           <div class="permission__item">
-            <figure class="permission__icon" [style.background-image]="'url(' + lesson.thumbnailURL + ')'">
+            <figure class="permission__icon" [style.background-image]="'url(' + (lesson.thumbnailURL ? lesson.thumbnailURL : '/assets/images/plan-bg-1.png') + ')'">
               <mat-icon inline class="mat-18">lock</mat-icon>
             </figure>
             <h2 class="permission__item-title">レッスンを購入</h2>
