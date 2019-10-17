@@ -177,7 +177,7 @@
   &__title {
     font-size: 16px;
     font-weight: normal;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
   }
   &__description {
     margin-bottom: 24px;
@@ -193,10 +193,11 @@
     margin: -24px;
     margin-bottom: 24px;
     color: #ffffff;
-    background: #000;
+    background: center/cover no-repeat;
     mat-icon {
       font-size: 56px;
       padding: 56px;
+      opacity: 0.6;
     }
   }
   &__item {

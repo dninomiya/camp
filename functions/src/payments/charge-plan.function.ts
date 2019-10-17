@@ -29,7 +29,7 @@ export const chargePlan = functions.https.onCall(async (data: {
     await charge({
       item,
       customer: {
-        id: customer.stripeUserId,
+        id: customer.customerId,
         uid: data.customerUid
       },
       seller: {

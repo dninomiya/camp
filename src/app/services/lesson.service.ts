@@ -192,9 +192,11 @@ export class LessonService {
       switchMap(inLesson => {
         if (inLesson) {
           return of(true);
-        } else {
+        } else if (uid) {
           return this.db.collection<Settlement>(`users/${uid}/settlements`, ref => ref.where('type', '==', 'cause'))
             .valueChanges();
+        } else {
+          return of(false);
         }
       }),
       switchMap((settlements: Settlement[] | boolean) => {

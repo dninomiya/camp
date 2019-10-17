@@ -375,11 +375,16 @@ export class LessonComponent implements OnInit, OnDestroy {
           sellerUid: lesson.authorId,
           customerUid: this.authService.user.id
         }).then(() => {
-          snackBar.dismiss();
-          this.settlementStatus = false;
           this.snackBar.open('レッスンを購入しました', null, {
             duration: 2000
           });
+        }).catch(() => {
+          this.snackBar.open('購入できませんでした', null, {
+            duration: 2000
+          });
+        }).finally(() => {
+          snackBar.dismiss();
+          this.settlementStatus = false;
         });
       }
     });

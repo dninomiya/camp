@@ -132,7 +132,7 @@
 
         <div class="permission__items">
           <div class="permission__item">
-            <figure class="permission__icon">
+            <figure class="permission__icon" style="background-image: url(/assets/images/plan-bg-1.png)">
               <mat-icon inline class="mat-18">ondemand_video</mat-icon>
             </figure>
             <h2 class="permission__item-title">レッスンを購入</h2>
@@ -141,12 +141,13 @@
             mat-raised-button
             (click)="chargeLesson(lesson)"
             color="primary"
+            [disabled]="settlementStatus"
           >
             {{ lesson.amount | number }}円
           </button>
           </div>
           <div class="permission__item" *ngIf="getParentCause$ | async as parentCause">
-              <figure class="permission__icon">
+              <figure class="permission__icon" style="background-image: url(/assets/images/plan-bg-2.png)">
                 <mat-icon inline class="mat-18">video_library</mat-icon>
               </figure>
               <h2 class="permission__item-title" matLine>{{ parentCause.title }}コースを購入</h2>
