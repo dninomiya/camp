@@ -51,7 +51,7 @@ const createTax = (stripe_account: string): Promise<{
 const createProduct = async (stripe_account: string): Promise<string> => {
   const result = await stripe.products.create(
     {
-      name: 'Update',
+      name: '3ML',
       type: 'service',
     },
     {

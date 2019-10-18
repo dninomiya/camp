@@ -22,7 +22,7 @@ const createChannelCustomer = async (data: {
   }
 
   const customer = await stripe.customers.create({
-    description: 'Updateカスタマー',
+    description: '3MLカスタマー',
     email: user.email,
     name: user.name,
     source: token.id

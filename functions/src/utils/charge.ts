@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import { config } from '../config';
 import { addSettlement } from './add-settlements';
+import { db } from './db';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
@@ -26,6 +27,12 @@ export const charge = async (data: {
   if (!item || !seller || !customer) {
     throw new Error('決済に必要な情報が不足しています');
   } else {
+    const isExists = (await db.doc(`users/${customer.uid}/settlements/${item.id}`).get()).exists;
+
+    if (isExists) {
+      throw new Error('既に購入済です')
+    }
+
     await stripe.charges.create({
       amount: item.amount,
       currency: 'jpy',
