@@ -10,6 +10,7 @@
         mat-icon-button
         (click)="openPlanHelpDialog(plan, $event)"
         (mousedown)="$event.stopPropagation()"
+        (touchdown)="$event.stopPropagation()"
       >
         <mat-icon class="icon">info</mat-icon>
       </button>

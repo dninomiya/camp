@@ -1,10 +1,19 @@
+@import "mixins";
+
 .wrap {
   padding: 40px 24px;
   text-align: center;
+  @include sp {
+    padding: 0;
+    margin-bottom: 24px;
+  }
 }
 
 .header {
   margin: -24px -24px 0;
+  @include sp {
+    margin: 0 -24px 16px;
+  }
   img {
     display: block;
     max-width: 100%;
@@ -24,6 +33,9 @@ h1 {
   margin-bottom: 24px;
   font-weight: normal;
   line-height: 1;
+  @include sp {
+    margin-bottom: 16px;
+  }
 }
 
 .amount {
@@ -48,4 +60,7 @@ mat-form-field {
 
 textarea {
   height: 240px;
+  @include sp {
+    height: 160px;
+  }
 }
