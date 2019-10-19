@@ -11,7 +11,8 @@ const routes: Routes = [
     component: ForumRootComponent,
     data: {
       formRoot: true,
-      noHeader: true
+      noHeader: true,
+      noBottomNav: true,
     },
     children: [
       {

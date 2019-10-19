@@ -12,7 +12,10 @@ export const sendEmail = (data: {
   dynamicTemplateData?: { [key: string]: any },
 }) => {
   return sgMail.send({
-    from: 'noreply@3ml.app',
+    from: {
+      email: 'noreply@3ml.app',
+      name: '3ML'
+    },
     ...data,
     templateId: config.mailTemplate[data.templateId]
   });

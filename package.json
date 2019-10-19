@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "sw-copy": "concat dist/workspace/ngsw-worker.js src/fcm.js -o dist/workspace/combined-worker.js",
+    "sw-copy": "concat dist/workspace/ngsw-worker.js src/firebase-messaging-sw.js -o dist/workspace/combined-worker.js",
     "index-copy": "cp dist/workspace/index.html functions/hosting",
     "deploy": "firebase deploy --only hosting,functions:render",
     "prerelease": "ng build --prod",

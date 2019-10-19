@@ -17,7 +17,7 @@ import { shareReplay, tap } from 'rxjs/operators';
 export class VimeoDialogComponent implements OnInit {
 
   private clientId = '45622d0c9345317a2482c24ecbdc9f3552eda034';
-  private redirectURI = 'http://localhost:4200/connect-vimeo';
+  private redirectURI = '/connect-vimeo';
   private scopes = 'private edit upload public';
 
   isOver: boolean;
@@ -75,12 +75,14 @@ export class VimeoDialogComponent implements OnInit {
   }
 
   connectVimeo() {
+    const host = location.protocol + '//' +  location.hostname;
+
     this.authService.createSCRF({
       uid: this.authService.user.id,
       path: this.router.url
     }).then((csrf) => {
       location.href = `https://api.vimeo.com/oauth/authorize?response_type=code&` +
-      `client_id=${this.clientId}&redirect_uri=${this.redirectURI}` +
+      `client_id=${this.clientId}&redirect_uri=${host}${this.redirectURI}` +
       `&state=${csrf}&scope=${this.scopes}`;
     });
   }

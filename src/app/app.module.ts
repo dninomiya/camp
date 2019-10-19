@@ -22,7 +22,7 @@ registerLocaleData(localeJa);
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    ServiceWorkerModule.register('combined-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [LogUpdateService, {provide: LOCALE_ID, useValue: 'ja-JP'}],
   bootstrap: [AppComponent]
