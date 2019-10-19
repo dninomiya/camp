@@ -3,6 +3,7 @@ import * as request from 'request';
 import { db } from './utils';
 
 const clientId = functions.config().vimeo.client_id;
+const isProd = functions.config().env.mode === 'prod';
 const clientSecret = functions.config().vimeo.client_secret;
 
 export const connectVimeo = functions.https.onCall(async (data, context) => {
@@ -24,7 +25,7 @@ export const connectVimeo = functions.https.onCall(async (data, context) => {
         json: {
           code: data.code,
           grant_type: 'authorization_code',
-          redirect_uri: 'http://localhost:4200/connect-vimeo'
+          redirect_uri: isProd ? 'https://3ml.app/connect-vimeo' : 'http://localhost:4200/connect-vimeo'
         }
       }, (error, res, body) => {
         if (!error && res.statusCode === 200) {
