@@ -9,7 +9,7 @@ const useragent = require('express-useragent');
 const generateUrl = (req: any) => {
   return url.format({
     protocol: 'https',
-    host: 'dev-update.firebaseapp.com',
+    host: functions.config().env.mode === 'prod' ? '3ml.app' : 'dev-update.firebaseapp.com',
     pathname: req.originalUrl
   });
 };
@@ -21,19 +21,12 @@ app.use(useragent.express());
 
 app.get('*', async (req: any, res: any) => {
   if (req.useragent.isBot) {
-    console.log(`Bot access: ${req.headers['user-agent']}`);
-
     const response = await fetch(
       `https://rendertron-255005.appspot.com/render/${generateUrl(req)}`
     );
     const body = await response.text();
-
-    console.log(`https://rendertron-255005.appspot.com/render/${generateUrl(req)}`);
-    console.log(body.toString());
-
     res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     res.set('Vary', 'User-Agent');
-
     res.send(body.toString());
   } else {
     res

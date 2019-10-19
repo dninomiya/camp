@@ -10,7 +10,6 @@
     ]
   },
   "hosting": {
-    "target": "dev-update",
     "public": "dist/workspace",
     "ignore": [
       "firebase.json",

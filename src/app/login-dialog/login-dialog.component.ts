@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login-dialog',
