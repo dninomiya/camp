@@ -1,14 +1,6 @@
 {
   "projects": {
-    "dev": "dev-update"
-  },
-  "targets": {
-    "dev-update": {
-      "hosting": {
-        "dev-update": [
-          "dev-update"
-        ]
-      }
-    }
+    "dev": "dev-update",
+    "prod": "tml-prod-74d27"
   }
 }

@@ -9,6 +9,7 @@ import { AboutComponent } from './about/about.component';
 import { PressComponent } from './press/press.component';
 import { GuidelineComponent } from './guideline/guideline.component';
 import { ContactComponent } from './contact/contact.component';
+import { LegalComponent } from './legal/legal.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'press',
         component: PressComponent
+      },
+      {
+        path: 'legal',
+        component: LegalComponent
       },
       {
         path: 'guideline',

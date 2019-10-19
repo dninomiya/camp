@@ -12,6 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PressComponent } from './press/press.component';
 import { GuidelineComponent } from './guideline/guideline.component';
 import { ContactComponent } from './contact/contact.component';
+import { LegalComponent } from './legal/legal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ContactComponent } from './contact/contact.component';
     AboutComponent,
     PressComponent,
     GuidelineComponent,
-    ContactComponent
+    ContactComponent,
+    LegalComponent
   ],
   imports: [
     SharedModule,

@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   stripe: {
-    publicKey: 'pk_test_Yg50CIMc6lUIYD8heFmaAYnj',
-    clientId: 'ca_FZkfKt7eWT2MuxmwLMFaY5T6QtJvkd1n'
+    publicKey: 'pk_test_lKq5jlH5mdbAxDeBfB4f0sn400ZYUYdpvH',
+    clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ'
   },
   firebase: {
     apiKey: 'AIzaSyD4MlPYXXp9_bjLsGmgzGlRYTSrKUTCqzY',
