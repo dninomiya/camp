@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "predeploy": "concat dist/workspace/ngsw-worker.js src/fcm.js -o dist/workspace/combined-worker.js",
     "deploy": "ng build --prod && firebase deploy --only hosting && cp dist/workspace/index.html functions/hosting && firebase deploy --only functions:render",
     "size": "ng build --prod --source-map && node_modules/.bin/source-map-explorer ./dist/workspace/main.*.js"
   },
@@ -71,6 +72,7 @@
     "@types/node": "~12.7.4",
     "@types/tus-js-client": "^1.7.0",
     "codelyzer": "^5.0.1",
+    "concat": "^1.0.3",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",
