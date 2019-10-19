@@ -44,7 +44,9 @@ export class VimeoDialogComponent implements OnInit {
     this.vimeoAccount$ = this.vimeoService.getVimeoAccount(this.user.id)
       .pipe(tap(user => {
         this.loading = false;
-        this.uploadQuota = user.uploadQuota.periodic;
+        if (user) {
+          this.uploadQuota = user.uploadQuota.periodic;
+        }
       }));
   }
 

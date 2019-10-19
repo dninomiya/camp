@@ -3,7 +3,7 @@ import * as request from 'request';
 import { db } from './utils';
 
 const clientId = functions.config().vimeo.client_id;
-const clientSecret = functions.config().vimeo.client_sercet;
+const clientSecret = functions.config().vimeo.client_secret;
 
 export const connectVimeo = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -36,6 +36,7 @@ export const connectVimeo = functions.https.onCall(async (data, context) => {
     });
   } catch (error) {
     console.error(error);
+    console.log(error);
     throw new Error(error);
   }
 

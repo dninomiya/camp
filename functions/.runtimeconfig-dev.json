@@ -10,7 +10,7 @@
     "token": "1/IqBSRxEFXTJNcnXAy8kqpDNhMKmJ53QIaatq2PLbXK4"
   },
   "vimeo": {
-    "client_sercret": "EIpT+LS5j1ioGaFWINFiVKBw7S1KYsyq68o6C+8r1zjIk2rqBAjA4g15iY/l0j2wAtTlooInbVwiTzIEZcs/ZsRLFhcBG+5bK0VzSqT96jVTLhjjSCGOHL8Yyed8LDrL",
+    "client_secret": "EIpT+LS5j1ioGaFWINFiVKBw7S1KYsyq68o6C+8r1zjIk2rqBAjA4g15iY/l0j2wAtTlooInbVwiTzIEZcs/ZsRLFhcBG+5bK0VzSqT96jVTLhjjSCGOHL8Yyed8LDrL",
     "client_id": "45622d0c9345317a2482c24ecbdc9f3552eda034"
   },
   "stripe": {

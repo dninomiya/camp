@@ -57,7 +57,7 @@
       </mat-form-field>
       <ng-template #connectVimeo>
         <div class="connect-vimeo">
-          <button mat-raised-button color="primary">Vimeoと接続</button>
+          <button type="button" mat-raised-button (click)="openVideoUploader()" color="primary">Vimeoと接続</button>
         </div>
       </ng-template>
     </div>

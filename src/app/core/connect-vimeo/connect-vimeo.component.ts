@@ -25,9 +25,9 @@ export class ConnectVimeoComponent implements OnInit {
           .catch(error => {
             if (error) {
               console.error(error);
-              // this.snackBar.open(errorMessage, null, {
-              //   duration: 2000
-              // });
+              this.snackBar.open('連携に失敗しました', null, {
+                duration: 2000
+              });
             }
           });
       } else {

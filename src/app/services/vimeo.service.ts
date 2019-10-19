@@ -27,7 +27,7 @@ export class VimeoService {
     return this.db.doc(`users/${uid}/private/vimeo`)
       .valueChanges().pipe(
         switchMap((vimeo: {token: string}) => {
-          if (vimeo.token) {
+          if (vimeo && vimeo.token) {
             tmpToken = vimeo.token;
             return this.http.get(
               'https://api.vimeo.com/me',
