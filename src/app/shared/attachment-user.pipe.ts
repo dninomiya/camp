@@ -10,16 +10,19 @@ export class AttachmentUserPipe implements PipeTransform {
   constructor(private channelService: ChannelService) {}
 
   transform(datas: any[], ...args: any[]): any {
+    if (!datas.length) {
+      return [];
+    }
     return combineLatest(
       datas
       .map(data => data.authorId)
       .filter((uid, i, self) => self.indexOf(uid) === i)
       .map(uid => this.channelService.getChannel(uid))
     ).pipe(
-      map(users => {
+      map(channels => {
         return datas.filter(data => !data.deleted).map(data => {
-          data.author = users.find(user => {
-            return user.id === data.authorId;
+          data.author = channels.find(channel => {
+            return channel && channel.id === data.authorId;
           });
           return data;
         });

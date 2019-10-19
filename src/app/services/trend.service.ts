@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { Lesson, LessonMeta } from '../interfaces/lesson';
 import { switchMap, first, take } from 'rxjs/operators';
 import { UtilService } from './util.service';
@@ -20,7 +20,11 @@ export class TrendService {
       return ref.orderBy('createdAt', 'desc').limit(40);
     }).valueChanges().pipe(
       switchMap(lessons => {
-        return this.utilService.attachChannel(lessons);
+        if (lessons.length) {
+          return this.utilService.attachChannel(lessons);
+        } else {
+          return of([]);
+        }
       })
     );
   }

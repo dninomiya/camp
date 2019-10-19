@@ -1,4 +1,5 @@
 import { firestore } from 'firebase/app';
+import { ChannelMeta } from './channel';
 
 export interface LessonMeta {
   readonly id: string;
@@ -39,3 +40,7 @@ export interface LessonBody {
 }
 
 export interface Lesson extends LessonMeta, LessonBody {}
+
+export interface LessonMetaWithChannel extends LessonMeta {
+  author: ChannelMeta;
+}
