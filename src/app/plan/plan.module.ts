@@ -12,6 +12,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MAT_DATE_LOCALE, MatDatepickerModule } from '@angular/material';
 import { JobListComponent } from './job-list/job-list.component';
 import { JobDialogComponent } from './job-dialog/job-dialog.component';
+import { UserCardComponent } from './user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { JobDialogComponent } from './job-dialog/job-dialog.component';
     PremiumDialogComponent,
     JobListComponent,
     JobDialogComponent,
+    UserCardComponent
   ],
   imports: [
     SharedModule,
@@ -34,6 +36,7 @@ import { JobDialogComponent } from './job-dialog/job-dialog.component';
   exports: [
     PlanListComponent,
     JobListComponent,
+    UserCardComponent
   ],
   entryComponents: [
     PlanDialogComponent,

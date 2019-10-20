@@ -10,7 +10,9 @@
         (dragover)="onDragOver($event)"
         (dragleave)="onDragLeave($event)"
         (drop)="onDrop($event)"
-        [style.background-image]="avatarImage ? 'url(' + avatarImage + ')' : null"
+        [style.background-image]="
+          avatarImage ? 'url(' + avatarImage + ')' : null
+        "
       >
         <input
           type="file"
@@ -63,117 +65,7 @@
           {{ maxLength.description }}</mat-hint
         >
       </mat-form-field>
-    </mat-card>
 
-    <mat-card>
-      <h3>宣伝</h3>
-
-      <p>レッスンのサイドバーで宣伝したいバナーを設定してください。(400 x 240px）</p>
-
-      <form [formGroup]="adsForm" (ngSubmit)="updateAdsStatus()">
-        <div class="ads" *ngIf="adsOptions.path">
-          <app-input-image
-            [options]="adsOptions"
-            [oldSrc]="adsSrc"
-            (uploaded)="uploadAds($event)"
-          ></app-input-image>
-        </div>
-
-        <mat-form-field>
-          <mat-label>リンク先</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="url"
-            autocomplete="off"
-            placeholder="https://"
-            required
-          />
-        </mat-form-field>
-
-        <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
-
-        <button
-          mat-flat-button
-          color="primary"
-          [disabled]="adsForm.invalid || adsForm.pristine"
-        >
-          保存
-        </button>
-      </form>
-    </mat-card>
-
-    <mat-card>
-      <h3>案件相談</h3>
-
-      <p class="info">希望の条件で案件相談窓口を表示します。</p>
-
-      <form [formGroup]="jobForm" (ngSubmit)="saveJob()">
-        <div
-          *ngFor="let control of jobForm.controls; let i = index"
-          [formGroupName]="i"
-        >
-          <mat-form-field>
-            <mat-label>タイトル</mat-label>
-            <input type="text" formControlName="title" placeholder="新規サービス開発" matInput autocomplete="off">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>1日の単価</mat-label>
-            <input
-              type="number"
-              matInput
-              formControlName="amount"
-              autocomplete="off"
-              placeholder="50,000"
-            />
-            <span matSuffix>円/日</span>
-            <mat-hint>0の場合応相談となります</mat-hint>
-          </mat-form-field>
-
-          <h4>ワークスタイル</h4>
-
-          <mat-radio-group formControlName="style" class="radios">
-            <mat-radio-button value="出社">出社</mat-radio-button>
-            <mat-radio-button value="リモート">リモート</mat-radio-button>
-            <mat-radio-button value="不問">不問</mat-radio-button>
-          </mat-radio-group>
-
-          <mat-form-field>
-            <mat-label>概要</mat-label>
-            <textarea
-              matInput
-              class="description"
-              formControlName="description"
-              placeholder="Angular と Firebaseによる新規プロダクト開発を行います。"
-              required
-            ></textarea>
-          </mat-form-field>
-
-          <div class="job-item-actions">
-            <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
-            <button mat-button *ngIf="jobForm.controls.length > 1" (click)="removeJob(i)">削除</button>
-          </div>
-
-          <mat-divider inset></mat-divider>
-        </div>
-
-        <div class="job-form-actions">
-          <button mat-button (click)="addJob()">
-            追加
-          </button>
-
-          <button
-            mat-flat-button
-            color="primary"
-            [disabled]="jobForm.invalid || jobForm.pristine"
-          >
-            保存
-          </button>
-        </div>
-      </form>
-    </mat-card>
-
-    <mat-card>
       <h3>リンク</h3>
 
       <div formArrayName="links">
@@ -202,16 +94,138 @@
         <span>追加</span>
         <mat-icon inline class="mat-18">add_circle_outline</mat-icon>
       </button>
-    </mat-card>
 
-    <div class="actions">
-      <button
-        [disabled]="form.invalid || form.pristine"
-        mat-raised-button
-        color="primary"
-      >
-        更新
-      </button>
-    </div>
+      <div class="actions">
+        <button
+          [disabled]="form.invalid || form.pristine"
+          mat-raised-button
+          color="primary"
+        >
+          更新
+        </button>
+      </div>
+    </mat-card>
   </form>
+
+  <mat-card>
+    <h3>宣伝</h3>
+
+    <p>
+      レッスンのサイドバーで宣伝したいバナーを設定してください。(400 x 240px）
+    </p>
+
+    <form [formGroup]="adsForm" (ngSubmit)="updateAdsStatus()">
+      <div class="ads" *ngIf="adsOptions.path">
+        <app-input-image
+          [options]="adsOptions"
+          [oldSrc]="adsSrc"
+          (uploaded)="uploadAds($event)"
+        ></app-input-image>
+      </div>
+
+      <mat-form-field>
+        <mat-label>リンク先</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="url"
+          autocomplete="off"
+          placeholder="https://"
+          required
+        />
+      </mat-form-field>
+
+      <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
+
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="adsForm.invalid || adsForm.pristine"
+      >
+        保存
+      </button>
+    </form>
+  </mat-card>
+
+  <mat-card>
+    <h3>案件相談</h3>
+
+    <p class="info">希望の条件で案件相談窓口を表示します。</p>
+
+    <form [formGroup]="jobForm" (ngSubmit)="saveJob()">
+      <div
+        *ngFor="let control of jobForm.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <mat-form-field>
+          <mat-label>タイトル</mat-label>
+          <input
+            type="text"
+            formControlName="title"
+            placeholder="新規サービス開発"
+            matInput
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>1日の単価</mat-label>
+          <input
+            type="number"
+            matInput
+            formControlName="amount"
+            autocomplete="off"
+            placeholder="50,000"
+          />
+          <span matSuffix>円/日</span>
+          <mat-hint>0の場合応相談となります</mat-hint>
+        </mat-form-field>
+
+        <h4>ワークスタイル</h4>
+
+        <mat-radio-group formControlName="style" class="radios">
+          <mat-radio-button value="出社">出社</mat-radio-button>
+          <mat-radio-button value="リモート">リモート</mat-radio-button>
+          <mat-radio-button value="不問">不問</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field>
+          <mat-label>概要</mat-label>
+          <textarea
+            matInput
+            class="description"
+            formControlName="description"
+            placeholder="Angular と Firebaseによる新規プロダクト開発を行います。"
+            required
+          ></textarea>
+        </mat-form-field>
+
+        <div class="job-item-actions">
+          <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
+          <button
+            mat-button
+            *ngIf="jobForm.controls.length > 1"
+            (click)="removeJob(i)"
+          >
+            削除
+          </button>
+        </div>
+
+        <mat-divider inset></mat-divider>
+      </div>
+
+      <div class="job-form-actions">
+        <button mat-button (click)="addJob()">
+          追加
+        </button>
+
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="jobForm.invalid || jobForm.pristine"
+        >
+          保存
+        </button>
+      </div>
+    </form>
+  </mat-card>
 </ng-container>

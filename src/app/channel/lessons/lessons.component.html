@@ -1,5 +1,11 @@
-<ul class="lesson-grid">
-  <li *ngFor="let lesson of lessons$ | async">
-    <app-grid-lesson-item [lesson]="lesson"></app-grid-lesson-item>
-  </li>
-</ul>
+<ng-container *ngIf="lessons$ | async as lessons">
+  <ul class="lesson-grid" *ngIf="lessons.length; else blank">
+    <li *ngFor="let lesson of lessons$ | async">
+      <app-grid-lesson-item [lesson]="lesson"></app-grid-lesson-item>
+    </li>
+  </ul>
+  <ng-template #blank>
+    <p class="blank">レッスンはありません</p>
+  </ng-template>
+</ng-container>
+<p class="blank">レッスンはありません</p>

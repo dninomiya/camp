@@ -63,7 +63,7 @@ service cloud.firestore {
       }
       match /jobs/data {
         allow read: if true;
-        allow read: if isOwner(channelId);
+        allow write: if isOwner(channelId);
       }
       match /reviews/{reviewId} {
         allow read: if true;

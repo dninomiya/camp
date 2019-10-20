@@ -1,1 +1,7 @@
-<app-plan-list *ngIf="channel$ | async as channel" [channel]="channel"></app-plan-list>
+<div *ngIf="channel$ | async as channel" class="wrap">
+<app-user-card
+*ngIf="user$ | async as user"
+[channel]="channel"
+[isOwner]="channel.authorId === user.id"
+></app-user-card>
+</div>
