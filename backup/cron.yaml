@@ -2,4 +2,4 @@ cron:
 - description: "Daily Cloud Firestore Export"
   url: /cloud-firestore-export?outputUriPrefix=gs://3ml
   target: cloud-firestore-admin
-  schedule: every 24 hours
+  schedule: 1 of month 09:00
