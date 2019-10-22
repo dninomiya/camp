@@ -71,3 +71,19 @@ export const updateLesson = functions.firestore
 
     return updateIndex(body);
   });
+
+export const deleteLesson = functions.firestore
+  .document('lessons/{lessonId}')
+  .onDelete(async (snapshot, context) => {
+    const lesson = snapshot.data();
+
+    if (!lesson) {
+      throw new Error('データが不正です');
+    }
+
+    if (lesson.public) {
+      await countDown(`channels/${lesson.channelId}`, 'statistics.publicLessonCount');
+    }
+    await countDown(`channels/${lesson.channelId}`, 'statistics.lessonCount');
+    return removeIndex(lesson.id);
+  });
