@@ -54,7 +54,7 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
     AngularFireFunctionsModule,
     AngularFireMessagingModule,
     HttpClientModule,
-    RecaptchaModule,
+RecaptchaModule,
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {

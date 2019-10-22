@@ -24,7 +24,7 @@
           required
         />
       </mat-form-field>
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-label>タグ</mat-label>
         <mat-chip-list #chipList aria-label="Tag selection">
           <mat-chip
@@ -58,7 +58,12 @@
             {{ tag }}
           </mat-option>
         </mat-autocomplete>
-      </mat-form-field>
+      </mat-form-field> -->
+      <div>
+        <ais-instantsearch [config]="algoliaConfig">
+          <app-refinement-list></app-refinement-list>
+        </ais-instantsearch>
+      </div>
       <mat-form-field *ngIf="(lists$ | async)?.length; else newList">
         <mat-label>コース</mat-label>
         <mat-select

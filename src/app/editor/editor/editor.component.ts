@@ -24,6 +24,7 @@ import { Simplemde } from 'ng2-simplemde';
 import { updatedDiff } from 'deep-object-diff';
 import { VimeoUser } from 'src/app/interfaces/vimeo';
 import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editor',
@@ -55,6 +56,7 @@ export class EditorComponent implements OnInit {
     }
   };
 
+  algoliaConfig = environment.algolia;
   oldThumbnail: string;
   uploadStep$ = this.vimeoService.uploadStep$;
   user$ = this.authService.authUser$.pipe(shareReplay(1));

@@ -48,6 +48,8 @@ import { PlanPerLabelPipe } from './plan-per-label.pipe';
 import { PlanTitleLabelPipe } from './plan-title-label.pipe';
 import { LinkIconPipe } from './link-icon.pipe';
 import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
+import { RefinementListComponent } from './refinement-list/refinement-list.component';
+import { MatChipsModule } from '@angular/material';
 
 
 
@@ -71,7 +73,8 @@ import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
     PlanPerLabelPipe,
     PlanTitleLabelPipe,
     LinkIconPipe,
-    SearchKitComponent
+    SearchKitComponent,
+    RefinementListComponent
   ],
   imports: [
     CommonModule,
@@ -86,6 +89,7 @@ import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
     MatCheckboxModule,
     MatDividerModule,
     MatIconModule,
+    MatChipsModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
     SafePipeModule,
@@ -146,7 +150,8 @@ import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
     PlanPerLabelPipe,
     PlanTitleLabelPipe,
     LinkIconPipe,
-    SearchKitComponent
+    SearchKitComponent,
+    RefinementListComponent
   ]
 })
 export class SharedModule { }

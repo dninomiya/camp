@@ -18,6 +18,7 @@ export interface LessonMeta {
   public: boolean;
   premium: boolean;
   amount?: number;
+  tags?: string[];
 }
 
 export interface LessonTraction {

@@ -11,6 +11,7 @@ import { LessonGuideComponent } from './lesson-guide/lesson-guide.component';
 import { EditorHelpComponent } from './editor-help/editor-help.component';
 import { NgxFilesizeModule } from 'ngx-filesize';
 import { VimeoDialogComponent } from './vimeo-dialog/vimeo-dialog.component';
+import { NgAisModule } from 'angular-instantsearch';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { VimeoDialogComponent } from './vimeo-dialog/vimeo-dialog.component';
     NgxPicaModule,
     NgxFilesizeModule,
     MatDialogModule,
+    NgAisModule,
     SimplemdeModule.forRoot({
       provide: SIMPLEMDE_CONFIG,
       useValue: {
