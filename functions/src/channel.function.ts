@@ -29,12 +29,12 @@ export const follow = functions.firestore
     await db.doc(`channels/${context.params.uid}/follows/${context.params.cid}`).set({
       channelId: context.params.cid
     })
-    return countUp(`channels/${context.params.cid}`, 'followerCount');
+    return countUp(`channels/${context.params.cid}`, 'statistics.followerCount');
   });
 
 export const unfollow = functions.firestore
   .document('channels/{cid}/followers/{uid}')
   .onDelete(async (snap, context) => {
     await db.doc(`channels/${context.params.uid}/follows/${context.params.cid}`).delete();
-    return countDown(`channels/${context.params.cid}`, 'followerCount');
+    return countDown(`channels/${context.params.cid}`, 'statistics.followerCount');
   });

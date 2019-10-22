@@ -14,11 +14,20 @@
   border-bottom: 1px solid rgba(black, .12);
   display: flex;
   justify-content: space-between;
-  background: #f4f4f4;
+  background: #fafafa;
+  mat-icon {
+    color: rgba(black, .6);
+  }
   h2 {
     font-size: 14px;
     font-weight: normal;
     margin: 0;
+    display: flex;
+    align-items: center;
+    color: rgba(black, .6);
+    mat-icon {
+      margin-right: 16px;
+    }
   }
 }
 
@@ -26,13 +35,13 @@
   height: 100%;
   overflow: auto;
   border-right: 1px solid rgba(black, .12);
-  mat-icon {
-    color: rgba(black, .6);
-  }
   .privacy {
     color: rgba(black, .38);
   }
   mat-list-item {
+    mat-icon {
+      color: rgba(black, .6);
+    }
     cursor: pointer;
     &:hover {
       background: #fafafa;

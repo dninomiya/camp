@@ -5,11 +5,9 @@ export interface ChannelMeta {
   authorId: string;
   title: string;
   coverURL: string;
-  followerCount: number;
   avatarURL: string;
   description?: string;
   contact: string;
-  lessonCount: number;
   links?: string[];
   createdAt: Date;
   reviewCount?: number;
@@ -31,6 +29,8 @@ export interface ChannelStatistics {
   totalLikeCount: number;
   totalLikedCount: number;
   publicLessonCount: number;
+  followerCount: number;
+  lessonCount: number;
 }
 
 export interface Follower {

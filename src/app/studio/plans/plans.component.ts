@@ -43,14 +43,14 @@ export class PlansComponent implements OnInit {
   ).pipe(map(channel => {
     this.isLoading = false;
     this.nowStatus = {
-      followerCount: channel.followerCount,
+      followerCount: channel.statistics.followerCount,
       ...channel.statistics
     };
     return channel.statistics &&
       channel.statistics.publicLessonCount >= this.limit.publicLessonCount &&
       channel.statistics.totalLikedCount >= this.limit.totalLikedCount &&
       channel.statistics.totalLikeCount >= this.limit.totalLikeCount &&
-      channel.followerCount >= this.limit.followerCount;
+      channel.statistics.followerCount >= this.limit.followerCount;
   }));
 
   constructor(

@@ -38,7 +38,7 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
     switchMap(({id}) => this.channelService.getChannel(id)),
     tap(channel => {
       if ( channel) {
-        this.followerCount = channel.followerCount;
+        this.followerCount = channel.statistics.followerCount;
       } else {
         this.router.navigate(['not-found']);
       }

@@ -11,8 +11,13 @@ const createChannel = (user: UserRecord) => {
     coverURL: '',
     avatarURL: user.photoURL,
     createdAt: new Date(),
-    followerCount: 0,
-    lessonCount: 0,
+    statistics: {
+      followerCount: 0,
+      lessonCount: 0,
+      publicLessonCount: 0,
+      totalLikeCount: 0,
+      totalLikedCount: 0
+    },
     email: user.email,
     unreadThread: {
       open: 0,

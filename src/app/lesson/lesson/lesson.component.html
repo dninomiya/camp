@@ -103,7 +103,7 @@
               (click)="unfollow(channel.id)"
               mat-flat-button
             >
-              フォロー中 {{ channel.followerCount + followerBuff }}
+              フォロー中 {{ channel.statistics.followerCount + followerBuff }}
             </button>
             <ng-template #noFollow>
               <button
@@ -111,7 +111,7 @@
                 mat-flat-button
                 color="primary"
               >
-                フォロー {{ channel.followerCount + followerBuff }}
+                フォロー {{ channel.statistics.followerCount + followerBuff }}
               </button>
             </ng-template>
           </div>
