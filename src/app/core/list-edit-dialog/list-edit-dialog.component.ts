@@ -66,7 +66,8 @@ export class ListEditDialogComponent implements OnInit {
     private authService: AuthService,
     private planService: PlanService,
     @Inject(MAT_DIALOG_DATA) public list?: LessonList
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.form.get('premium').valueChanges.subscribe(status => {
@@ -84,6 +85,9 @@ export class ListEditDialogComponent implements OnInit {
   }
 
   update() {
+    if (this.form.invalid) {
+      return;
+    }
     if (this.list) {
       this.listService.updateList({
         id: this.list.id,

@@ -24,46 +24,11 @@
           required
         />
       </mat-form-field>
-      <!-- <mat-form-field>
+      <mat-form-field>
         <mat-label>タグ</mat-label>
-        <mat-chip-list #chipList aria-label="Tag selection">
-          <mat-chip
-            *ngFor="let tag of tags"
-            [selectable]="selectable"
-            [removable]="removable"
-            (removed)="remove(tag)"
-          >
-            {{ tag }}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-          </mat-chip>
-          <input
-            placeholder=""
-            #fruitInput
-            formControlName="tags"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur"
-            (matChipInputTokenEnd)="add($event)"
-          />
-        </mat-chip-list>
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          (optionSelected)="selected($event)"
-        >
-          <mat-option
-            *ngFor="let tag of filteredTags$ | async"
-            [value]="tag"
-          >
-            {{ tag }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field> -->
-      <div>
-        <ais-instantsearch [config]="algoliaConfig">
-          <app-refinement-list></app-refinement-list>
-        </ais-instantsearch>
-      </div>
+        <input type="text" matInput formControlName="tags" readonly>
+        <mat-icon (click)="openTagEditor()" class="mat-18" matSuffix>edit</mat-icon>
+      </mat-form-field>
       <mat-form-field *ngIf="(lists$ | async)?.length; else newList">
         <mat-label>コース</mat-label>
         <mat-select
@@ -82,6 +47,7 @@
       <ng-template #newList>
         <div class="cause-section">
           <button
+            type="button"
             mat-stroked-button
             color="primary"
             (click)="openNewListDialog(user.id)"

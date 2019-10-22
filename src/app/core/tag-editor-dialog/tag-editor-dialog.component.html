@@ -1,0 +1,14 @@
+<h1 matDialogTitle>タグを編集</h1>
+
+<mat-dialog-content>
+  <div>
+    <ais-instantsearch [config]="algoliaConfig">
+      <app-refinement-list [old]="oldTags" (result)="updateTags($event)"></app-refinement-list>
+    </ais-instantsearch>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button mat-flat-button (click)="saveTags()" [disabled]="tags.pristine" color="primary">保存</button>
+</mat-dialog-actions>

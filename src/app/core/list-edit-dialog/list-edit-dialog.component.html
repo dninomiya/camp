@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>再生リストを編集</h2>
+<h2 mat-dialog-title>再生リストを{{list ? '編集' : '作成'}}</h2>
 
 <mat-dialog-content>
   <form [formGroup]="form">
@@ -13,7 +13,7 @@
 
     <h3>カバー</h3>
     <div class="cover">
-      <app-input-image [oldSrc]="list.coverURL" (file)="getFile($event)" [options]="imageOpts"></app-input-image>
+      <app-input-image [oldSrc]="list?.coverURL" (file)="getFile($event)" [options]="imageOpts"></app-input-image>
     </div>
 
     <mat-slide-toggle class="premium" formControlName="premium">プレミアム</mat-slide-toggle>
@@ -38,6 +38,6 @@
     [disabled]="form.invalid || form.pristine"
     (click)="update()"
   >
-    編集
+    {{list ? '編集' : '作成'}}
   </button>
 </mat-dialog-actions>

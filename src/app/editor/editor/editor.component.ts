@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { NgxPicaErrorInterface, NgxPicaService } from '@digitalascetic/ngx-pica';
-import { of, Observable, combineLatest, throwError } from 'rxjs';
-import { switchMap, tap, take, shareReplay, debounceTime, map, catchError, delay, distinctUntilChanged, startWith } from 'rxjs/operators';
+import { of, Observable, combineLatest } from 'rxjs';
+import { switchMap, tap, take, shareReplay, debounceTime, map, catchError } from 'rxjs/operators';
 import { FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,6 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { Lesson } from 'src/app/interfaces/lesson';
 import { LessonList } from 'src/app/interfaces/lesson-list';
 import { AuthService } from 'src/app/services/auth.service';
-import { NewListDialogComponent } from '../new-list-dialog/new-list-dialog.component';
 import { LessonService } from 'src/app/services/lesson.service';
 import { Location } from '@angular/common';
 import { ListService } from 'src/app/services/list.service';
@@ -23,8 +22,9 @@ import { VimeoService } from 'src/app/services/vimeo.service';
 import { Simplemde } from 'ng2-simplemde';
 import { updatedDiff } from 'deep-object-diff';
 import { VimeoUser } from 'src/app/interfaces/vimeo';
-import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ListEditDialogComponent } from 'src/app/core/list-edit-dialog/list-edit-dialog.component';
+import { TagEditorDialogComponent } from 'src/app/core/tag-editor-dialog/tag-editor-dialog.component';
 
 @Component({
   selector: 'app-editor',
@@ -156,22 +156,6 @@ export class EditorComponent implements OnInit {
     });
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
-
   ngOnInit() {
     this.isLoading = true;
     this.oldLesson$ = this.route.queryParams.pipe(
@@ -249,6 +233,10 @@ export class EditorComponent implements OnInit {
   submit(id: string) {
     let action;
     const activeListIds = this.listControl.value || [];
+
+    if (this.form.invalid) {
+      return;
+    }
 
     if (this.oldLesson) {
       const newValue = updatedDiff(this.oldLesson, this.form.value);
@@ -422,10 +410,9 @@ export class EditorComponent implements OnInit {
   }
 
   openNewListDialog(uid: string) {
-    this.dialog.open(NewListDialogComponent, {
+    this.dialog.open(ListEditDialogComponent, {
       maxWidth: 600,
       maxHeight: '80vh',
-      data: { uid }
     }).afterClosed().subscribe(status => {
       if (status) {
         this.snackBar.open('リストを追加しました', null, {
@@ -457,5 +444,17 @@ export class EditorComponent implements OnInit {
     } else {
       this.thumbnail = image;
     }
+  }
+
+  openTagEditor() {
+    this.dialog.open(TagEditorDialogComponent, {
+      restoreFocus: false,
+      width: '800px',
+      data: this.form.get('tags').value
+    }).afterClosed().subscribe(tags => {
+      if (tags) {
+        this.form.get('tags').patchValue(tags);
+      }
+    });
   }
 }

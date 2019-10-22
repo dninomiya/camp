@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewListDialogComponent } from './new-list-dialog.component';
+import { TagEditorDialogComponent } from './tag-editor-dialog.component';
 
-describe('NewListDialogComponent', () => {
-  let component: NewListDialogComponent;
-  let fixture: ComponentFixture<NewListDialogComponent>;
+describe('TagEditorDialogComponent', () => {
+  let component: TagEditorDialogComponent;
+  let fixture: ComponentFixture<TagEditorDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewListDialogComponent ]
+      declarations: [ TagEditorDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewListDialogComponent);
+    fixture = TestBed.createComponent(TagEditorDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

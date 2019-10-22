@@ -6,10 +6,9 @@ import { Subject, combineLatest, BehaviorSubject } from 'rxjs';
 import { LessonService } from 'src/app/services/lesson.service';
 import { LessonList } from 'src/app/interfaces/lesson-list';
 import { MatDialog } from '@angular/material/dialog';
-import { ListEditDialogComponent } from '../list-edit-dialog/list-edit-dialog.component';
+import { ListEditDialogComponent } from '../../core/list-edit-dialog/list-edit-dialog.component';
 import { ListDeleteDialogComponent } from '../list-delete-dialog/list-delete-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { NewListDialogComponent } from 'src/app/editor/new-list-dialog/new-list-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -112,12 +111,9 @@ export class ListsComponent implements OnInit {
   }
 
   openAddListDialog() {
-    this.dialog.open(NewListDialogComponent, {
+    this.dialog.open(ListEditDialogComponent, {
       maxWidth: 600,
-      maxHeight: '80vh',
-      data: {
-        uid: this.channelId
-      }
+      maxHeight: '80vh'
     });
   }
 

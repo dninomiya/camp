@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, forwardRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Inject, forwardRef, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
 import { NgAisInstantSearch, BaseWidget } from 'angular-instantsearch';
 import { connectRefinementList } from 'instantsearch.js/es/connectors';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -13,6 +13,8 @@ import { lang } from 'moment';
 })
 export class RefinementListComponent extends BaseWidget implements OnInit {
 
+  @Output() result = new EventEmitter();
+  @Input() old?;
   @ViewChild('tagInput', {static: false}) tagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
 
@@ -45,6 +47,10 @@ export class RefinementListComponent extends BaseWidget implements OnInit {
       attribute: 'tags'
     });
     super.ngOnInit();
+
+    if (this.old) {
+      this.tags = this.old.map(label => ({label}));
+    }
   }
 
   add(event: MatChipInputEvent): void {
@@ -66,6 +72,7 @@ export class RefinementListComponent extends BaseWidget implements OnInit {
       }
 
       this.tagControl.setValue(null);
+      this.result.emit(this.tags);
     }
   }
 
@@ -85,10 +92,11 @@ export class RefinementListComponent extends BaseWidget implements OnInit {
 
     if (index >= 0) {
       this.tags.splice(index, 1);
+      this.result.emit(this.tags);
     }
   }
 
-  isExsists(value: string): boolean {
+  private isExsists(value: string): boolean {
     return !!this.tags.find(tag => tag.label === value);
   }
 
@@ -97,6 +105,7 @@ export class RefinementListComponent extends BaseWidget implements OnInit {
       this.tags.push(event.option.value);
       this.tagInput.nativeElement.value = '';
       this.tagControl.setValue(null);
+      this.result.emit(this.tags);
     }
   }
 

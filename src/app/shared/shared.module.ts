@@ -123,6 +123,7 @@ import { MatChipsModule } from '@angular/material';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatChipsModule,
     MatSnackBarModule,
     SafePipeModule,
     MarkdownModule,

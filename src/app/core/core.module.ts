@@ -18,7 +18,6 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { CardDialogComponent } from '../shared/card-dialog/card-dialog.component';
 import { AddListDialogComponent } from './add-list-dialog/add-list-dialog.component';
 import { ShellModule } from '../shell/shell.module';
-import { NewListDialogComponent } from '../editor/new-list-dialog/new-list-dialog.component';
 import { ConnectStripeComponent } from './connect-stripe/connect-stripe.component';
 import { ConfirmUnsubscribeDialogComponent } from './confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { SharedConfirmDialogComponent } from './shared-confirm-dialog/shared-confirm-dialog.component';
@@ -29,20 +28,24 @@ import { MailDialogComponent } from './mail-dialog/mail-dialog.component';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ConnectVimeoComponent } from './connect-vimeo/connect-vimeo.component';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import { ListEditDialogComponent } from './list-edit-dialog/list-edit-dialog.component';
+import { TagEditorDialogComponent } from './tag-editor-dialog/tag-editor-dialog.component';
+import { NgAisModule } from 'angular-instantsearch';
 
 @NgModule({
   declarations: [
     NotFoundComponent,
     CardDialogComponent,
     AddListDialogComponent,
-    NewListDialogComponent,
     ConnectStripeComponent,
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
     ChannelReviewDialogComponent,
     MailDialogComponent,
     ConnectVimeoComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    ListEditDialogComponent,
+    TagEditorDialogComponent
   ],
   imports: [
     SharedModule,
@@ -54,7 +57,8 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
     AngularFireFunctionsModule,
     AngularFireMessagingModule,
     HttpClientModule,
-RecaptchaModule,
+    NgAisModule,
+    RecaptchaModule,
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {
@@ -82,13 +86,14 @@ RecaptchaModule,
   ],
   entryComponents: [
     CardDialogComponent,
+    ListEditDialogComponent,
     AddListDialogComponent,
-    NewListDialogComponent,
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
     ChannelReviewDialogComponent,
     MailDialogComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    TagEditorDialogComponent
   ]
 })
 export class CoreModule { }

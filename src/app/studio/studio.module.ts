@@ -11,7 +11,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgxPicaModule } from '@digitalascetic/ngx-pica';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ListEditDialogComponent } from './list-edit-dialog/list-edit-dialog.component';
 import { ListDeleteDialogComponent } from './list-delete-dialog/list-delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -33,7 +32,6 @@ import { ImageDialogComponent } from './image-dialog/image-dialog.component';
     PlansComponent,
     AboutComponent,
     DashboardComponent,
-    ListEditDialogComponent,
     ListDeleteDialogComponent,
     GuideComponent,
     PlanDetailComponent,
@@ -58,7 +56,6 @@ import { ImageDialogComponent } from './image-dialog/image-dialog.component';
     ImageCropperModule
   ],
   entryComponents: [
-    ListEditDialogComponent,
     ListDeleteDialogComponent,
     ConfirmDisconnectStripeDialogComponent,
     MultipleLessonEditDialogComponent,
