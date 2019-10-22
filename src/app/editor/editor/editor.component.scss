@@ -15,7 +15,7 @@
 
 .form-header {
   display: grid;
-  grid-template-columns: 120px 1fr 200px 200px;
+  grid-template-columns: 120px 1fr 240px 160px 160px;
   gap: 0 16px;
   padding: 8px 24px 8px 0;
   position: relative;
@@ -149,6 +149,11 @@
 }
 
 .connect-vimeo {
+  align-self: center;
+  justify-self: center;
+}
+
+.cause-section {
   align-self: center;
   justify-self: center;
 }

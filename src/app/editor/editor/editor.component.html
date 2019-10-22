@@ -25,6 +25,41 @@
         />
       </mat-form-field>
       <mat-form-field>
+        <mat-label>タグ</mat-label>
+        <mat-chip-list #chipList aria-label="Tag selection">
+          <mat-chip
+            *ngFor="let tag of tags"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(tag)"
+          >
+            {{ tag }}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder=""
+            #fruitInput
+            formControlName="tags"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)"
+          />
+        </mat-chip-list>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selected($event)"
+        >
+          <mat-option
+            *ngFor="let tag of filteredTags$ | async"
+            [value]="tag"
+          >
+            {{ tag }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field *ngIf="(lists$ | async)?.length; else newList">
         <mat-label>コース</mat-label>
         <mat-select
           [formControl]="listControl"
@@ -39,10 +74,23 @@
           >
         </mat-select>
       </mat-form-field>
+      <ng-template #newList>
+        <div class="cause-section">
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="openNewListDialog(user.id)"
+          >
+            コースを作成
+          </button>
+        </div>
+      </ng-template>
       <mat-form-field *ngIf="vimeoUser; else connectVimeo">
         <mat-label>動画ID</mat-label>
         <mat-hint><a (click)="openLessonGuide()">ガイドライン</a></mat-hint>
-        <mat-error *ngIf="form.get('videoId').hasError('videoId')">自分の動画ではありません</mat-error>
+        <mat-error *ngIf="form.get('videoId').hasError('videoId')"
+          >自分の動画ではありません</mat-error
+        >
         <input
           type="text"
           formControlName="videoId"
@@ -51,13 +99,18 @@
           autocomplete="off"
           required
         />
-        <mat-icon (click)="openVideoUploader()" matSuffix
-          >video_call</mat-icon
-        >
+        <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon>
       </mat-form-field>
       <ng-template #connectVimeo>
         <div class="connect-vimeo">
-          <button type="button" mat-raised-button (click)="openVideoUploader()" color="primary">Vimeoと接続</button>
+          <button
+            type="button"
+            mat-raised-button
+            (click)="openVideoUploader()"
+            color="primary"
+          >
+            Vimeoと接続
+          </button>
         </div>
       </ng-template>
     </div>
