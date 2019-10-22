@@ -7,7 +7,7 @@
 ></mat-progress-bar>
 <div class="main" [class.full]="isMobile && noHeader">
 <router-outlet></router-outlet>
-<app-footer *ngIf="!(isLoading$ | async) && !noBottomNav"></app-footer>
+<app-footer *ngIf="!(isLoading$ | async) && !noFooter"></app-footer>
 </div>
 
 <div *ngIf="isMobile && !noBottomNav" class="bottom-nav">

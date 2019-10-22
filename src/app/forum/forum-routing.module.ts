@@ -12,7 +12,7 @@ const routes: Routes = [
     data: {
       formRoot: true,
       noHeader: true,
-      noBottomNav: true,
+      noFooter: true,
     },
     children: [
       {
@@ -20,7 +20,8 @@ const routes: Routes = [
         component: ThreadComponent,
         data: {
           noBottomNav: true,
-          noHeader: true
+          noHeader: true,
+          noFooter: true,
         }
       },
       {
