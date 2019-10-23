@@ -11,6 +11,7 @@
           [options]="thumbnailOption"
           [oldSrc]="oldThumbnail"
           (uploaded)="uploadThumbnail($event)"
+          (file)="setThumbnail($event)"
         ></app-input-image>
       </div>
       <mat-form-field>
@@ -129,7 +130,7 @@
 
         <button
           type="button"
-          *ngIf="isEdit"
+          *ngIf="oldLesson"
           mat-button
           (click)="deleteLesson()"
         >

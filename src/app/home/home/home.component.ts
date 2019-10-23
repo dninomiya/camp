@@ -22,14 +22,13 @@ export class HomeComponent implements OnInit {
     filters: 'NOT deleted:true'
   };
 
-  isLoading = true;
+  trendSearchParameters = {
+    hitsPerPage: 10,
+    filters: 'NOT deleted:true'
+  };
 
-  lessons$: Observable<LessonMeta[]> = this.trendService.getTrend().pipe(
-    tap(() => {
-      this.isLoading = false;
-      this.loadingService.endLoading();
-    })
-  );
+  noFollow = true;
+  isLoading = true;
 
   follows$: Observable<string[]> = this.authService.authUser$.pipe(
     switchMap(user => {
@@ -52,11 +51,16 @@ export class HomeComponent implements OnInit {
   ) {
     this.loadingService.startLoading();
     this.follows$.subscribe(follows => {
+      this.isLoading = false;
+      this.loadingService.endLoading();
       if (follows.length) {
+        this.noFollow = false;
         const ids = follows.map(id => {
           return `authorId:${this.authService.user.id}`;
         }).join(' AND ');
         this.searchParameters.filters = `(${ids}) AND NOT deleted:true`;
+      } else {
+        this.noFollow = true;
       }
     });
 

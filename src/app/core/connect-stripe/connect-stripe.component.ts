@@ -25,7 +25,6 @@ export class ConnectStripeComponent implements OnInit {
           .catch(error => {
             if (error) {
               console.log(error);
-              console.error(error);
               const data = error.split(':');
               const errorMessage = data[0];
               const path = data[1];

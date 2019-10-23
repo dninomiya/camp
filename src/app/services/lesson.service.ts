@@ -53,11 +53,13 @@ export class LessonService {
     if (thumbnail) {
       thumbnailURL = await this.storageService.upload(`lessons/${id}/thumbnail`, thumbnail);
     }
-    await this.db.doc(`lessons/${id}`).set(data);
+    await this.db.doc(`lessons/${id}`).set({
+      ...data,
+      thumbnailURL: thumbnailURL || null
+    });
     await this.db.doc(`lessons/${id}/body/content`).set({
       body,
       authorId,
-      thumbnailURL
     });
     return id;
   }

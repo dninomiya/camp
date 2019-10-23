@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Lesson, LessonMeta } from '../interfaces/lesson';
-import { switchMap, first, take } from 'rxjs/operators';
+import { switchMap, first, take, map } from 'rxjs/operators';
 import { UtilService } from './util.service';
 
 @Injectable({
@@ -19,6 +19,9 @@ export class TrendService {
     return this.db.collection<LessonMeta>('lessons', ref => {
       return ref.orderBy('createdAt', 'desc').limit(40);
     }).valueChanges().pipe(
+      map(lessons => {
+        return lessons.filter(lesson => !lesson.deleted);
+      }),
       switchMap(lessons => {
         if (lessons.length) {
           return this.utilService.attachChannel(lessons);

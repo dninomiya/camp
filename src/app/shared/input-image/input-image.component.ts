@@ -61,7 +61,6 @@ export class InputImageComponent implements OnInit {
     width: number;
     height: number;
   }): Promise<File> {
-    console.log(file);
     return this.ngxPicaService.resizeImage(file, size.width, size.height, {
       aspectRatio: {
         keepAspectRatio: true,

@@ -1,9 +1,9 @@
 <ng-container *ngIf="channel$ | async as channel">
   <div class="wrap" *ngIf="lesson$ | async as lesson" [class.loading-lesson]="isLoading$ | async">
-    <div class="lesson">
-      <ng-container *ngIf="permission$ | async">
+    <div class="lesson" *ngIf="!lesson.deleted; else delete">
+      <ng-container *ngIf="permission$ | async as permission">
       <app-vimeo
-        *ngIf="lesson.videoId && (permission$ | async)"
+        *ngIf="lesson.videoId && permission"
         class="video"
         [id]="lesson.videoId"
       ></app-vimeo>
@@ -165,6 +165,12 @@
         </div>
       </mat-card>
     </div>
+
+    <ng-template #delete>
+      <div class="lesson">
+        <p class="delete">このレッスンは削除されました</p>
+      </div>
+    </ng-template>
 
     <div class="side" [class.show]="!loading">
       <app-cause-widget

@@ -36,7 +36,6 @@ export const connectVimeo = functions.https.onCall(async (data, context) => {
       });
     });
   } catch (error) {
-    console.error(error);
     console.log(error);
     throw new Error(error);
   }

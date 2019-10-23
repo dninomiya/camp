@@ -20,7 +20,6 @@ export class GuideComponent implements OnInit {
     private paymentService: PaymentService,
     private authService: AuthService
   ) {
-    console.log('object');
   }
 
   ngOnInit() {

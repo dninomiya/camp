@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ChannelMeta, Follower } from '../interfaces/channel';
 import { LessonList } from '../interfaces/lesson-list';
@@ -50,7 +50,11 @@ export class ChannelService {
     return this.db.collection<Follower>(`channels/${cid}/followers`)
       .valueChanges().pipe(
         switchMap((items: Follower[]) => {
-          return combineLatest(items.map(item => this.getChannel(item.uid)));
+          if (items.length) {
+            return combineLatest(items.map(item => this.getChannel(item.uid)));
+          } else {
+            return of([]);
+          }
         })
       );
   }

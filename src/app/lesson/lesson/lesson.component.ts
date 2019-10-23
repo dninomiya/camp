@@ -18,7 +18,6 @@ import { MatSnackBar } from '@angular/material';
 import { SeoService } from 'src/app/services/seo.service';
 import { UiService } from 'src/app/services/ui.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { LoginDialogComponent } from 'src/app/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'app-lesson',
@@ -118,7 +117,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   permission$: Observable<boolean> = this.lesson$.pipe(
     map(lesson => {
-      return lesson.premium;
+      return lesson && lesson.premium;
     }),
     switchMap((premium: boolean) => {
       if (premium) {
@@ -211,14 +210,18 @@ export class LessonComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService
   ) {
     this.lesson$.subscribe(lesson => {
-      this.setMeta(lesson);
+      if (lesson) {
+        this.setMeta(lesson);
+      }
     });
 
     combineLatest([
       this.lesson$,
       this.channel$
     ]).subscribe(([lesson, channel]) => {
-      this.setSchema(lesson, channel);
+      if (lesson && channel) {
+        this.setSchema(lesson, channel);
+      }
     });
   }
 

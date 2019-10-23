@@ -280,7 +280,7 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  deleteLesson(cid: string) {
+  deleteLesson() {
     this.snackBar.open('本当に削除しますか？', 'はい', {
       duration: 4000
     }).onAction().subscribe(() => {
@@ -288,7 +288,7 @@ export class EditorComponent implements OnInit {
         this.snackBar.open('レッスンを削除しました。', null, {
           duration: 2000
         });
-        this.router.navigate(['/channels', cid]);
+        this.router.navigate(['/']);
       });
 
       this.listService.removeLessonFromList(
@@ -441,9 +441,11 @@ export class EditorComponent implements OnInit {
           thumbnailURL: image
         }
       );
-    } else {
-      this.thumbnail = image;
     }
+  }
+
+  setThumbnail(image) {
+    this.thumbnail = image;
   }
 
   openTagEditor() {

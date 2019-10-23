@@ -13,7 +13,7 @@ export class StorageService {
 
   async upload(path: string, file: string): Promise<string> {
     const ref = this.storage.ref(path);
-    await ref.putString(file, 'data_url');
-    return ref.getDownloadURL().pipe(first()).toPromise();
+    const result = await ref.putString(file, 'data_url');
+    return result.ref.getDownloadURL();
   }
 }
