@@ -31,7 +31,7 @@ service cloud.firestore {
 
     match /threads/{threadId} {
       allow create: if request.auth.uid != null;
-      allow update: if request.auth.uid == resource.data.targetId && safeKey('id') && safeKey('targetId') && safeKey('authorId');
+      allow update: if (request.auth.uid == resource.data.authorId || request.auth.uid == resource.data.targetId) && safeKey('id') && safeKey('targetId') && safeKey('authorId');
       allow read: if request.auth.uid == resource.data.authorId || request.auth.uid == resource.data.targetId;
       match /replies/{replieId} {
         allow read, write: if true;
