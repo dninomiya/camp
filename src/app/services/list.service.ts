@@ -61,7 +61,7 @@ export class ListService {
       params.data.coverURL = await this.storageService.upload(`causes/${params.id}`, params.file);
     }
 
-    if (params.data.lessonIds[0]) {
+    if (params.data.lessonIds && params.data.lessonIds[0]) {
       params.data.firstLessonId = params.data.lessonIds[0];
     }
 

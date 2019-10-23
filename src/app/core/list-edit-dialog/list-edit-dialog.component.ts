@@ -94,7 +94,7 @@ export class ListEditDialogComponent implements OnInit {
         data: this.form.value,
         file: this.file
       }).then(() => {
-        this.snackBar.open('コレクションを更新しました', null, {
+        this.snackBar.open('コースを更新しました', null, {
           duration: 2000
         });
       });
@@ -103,7 +103,7 @@ export class ListEditDialogComponent implements OnInit {
         ...this.form.value,
         authorId: this.authService.user.id
       }, this.file).then(() => {
-        this.snackBar.open('コレクションを作成しました', null, {
+        this.snackBar.open('コースを作成しました', null, {
           duration: 2000
         });
       });
