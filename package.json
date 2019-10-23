@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "sw-copy": "concat dist/workspace/ngsw-worker.js src/firebase-messaging-sw.js -o dist/workspace/combined-worker.js",
     "index-copy": "cp dist/workspace/index.html functions/hosting",
-    "deploy": "firebase deploy --only hosting,functions:render",
+    "deploy": "firebase deploy",
     "prerelease": "ng build --prod",
     "release": "run-s sw-copy index-copy deploy",
     "prestaging": "ng build",
