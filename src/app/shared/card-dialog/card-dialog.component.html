@@ -1,13 +1,59 @@
-<div class="header">
-  <h2 class="header__title">クレジットカードを{{isEdit ? '変更' : '登録'}}</h2>
-  <div class="header__close">
-    <button mat-icon-button matDialogClose>
-      <mat-icon class="mat-18">close</mat-icon>
-    </button>
-  </div>
-</div>
+<h1 matDialogTitle>クレジットカードを{{ isEdit ? '変更' : '登録' }}</h1>
 
-<app-card-form
-  [customerId]="data.customerId"
-  (saveCard)="saved()"
-></app-card-form>
+<mat-dialog-content>
+  <ng-container *ngIf="user$ | async as user">
+    <form
+      class="form"
+      novalidate
+      (ngSubmit)="submit(user.id, customerId)"
+      [formGroup]="stripeForm"
+      [class.is-loading]="isLoading"
+    >
+      <div id="card-element" class="field"></div>
+
+      <mat-form-field class="name">
+        <mat-label>カードの名義</mat-label>
+        <input
+          type="text"
+          matInput
+          autocomplete="off"
+          formControlName="name"
+          placeholder="TARO YAMADA"
+        />
+      </mat-form-field>
+
+      <p class="form__notice">
+        <a href="https://stripe.com" target="_blank" rel="noopener">
+          <img
+            src="/assets/images/powered-by-stripe.svg"
+            alt="powered by stripe"
+          />
+        </a>
+      </p>
+
+      <ul class="form__note">
+        <li>カード情報は世界的に信頼が厚いStripeで厳重に管理されます。</li>
+        <li>3MLではクレジットカード情報を保持しないので漏洩の心配はありません。</li>
+      </ul>
+    </form>
+
+    <div *ngIf="isLoading">
+      <div class="doing">
+        <mat-spinner [diameter]="32"></mat-spinner>
+        <p>カード登録中です。</p>
+      </div>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button
+    (click)="submit()"
+    mat-raised-button
+    color="primary"
+    [disabled]="invalid || isLoading"
+  >
+    {{ customerId ? '更新' : '登録' }}
+  </button>
+</mat-dialog-actions>

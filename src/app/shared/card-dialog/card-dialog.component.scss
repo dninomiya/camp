@@ -1,17 +1,42 @@
-.header {
-  position: relative;
-  background: #444;
-  color: #ffffff;
-  margin: -24px -24px 24px;
+.doing {
   display: flex;
-  justify-content: space-between;
+  flex-flow: column;
+  justify-content: center;
   align-items: center;
-  &__title {
-    font-size: 20px;
-    padding: 24px;
+  margin: 24px 0;
+  mat-spinner {
+    margin: 0 auto 16px;
+  }
+  p {
+    color: rgba(black, .38);
+    font-size: 13px;
+  }
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.form {
+  &__notice {
     margin: 0;
+    font-size: 13px;
+    text-align: right;
   }
-  &__close {
-    padding: 0 24px;
+  &__footer {
+    text-align: right;
   }
+  &__note {
+    margin: 16px 0;
+    color: rgba(black, .38);
+    font-size: 13px;
+  }
+}
+
+.name {
+  width: 100%;
+}
+
+.is-loading {
+  display: none;
 }
