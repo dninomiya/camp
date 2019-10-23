@@ -112,7 +112,7 @@ export class ListsComponent implements OnInit {
 
   openAddListDialog() {
     this.dialog.open(ListEditDialogComponent, {
-      maxWidth: 600,
+      width: '600px',
       restoreFocus: false
     });
   }
