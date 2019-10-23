@@ -59,9 +59,6 @@ export class ForumRootComponent implements OnInit {
         });
       }
     });
-
-    this.afMessaging.messages
-      .subscribe((message) => { console.log(message); });
   }
 
   requestPermission() {

@@ -57,9 +57,7 @@ export class BillingComponent implements OnInit {
     this.dialog.open(CardDialogComponent, {
       width: '560px',
       autoFocus: true,
-      data: {
-        customerId
-      }
+      data: customerId
     });
   }
 
