@@ -25,13 +25,10 @@ export class ConnectStripeComponent implements OnInit {
           .catch(error => {
             if (error) {
               console.log(error);
-              const data = error.split(':');
-              const errorMessage = data[0];
-              const path = data[1];
-              this.snackBar.open(errorMessage, null, {
+              this.snackBar.open('連携に失敗しました', null, {
                 duration: 2000
               });
-              this.router.navigateByUrl(path);
+              this.router.navigateByUrl('/');
             }
           });
       } else {
