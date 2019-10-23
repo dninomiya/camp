@@ -13,11 +13,11 @@
         matBadgeSize="small"
         matListAvatar
       >
-        <img [src]="item.user.avatarURL | safe: 'url'" />
+        <img [src]="item.user?.avatarURL | safe: 'url'" />
       </figure>
       <span matLine>{{ item.title }}</span>
       <span matLine class="subline"
-        >{{ item.user.title }}{{ item.isOwner ? 'へ' : 'から' }}の{{
+        >{{ item.user.title }}{{ uid === item.authorId ? 'へ' : 'から' }}の{{
           item.plan.type | planTitleLabel
         }}</span
       >

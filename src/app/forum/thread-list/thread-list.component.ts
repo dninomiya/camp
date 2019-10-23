@@ -3,7 +3,7 @@ import { ForumService } from 'src/app/services/forum.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ThreadStatus } from 'src/app/interfaces/thread';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-thread-list',

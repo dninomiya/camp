@@ -31,7 +31,7 @@
       </button>
     </div>
     <router-outlet></router-outlet>
-    <div class="alert" *ngIf="isAlert">
+    <div class="alert mat-elevation-z2" *ngIf="isAlert">
       <p>通知を有効にしてメッセージの見落としを防ぎましょう</p>
       <div>
       <button mat-flat-button (click)="stopFCM()">無視</button>

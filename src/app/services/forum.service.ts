@@ -26,30 +26,12 @@ export class ForumService {
         return ref
           .where('authorId', '==', authorId)
           .where('status', '==', status);
-      }).valueChanges().pipe(
-        map((list) => {
-          return list.map(item => {
-            return {
-              isOwner: true,
-              ...item
-            };
-          });
-        })
-      ),
+      }).valueChanges(),
       this.db.collection<Thread>('threads', ref => {
         return ref
           .where('targetId', '==', authorId)
           .where('status', '==', status);
-      }).valueChanges().pipe(
-        map((list) => {
-          return list.map(item => {
-            return {
-              isOwner: false,
-              ...item
-            };
-          });
-        })
-      ),
+      }).valueChanges()
     ]).pipe(
       switchMap(([list1, list2]) => {
         if (!list1.length && !list2.length) {
@@ -61,7 +43,7 @@ export class ForumService {
         return forkJoin(
           items
             .map(item => {
-              if (item.isOwner) {
+              if (item.authorId === authorId) {
                 return item.targetId;
               } else {
                 return item.authorId;
@@ -78,7 +60,13 @@ export class ForumService {
           return [];
         }
         return itemsTmp.map(item => {
-          item.user = channels.find(channel => channel.authorId === item.authorId);
+          item.user = channels.find(channel => {
+            if (item.authorId === authorId) {
+              return channel.id === item.targetId;
+            } else {
+              return channel.id === item.authorId;
+            }
+          });
           return item;
         });
       })

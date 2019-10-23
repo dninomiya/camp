@@ -10,7 +10,8 @@ export const createReply = functions.firestore
       throw new Error('data is broken');
     }
 
-    const target = await db.doc(`users/${data.thread.targetId}`).get();
+    const targetId = data.authorId === data.thread.authorId ? data.thread.targetId : data.thread.authorId;
+    const target = await db.doc(`users/${targetId}`).get();
     const targetData = target.data();
 
     const item = {
@@ -29,7 +30,7 @@ export const createReply = functions.firestore
           id: targetData.id,
           email: targetData.email,
           fcmToken: targetData.fcmToken,
-          mailSettings: targetData.notification
+          mailSettings: targetData.mailSettings
         },
         dynamicTemplateData: item
       });
@@ -48,7 +49,7 @@ export const createThread = functions.firestore
     const target = await db.doc(`users/${thread.targetId}`).get();
     const targetData = target.data();
     const item = {
-      title: `リクエスト「${thread.thread.title}」がありました`,
+      title: `リクエスト「${thread.title}」がありました`,
       path: `/forum/${thread.id}?status=request`,
       body: thread.body,
     };
@@ -63,7 +64,7 @@ export const createThread = functions.firestore
           id: targetData.id,
           email: targetData.email,
           fcmToken: targetData.fcmToken,
-          mailSettings: targetData.notification
+          mailSettings: targetData.mailSettings
         },
         dynamicTemplateData: item
       })
