@@ -24,8 +24,10 @@ export class SettingsComponent implements OnInit {
     this.paymentService.getStirpeAccountId(
       this.authService.user.id
     ).pipe(take(1)).subscribe(id => {
-      this.accountId = id;
-      this.setDashboardURL(id);
+      if (id) {
+        this.accountId = id;
+        this.setDashboardURL(id);
+      }
     });
   }
 
