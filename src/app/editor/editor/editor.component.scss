@@ -36,6 +36,18 @@
   position: relative;
   margin: -8px 0;
   border-right: 1px solid rgba(black, .12);
+  &--invalid {
+    &:after {
+      content: "";
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: rgba(red, .12);
+    }
+  }
 }
 
 .wrap {

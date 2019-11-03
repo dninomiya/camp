@@ -6,7 +6,7 @@
     *ngIf="!isLoading"
   >
     <div class="form-header">
-      <div class="thumbnail" matTooltip="サムネイル">
+      <div class="thumbnail" matTooltip="サムネイル" [class.thumbnail--invalid]="!oldThumbnail || !thumbnail">
         <app-input-image
           [options]="thumbnailOption"
           [oldSrc]="oldThumbnail"
@@ -27,7 +27,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>タグ</mat-label>
-        <input type="text" matInput formControlName="tags" readonly>
+        <input type="text" matInput formControlName="tags" readonly required>
         <mat-icon (click)="openTagEditor()" class="mat-18" matSuffix>edit</mat-icon>
       </mat-form-field>
       <mat-form-field *ngIf="(lists$ | async)?.length; else newList">
@@ -142,7 +142,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="form.invalid || form.pristine || isValidWaiting"
+          [disabled]="form.invalid || form.pristine || isValidWaiting || (!oldThumbnail && !thumbnail)"
         >
           {{ oldLesson ? '変更' : '作成' }}
         </button>
