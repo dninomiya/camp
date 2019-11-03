@@ -404,7 +404,7 @@ export class EditorComponent implements OnInit {
       restoreFocus: false
     }).afterClosed().subscribe(videoId => {
       if (videoId) {
-        this.form.get('videoId').setValue('videoId');
+        this.form.get('videoId').setValue(videoId);
       }
     });
   }

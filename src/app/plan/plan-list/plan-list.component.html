@@ -1,6 +1,6 @@
 <div class="plans">
   <mat-nav-list dense [disableRipple]="isOwner">
-    <h3 mat-subheader>プラン</h3>
+    <h3 mat-subheader>サポート</h3>
     <mat-list-item *ngFor="let plan of plans" (click)="openPlanDialog(plan)" matTooltip="あなたがオーナーです" [matTooltipDisabled]="!isOwner" [class.disabled]="isOwner">
       <span matLine>{{ plan.type | planTitleLabel }}</span>
       <span matLine class="cost"

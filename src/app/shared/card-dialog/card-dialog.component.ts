@@ -125,13 +125,14 @@ export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(result => {
         if (result.token) {
           this.paymentService.setCard(uid, result.token.card);
-          this.paymentService.createCustomer(uid, {
+          this.paymentService.createCustomer({
             source: result.token.id,
             email: this.authService.afUser.email,
             description: name
-          }).then(cid => {
+          }).then(() => {
             this.saved();
-          }).catch(() => {
+          }).catch(error => {
+            console.log(error);
             this.saved();
           }).finally(() => {
             this.isLoading = false;

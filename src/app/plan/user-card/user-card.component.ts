@@ -48,7 +48,7 @@ export class UserCardComponent implements OnInit {
 
   getRate(): number {
     if (this.channel.totalRate && this.channel.totalRate) {
-      return this.channel.totalRate / this.channel.reviewCount;
+      return this.channel.totalRate / this.channel.statistics.reviewCount;
     } else {
       return 0;
     }

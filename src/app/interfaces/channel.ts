@@ -10,9 +10,8 @@ export interface ChannelMeta {
   contact: string;
   links?: string[];
   createdAt: Date;
-  reviewCount?: number;
   totalRate?: number;
-  statistics?: ChannelStatistics;
+  statistics: ChannelStatistics;
   ads?: {
     public?: boolean;
     url?: string;
@@ -31,6 +30,7 @@ export interface ChannelStatistics {
   publicLessonCount: number;
   followerCount: number;
   lessonCount: number;
+  reviewCount: number;
 }
 
 export interface Follower {

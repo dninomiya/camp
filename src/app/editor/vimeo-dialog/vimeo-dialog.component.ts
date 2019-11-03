@@ -7,7 +7,7 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
 import { Router } from '@angular/router';
-import { shareReplay, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vimeo-dialog',
@@ -29,8 +29,9 @@ export class VimeoDialogComponent implements OnInit {
   isBasic: boolean;
   vimeoAccount$: Observable<VimeoUser>;
   videoId: string;
+  createWaiting: boolean;
   loading = true;
-  uploadQuota;
+  uploadQuota: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private user: User,
@@ -56,6 +57,7 @@ export class VimeoDialogComponent implements OnInit {
   }
 
   createVideo(user: VimeoUser) {
+    this.createWaiting = true;
     this.vimeoService.createVideo(user, this.file.size)
       .subscribe(res => {
         this.uploadURL = res.uploadURL;

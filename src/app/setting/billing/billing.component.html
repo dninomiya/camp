@@ -37,7 +37,7 @@
 </ng-container>
 
 <ng-template #new>
-  <div *ngIf="!loading" class="create-card" (click)="openCardDialog()">
-    <button mat-raised-button color="primary">新しくカードを作成</button>
+  <div *ngIf="!loading" class="create-card">
+    <button mat-raised-button color="primary" (click)="openCardDialog()">新しくカードを作成</button>
   </div>
 </ng-template>

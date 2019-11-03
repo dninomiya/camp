@@ -69,7 +69,9 @@
 
 <mat-dialog-actions>
   <button mat-button matDialogClose>キャンセル</button>
-  <button [disabled]="!size" color="primary" mat-raised-button>
-    アップロード
-  </button>
+  <ng-container *ngIf="vimeoAccount$ | async as user">
+    <button [disabled]="!size || createWaiting" color="primary" (click)="createVideo(user)" mat-raised-button>
+      アップロード
+    </button>
+  </ng-container>
 </mat-dialog-actions>

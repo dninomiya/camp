@@ -60,6 +60,10 @@ export class PlanListComponent implements OnInit, OnDestroy {
         channel: this.channel
       },
       restoreFocus: false
+    }).afterClosed().subscribe(status => {
+      if (status) {
+        this.openPlanDialog(plan);
+      }
     });
   }
 

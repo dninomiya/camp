@@ -10,6 +10,6 @@ export const addReview = functions.firestore
       throw new Error('データが不正です');
     }
 
-    await countUp(`channels/${context.params.channelId}`, 'reviewCount');
+    await countUp(`channels/${context.params.channelId}`, 'statistics.reviewCount');
     return countUp(`channels/${context.params.channelId}`, 'totalRate', data.rate);
   });

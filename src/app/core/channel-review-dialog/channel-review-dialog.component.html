@@ -2,7 +2,7 @@
 <h1>{{ data.channel.title }}のレビュー</h1>
 <div class="header__rate">
   <app-mat-star-rating [readonly]="true" [rating]="data.rate"></app-mat-star-rating>
-  <p>{{ data.channel.reviewCount | number }}件のレビュー</p>
+  <p>{{ data.channel.statistics.reviewCount | number }}件のレビュー</p>
 </div>
 </div>
 

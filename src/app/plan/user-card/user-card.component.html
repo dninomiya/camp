@@ -13,7 +13,7 @@
         ></app-mat-star-rating>
       </span>
       <span class="rate__review-count"
-        >{{ channel.reviewCount | number }}件のレビュー</span
+        >{{ (channel.statistics.reviewCount | number) || 0 }}件のレビュー</span
       >
     </p>
 

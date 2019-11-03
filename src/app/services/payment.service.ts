@@ -25,7 +25,7 @@ export class PaymentService {
     }, {merge: true});
   }
 
-  createCustomer(uid: string, params: {
+  createCustomer(params: {
     source: string,
     email: string,
     description: string,

@@ -16,7 +16,8 @@ const createChannel = (user: UserRecord) => {
       lessonCount: 0,
       publicLessonCount: 0,
       totalLikeCount: 0,
-      totalLikedCount: 0
+      totalLikedCount: 0,
+      reviewCount: 0
     },
     email: user.email,
     unreadThread: {

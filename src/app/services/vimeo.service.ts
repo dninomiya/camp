@@ -7,6 +7,7 @@ import { VimeoPostResponse, VimeoUser } from '../interfaces/vimeo';
 
 import * as tus from 'tus-js-client';
 import { MatSnackBar } from '@angular/material';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -116,11 +117,17 @@ export class VimeoService {
     file: File;
     videoId: string;
   }) {
+    let domains = [];
+    if (environment.production) {
+      domains = ['3ml.app'];
+    } else {
+      domains = ['localhost', 'dev-update.firebaseapp.com'];
+    }
     if (params.user.account !== 'basic') {
       this.addWhiteList(
         params.videoId,
         params.user.token,
-        ['3ml.app', 'localhost']
+        domains
       );
     }
 

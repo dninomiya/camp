@@ -25,7 +25,7 @@ export const connectVimeo = functions.https.onCall(async (data, context) => {
         json: {
           code: data.code,
           grant_type: 'authorization_code',
-          redirect_uri: isProd ? 'https://3ml.app/connect-vimeo' : 'http://localhost:4200/connect-vimeo'
+          redirect_uri: isProd ? 'https://3ml.app/connect-vimeo' : 'https://dev-update.firebaseapp.com/connect-vimeo'
         }
       }, (error, res, body) => {
         if (!error && res.statusCode === 200) {
