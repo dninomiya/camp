@@ -50,6 +50,7 @@ import { LinkIconPipe } from './link-icon.pipe';
 import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
 import { RefinementListComponent } from './refinement-list/refinement-list.component';
 import { MatChipsModule } from '@angular/material';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -72,6 +73,7 @@ import { MatChipsModule } from '@angular/material';
     AttachmentUserPipe,
     PlanPerLabelPipe,
     PlanTitleLabelPipe,
+    FooterComponent,
     LinkIconPipe,
     SearchKitComponent,
     RefinementListComponent
@@ -114,6 +116,7 @@ import { MatChipsModule } from '@angular/material';
     MatRadioModule,
     MatMenuModule,
     MatToolbarModule,
+    FooterComponent,
     MatListModule,
     FormsModule,
     ReactiveFormsModule,
