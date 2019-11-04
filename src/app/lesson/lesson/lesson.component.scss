@@ -304,9 +304,7 @@
 }
 
 .lesson {
-  @include tablet {
-    margin-bottom: 80px;
-  }
+  margin-bottom: 80px;
   @include sp {
     margin-bottom: 24px;
   }

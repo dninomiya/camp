@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TrendService } from 'src/app/services/trend.service';
 import { Observable, of } from 'rxjs';
-import { LessonMeta } from 'src/app/interfaces/lesson';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChannelService } from 'src/app/services/channel.service';
-import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { LoadingService } from 'src/app/services/loading.service';
 

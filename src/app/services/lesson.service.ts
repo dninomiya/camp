@@ -67,7 +67,7 @@ export class LessonService {
   getLessonsByChannelId(cid: string, limit= 100): Observable<LessonMeta[]> {
     let lessons: LessonMeta[] = [];
     return this.db.collection<LessonMeta>('lessons', ref => {
-      return ref.where('channelId', '==', cid).limit(limit);
+      return ref.where('channelId', '==', cid).where('deleted', '==', false).where('public', '==', true).limit(limit).orderBy('createdAt', 'desc');
     }).valueChanges().pipe(
       switchMap(items => {
         lessons = items;

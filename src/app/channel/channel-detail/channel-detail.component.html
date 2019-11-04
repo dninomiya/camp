@@ -9,7 +9,7 @@
           <div class="profile__body">
             <p class="profile__name">{{ channel.title }}</p>
             <p class="profile__info">
-              フォロワー {{ channel.statistics.followerCount }}人
+              フォロワー {{ channel.statistics.followerCount || 0 }}人
             </p>
           </div>
         </div>
@@ -29,7 +29,7 @@
               (click)="unfollow(channel.id)"
               mat-flat-button
             >
-              フォロー中{{ followerCount + followerBuff }}
+              フォロー中{{ (followerCount || 0) + followerBuff }}
             </button>
             <ng-template #noFollow>
               <button
@@ -37,7 +37,7 @@
                 mat-flat-button
                 color="primary"
               >
-              フォロー {{ followerCount + followerBuff }}
+              フォロー {{ (followerCount || 0) + followerBuff }}
               </button>
             </ng-template>
           </ng-container>

@@ -6,7 +6,7 @@
     *ngIf="!isLoading"
   >
     <div class="form-header">
-      <div class="thumbnail" matTooltip="サムネイル" [class.thumbnail--invalid]="!oldThumbnail || !thumbnail">
+      <div class="thumbnail" matTooltip="サムネイル" [class.thumbnail--invalid]="!oldThumbnail && !thumbnail">
         <app-input-image
           [options]="thumbnailOption"
           [oldSrc]="oldThumbnail"
@@ -87,15 +87,17 @@
       </ng-template>
     </div>
     <div class="wrap">
-      <simplemde
-        class="body"
-        #body
-        (paste)="onPaste($event)"
-        (keydown)="shortCut($event, user.id)"
-        formControlName="body"
-        [options]="opts"
-        [codemirror]="codemirrorOpts"
-      ></simplemde>
+      <div class="body">
+        <simplemde
+          class="body__editor"
+          #body
+          (paste)="onPaste($event)"
+          (keydown)="shortCut($event, user.id)"
+          formControlName="body"
+          [options]="opts"
+          [codemirror]="codemirrorOpts"
+        ></simplemde>
+      </div>
       <div class="preview">
         <div class="article">
           <markdown [data]="body.value || ' '"></markdown>

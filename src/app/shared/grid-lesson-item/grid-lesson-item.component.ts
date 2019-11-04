@@ -14,6 +14,6 @@ export class GridLessonItemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }
