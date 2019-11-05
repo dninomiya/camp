@@ -1,8 +1,8 @@
 <div class="header"></div>
 <div class="body">
-  <h1 MatDialogTitle>知識の収益化</h1>
+  <h1 MatDialogTitle>有料サポートをはじめる</h1>
 
-  <p>積み重ねたきた知識や経験をマネタイズしましょう。プランの金額は自由に設定できます。現在以下のプランが公開可能です。</p>
+  <p>現在以下のサポートがはじめられます。金額は自由に設定できます。</p>
 
   <ul>
     <li>質問への回答</li>
@@ -26,9 +26,9 @@
 
   <ng-container *ngIf="!(accountId$ | async) as accountId">
     <ng-container *ngIf="!isLoading">
-    <h2>プランをはじめる</h2>
+    <h2>Stripeとの連携</h2>
     <p>
-      プランをはじめるにはStripeと連携する必要があります。Stripeは世界的に有名な決済サービスです。連携することで売上の受け取りや管理を行うことができます。アカウントがない場合は作成（無料）してください。
+      有料サポートをはじめるにはStripeと連携する必要があります。Stripeは世界的に有名な決済サービスです。連携することで売上の受け取りや管理を行うことができます。アカウントがない場合は作成（無料）してください。
     </p>
     <div class="stripe">
       <app-stripe-connect-button></app-stripe-connect-button>

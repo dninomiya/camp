@@ -27,6 +27,8 @@ export class SettingsComponent implements OnInit {
       if (id) {
         this.accountId = id;
         this.setDashboardURL(id);
+      } else {
+        this.loading = false;
       }
     });
   }

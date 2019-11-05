@@ -18,7 +18,7 @@ export class PlansComponent implements OnInit {
 
   stripeAccount$ = this.paymentService.getStirpeAccountId(
     this.authService.user.id
-  );
+  ).pipe(tap(() => this.isLoading = false));
   plans$: Observable<Plan[]> = this.planService.getPlansByChannelId(
     this.authService.user.id
   );
@@ -41,7 +41,6 @@ export class PlansComponent implements OnInit {
   permission$: Observable<boolean> = this.channelService.getChannel(
     this.authService.user.id
   ).pipe(map(channel => {
-    this.isLoading = false;
     this.nowStatus = {
       followerCount: channel.statistics.followerCount,
       ...channel.statistics
