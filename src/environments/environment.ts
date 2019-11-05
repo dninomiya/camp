@@ -23,7 +23,8 @@ export const environment = {
     apiKey: '301d11ee1a8d253bace02afb4410422c',
     indexName: 'lessons-dev'
   },
-  captchaKey: '6LdxgLIUAAAAAG7VOix4btA1S51f5kYqPugCNPeu'
+  captchaKey: '6LdxgLIUAAAAAG7VOix4btA1S51f5kYqPugCNPeu',
+  host: 'https://dev-update.firebaseapp.com'
 };
 
 /*

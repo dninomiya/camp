@@ -24,7 +24,7 @@ export class StripeConnectButtonComponent implements OnInit {
   ngOnInit() {}
 
   connectStripe() {
-    const domain = environment.production ? 'https://3ml.app' : 'https://dev-update.firebaseapp.com/';
+    const domain = environment.host;
 
     this.authService.createSCRF({
       uid: this.authService.user.id,

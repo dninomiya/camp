@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as request from 'request';
 import { db } from './utils';
+import { environment } from 'src/environments/environment';
 
 const clientId = functions.config().vimeo.client_id;
 const isProd = functions.config().env.mode === 'prod';
@@ -25,7 +26,7 @@ export const connectVimeo = functions.https.onCall(async (data, context) => {
         json: {
           code: data.code,
           grant_type: 'authorization_code',
-          redirect_uri: isProd ? 'https://3ml.app/connect-vimeo' : 'https://dev-update.firebaseapp.com/connect-vimeo'
+          redirect_uri: environment.host + '/connect-vimeo'
         }
       }, (error, res, body) => {
         if (!error && res.statusCode === 200) {

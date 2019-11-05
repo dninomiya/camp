@@ -119,7 +119,7 @@ export class VimeoService {
   }) {
     let domains = [];
     if (environment.production) {
-      domains = ['3ml.app'];
+      domains = [environment.host];
     } else {
       domains = ['localhost', 'dev-update.firebaseapp.com'];
     }

@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+import { config } from '../config';
 
 export const sendFCM = (params: {
   token: string,
@@ -13,7 +14,7 @@ export const sendFCM = (params: {
     webpush: {
       notification: {
         ...params.notification,
-        icon: 'https://3ml.app/assets/images/fcm-logo.png',
+        icon: config.host,
       }
     }
   };

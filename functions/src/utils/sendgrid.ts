@@ -13,8 +13,8 @@ export const sendEmail = (data: {
 }) => {
   return sgMail.send({
     from: {
-      email: 'noreply@3ml.app',
-      name: '3ML'
+      email: 'noreply@deer.co.jp',
+      name: 'コードオタクプラットフォーム（仮）'
     },
     ...data,
     templateId: config.mailTemplate[data.templateId]

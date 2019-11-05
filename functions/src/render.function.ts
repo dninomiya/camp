@@ -9,7 +9,7 @@ const useragent = require('express-useragent');
 const generateUrl = (req: any) => {
   return url.format({
     protocol: 'https',
-    host: functions.config().env.mode === 'prod' ? '3ml.app' : 'dev-update.firebaseapp.com',
+    host: functions.config().env.mode === 'prod' ? 'tml-prod-74d27.firebaseapp.com' : 'dev-update.firebaseapp.com',
     pathname: req.originalUrl
   });
 };

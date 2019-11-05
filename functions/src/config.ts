@@ -9,5 +9,6 @@ export const config: any = {
     closed: 'd-d689d22537d248ec867450f65a224635',
     reply: 'd-c817cb31b5df435a885bc94f6348f2b0',
     charged: 'd-da33040183db47ba9c8ca6976312bb1f'
-  }
+  },
+  host: 'https://tml-prod-74d27.firebaseapp.com',
 }

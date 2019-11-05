@@ -27,6 +27,7 @@ import { environment } from 'src/environments/environment';
 })
 export class LessonComponent implements OnInit, OnDestroy {
 
+  host = environment.host;
   lessonURL = location.href;
   uid: string;
   isCause: boolean;
