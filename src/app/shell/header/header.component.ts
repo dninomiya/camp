@@ -22,6 +22,8 @@ export class HeaderComponent implements OnInit {
   isLoading = true;
   noHeader: boolean;
 
+  title = environment.title;
+
   searchParameters = {
     hitsPerPage: 5,
     filters: 'NOT deleted:true'

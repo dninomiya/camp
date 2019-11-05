@@ -10,7 +10,7 @@
     *ngIf="!valid"
   ></re-captcha>
 
-  <a *ngIf="valid" href="mailto:{{email}}&subject=3MLをみてご連絡しました" target="_blank" mat-raised-button color="primary" matDialogClose>メール</a>
+  <a *ngIf="valid" href="mailto:{{email}}&subject={{title}}をみてご連絡しました" target="_blank" mat-raised-button color="primary" matDialogClose>メール</a>
 </mat-dialog-content>
 
 <mat-dialog-actions>

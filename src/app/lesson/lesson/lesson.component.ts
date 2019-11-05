@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material';
 import { SeoService } from 'src/app/services/seo.service';
 import { UiService } from 'src/app/services/ui.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-lesson',
@@ -34,6 +35,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   lessonId?: string;
   settlementStatus: boolean;
   channel: ChannelMeta;
+  title = environment.title;
   isMobile = this.uiService.isMobile;
   cause$: Observable<LessonList> = this.route.queryParamMap.pipe(
     switchMap(params => {

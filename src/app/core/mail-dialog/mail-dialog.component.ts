@@ -11,6 +11,7 @@ export class MailDialogComponent implements OnInit {
 
   siteKey = environment.captchaKey;
   valid: boolean;
+  title = environment.title;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public email: string

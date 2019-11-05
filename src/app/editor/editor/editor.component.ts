@@ -117,9 +117,8 @@ export class EditorComponent implements OnInit {
   form = this.fb.group({
     title: ['', Validators.required],
     body: ['', Validators.required],
-    tags: ['', Validators.required],
+    tags: [''],
     videoId: ['', {
-      validators: [Validators.required],
       asyncValidators: [this.validateVimeoId.bind(this)],
       updateOn: 'blur'
     }],

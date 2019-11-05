@@ -6,7 +6,7 @@
     *ngIf="!isLoading"
   >
     <div class="form-header">
-      <div class="thumbnail" matTooltip="サムネイル" [class.thumbnail--invalid]="!oldThumbnail && !thumbnail">
+      <div class="thumbnail" matTooltip="サムネイル">
         <app-input-image
           [options]="thumbnailOption"
           [oldSrc]="oldThumbnail"
@@ -27,7 +27,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>タグ</mat-label>
-        <input type="text" matInput formControlName="tags" readonly required>
+        <input type="text" matInput formControlName="tags" readonly>
         <mat-icon (click)="openTagEditor()" class="mat-18" matSuffix>edit</mat-icon>
       </mat-form-field>
       <mat-form-field *ngIf="(lists$ | async)?.length; else newList">
@@ -69,7 +69,6 @@
           matInput
           placeholder="12345"
           autocomplete="off"
-          required
         />
         <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon>
       </mat-form-field>

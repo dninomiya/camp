@@ -5,7 +5,6 @@ import { EditorComponent } from './editor/editor.component';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPicaModule } from '@digitalascetic/ngx-pica';
 import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
-import { VideoUploaderComponent } from './video-uploader/video-uploader.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LessonGuideComponent } from './lesson-guide/lesson-guide.component';
 import { EditorHelpComponent } from './editor-help/editor-help.component';
@@ -15,7 +14,7 @@ import { NgAisModule } from 'angular-instantsearch';
 
 
 @NgModule({
-  declarations: [EditorComponent, VideoUploaderComponent, LessonGuideComponent, EditorHelpComponent, VimeoDialogComponent],
+  declarations: [EditorComponent, LessonGuideComponent, EditorHelpComponent, VimeoDialogComponent],
   imports: [
     SharedModule,
     EditorRoutingModule,
@@ -43,7 +42,6 @@ import { NgAisModule } from 'angular-instantsearch';
     })
   ],
   entryComponents: [
-    VideoUploaderComponent,
     LessonGuideComponent,
     EditorHelpComponent,
     VimeoDialogComponent

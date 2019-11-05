@@ -30,32 +30,13 @@
 }
 
 .logo {
-  line-height: 56px;
   font-weight: bold;
   @include sp {
     line-height: 48px;
   }
   &__text {
     color: #333;
-    font-size: 24px;
-  }
-  .big {
-    color: #0084ff;
-  }
-  .small {
-    font-size: 24px;
-  }
-  img {
-    height: 48px;
-    vertical-align: -13px;
-  }
-  sup {
-    vertical-align: 12px;
-    font-size: 12px;
-    color: rgba(black, .6);
-    font-weight: normal;
-    margin-left: 4px;
-    line-height: 1;
+    font-size: 16px;
   }
 }
 

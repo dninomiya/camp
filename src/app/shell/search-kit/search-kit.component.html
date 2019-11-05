@@ -1,5 +1,5 @@
 <form class="search" (ngSubmit)="saerch(box.value)">
-  <input class="search__input" type="text" [formControl]="searchInput" matInput placeholder="レッスンを検索" [matAutocomplete]="auto" autocomplete="off" (keyup)="handleChange($event)" #box>
+  <input class="search__input" type="text" [formControl]="searchInput" matInput placeholder="キーワードで検索" [matAutocomplete]="auto" autocomplete="off" (keyup)="handleChange($event)" #box>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event, box)">
     <ng-container>
       <mat-option class="option" *ngFor="let option of (state.indices && state.indices.length > 0 ? state.indices[0].hits : [])" [value]="option">

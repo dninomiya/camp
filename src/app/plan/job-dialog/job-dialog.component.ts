@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { Job } from 'src/app/interfaces/job';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { FormBuilder, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-job-dialog',
@@ -34,7 +35,7 @@ export class JobDialogComponent implements OnInit {
   ) {
     this.form.valueChanges.subscribe(value => {
       this.body = `はじめまして。${value.name}と申します。%0D%0A` +
-      `3MLを見てご相談させていただきました。%0D%0A%0D%0A概要はこちらになります。%0D%0A%0D%0A` +
+      `${environment.title}を見てご相談させていただきました。%0D%0A%0D%0A概要はこちらになります。%0D%0A%0D%0A` +
       `予算: ${value.badge || '不明'}%0D%0A` +
       `納期/契約期間: ${value.dueDate}%0D%0A` +
       `契約形態: ${value.type.join('or')}%0D%0A` +

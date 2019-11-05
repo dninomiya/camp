@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
     this.seoService.setSchema({
       '@type': 'WebSite',
       logo: '/assets/images/logo.png',
-      name: '3ML',
+      name: environment.title,
       type: 'WebSite',
       potentialAction: {
         '@type': 'SearchAction',

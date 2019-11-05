@@ -12,7 +12,7 @@
     </div>
     <mat-nav-list>
       <a routerLink="/intl/about" mat-list-item routerLinkActive="active" (click)="drawer.close()">
-        3MLについて
+        サービスについて
       </a>
       <a routerLink="/intl/guideline" mat-list-item routerLinkActive="active" (click)="drawer.close()">
         ガイドライン
@@ -49,10 +49,8 @@
       </button>
       <a class="logo" routerLink="/">
         <span class="logo__text">
-          <span class="big">3</span>
-          <span class="small">ML</span>
+          <span class="small">{{title}}</span>
         </span>
-        <sup>β</sup>
       </a>
     </mat-toolbar-row>
   </mat-toolbar>

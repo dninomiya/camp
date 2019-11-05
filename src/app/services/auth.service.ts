@@ -10,6 +10,7 @@ import { User } from '../interfaces/user';
 import * as moment from 'moment';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -160,7 +161,7 @@ export class AuthService {
     }).afterClosed().subscribe(status => {
       if (status) {
         this.login().then(() => {
-          this.snackBar.open('3MLへようこそ！', null, {
+          this.snackBar.open(`${environment.title}へようこそ！`, null, {
             duration: 2000
           });
         });

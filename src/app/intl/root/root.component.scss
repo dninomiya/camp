@@ -34,32 +34,7 @@
 }
 
 .logo {
-  height: 56px;
   font-weight: bold;
-  &__text {
-    color: #333;
-    display: inline-block;
-    vertical-align: -18px;
-  }
-  .big {
-    color: #25A5DE;
-    font-size: 40px;
-  }
-  .small {
-    font-size: 24px;
-  }
-  img {
-    height: 48px;
-    vertical-align: -13px;
-  }
-  sup {
-    vertical-align: 5px;
-    font-size: 12px;
-    color: rgba(black, .6);
-    font-weight: normal;
-    margin-left: 0;
-    line-height: 1;
-  }
 }
 
 mat-nav-list {

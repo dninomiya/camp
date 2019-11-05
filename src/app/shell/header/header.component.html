@@ -11,10 +11,8 @@
     </button>
     <a class="logo" routerLink="/">
       <span class="logo__text">
-        <span class="big">3</span>
-        <span class="small">ML</span>
+        <span class="big">{{title}}</span>
       </span>
-      <sup>β</sup>
     </a>
     <ais-instantsearch
       *ngIf="!isMobile"
@@ -31,7 +29,7 @@
             class="toolbar__item"
             mat-icon-button
             routerLink="/new"
-            matTooltip="レッスンを作成"
+            matTooltip="投稿"
           >
             <mat-icon class="mat-18">video_call</mat-icon>
           </button>
@@ -103,7 +101,7 @@
           </button>
           <button *ngIf="isStudio" mat-menu-item routerLink="/">
             <mat-icon>compare_arrows</mat-icon>
-            <span>3ML</span>
+            <span>{{title}}</span>
           </button>
           <button
             *ngIf="!isStudio && !isMobile"
@@ -111,7 +109,7 @@
             routerLink="/studio/{{ user.id }}"
           >
             <mat-icon>compare_arrows</mat-icon>
-            <span>3ML Studio</span>
+            <span>チャンネル管理</span>
           </button>
           <button *ngIf="user.admin" mat-menu-item routerLink="/admin">
             <mat-icon>account_circle</mat-icon>
