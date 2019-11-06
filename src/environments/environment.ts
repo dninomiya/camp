@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  title: 'ゴミナレッジ共有所（仮）',
+  title: 'エンジニアのゴミ箱（仮）',
   stripe: {
     publicKey: 'pk_test_lKq5jlH5mdbAxDeBfB4f0sn400ZYUYdpvH',
     clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ'
