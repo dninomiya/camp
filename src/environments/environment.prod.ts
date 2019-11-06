@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  title: 'ゴミ',
+  title: 'ゴミナレッジ共有所',
   stripe: {
     publicKey: 'pk_live_wlNER2telcowyGuSx1mGTrGb',
     clientId: 'ca_G18JUfv56rvyII64gIBw9KWHzu15m44g'
