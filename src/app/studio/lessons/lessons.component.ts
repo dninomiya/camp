@@ -136,13 +136,13 @@ export class LessonsComponent implements OnInit {
     this.dialog.open(SharedConfirmDialogComponent, {
       data: {
         title: '本当に削除しますか？',
-        description: `${lessonIds.length}件のレッスンを削除しようとしています。削除すると復元できません`
+        description: `${lessonIds.length}件のポストを削除しようとしています。削除すると復元できません`
       },
       restoreFocus: false,
       autoFocus: false
     }).afterClosed().subscribe(status => {
       if (status) {
-        const processing = this.snackBar.open(`${lessonIds.length}件のレッスンを削除しています。`);
+        const processing = this.snackBar.open(`${lessonIds.length}件のポストを削除しています。`);
 
         Promise.all(
           lessonIds.map(id => {
@@ -150,7 +150,7 @@ export class LessonsComponent implements OnInit {
           })
         ).then(() => {
           processing.dismiss();
-          this.snackBar.open(`${lessonIds.length}件のレッスンを削除しました`, null, {
+          this.snackBar.open(`${lessonIds.length}件のポストを削除しました`, null, {
             duration: 2000
           });
         });
@@ -197,14 +197,14 @@ export class LessonsComponent implements OnInit {
 
     this.dialog.open(SharedConfirmDialogComponent, {
       data: {
-        title: `${length}件のレッスンを${label}にしますか？`,
-        description: `${length}件のレッスンを${label}にしようとしています。`
+        title: `${length}件のポストを${label}にしますか？`,
+        description: `${length}件のポストを${label}にしようとしています。`
       },
       restoreFocus: false,
       autoFocus: false
     }).afterClosed().subscribe(status => {
       if (status) {
-        const processing = this.snackBar.open(`${length}件のレッスンを${label}にしています。`);
+        const processing = this.snackBar.open(`${length}件のポストを${label}にしています。`);
 
         Promise.all(
           lessonIds.map(id => {
@@ -214,7 +214,7 @@ export class LessonsComponent implements OnInit {
           })
         ).then(() => {
           processing.dismiss();
-          this.snackBar.open(`${length}件のレッスンを${label}にしました`, null, {
+          this.snackBar.open(`${length}件のポストを${label}にしました`, null, {
             duration: 2000
           });
         });

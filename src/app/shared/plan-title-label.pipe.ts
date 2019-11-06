@@ -17,11 +17,11 @@ export class PlanTitleLabelPipe implements PipeTransform {
       case 'coaching':
         return 'ライブコーチング';
       case 'premium':
-        return 'レッスン見放題';
+        return 'ポスト見放題';
       case 'cause':
         return 'コース';
       case 'lesson':
-        return 'レッスン';
+        return 'ポスト';
     }
   }
 

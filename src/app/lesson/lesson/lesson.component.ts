@@ -258,7 +258,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   async setMeta(lesson: Lesson) {
-    const image = lesson.thumbnailURL;
+    const image = lesson.thumbnailURL || environment.host + '/assets/images/ogp-cover.png';
     this.seoService.generateTags({
       title: lesson.title,
       image,
@@ -301,7 +301,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   /**
    * 10秒後にPVカウント
-   * @param lid レッスンID
+   * @param lid ポストID
    */
   private countUpView(lid: string) {
     if (this.viewTimer) {
@@ -369,12 +369,12 @@ export class LessonComponent implements OnInit, OnDestroy {
   chargeLesson(lesson: Lesson) {
     return this.dialog.open(SharedConfirmDialogComponent, {
       data: {
-        title: `「${lesson.title}」レッスンを購入しますか？`,
+        title: `「${lesson.title}」ポストを購入しますか？`,
         description: `返金、返品はできません。`
       }
     }).afterClosed().subscribe(status => {
       if (status) {
-        const snackBar = this.snackBar.open('レッスンを購入しています');
+        const snackBar = this.snackBar.open('ポストを購入しています');
         this.settlementStatus = true;
         this.paymentService.createCharge({
           item: {
@@ -388,7 +388,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           sellerUid: lesson.authorId,
           customerUid: this.authService.user.id
         }).then(() => {
-          this.snackBar.open('レッスンを購入しました', null, {
+          this.snackBar.open('ポストを購入しました', null, {
             duration: 2000
           });
         }).catch(() => {

@@ -17,7 +17,7 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
   tabs = [
     {
       path: './',
-      label: 'レッスン'
+      label: 'ポスト'
     },
     {
       path: './causes',

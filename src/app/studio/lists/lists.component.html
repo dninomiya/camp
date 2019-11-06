@@ -40,7 +40,7 @@
   </div>
   <div>
     <div class="toolbar">
-      <h2><mat-icon>class</mat-icon>レッスン</h2>
+      <h2><mat-icon>class</mat-icon>ポスト</h2>
       <button mat-icon-button routerLink="/new">
         <mat-icon class="mat-18">add</mat-icon>
       </button>
@@ -51,7 +51,7 @@
       [class.hide]="isLessonLoading"
     >
       <p class="empty" *ngIf="!lessons.length; else lessonsBlock">
-        レッスンはありません
+        ポストはありません
       </p>
       <ng-template #lessonsBlock>
         <mat-list dense cdkDropList (cdkDropListDropped)="drop($event)">
@@ -64,7 +64,7 @@
                 {{ lesson.title }}
               </a>
               <ng-template #deleted>
-                このレッスンは削除されました
+                このポストは削除されました
               </ng-template>
             </span>
             <button mat-icon-button [matMenuTriggerFor]="menu">

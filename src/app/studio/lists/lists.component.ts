@@ -122,7 +122,7 @@ export class ListsComponent implements OnInit {
       duration: 4000
     }).onAction().subscribe(() => {
       this.lessonService.deleteLesson(lesson.id).then(() => {
-        this.snackBar.open('レッスンを削除しました。', null, {
+        this.snackBar.open('ポストを削除しました。', null, {
           duration: 2000
         });
       });

@@ -20,7 +20,7 @@
           type="text"
           formControlName="title"
           matInput
-          placeholder="レッスンタイトル"
+          placeholder="タイトル"
           autocomplete="off"
           required
         />
@@ -30,7 +30,7 @@
         <input type="text" matInput formControlName="tags" readonly>
         <mat-icon (click)="openTagEditor()" class="mat-18" matSuffix>edit</mat-icon>
       </mat-form-field>
-      <mat-form-field *ngIf="(lists$ | async)?.length; else newList">
+      <mat-form-field *ngIf="(lists$ | async)?.length">
         <mat-label>コース</mat-label>
         <mat-select
           [formControl]="listControl"
@@ -45,7 +45,7 @@
           >
         </mat-select>
       </mat-form-field>
-      <ng-template #newList>
+      <div *ngIf="(lists$ | async)?.length === 0">
         <div class="cause-section">
           <button
             type="button"
@@ -56,10 +56,9 @@
             コースを作成
           </button>
         </div>
-      </ng-template>
-      <mat-form-field *ngIf="vimeoUser; else connectVimeo">
+      </div>
+      <mat-form-field *ngIf="vimeoUser">
         <mat-label>動画ID</mat-label>
-        <mat-hint><a (click)="openLessonGuide()">ガイドライン</a></mat-hint>
         <mat-error *ngIf="form.get('videoId').hasError('videoId')"
           >自分の動画ではありません</mat-error
         >
@@ -72,7 +71,7 @@
         />
         <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon>
       </mat-form-field>
-      <ng-template #connectVimeo>
+      <div *ngIf="vimeoUser === null">
         <div class="connect-vimeo">
           <button
             type="button"
@@ -83,7 +82,7 @@
             Vimeoと接続
           </button>
         </div>
-      </ng-template>
+      </div>
     </div>
     <div class="wrap">
       <div class="body">
@@ -143,7 +142,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="form.invalid || form.pristine || isValidWaiting || (!oldThumbnail && !thumbnail)"
+          [disabled]="form.invalid || form.pristine || isValidWaiting"
         >
           {{ oldLesson ? '変更' : '作成' }}
         </button>

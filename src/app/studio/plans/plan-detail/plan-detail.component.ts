@@ -62,7 +62,10 @@ export class PlanDetailComponent implements OnInit {
   submit() {
     this.planService.updatePlan(
       this.authService.user.id,
-      this.form.value
+      {
+        ...this.form.value,
+        type: this.plan.type
+      }
     ).then(() => {
       this.snackBar.open('プランを更新しました', null, {
         duration: 2000

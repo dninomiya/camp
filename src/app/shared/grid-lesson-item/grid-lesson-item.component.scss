@@ -8,6 +8,22 @@
     padding-bottom: 56%;
     background: #fafafa center/cover;
     margin-bottom: 12px;
+    position: relative;
+    span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      padding: 16px;
+      font-size: 24px;
+      background: #000;
+      color: #ffffff;
+    }
   }
   &__title {
     font-size: 14px;

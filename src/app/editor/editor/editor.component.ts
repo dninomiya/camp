@@ -151,7 +151,7 @@ export class EditorComponent implements OnInit {
     this.user$.pipe(
       switchMap(user => this.vimeoService.getVimeoAccount(user.id))
     ).subscribe(vimeoUser => {
-      this.vimeoUser = vimeoUser;
+      this.vimeoUser = vimeoUser || null;
     });
   }
 
@@ -253,7 +253,7 @@ export class EditorComponent implements OnInit {
     }
 
     action.then((lessonId?: string) => {
-      this.snackBar.open(`レッスンを${this.oldLesson ? '更新' : '作成'}しました`, null, {
+      this.snackBar.open(`ポストを${this.oldLesson ? '更新' : '作成'}しました`, null, {
         duration: 2000
       });
       this.isComplete = true;
@@ -284,7 +284,7 @@ export class EditorComponent implements OnInit {
       duration: 4000
     }).onAction().subscribe(() => {
       this.lessonService.deleteLesson(this.oldLesson.id).then(() => {
-        this.snackBar.open('レッスンを削除しました。', null, {
+        this.snackBar.open('ポストを削除しました。', null, {
           duration: 2000
         });
         this.router.navigate(['/']);

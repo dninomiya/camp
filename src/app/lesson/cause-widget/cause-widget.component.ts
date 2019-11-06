@@ -74,7 +74,7 @@ export class CauseWidgetComponent implements OnInit {
     this.dialog.open(SharedConfirmDialogComponent, {
       data: {
         title: `${cause.title}コースを${this.decimal.transform(cause.amount)}円で購入しますか？`,
-        description: 'コースを購入するとコース内の有料レッスンが閲覧できるようになります。コースに追加さる有料レッスンも閲覧可能になりますが、コースから外されたら閲覧できなくなります。'
+        description: 'コースを購入するとコース内の有料ポストが閲覧できるようになります。コースに追加さる有料ポストも閲覧可能になりますが、コースから外されたら閲覧できなくなります。'
       },
       width: '640px',
       restoreFocus: false

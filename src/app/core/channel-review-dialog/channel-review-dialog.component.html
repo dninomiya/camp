@@ -2,28 +2,33 @@
 <h1>{{ data.channel.title }}のレビュー</h1>
 <div class="header__rate">
   <app-mat-star-rating [readonly]="true" [rating]="data.rate"></app-mat-star-rating>
-  <p>{{ data.channel.statistics.reviewCount | number }}件のレビュー</p>
+  <p>{{ (data.channel.statistics.reviewCount | number) || 0 }}件のレビュー</p>
 </div>
 </div>
 
 <mat-dialog-content>
-  <div class="reviews">
-    <div class="review" *ngFor="let review of reviews$ | async">
-      <div class="review__avatar">
-        <img [src]="review.author?.avatarURL" />
-      </div>
-      <div class="review__main">
-        <div class="review__body" markdown>
-          <span class="review__type">{{review.type | planTitleLabel}}利用</span>
-          <span>{{ review.body }}</span>
+  <ng-container *ngIf="reviews$ | async as reviews">
+    <div class="reviews" *ngIf="reviews.length else blank">
+      <div class="review" *ngFor="let review of reviews">
+        <div class="review__avatar">
+          <img [src]="review.author?.avatarURL" />
         </div>
-        <p class="review__footer">
-          <span>{{ review.author.title }}</span>
-          <span>{{ review.createdAt | fromNow }}</span>
-        </p>
+        <div class="review__main">
+          <div class="review__body" markdown>
+            <span class="review__type">{{review.type | planTitleLabel}}利用</span>
+            <span>{{ review.body }}</span>
+          </div>
+          <p class="review__footer">
+            <span>{{ review.author.title }}</span>
+            <span>{{ review.createdAt | fromNow }}</span>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
+    <ng-template #blank>
+      <p>レビューはありません</p>
+    </ng-template>
+  </ng-container>
   <mat-spinner *ngIf="isLoading" [diameter]="36"></mat-spinner>
 </mat-dialog-content>
 

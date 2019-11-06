@@ -38,20 +38,6 @@ export class PlansComponent implements OnInit {
 
   nowStatus;
 
-  permission$: Observable<boolean> = this.channelService.getChannel(
-    this.authService.user.id
-  ).pipe(map(channel => {
-    this.nowStatus = {
-      followerCount: channel.statistics.followerCount,
-      ...channel.statistics
-    };
-    return channel.statistics &&
-      channel.statistics.publicLessonCount >= this.limit.publicLessonCount &&
-      channel.statistics.totalLikedCount >= this.limit.totalLikedCount &&
-      channel.statistics.totalLikeCount >= this.limit.totalLikeCount &&
-      channel.statistics.followerCount >= this.limit.followerCount;
-  }));
-
   constructor(
     private authService: AuthService,
     private planService: PlanService,

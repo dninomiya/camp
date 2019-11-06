@@ -6,7 +6,7 @@
         <mat-list-item *ngFor="let plan of plans$ | async" routerLinkActive="active" [routerLink]="[plan.type]">
           <span matLine>{{ plan.type | planTitleLabel }}</span>
           <span matLine class="subline">{{ plan.amount | number }}円/{{plan.per | planPerLabel}}</span>
-          <mat-slide-toggle [disabled]="!(permissions$ | async)" [checked]="plan.active" (mousedown)="$event.stopPropagation()" (change)="changeStatus(plan, $event)">公開</mat-slide-toggle>
+          <mat-slide-toggle [checked]="plan.active" (mousedown)="$event.stopPropagation()" (change)="changeStatus(plan, $event)">公開</mat-slide-toggle>
         </mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>
@@ -23,16 +23,3 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-
-<!-- <div class="permission" *ngIf="!isLoading">
-    <h1>プランを作る権限がありません。</h1>
-
-    <p>プランを作るためには以下の条件をクリアする必要があります。</p>
-
-    <ul>
-      <li>いいねした回数: {{limit.totalLikeCount}}以上（現: {{nowStatus?.totalLikeCount}}）</li>
-      <li>いいねされた回数: {{limit.totalLikedCount}}以上（現: {{nowStatus?.totalLikedCount}}）</li>
-      <li>公開したレッスン: {{limit.publicLessonCount}}以上（現: {{nowStatus?.publicLessonCount}}）</li>
-      <li>登録者数: {{limit.followerCount}}以上（現: {{nowStatus?.followerCount}}）</li>
-    </ul>
-  </div> -->

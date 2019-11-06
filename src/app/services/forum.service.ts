@@ -207,13 +207,16 @@ export class ForumService {
     });
   }
 
-  getReviews(channelId: string) {
+  getReviews(channelId: string): Observable<Review[]> {
     let tmpReviews;
 
     return this.db.collection<Review>(`channels/${channelId}/reviews`)
       .valueChanges().pipe(
         switchMap(replies => {
           tmpReviews = replies;
+          if (!replies.length) {
+            return of([]);
+          }
           return forkJoin(
             replies
             .map(reply => reply.authorId)
