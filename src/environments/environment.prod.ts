@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  title: 'エンジニアのゴミ箱（仮）',
+  title: 'サービス名検討中',
   stripe: {
     publicKey: 'pk_live_wlNER2telcowyGuSx1mGTrGb',
     clientId: 'ca_G18JUfv56rvyII64gIBw9KWHzu15m44g'
