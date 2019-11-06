@@ -91,11 +91,11 @@ export class PlanListComponent implements OnInit, OnDestroy {
           });
         }
       });
-    } else if (!this.notLogin) {
+    } else if (!this.notLogin && !this.isOwner) {
       this.dialog.open(CardDialogComponent, {
         width: '560px'
       });
-    } else {
+    } else if (this.notLogin) {
       this.authService.openLoginDialog();
     }
   }

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Plan } from 'src/app/interfaces/plan';
 import { PaymentService } from 'src/app/services/payment.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-confirm-subscribe-dialog',
@@ -12,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ConfirmSubscribeDialogComponent implements OnInit {
 
   isLoading: boolean;
+  title = environment.title;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: {
