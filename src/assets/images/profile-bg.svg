@@ -1,23 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="375" height="403" viewBox="0 0 375 403">
   <defs>
+    <clipPath id="clip-path">
+      <rect id="長方形_1" data-name="長方形 1" width="375" height="403"/>
+    </clipPath>
     <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0" stop-color="#6c18a4"/>
+      <stop offset="0" stop-color="#187ea4"/>
+      <stop offset="1" stop-color="#3827b4"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#1899a4"/>
       <stop offset="1" stop-color="#3827b4"/>
     </linearGradient>
     <linearGradient id="linear-gradient-3" x1="1" y1="0.423" x2="0.176" y2="0.423" gradientUnits="objectBoundingBox">
-      <stop offset="0" stop-color="#3827b4"/>
-      <stop offset="1" stop-color="#6c18a4"/>
+      <stop offset="0" stop-color="#2778b4"/>
+      <stop offset="1" stop-color="#18a4a4"/>
     </linearGradient>
-    <linearGradient id="linear-gradient-4" x1="1" y1="0.381" x2="0" y2="0.381" xlink:href="#linear-gradient-3"/>
-    <clipPath id="clip-アートボード_1">
-      <rect width="375" height="403"/>
-    </clipPath>
+    <linearGradient id="linear-gradient-4" x1="1" y1="0.381" x2="0" y2="0.381" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#275db4"/>
+      <stop offset="1" stop-color="#1899a4"/>
+    </linearGradient>
   </defs>
-  <g id="アートボード_1" data-name="アートボード – 1" clip-path="url(#clip-アートボード_1)">
+  <g id="アートボード_1" data-name="アートボード – 1" clip-path="url(#clip-path)">
     <rect id="長方形_319" data-name="長方形 319" width="378" height="403" transform="translate(-3)" fill="none"/>
     <g id="Background" transform="translate(375.434 812.817) rotate(180)">
       <path id="パス_5" data-name="パス 5" d="M609,447.47s-103.853-50.361-217.56-30.729-158.375-41.986-158.375-41.986V777.523H609Z" transform="translate(-234 35)" opacity="0.2" fill="url(#linear-gradient)"/>
-      <path id="パス_4" data-name="パス 4" d="M612,387.47s-63.072-12.841-160.56,29.271-218.375-21.986-218.375-21.986V757.523H609Z" transform="translate(-234 55)" opacity="0.4" fill="url(#linear-gradient)"/>
+      <path id="パス_4" data-name="パス 4" d="M612,387.47s-63.072-12.841-160.56,29.271-218.375-21.986-218.375-21.986V757.523H609Z" transform="translate(-234 55)" opacity="0.4" fill="url(#linear-gradient-2)"/>
       <path id="パス_1" data-name="パス 1" d="M158.465,404.416s65.937-46.684,198.506-8.808,254,24.4,254,24.4l-1,336.054H234Z" transform="translate(-234 57)" opacity="0.7" fill="url(#linear-gradient-3)"/>
       <path id="パス_2" data-name="パス 2" d="M214,428.849s58.257-43.116,190.485-5.179S591,460.043,591,460.043L590,786.67H213Z" transform="translate(-214 26.392)" opacity="0.7" fill="url(#linear-gradient-4)"/>
     </g>
