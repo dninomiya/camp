@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  title: 'コードオタクプラットフォーム（仮）',
+  title: 'サービス名検討中',
   stripe: {
     publicKey: 'pk_test_lKq5jlH5mdbAxDeBfB4f0sn400ZYUYdpvH',
     clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ'

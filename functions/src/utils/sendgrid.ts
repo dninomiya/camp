@@ -14,7 +14,7 @@ export const sendEmail = (data: {
   return sgMail.send({
     from: {
       email: 'noreply@deer.co.jp',
-      name: 'コードオタクプラットフォーム（仮）'
+      name: 'サービス名検討中'
     },
     ...data,
     templateId: config.mailTemplate[data.templateId]
