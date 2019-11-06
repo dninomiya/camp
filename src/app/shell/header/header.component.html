@@ -146,8 +146,9 @@
         *ngIf="!isLoading"
         mat-flat-button
         (click)="login()"
+        [disabled]="loginWaiting"
       >
-        ログイン
+        {{loginWaiting ? 'アカウント作成中' : 'ログイン'}}
       </button>
     </ng-template>
   </mat-toolbar-row>

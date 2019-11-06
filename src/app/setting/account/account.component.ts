@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -28,10 +29,11 @@ export class AccountComponent implements OnInit {
     private authService: AuthService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.user$.subscribe(user => {
-      if (user.mailSettings) {
+      if (user && user.mailSettings) {
         this.mailForm.patchValue(user.mailSettings);
       }
     });
@@ -53,6 +55,7 @@ export class AccountComponent implements OnInit {
         duration: 2000
       });
     });
+    this.router.navigateByUrl('/');
   }
 
   udpateMailSettings(uid: string) {

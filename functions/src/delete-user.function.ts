@@ -63,16 +63,14 @@ export const deleteUser = functions.runWith({
     token: functions.config().fb.token
   });
 
+  await admin.auth().deleteUser(uid).then(() => {
+    console.log(`ID: ${uid} を完全に削除しました`);
+  });
+
   if (data && data.email) {
-    return sendEmail({
+    await sendEmail({
       to: data.email,
       templateId: 'deleteAccount'
     });
-  } else {
-    return;
   }
-
-  return admin.auth().deleteUser(uid).then(() => {
-    console.log(`ID: ${uid} を完全に削除しました`);
-  });
 });

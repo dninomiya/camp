@@ -49,7 +49,7 @@ export class AuthService {
     );
   }
 
-  async login(): Promise<void> {
+  async login(): Promise<auth.UserCredential> {
     if (this.afUser) {
       await this.afAuth.auth.signOut();
     }
@@ -57,25 +57,24 @@ export class AuthService {
     authProvider.setCustomParameters({
       prompt: 'select_account'
     });
-    await this.afAuth.auth.signInWithPopup(authProvider);
+    return this.afAuth.auth.signInWithPopup(authProvider);
   }
 
   logout() {
     this.afAuth.auth.signOut().then(() => this.router.navigate(['/']));
   }
 
-  async deleteAccount(uid: string): Promise<void> {
-    if (uid) {
-      const deleteFn = this.fns.httpsCallable('deleteUser');
-      return deleteFn({ uid }).toPromise();
-    } else {
-      console.log('uid is not found.');
-    }
+  async deleteAccount(user: AfUser): Promise<void> {
+    const deleteFn = this.fns.httpsCallable('deleteUser');
+    return deleteFn({
+      uid: user.uid,
+      email: user.email
+    }).toPromise();
   }
 
   deleteMyAccount(): Promise<void> {
-    return this.deleteAccount(this.afUser.uid).then(() => {
-      this.router.navigate(['']);
+    return this.deleteAccount(this.afUser).then(() => {
+      this.router.navigate(['/']);
     });
   }
 

@@ -51,11 +51,10 @@ service cloud.firestore {
       }
       match /followers/{uid} {
         allow read: if true
-        allow write: if isOwner(channelId);
+        allow write: if isOwner(uid);
       }
       match /follows/{uid} {
         allow read: if true
-        allow write: if isOwner(channelId)
       }
       match /plans/{planId} {
         allow read: if true;

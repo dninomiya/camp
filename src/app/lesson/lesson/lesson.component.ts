@@ -100,7 +100,6 @@ export class LessonComponent implements OnInit, OnDestroy {
   );
 
   user$: Observable<User> = this.authService.authUser$.pipe(
-    take(1),
     tap(user => this.uid = user && user.id)
   );
 
@@ -314,8 +313,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   like(id: string) {
-    this.likeBuff++;
     if (this.uid) {
+      this.likeBuff++;
       this.lessonService.like(this.uid, id);
     } else {
       this.authService.openLoginDialog();

@@ -37,8 +37,8 @@ const createAccount = (user: UserRecord) => {
     avatarURL: user.photoURL,
     createdAt: new Date(),
     mailSettings: {
-      forum: true,
-      premium: true,
+      purchase: true,
+      reply: true
     }
   });
 }

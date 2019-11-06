@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit {
   noHeader: boolean;
 
   title = environment.title;
+  loginWaiting: boolean;
 
   searchParameters = {
     hitsPerPage: 5,
@@ -48,6 +49,11 @@ export class HeaderComponent implements OnInit {
       } else {
         return of(null);
       }
+    }),
+    tap(user => {
+      if (user) {
+        this.loginWaiting = false;
+      }
     })
   );
   notifications$: Observable<Notification[]>;
@@ -65,7 +71,8 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    this.authService.login();
+    this.loginWaiting = true;
+    this.authService.login().catch(() => this.loginWaiting = false);
   }
 
   logout() {
