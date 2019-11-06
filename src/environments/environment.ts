@@ -19,8 +19,8 @@ export const environment = {
     appId: '1:11098690567:web:50dbe85f0c81793b'
   },
   algolia: {
-    appId: 'WVB08E3GUS',
-    apiKey: '301d11ee1a8d253bace02afb4410422c',
+    appId: 'LZ4B1TI1NW',
+    apiKey: 'e4a4e27ff57df999aae2dda4f3ad367d',
     indexName: 'lessons-dev'
   },
   captchaKey: '6LdxgLIUAAAAAG7VOix4btA1S51f5kYqPugCNPeu',
