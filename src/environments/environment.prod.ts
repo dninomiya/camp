@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   title: 'サービス名検討中',
   stripe: {
-    publicKey: 'pk_live_wlNER2telcowyGuSx1mGTrGb',
+    publicKey: 'pk_live_PRahgFHJRpGZkMYMDUdSHkLQ00AEbGkN6b',
     clientId: 'ca_G18JUfv56rvyII64gIBw9KWHzu15m44g'
   },
   firebase: {

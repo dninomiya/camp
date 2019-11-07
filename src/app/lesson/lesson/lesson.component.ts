@@ -103,9 +103,9 @@ export class LessonComponent implements OnInit, OnDestroy {
     tap(user => this.uid = user && user.id)
   );
 
-  isOwner$: Observable<boolean> = forkJoin([
-    this.user$,
-    this.lesson$.pipe(take(1))
+  isOwner$: Observable<boolean> = combineLatest([
+    this.user$.pipe(),
+    this.lesson$.pipe()
   ]).pipe(
     map(([user, lesson]) => {
       if (user) {
