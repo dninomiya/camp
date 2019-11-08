@@ -17,6 +17,7 @@
       </p>
     </div>
     <label
+      *ngIf="!createWaiting"
       class="placeholder"
       [class.over]="isOver"
       (dragover)="onDragOver($event)"
@@ -68,10 +69,10 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button matDialogClose>キャンセル</button>
+  <button mat-button [disabled]="createWaiting" matDialogClose>キャンセル</button>
   <ng-container *ngIf="vimeoAccount$ | async as user">
     <button [disabled]="!size || createWaiting" color="primary" (click)="createVideo(user)" mat-raised-button>
-      アップロード
+      アップロード{{createWaiting && '中'}}
     </button>
   </ng-container>
 </mat-dialog-actions>

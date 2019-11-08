@@ -268,17 +268,38 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   private getOgpHTML(ogp: any) {
     const data = ogp.data;
-    const thumbnail = data.ogImage ?
-    `<figure class="ogp__thumbnail" style="background-image: url(${data.ogImage.url})"></figure>` : '';
+    console.log(data.ogImage);
+    let imageURL: string;
 
-    return `<a href="${ogp.requestUrl}" target="_blank" class="ogp">
+    if (data.ogImage && data.ogImage.url) {
+      imageURL = data.ogImage.url;
+    } else if (data.ogImage) {
+      imageURL = data.ogImage[0].url;
+    }
+
+    const title = data.ogTitle.replace(/`/g, '&#096;');
+    let thumbnail = '';
+
+    if (imageURL) {
+      thumbnail = `<figure class="ogp__thumbnail" style="background-image: url(${imageURL})"></figure>`;
+    }
+
+    let description = '';
+
+    if (data.ogDescription) {
+      description = `<p class="ogp__description">${data.ogDescription.replace(/\n/gm, '').replace(/`/g, '&#096;')}</p>`;
+    }
+
+    const result =  `<a href="${ogp.requestUrl}" target="_blank" class="ogp">
       ${thumbnail}
       <div class="ogp__body">
-        <p class="ogp__title">${data.ogTitle}</p>
-        <p class="ogp__description">${data.ogDescription}</p>
+        <p class="ogp__title">${title}</p>
+        ${description}
         <p class="ogp__url">${ogp.requestUrl}</p>
       </div>
-    </a>`;
+    </a>`.replace(/\n|^ +/gm, '').replace(/\n/gm, '');
+
+    return '```ogp_export\n' + result + '\n```';
   }
 
   ngOnInit() {

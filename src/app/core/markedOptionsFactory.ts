@@ -30,7 +30,7 @@ export function markedOptionsFactory(): MarkedOptions {
   };
 
   renderer.html = (html) => {
-    const gist = html.match(/https:\/\/gist\.github\.com.*\.js/m);
+    const gist = html && html.match(/https:\/\/gist\.github\.com.*\.js/m);
     if (gist) {
       return `<iframe frameborder=0 style="height: 460px;" scrolling="no" seamless="seamless" srcdoc='<html><body><style type="text/css">.gist .gist-data { height: 400px; }</style><script src="${gist[0]}"></script></body></html>'></iframe>`;
     } else {
@@ -64,8 +64,12 @@ export function markedOptionsFactory(): MarkedOptions {
 
     let text = t;
 
-    const info = lang.match(/note|denger|notice/);
-    const dod = label.match(/dont|do/);
+    const info = lang && lang.match(/note|denger|notice/);
+    const dod = label && label.match(/dont|do/);
+
+    if (label === 'ogp_export') {
+      return text;
+    }
 
     if (info) {
       return `<div class="info info--${info[0]}">${marked(text, {renderer})}</div>`;

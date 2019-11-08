@@ -142,7 +142,10 @@ export class VimeoService {
         });
       },
       onProgress: (bytesUploaded, bytesTotal) => {
+        console.log(bytesUploaded);
+        console.log(bytesTotal);
         const percentage = Math.round(bytesUploaded / bytesTotal * 100);
+        console.log(percentage);
         this.uploadStepSource.next(percentage);
       },
       onSuccess: () => {
