@@ -55,8 +55,9 @@ export class HomeComponent implements OnInit {
       if (follows.length) {
         this.noFollow = false;
         const ids = follows.map(id => {
-          return `authorId:${this.authService.user.id}`;
+          return `authorId:${id}`;
         }).join(' AND ');
+        console.log(ids);
         this.searchParameters.filters = `(${ids}) AND NOT deleted:true`;
       } else {
         this.noFollow = true;

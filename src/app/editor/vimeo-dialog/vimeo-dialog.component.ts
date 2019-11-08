@@ -77,7 +77,7 @@ export class VimeoDialogComponent implements OnInit {
   }
 
   connectVimeo() {
-    const host = location.protocol + '//' +  location.hostname;
+    const host = location.protocol + '//' +  location.hostname + (location.port && ':' + location.port);
 
     this.authService.createSCRF({
       uid: this.authService.user.id,
