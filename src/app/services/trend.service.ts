@@ -15,23 +15,6 @@ export class TrendService {
     private utilService: UtilService
   ) { }
 
-  getTrend(): Observable<LessonMeta[]> {
-    return this.db.collection<LessonMeta>('lessons', ref => {
-      return ref.orderBy('createdAt', 'desc').limit(40);
-    }).valueChanges().pipe(
-      map(lessons => {
-        return lessons.filter(lesson => !lesson.deleted);
-      }),
-      switchMap(lessons => {
-        if (lessons.length) {
-          return this.utilService.attachChannel(lessons);
-        } else {
-          return of([]);
-        }
-      })
-    );
-  }
-
   getFavirite(channelId: string): Observable<LessonMeta[]> {
     return this.db.collection<Lesson>(`channels/${channelId}/likes`, ref => {
       return ref.limit(20);
