@@ -13,7 +13,7 @@ export class ConfirmDisconnectStripeDialogComponent implements OnInit {
   constructor(
     private dialog: MatDialogRef<ConfirmDisconnectStripeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: {
-      clientId: string;
+      stripeUserId: string;
     },
     private paymentService: PaymentService,
     private snackBar: MatSnackBar
@@ -23,7 +23,8 @@ export class ConfirmDisconnectStripeDialogComponent implements OnInit {
   }
 
   disconnect() {
-    this.paymentService.disconnectStripe(this.data.clientId).then(() => {
+    this.paymentService.disconnectStripe(this.data.stripeUserId).then(() => {
+      this.dialog.close();
       this.snackBar.open('連携を解除しました', null, {
         duration: 2000
       });

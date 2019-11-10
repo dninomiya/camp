@@ -1,13 +1,21 @@
-.wrap {
-  position: absolute;
-  top: 0;
-  width: 900px;
+@import "mixins";
+
+:host {
+  display: block;
+  background: #fff;
   height: 100%;
+}
+
+.wrap {
   display: grid;
   grid-template-columns: 1fr 400px;
-  left: 50%;
-  transform: translateX(-50%);
+  height: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
   align-items: center;
+  @include sp {
+    grid-template-columns: 1fr;
+  }
 }
 
 .title {

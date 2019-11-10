@@ -3,7 +3,7 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Lesson } from 'src/app/interfaces/lesson';
 import { Observable, combineLatest, Subscription, of, forkJoin, merge } from 'rxjs';
-import { switchMap, tap, take, shareReplay, map } from 'rxjs/operators';
+import { switchMap, tap, take, shareReplay, map, catchError } from 'rxjs/operators';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { LessonService } from 'src/app/services/lesson.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -59,14 +59,21 @@ export class LessonComponent implements OnInit, OnDestroy {
     switchMap((params) => {
       const lid = params.get('v');
 
+      console.log(lid);
+
       if (lid) {
         return this.lessonService.getLesson(lid).pipe(take(1));
       } else {
         of(null);
       }
     }),
+    catchError(error => {
+      console.log(error);
+      return of(null);
+    }),
     switchMap((lesson) => {
       if (!lesson) {
+        this.router.navigate(['not-found']);
         return of(null);
       }
 
@@ -268,7 +275,6 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   private getOgpHTML(ogp: any) {
     const data = ogp.data;
-    console.log(data.ogImage);
     let imageURL: string;
 
     if (data.ogImage && data.ogImage.url) {

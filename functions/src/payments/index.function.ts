@@ -7,6 +7,7 @@ export { updatePlan } from './update-plan.function';
 export { deletePlan } from './delete-plan.function';
 export { planMemberDelete } from './plan-member-delete.function';
 export { chargePlan } from './charge-plan.function';
+export { disconnectStripe } from './disconnect-stripe.function';
 export {
   connectStripe,
   getDashboardURL

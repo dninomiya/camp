@@ -100,10 +100,9 @@ export class PaymentService {
       );
   }
 
-  async disconnectStripe(clientId: string): Promise<void> {
-    alert(clientId);
+  async disconnectStripe(stripeUserId: string): Promise<void> {
     const collable = this.fns.httpsCallable('disconnectStripe');
-    return collable({ clientId }).toPromise();
+    return collable({ stripeUserId }).toPromise();
   }
 
   getSubscriptions(uid: string): Observable<UserSubscription[]> {

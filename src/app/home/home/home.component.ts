@@ -18,12 +18,12 @@ export class HomeComponent implements OnInit {
 
   searchParameters = {
     hitsPerPage: 10,
-    filters: 'NOT deleted:true'
+    filters: 'public:true AND NOT deleted:true'
   };
 
   trendSearchParameters = {
     hitsPerPage: 10,
-    filters: 'NOT deleted:true'
+    filters: 'public:true AND NOT deleted:true'
   };
 
   noFollow = true;

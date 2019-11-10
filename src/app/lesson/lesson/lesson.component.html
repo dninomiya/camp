@@ -95,13 +95,14 @@
             </p>
           </div>
         </div>
-        <div class="channel-actions" *ngIf="!(isOwner$ | async)">
+        <div class="channel-actions">
           <div>
             <button
               class="weak"
               *ngIf="isFollow$ | async; else noFollow"
               (click)="unfollow(channel.id)"
               mat-flat-button
+              [disabled]="isOwner$ | async"
             >
               フォロー中 {{ (channel.statistics.followerCount || 0) + followerBuff }}
             </button>
@@ -109,6 +110,7 @@
               <button
                 (click)="follow(channel.id)"
                 mat-flat-button
+                [disabled]="isOwner$ | async"
                 color="primary"
               >
                 フォロー {{ (channel.statistics.followerCount || 0) + followerBuff }}

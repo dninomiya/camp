@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
-import { deleteAll } from '../utils/db';
+const stripe = require('stripe')(functions.config().stripe.key);
 
 export const disconnectStripe = functions
   .runWith({
@@ -8,14 +8,16 @@ export const disconnectStripe = functions
     memory: '2GB'
   })
   .https.onCall(async (data: {
-    channelId: string;
-    clientId: string;
+    stripeUserId: string;
   }, context) => {
     if (!context.auth) {
       return new functions.https.HttpsError('permission-denied', '認証エラー');
     }
 
-    await db.doc(`users/${context.auth.uid}/private/payment`).delete();
-    await deleteAll(`channels/${context.auth.uid}/plans`);
-    return deleteAll(`channels/${context.auth.uid}/customers`);
+    await stripe.oauth.deauthorize({
+      client_id: functions.config().stripe.client_id,
+      stripe_user_id: data.stripeUserId,
+    });
+
+    return db.doc(`users/${context.auth.uid}/private/connect`).delete();
   });

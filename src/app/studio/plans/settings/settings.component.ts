@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit {
   }
 
   async rejectStripe() {
-    const clientId = await this.paymentService.getStripeUserId(
+    const stripeUserId = await this.paymentService.getStripeUserId(
       this.authService.user.id
     );
 
@@ -50,7 +50,7 @@ export class SettingsComponent implements OnInit {
       autoFocus: false,
       width: '400px',
       data: {
-        clientId
+        stripeUserId
       }
     });
   }

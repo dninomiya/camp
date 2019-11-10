@@ -70,7 +70,7 @@ service cloud.firestore {
       }
     }
     match /lessons/{lessonId} {
-      allow read: if true;
+      allow read: if resource.data.public == true || isOwner(resource.data.authorId);
       allow create: if isSignIn();
       allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
       match /body/content {
