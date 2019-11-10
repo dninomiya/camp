@@ -24,7 +24,7 @@ export class StripeConnectButtonComponent implements OnInit {
   ngOnInit() {}
 
   connectStripe() {
-    const domain = environment.host;
+    const host = location.protocol + '//' +  location.hostname + (location.port && ':' + location.port);
 
     this.authService.createSCRF({
       uid: this.authService.user.id,
@@ -32,7 +32,7 @@ export class StripeConnectButtonComponent implements OnInit {
     }).then((id) => {
       const url =  'https://connect.stripe.com/express/oauth/authorize?' +
         `client_id=${environment.stripe.clientId}&` +
-        `redirect_uri=${domain}/connect-stripe&` +
+        `redirect_uri=${host}/connect-stripe&` +
         `state=${id}`;
 
       location.href = url;

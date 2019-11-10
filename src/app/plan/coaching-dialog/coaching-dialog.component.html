@@ -31,6 +31,7 @@
             <mat-select formControlName="time" multiple [required]="!days.controls[i].get('allDay').value">
               <mat-option *ngFor="let time of times" [value]="time">{{time}}</mat-option>
             </mat-select>
+            <mat-hint>時間は複数選択できます</mat-hint>
           </mat-form-field>
           <mat-slide-toggle formControlName="allDay">終日</mat-slide-toggle>
         </div>

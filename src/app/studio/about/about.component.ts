@@ -58,9 +58,7 @@ export class AboutComponent implements OnInit {
       Validators.maxLength(this.maxLength.description)
     ]],
     links: this.fb.array([
-      this.fb.control('', [
-        Validators.required
-      ])
+      this.fb.control('')
     ])
   });
 

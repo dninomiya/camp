@@ -32,6 +32,7 @@ export class ThreadComponent implements OnInit {
   thread$ = this.route.paramMap.pipe(
     switchMap(params => this.forumService.getThread(params.get('id')).pipe(take(1))),
     tap(thread => {
+      console.log(thread);
       this.thread = thread;
       this.forumService.reduceUnreadCount(
         this.authService.user.id,

@@ -18,7 +18,7 @@
   <div class="body">
     <markdown [data]="thread.body" class="article"></markdown>
 
-    <div *ngIf="thread.data?.browsers">
+    <div *ngIf="thread.browsers">
       <h2>対象ブラウザ</h2>
       <p>
         <span class="browser" *ngFor="let browser of thread.data?.browsers">
@@ -28,28 +28,28 @@
     </div>
 
     <div *ngIf="thread.data?.repository">
-      <a class="link" [href]="thread.data?.repository" target="_blank" mat-stroked-button>
+      <a class="link" [href]="thread.repository" target="_blank" mat-stroked-button>
         <span>リソース</span>
         <mat-icon class="mat-18">open_in_new</mat-icon>
       </a>
     </div>
 
-    <div *ngIf="thread.data?.days && thread.status === 'request'">
-      <h2>コーチング対応日を選択</h2>
-      <div *ngFor="let day of thread.data?.days" class="day">
+    <mat-card *ngIf="thread.days && thread.status === 'request'" class="coaching">
+      <h2 matCardTitle>コーチング対応日を選択するか、コメントで調整してください。</h2>
+      <div *ngFor="let day of thread?.days" class="day">
         <p class="day__date">{{day.date.toDate() | date:'yyyy/MM/dd (EE)'}}</p>
         <div class="day__sub">
           <p *ngIf="day.time">
-            <button (click)="postDate(day.date.toDate(), time)" mat-stroked-button *ngFor="let time of day.time">
+            <button color="primary" (click)="postDate(day.date.toDate(), time)" mat-stroked-button *ngFor="let time of day.time">
               {{time}}
             </button>
           </p>
           <p *ngIf="day.allDay">
-            <button mat-stroked-button (click)="openTimeSelector()">終日</button>
+            <button mat-stroked-button disabled>終日 (時間帯を伝えてください)</button>
           </p>
         </div>
       </div>
-    </div>
+    </mat-card>
   </div>
 
   <div class="actions">
