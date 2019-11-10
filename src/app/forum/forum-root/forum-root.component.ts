@@ -72,7 +72,14 @@ export class ForumRootComponent implements OnInit {
             });
           });
         },
-        (error) => { console.error(error); }
+        (error) => {
+          if (error.message.match('blocked')) {
+            this.snackBar.open('シークレットウィンドウを解除するか、ブラウザの通知を有効にしてください', null, {
+              duration: 4000
+            });
+          }
+          console.log(error.message);
+        }
       );
   }
 
