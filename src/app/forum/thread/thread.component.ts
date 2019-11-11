@@ -32,7 +32,6 @@ export class ThreadComponent implements OnInit {
   thread$ = this.route.paramMap.pipe(
     switchMap(params => this.forumService.getThread(params.get('id')).pipe(take(1))),
     tap(thread => {
-      console.log(thread);
       this.thread = thread;
       this.forumService.reduceUnreadCount(
         this.authService.user.id,
@@ -40,6 +39,15 @@ export class ThreadComponent implements OnInit {
       );
     }),
     shareReplay(1)
+  );
+
+  paymentStatus$ = this.thread$.pipe(
+    switchMap(thread => {
+      return this.paymentService.checkThreadPaymentStatus(
+        thread.authorId,
+        thread.targetId
+      );
+    })
   );
 
   @ViewChild('threadBottom', {
@@ -59,7 +67,7 @@ export class ThreadComponent implements OnInit {
     switchMap(params => {
       return this.forumService.getReplies(params.get('id'));
     }),
-    tap(() => {
+    tap(res => {
       setTimeout(() => {
         this.threadBottom.nativeElement.scrollIntoView({ block: 'start' });
       }, 100);

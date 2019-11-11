@@ -37,6 +37,21 @@ export const createReply = functions.firestore
     }
   });
 
+export const checkThreadPaymentStatus = functions.https.onCall(async (data, context) => {
+  const result = await Promise.all([
+    db.doc(`users/${data.customerId}`).get(),
+    db.doc(`users/${data.sellerId}`).get(),
+  ]);
+
+  const customer = result[0].data();
+  const seller = result[1].data();
+
+  return {
+    customer: customer && customer.isCustomer,
+    seller: seller && seller.isSeller,
+  };
+});
+
 export const createThread = functions.firestore
   .document('threads/{threadId}')
   .onCreate(async (snapshot) => {

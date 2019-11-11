@@ -19,5 +19,8 @@ export const disconnectStripe = functions
       stripe_user_id: data.stripeUserId,
     });
 
-    return db.doc(`users/${context.auth.uid}/private/connect`).delete();
+    await db.doc(`users/${context.auth.uid}/private/connect`).delete();
+    return db.doc(`users/${context.auth.uid}`).update({
+      isSeller: false
+    });
   });

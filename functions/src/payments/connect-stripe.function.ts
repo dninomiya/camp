@@ -118,6 +118,10 @@ export const connectStripe = functions.https.onCall(async (data, context) => {
       productId,
     });
 
+    await db.doc(`users/${context.auth.uid}`).update({
+      isSeller: true
+    });
+
     return createPlans(context.auth.uid);
   } else {
     throw new Error('権限がありません');

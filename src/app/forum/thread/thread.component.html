@@ -1,108 +1,175 @@
 <ng-container *ngIf="thread$ | async as thread">
-<div class="main">
-  <div class="header">
-    <div class="header__avatar">
-      <img [src]="thread.author.avatarURL | safe: 'url'" />
-    </div>
-    <div class="header__body">
-      <h1 class="header__title">{{ thread.title }}</h1>
-      <p class="header__subline">
-        <span>{{ thread.author.title }}</span>
-        <span class="header__date">{{
-          thread.createdAt | fromNow
-        }}</span>
-      </p>
-    </div>
-  </div>
-
-  <div class="body">
-    <markdown [data]="thread.body" class="article"></markdown>
-
-    <div *ngIf="thread.browsers">
-      <h2>対象ブラウザ</h2>
-      <p>
-        <span class="browser" *ngFor="let browser of thread.data?.browsers">
-          {{browser}}
-        </span>
-      </p>
-    </div>
-
-    <div *ngIf="thread.data?.repository">
-      <a class="link" [href]="thread.repository" target="_blank" mat-stroked-button>
-        <span>リソース</span>
-        <mat-icon class="mat-18">open_in_new</mat-icon>
-      </a>
-    </div>
-
-    <mat-card *ngIf="thread.days && thread.status === 'request'" class="coaching">
-      <h2 matCardTitle>コーチング対応日を選択するか、コメントで調整してください。</h2>
-      <div *ngFor="let day of thread?.days" class="day">
-        <p class="day__date">{{day.date.toDate() | date:'yyyy/MM/dd (EE)'}}</p>
-        <div class="day__sub">
-          <p *ngIf="day.time">
-            <button color="primary" (click)="postDate(day.date.toDate(), time)" mat-stroked-button *ngFor="let time of day.time">
-              {{time}}
-            </button>
-          </p>
-          <p *ngIf="day.allDay">
-            <button mat-stroked-button disabled>終日 (時間帯を伝えてください)</button>
-          </p>
-        </div>
+  <div class="main">
+    <div class="header">
+      <div class="header__avatar">
+        <img [src]="thread.author.avatarURL | safe: 'url'" />
       </div>
-    </mat-card>
-  </div>
-
-  <div class="actions">
-    <div [ngSwitch]="thread.status">
-      <div *ngSwitchCase="'request'">
-        <ng-container *ngIf="uid === thread.targetId; else cancel">
-          <button mat-button (click)="openRejectDialog(thread)">却下</button>
-          <button mat-raised-button (click)="openConfirmDialog(thread)" color="primary">承認</button>
-        </ng-container>
-        <ng-template #cancel>
-          <button mat-button (click)="openRejectDialog(thread)">キャンセル</button>
-        </ng-template>
-      </div>
-      <div *ngSwitchCase="'open'">
-        <button mat-button (click)="addReviewDialog(thread, false)">未解決</button>
-        <button mat-raised-button (click)="addReviewDialog(thread, true)" color="primary">解決</button>
-      </div>
-      <div *ngSwitchCase="'closed'">
-        <button mat-button disabled *ngIf="thread.isComplete">解決済みとしてクローズ</button>
-        <button mat-button disabled *ngIf="thread.isReject">却下（理由: {{getReason(thread.rejectReason)}}）</button>
-        <button mat-button disabled *ngIf="!thread.isComplete && !thread.isReject">未解決としてクローズ</button>
-      </div>
-      <div *ngSwitchDefault></div>
-    </div>
-  </div>
-
-  <mat-divider></mat-divider>
-
-  <div class="replies">
-    <div class="reply" *ngFor="let reply of replies$ | async">
-      <div class="reply__avatar">
-        <img [src]="reply.author?.avatarURL" />
-      </div>
-      <div class="reply__main">
-        <div class="reply__body" markdown>{{ reply.body }}</div>
-        <p class="reply__footer">
-          <span>{{ reply.author.title }}</span>
-          <span>{{ reply.createdAt | fromNow }}</span>
+      <div class="header__body">
+        <h1 class="header__title">{{ thread.title }}</h1>
+        <p class="header__subline">
+          <span>{{ thread.author.title }}</span>
+          <span class="header__date">{{ thread.createdAt | fromNow }}</span>
         </p>
       </div>
     </div>
-    <div #threadBottom></div>
-  </div>
-</div>
 
-<div class="form" *ngIf="thread.status !== 'closed'">
-  <textarea
-    [placeholder]="thread.status === 'request' ? '承認前の確認事項' : 'マークダウンが使えます'"
-    [formControl]="commentForm"
-    [appAutofocus]="true"
-  ></textarea>
-  <button [disabled]="commentForm.invalid" (click)="submit()" mat-icon-button class="form__button">
-    <mat-icon class="mat-18">send</mat-icon>
-  </button>
-</div>
+    <div class="body">
+      <markdown [data]="thread.body" class="article"></markdown>
+
+      <div *ngIf="thread.browsers">
+        <h2>対象ブラウザ</h2>
+        <p>
+          <span class="browser" *ngFor="let browser of thread.data?.browsers">
+            {{ browser }}
+          </span>
+        </p>
+      </div>
+
+      <div *ngIf="thread.data?.repository">
+        <a
+          class="link"
+          [href]="thread.repository"
+          target="_blank"
+          mat-stroked-button
+        >
+          <span>リソース</span>
+          <mat-icon class="mat-18">open_in_new</mat-icon>
+        </a>
+      </div>
+
+      <mat-card
+        *ngIf="thread.days && thread.status === 'request'"
+        class="coaching"
+      >
+        <h2 matCardTitle>
+          コーチング対応日を選択するか、コメントで調整してください。
+        </h2>
+        <div *ngFor="let day of thread?.days" class="day">
+          <p class="day__date">
+            {{ day.date.toDate() | date: 'yyyy/MM/dd (EE)' }}
+          </p>
+          <div class="day__sub">
+            <p *ngIf="day.time">
+              <button
+                color="primary"
+                (click)="postDate(day.date.toDate(), time)"
+                mat-stroked-button
+                *ngFor="let time of day.time"
+              >
+                {{ time }}
+              </button>
+            </p>
+            <p *ngIf="day.allDay">
+              <button mat-stroked-button disabled>
+                終日 (時間帯を伝えてください)
+              </button>
+            </p>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="actions">
+      <div [ngSwitch]="thread.status">
+        <div *ngSwitchCase="'request'">
+          <ng-container *ngIf="uid === thread.targetId; else cancel">
+            <button mat-button (click)="openRejectDialog(thread)">却下</button>
+            <button
+              *ngIf="paymentStatus$ | async as paymentStatus"
+              mat-raised-button
+              (click)="openConfirmDialog(thread)"
+              color="primary"
+              [disabled]="!paymentStatus.seller || !paymentStatus.customer"
+            >
+              <span *ngIf="!paymentStatus.seller"
+                >サポーターのStripe連携待ち</span
+              >
+              <span *ngIf="!paymentStatus.customer"
+                >利用者のカード登録待ち</span
+              >
+              <span *ngIf="paymentStatus.customer && paymentStatus.seller"
+                >承認</span
+              >
+            </button>
+          </ng-container>
+          <ng-template #cancel>
+            <button mat-button (click)="openRejectDialog(thread)">
+              キャンセル
+            </button>
+          </ng-template>
+        </div>
+        <div *ngSwitchCase="'open'">
+          <button mat-button (click)="addReviewDialog(thread, false)">
+            未解決
+          </button>
+          <button
+            mat-raised-button
+            (click)="addReviewDialog(thread, true)"
+            color="primary"
+          >
+            解決
+          </button>
+        </div>
+        <div *ngSwitchCase="'closed'">
+          <button mat-button disabled *ngIf="thread.isComplete">
+            解決済みとしてクローズ
+          </button>
+          <button mat-button disabled *ngIf="thread.isReject">
+            却下（理由: {{ getReason(thread.rejectReason) }}）
+          </button>
+          <button
+            mat-button
+            disabled
+            *ngIf="!thread.isComplete && !thread.isReject"
+          >
+            未解決としてクローズ
+          </button>
+        </div>
+        <div *ngSwitchDefault></div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="replies" *ngIf="replies$ | async as replies">
+      <div *ngIf="replies.length; else blank">
+        <div class="reply" *ngFor="let reply of replies">
+          <div class="reply__avatar">
+            <img [src]="reply.author?.avatarURL" />
+          </div>
+          <div class="reply__main">
+            <div class="reply__body" markdown>{{ reply.body }}</div>
+            <p class="reply__footer">
+              <span>{{ reply.author.title }}</span>
+              <span>{{ reply.createdAt | fromNow }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <ng-template #blank>
+        <p class="no-reply">返信はありません</p>
+      </ng-template>
+      <div #threadBottom></div>
+    </div>
+  </div>
+
+  <div class="form" *ngIf="thread.status !== 'closed'">
+    <textarea
+      [placeholder]="
+        thread.status === 'request'
+          ? '承認前の確認事項'
+          : 'マークダウンが使えます'
+      "
+      [formControl]="commentForm"
+      [appAutofocus]="true"
+    ></textarea>
+    <button
+      [disabled]="commentForm.invalid"
+      (click)="submit()"
+      mat-icon-button
+      class="form__button"
+    >
+      <mat-icon class="mat-18">send</mat-icon>
+    </button>
+  </div>
 </ng-container>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { UserPayment, UserConnect } from '../interfaces/user';
+import { UserPayment, UserConnect, User } from '../interfaces/user';
 import { Observable, forkJoin, of } from 'rxjs';
 import { map, take, first, switchMap } from 'rxjs/operators';
 import { UserSubscription } from '../interfaces/user-subscription';
@@ -84,6 +84,17 @@ export class PaymentService {
         }),
         first()
       ).toPromise();
+  }
+
+  checkThreadPaymentStatus(customerId: string, sellerId: string): Observable<{
+    customer: boolean,
+    seller: boolean
+  }> {
+    const callable = this.fns.httpsCallable('checkThreadPaymentStatus');
+    return callable({
+      customerId,
+      sellerId
+    });
   }
 
   getStirpeAccountId(uid: string): Observable<string> {

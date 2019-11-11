@@ -1,11 +1,11 @@
-import { firestore } from 'firebase/app';
-
 export interface User {
   readonly id: string;
   readonly name: string;
   readonly email: string;
   readonly avatarURL: string;
   readonly createdAt: Date;
+  readonly isCustomer: boolean;
+  readonly isSeller: boolean;
 
   mailSettings: {
     forum: boolean;

@@ -114,6 +114,9 @@ export class ForumService {
       return ref.orderBy('createdAt', 'asc');
     }).valueChanges().pipe(
       switchMap(replies => {
+        if (!replies.length) {
+          return of([]);
+        }
         tmpReplies = replies;
         return forkJoin(
           replies
@@ -125,6 +128,9 @@ export class ForumService {
         );
       }),
       map(users => {
+        if (!users.length) {
+          return [];
+        }
         return tmpReplies.map(reply => {
           reply.author = users.find(user => user.id === reply.authorId);
           return reply;

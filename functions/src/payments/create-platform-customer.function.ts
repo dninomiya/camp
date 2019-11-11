@@ -12,6 +12,10 @@ export const createPlatformCustomer = functions.https.onCall(async (data, contex
 
   const customer = await stripe.customers.create(data);
 
+  await db.doc(`users/${context.auth.uid}`).update({
+    isCustomer: true
+  });
+
   return db.doc(`users/${context.auth.uid}/private/payment`).set({
     customerId: customer.id
   }, {merge: true});
