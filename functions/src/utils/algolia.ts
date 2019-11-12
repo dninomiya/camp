@@ -17,6 +17,7 @@ export const addIndex = (data: any) => {
 export const updateIndex = (data: any) => {
   const item = data;
   item.objectID = data.id;
+  item.updatedAt = item.updatedAt.toMillis();
   delete item.createdAt
   return index.partialUpdateObject(item);
 }

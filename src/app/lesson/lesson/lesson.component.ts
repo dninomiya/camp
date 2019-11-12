@@ -58,9 +58,6 @@ export class LessonComponent implements OnInit, OnDestroy {
     }),
     switchMap((params) => {
       const lid = params.get('v');
-
-      console.log(lid);
-
       if (lid) {
         return this.lessonService.getLesson(lid).pipe(take(1));
       } else {

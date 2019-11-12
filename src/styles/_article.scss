@@ -209,10 +209,17 @@
     overflow: hidden;
     border: 1px solid rgba(black, .12);
     border-radius: 2px;
+    @include sp {
+      display: block;
+    }
     &__thumbnail {
       width: 184px;
       background: center/cover;
       margin: 0;
+      @include sp {
+        height: 120px;
+        width: 100%;
+      }
     }
     &__title {
       font-size: 14px;
@@ -227,11 +234,21 @@
       margin: 0 0 8px;
       font-size: 13px;
       color: rgba(black, .6);
+      @include sp {
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+      }
     }
     &__url {
       font-size: 12px;
       color: rgba(black, .38);
       margin: 0;
+      @include sp {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
 

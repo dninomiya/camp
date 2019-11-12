@@ -1,3 +1,21 @@
+<mat-toolbar class="header">
+  <mat-toolbar-row>
+    <button
+      class="menu"
+      mat-icon-button
+      aria-label="メニューを開く"
+      (click)="drawer.open()"
+    >
+      <mat-icon class="mat-18">menu</mat-icon>
+    </button>
+    <a class="logo" routerLink="/">
+      <span class="logo__text">
+        <span class="small">{{title}}</span>
+      </span>
+    </a>
+  </mat-toolbar-row>
+</mat-toolbar>
+
 <mat-drawer-container class="in-intl">
   <mat-drawer
     #drawer
@@ -37,24 +55,6 @@
       </a>
     </mat-nav-list>
   </mat-drawer>
-  <mat-toolbar class="header">
-    <mat-toolbar-row>
-      <button
-        class="menu"
-        mat-icon-button
-        aria-label="メニューを開く"
-        (click)="drawer.open()"
-      >
-        <mat-icon class="mat-18">menu</mat-icon>
-      </button>
-      <a class="logo" routerLink="/">
-        <span class="logo__text">
-          <span class="small">{{title}}</span>
-        </span>
-      </a>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
   <mat-progress-bar
     *ngIf="isLoading$ | async"
     color="accent"
