@@ -73,7 +73,7 @@ export class VimeoService {
         },
         name: new Date().toString(),
         privacy: {
-          view: user.account === 'basic' ? 'anybody' : 'unlisted',
+          view: user.account === 'basic' ? 'anybody' : 'disable',
           embed: user.account === 'basic' ? 'public' : 'whitelist',
           download: false
         }
