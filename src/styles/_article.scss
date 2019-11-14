@@ -235,12 +235,10 @@
       margin: 0 0 8px;
       font-size: 13px;
       color: rgba(black, .6);
-      @include sp {
-        overflow: hidden;
-        -webkit-line-clamp: 2;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-      }
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
     }
     &__url {
       font-size: 12px;

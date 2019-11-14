@@ -276,7 +276,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
     if (data.ogImage && data.ogImage.url) {
       imageURL = data.ogImage.url;
-    } else if (data.ogImage) {
+    } else if (data.ogImage && data.ogImage[0]) {
       imageURL = data.ogImage[0].url;
     }
 
