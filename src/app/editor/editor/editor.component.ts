@@ -242,6 +242,7 @@ export class EditorComponent implements OnInit {
 
       action = this.lessonService.updateLesson(
         this.oldLesson.id, {
+          body: this.form.value.body,
         ...newValue
       });
     } else {

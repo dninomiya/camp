@@ -41,7 +41,12 @@ export const updateLessonMeta = functions.firestore
         await countDown(`channels/${before.channelId}`, 'statistics.publicLessonCount');
       }
 
-      return updateIndex(after);
+      const content = (await db.doc(`lessons/${before.id}/body/content`).get()).data() as any;
+
+      return updateIndex({
+        ...after,
+        body: content.body
+      });
     }
   });
 
@@ -56,20 +61,6 @@ export const createLesson = functions.firestore
       ...data
     };
     return addIndex(body);
-  });
-
-export const updateLesson = functions.firestore
-  .document('lessons/{lessonId}/body/content')
-  .onUpdate(async (change, context) => {
-    const lid = context.params.lessonId;
-    const meta = (await db.doc(`lessons/${lid}`).get()).data() as any;
-    const data = change.after.data() as any;
-    const body = {
-      ...meta,
-      ...data
-    };
-
-    return updateIndex(body);
   });
 
 export const deleteLesson = functions.firestore

@@ -37,8 +37,8 @@ export class UserCardComponent implements OnInit {
       this.planService.getPlansByChannelId(this.channel.id).pipe(
         map(plans => plans.filter(plan => plan.active)),
       ),
-    ]).subscribe(([job, plans]) => {
-      this.jobs = job;
+    ]).subscribe(([jobs, plans]) => {
+      this.jobs = jobs.filter(job => job.public);
       this.plans = plans;
       this.loaded.emit(true);
     });
