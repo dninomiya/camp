@@ -33,9 +33,11 @@ export const updateLessonMeta = functions.firestore
     }
 
     if (after.deleted) {
-      await countDown(`channels/${after.channelId}`, 'statistics.lessonCount');
-      if (before.public) {
-        await countDown(`channels/${after.channelId}`, 'statistics.publicLessonCount');
+      if (after.channelId) {
+        await countDown(`channels/${after.channelId}`, 'statistics.lessonCount');
+        if (before.public) {
+          await countDown(`channels/${after.channelId}`, 'statistics.publicLessonCount');
+        }
       }
       return removeIndex(context.params.lessonId);
     } else {
