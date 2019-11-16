@@ -17,12 +17,12 @@ export class HomeComponent implements OnInit {
   algoliaConfig = environment.algolia;
 
   searchParameters = {
-    hitsPerPage: 10,
+    hitsPerPage: 20,
     filters: 'public:true AND NOT deleted:true'
   };
 
   trendSearchParameters = {
-    hitsPerPage: 10,
+    hitsPerPage: 20,
     filters: 'public:true AND NOT deleted:true'
   };
 
