@@ -11,10 +11,11 @@ import { EditorHelpComponent } from './editor-help/editor-help.component';
 import { NgxFilesizeModule } from 'ngx-filesize';
 import { VimeoDialogComponent } from './vimeo-dialog/vimeo-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
+import { VimeoHelpDialogComponent } from './vimeo-help-dialog/vimeo-help-dialog.component';
 
 
 @NgModule({
-  declarations: [EditorComponent, LessonGuideComponent, EditorHelpComponent, VimeoDialogComponent],
+  declarations: [EditorComponent, LessonGuideComponent, EditorHelpComponent, VimeoDialogComponent, VimeoHelpDialogComponent],
   imports: [
     SharedModule,
     EditorRoutingModule,
@@ -44,7 +45,8 @@ import { NgAisModule } from 'angular-instantsearch';
   entryComponents: [
     LessonGuideComponent,
     EditorHelpComponent,
-    VimeoDialogComponent
+    VimeoDialogComponent,
+    VimeoHelpDialogComponent
   ]
 })
 export class EditorModule { }

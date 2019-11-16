@@ -25,6 +25,7 @@ import { VimeoUser } from 'src/app/interfaces/vimeo';
 import { environment } from 'src/environments/environment';
 import { ListEditDialogComponent } from 'src/app/core/list-edit-dialog/list-edit-dialog.component';
 import { TagEditorDialogComponent } from 'src/app/core/tag-editor-dialog/tag-editor-dialog.component';
+import { VimeoHelpDialogComponent } from '../vimeo-help-dialog/vimeo-help-dialog.component';
 
 @Component({
   selector: 'app-editor',
@@ -119,8 +120,8 @@ export class EditorComponent implements OnInit {
     body: ['', Validators.required],
     tags: [''],
     videoId: ['', {
-      asyncValidators: [this.validateVimeoId.bind(this)],
-      updateOn: 'blur'
+      // asyncValidators: [this.validateVimeoId.bind(this)],
+      // updateOn: 'blur'
     }],
     public: [true, Validators.required],
     premium: [false],
@@ -458,5 +459,9 @@ export class EditorComponent implements OnInit {
         this.form.get('tags').patchValue(tags);
       }
     });
+  }
+
+  openVimeoHelp() {
+    this.dialog.open(VimeoHelpDialogComponent);
   }
 }
