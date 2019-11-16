@@ -9,7 +9,6 @@
       ></app-vimeo>
       <h1 class="title">{{ lesson.title }}</h1>
       <div class="video-footer">
-        <p class="count">{{ lesson.viewCount | number }} 回視聴</p>
         <div class="actions">
           <button
             [disabled]="isOwner$ | async"

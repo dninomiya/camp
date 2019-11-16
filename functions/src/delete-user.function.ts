@@ -63,6 +63,12 @@ export const deleteUser = functions.runWith({
     token: functions.config().fb.token
   });
 
+  const lessons = await db.collection('lessons').where('authorId', '==', uid).get();
+
+  for(const doc of lessons.docs) {
+    await doc.ref.set({deleted: true});
+  }
+
   await admin.auth().deleteUser(uid).then(() => {
     console.log(`ID: ${uid} を完全に削除しました`);
   });

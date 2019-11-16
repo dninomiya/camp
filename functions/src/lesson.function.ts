@@ -28,6 +28,10 @@ export const updateLessonMeta = functions.firestore
       throw new Error('データが存在しません');
     }
 
+    if (before.deleted) {
+      return;
+    }
+
     if (after.deleted) {
       await countDown(`channels/${after.channelId}`, 'statistics.lessonCount');
       if (before.public) {
