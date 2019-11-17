@@ -25,7 +25,7 @@ app.get('*', async (req: any, res: any) => {
       `https://rendertron-255005.appspot.com/render/${generateUrl(req)}`
     );
     const body = await response.text();
-    res.set('Cache-Control', 'public, max-age=300, s-maxage=600');
+    res.set('Cache-Control', 'public, max-age=86400, s-maxage=86400');
     res.set('Vary', 'User-Agent');
     res.send(body.toString());
   } else {
