@@ -20,7 +20,7 @@ import { PlanService } from 'src/app/services/plan.service';
 import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
 import { VimeoService } from 'src/app/services/vimeo.service';
 import { Simplemde } from 'ng2-simplemde';
-import { updatedDiff } from 'deep-object-diff';
+import { addedDiff, updatedDiff } from 'deep-object-diff';
 import { VimeoUser } from 'src/app/interfaces/vimeo';
 import { environment } from 'src/environments/environment';
 import { ListEditDialogComponent } from 'src/app/core/list-edit-dialog/list-edit-dialog.component';
@@ -239,7 +239,12 @@ export class EditorComponent implements OnInit {
     }
 
     if (this.oldLesson) {
-      const newValue = updatedDiff(this.oldLesson, this.form.value);
+      const added = addedDiff(this.oldLesson, this.form.value);
+      const updated = updatedDiff(this.oldLesson, this.form.value);
+      const newValue = {
+        ...added,
+        ...updated,
+      };
 
       action = this.lessonService.updateLesson(
         this.oldLesson.id, {
