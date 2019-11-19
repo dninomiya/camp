@@ -41,5 +41,9 @@ export const updateIndex = async (data: any) => {
   item.updatedAt = item.updatedAt.toMillis();
   item.createdAt = item.createdAt.toMillis();
   await removeIndex(item.id);
-  return addRecords(item);
+  if (item.body && item.body.length > 500) {
+    return addRecords(item);
+  } else {
+    return index.addObject(item);
+  }
 }
