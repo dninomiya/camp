@@ -3,6 +3,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, ActivationEnd, ActivatedRoute } from '@angular/router';
 import { UiService } from 'src/app/services/ui.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-main-shell',
@@ -17,12 +18,14 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
   noBottomNav: boolean;
   noFooter: boolean;
   isMobile = this.uiService.isMobile;
+  user$ = this.authService.authUser$;
 
   constructor(
     private loadingService: LoadingService,
     private cd: ChangeDetectorRef,
     private uiService: UiService,
     private router: Router,
+    private authService: AuthService,
     private route: ActivatedRoute
   ) {
     const getLastChild = (parent) => {
@@ -30,7 +33,7 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     this.router.events.subscribe(event => {
       if (event instanceof ActivationEnd) {
-        const lastChild = getLastChild(route.firstChild).snapshot;
+        const lastChild = getLastChild(this.route.firstChild).snapshot;
         this.noHeader = lastChild.data.noHeader;
         this.noBottomNav = lastChild.data.noBottomNav;
         this.noFooter = lastChild.data.noFooter;
