@@ -10,8 +10,6 @@ export class GridLessonItemComponent implements OnInit {
   @Input() lesson: LessonMetaWithChannel;
   @Input() type?: string;
 
-  thumbnailURL: string;
-
   constructor() { }
 
   ngOnInit() { }
