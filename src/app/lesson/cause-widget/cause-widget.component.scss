@@ -22,7 +22,7 @@
   &__title {
     font-size: 14px;
     font-weight: normal;
-    line-height: 1;
+    line-height: 1.6;
     margin: 0;
   }
   &__description {
@@ -36,7 +36,7 @@
 }
 
 .list {
-  mat-icon {
-    color: rgba(black, .38);
+  .active {
+    font-weight: bold;
   }
 }
