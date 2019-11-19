@@ -127,7 +127,6 @@ export class LessonComponent implements OnInit, OnDestroy {
     }),
     switchMap((premium: boolean) => {
       if (premium) {
-        return of(false); // TODO: remove
         return this.isOwner$;
       } else {
         return of(true);
