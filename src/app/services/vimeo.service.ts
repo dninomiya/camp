@@ -64,6 +64,7 @@ export class VimeoService {
     videoId: string;
     uploadURL: string;
   }> {
+    console.log(user.account);
     return this.http.post(
       'https://api.vimeo.com/me/videos',
       {
@@ -75,7 +76,7 @@ export class VimeoService {
         privacy: {
           view: user.account === 'basic' ? 'anybody' : 'disable',
           embed: user.account === 'basic' ? 'public' : 'whitelist',
-          download: false
+          download: user.account === 'basic' ? null : false
         }
       },
       {

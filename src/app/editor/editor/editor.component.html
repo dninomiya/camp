@@ -57,11 +57,11 @@
           </button>
         </div>
       </div>
-      <mat-form-field>
+      <mat-form-field *ngIf="vimeoUser">
         <mat-label>動画ID</mat-label>
-        <!-- <mat-error *ngIf="form.get('videoId').hasError('videoId')"
+        <mat-error *ngIf="form.get('videoId').hasError('videoId')"
           >自分の動画ではありません</mat-error
-        > -->
+        >
         <input
           type="text"
           formControlName="videoId"
@@ -69,10 +69,9 @@
           placeholder="12345"
           autocomplete="off"
         />
-        <!-- <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon> -->
-        <mat-icon (click)="openVimeoHelp()" matSuffix>help_outline</mat-icon>
+        <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon>
       </mat-form-field>
-      <!-- <div *ngIf="vimeoUser === null" class="connect-vimeo">
+      <div *ngIf="vimeoUser === null" class="connect-vimeo">
         <div class="connect-vimeo">
           <button
             type="button"
@@ -83,7 +82,7 @@
             Vimeoと接続
           </button>
         </div>
-      </div> -->
+      </div>
     </div>
     <div class="wrap">
       <div class="body">
