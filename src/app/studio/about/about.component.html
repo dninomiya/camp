@@ -2,6 +2,15 @@
   <h2>基本情報</h2>
 
   <mat-card>
+    <h3>カバー写真</h3>
+    <div class="cover-field">
+      <app-input-image
+        [options]="coverOptions"
+        [oldSrc]="coverSrc"
+        (uploaded)="uploadCover($event)"
+      ></app-input-image>
+    </div>
+
     <h3>アバター画像</h3>
 
     <div class="avatar-field">

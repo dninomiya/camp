@@ -23,6 +23,22 @@
   height: 160px;
   position: relative;
   margin-bottom: 32px;
+  &--no-cover {
+    background: bottom/cover url(/assets/images/profile-bg.svg) no-repeat;
+    padding: 40px 0 80px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 0;
+    height: auto;
+  }
+  &__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: bottom;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.38);
+  }
 }
 
 .profile {

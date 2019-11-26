@@ -1,6 +1,8 @@
 <mat-card class="card">
-  <div matCardImage class="header">
-    <!-- <img class="header__avatar" [src]="channel.avatarURL | safe: 'url'" alt=""> -->
+  <div *ngIf="channel.coverURL" matCardImage class="header" [style.background-image]="'url(' + channel.coverURL + ')' | safe:'style'"></div>
+
+  <div *ngIf="!channel.coverURL" matCardImage class="header header--no-cover">
+    <img class="header__avatar" [src]="channel.avatarURL | safe: 'url'" alt="">
   </div>
 
   <div class="profile">
@@ -31,6 +33,11 @@
       <!-- <p class="camp__price">50,000円 / 月</p> -->
     </div>
   </div>
+
+  <ng-container *ngIf="plans && plans.length">
+    <mat-divider></mat-divider>
+    <app-plan-list [isOwner]="isOwner" [channel]="channel" [plans]="plans"></app-plan-list>
+  </ng-container>
 
   <ng-container *ngIf="jobs && jobs.length">
     <mat-divider></mat-divider>

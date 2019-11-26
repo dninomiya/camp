@@ -9,6 +9,7 @@
   <ng-container *ngIf="!src">
     <div class="placeholder__icon">
       <mat-icon class="mat-18" inline>add_photo_alternate</mat-icon>
+      <span *ngIf="options.label">{{options.size.width}} × {{options.size.height}}以上</span>
     </div>
   </ng-container>
   <input

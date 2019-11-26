@@ -16,6 +16,7 @@ export class InputImageComponent implements OnInit {
   @Input() oldSrc?: string;
   @Input() options: {
     path: string;
+    label?: boolean;
     size: {
       width: number;
       height: number;

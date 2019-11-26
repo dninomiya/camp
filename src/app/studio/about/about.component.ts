@@ -66,12 +66,15 @@ export class AboutComponent implements OnInit {
   });
   adsSrc: string;
   channel: ChannelMeta;
+
+  coverSrc: string;
   channel$ = this.route.parent.params.pipe(
     switchMap(({ id }) => this.channelService.getChannel(id).pipe(take(1))),
     tap(channel => {
       this.channel = channel;
       this.form.patchValue(channel);
       this.adsOptions.path = `ads/${channel.id}`;
+      this.coverOptions.path = `channels/${channel.id}/cover`,
       this.avatarImage = channel.avatarURL;
       if (channel.ads) {
         this.adsSrc = channel.ads.imageURL;
@@ -90,6 +93,16 @@ export class AboutComponent implements OnInit {
       width: 400,
       height: 240,
       limitMb: 1
+    }
+  };
+
+  coverOptions = {
+    path: '',
+    label: true,
+    size: {
+      width: 1200,
+      height: 630,
+      limitMb: 3
     }
   };
 
@@ -262,6 +275,16 @@ export class AboutComponent implements OnInit {
       this.authService.user.id,
       {
         [`ads.imageURL`]: imageURL
+      }
+    );
+  }
+
+  uploadCover(imageURL) {
+    this.coverSrc = imageURL;
+    this.channelService.updateChannel(
+      this.authService.user.id,
+      {
+        coverURL: imageURL
       }
     );
   }
