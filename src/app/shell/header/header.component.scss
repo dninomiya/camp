@@ -31,12 +31,12 @@
 
 .logo {
   display: block;
-  height: 100%;
-  padding: 16px 0;
-  box-sizing: border-box;
   img {
     display: block;
-    max-height: 100%;
+    height: 32px;
+    @include sp {
+      height: 24px;
+    }
   }
 }
 
