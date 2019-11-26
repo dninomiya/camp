@@ -10,9 +10,7 @@
       <mat-icon class="mat-18">menu</mat-icon>
     </button>
     <a class="logo" routerLink="/">
-      <span class="logo__text">
-        <span class="big">{{title}}</span>
-      </span>
+      <img src="/assets/images/logo.png" alt="CAMP">
     </a>
     <ais-instantsearch
       *ngIf="!isMobile"
@@ -71,11 +69,6 @@
                       <p mat-line class="alert__date">
                         {{ item.createdAt | fromNow }}
                       </p>
-                      <button mat-icon-button *ngIf="item.link">
-                        <mat-icon class="mat-18" [routerLink]="item.link"
-                          >link</mat-icon
-                        >
-                      </button>
                     </mat-list-item>
                   </mat-list>
                 </div>
@@ -110,10 +103,6 @@
           >
             <mat-icon>compare_arrows</mat-icon>
             <span>チャンネル管理</span>
-          </button>
-          <button *ngIf="user.admin" mat-menu-item routerLink="/admin">
-            <mat-icon>account_circle</mat-icon>
-            <span>管理</span>
           </button>
           <button mat-menu-item (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>

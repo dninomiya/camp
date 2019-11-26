@@ -30,13 +30,13 @@
 }
 
 .logo {
-  font-weight: bold;
-  @include sp {
-    line-height: 48px;
-  }
-  &__text {
-    color: #333;
-    font-size: 16px;
+  display: block;
+  height: 100%;
+  padding: 16px 0;
+  box-sizing: border-box;
+  img {
+    display: block;
+    max-height: 100%;
   }
 }
 

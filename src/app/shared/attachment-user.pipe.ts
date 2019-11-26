@@ -10,6 +10,7 @@ export class AttachmentUserPipe implements PipeTransform {
   constructor(private channelService: ChannelService) {}
 
   transform(datas: any[], ...args: any[]): any {
+    console.log(datas);
     if (!datas.length) {
       return [];
     }

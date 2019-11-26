@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  title: '試験運用中（β）',
+  title: 'CAMP',
   stripe: {
     publicKey: 'pk_live_PRahgFHJRpGZkMYMDUdSHkLQ00AEbGkN6b',
     clientId: 'ca_G18JUfv56rvyII64gIBw9KWHzu15m44g'
