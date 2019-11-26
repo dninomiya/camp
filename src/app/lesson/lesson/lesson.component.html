@@ -34,15 +34,6 @@
               <span>{{ lesson.likeCount + likeBuff }}</span>
             </button>
           </ng-template>
-          <button
-            *ngIf="!isMobile && (!lesson.premium || (isOwner$ | async))"
-            class="actions__item"
-            mat-button
-            (click)="openListDialog(lesson.id, channel.id)"
-          >
-            <mat-icon class="mat-18">playlist_add</mat-icon>
-            <span>コース</span>
-          </button>
           <a
             href="https://twitter.com/intent/tweet?url={{ lessonURL }}&text={{
               lesson.title

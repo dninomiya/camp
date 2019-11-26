@@ -17,15 +17,15 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
   tabs = [
     {
       path: './',
-      label: 'ポスト'
+      label: '概要'
+    },
+    {
+      path: './lessons',
+      label: 'レッスン'
     },
     {
       path: './causes',
       label: 'コース'
-    },
-    {
-      path: './plans',
-      label: 'プラン'
     }
   ];
 

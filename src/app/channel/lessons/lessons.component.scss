@@ -1,5 +1,16 @@
+@import "mixins";
+
+:host {
+  padding-bottom: 90px;
+  display: block;
+  @include sp {
+    margin: -16px;
+    display: block;
+    padding-bottom: 24px;
+  }
+}
+
 .blank {
-  padding: 24px;
   text-align: center;
   color: rgba(black, .38);
 }

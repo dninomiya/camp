@@ -57,9 +57,7 @@ export class AboutComponent implements OnInit {
       Validators.required,
       Validators.maxLength(this.maxLength.description)
     ]],
-    links: this.fb.array([
-      this.fb.control('')
-    ])
+    links: this.fb.array([])
   });
 
   adsForm = this.fb.group({
@@ -237,11 +235,15 @@ export class AboutComponent implements OnInit {
   }
 
   addLinkForm() {
-    this.links.push(this.fb.control(''));
+    this.links.push(this.fb.control('', [
+      Validators.required,
+      Validators.pattern('^https?://')
+    ]));
   }
 
   removeLinkForm(i: number) {
     this.links.removeAt(i);
+    this.form.markAsDirty();
   }
 
   saveJob() {

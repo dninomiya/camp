@@ -19,16 +19,20 @@ h2 {
 
 .logos {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   @include sp {
     grid-template-columns: 1fr;
   }
+  mat-card {
+    display: flex;
+    align-items: center;
+  }
   img {
     max-width: 100%;
   }
-  &__black {
-    background: #000;
+  &__dark {
+    background: #282828;
   }
 }
 

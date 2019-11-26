@@ -14,14 +14,6 @@
           </div>
         </div>
         <div class="actions">
-          <button
-            mat-flat-button
-            *ngIf="!isMobile && isOwner"
-            color="primary"
-            [routerLink]="['/studio', channel.id]"
-          >
-            チャンネル管理
-          </button>
           <ng-container *ngIf="channel.authorId !== uid">
             <button
               class="weak"

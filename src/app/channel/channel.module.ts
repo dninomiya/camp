@@ -7,7 +7,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { LessonsComponent } from './lessons/lessons.component';
 import { MemberComponent } from './member/member.component';
 import { AboutComponent } from './about/about.component';
-import { TopComponent } from './top/top.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ListsComponent } from './lists/lists.component';
@@ -22,7 +21,6 @@ import { PlanModule } from '../plan/plan.module';
     LessonsComponent,
     MemberComponent,
     AboutComponent,
-    TopComponent,
     ListsComponent,
     LinkIconPipe,
     ConfirmSubscribeDialogComponent,

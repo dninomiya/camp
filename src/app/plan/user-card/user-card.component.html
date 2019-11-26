@@ -1,6 +1,6 @@
 <mat-card class="card">
   <div matCardImage class="header">
-    <img class="header__avatar" [src]="channel.avatarURL | safe: 'url'" alt="">
+    <!-- <img class="header__avatar" [src]="channel.avatarURL | safe: 'url'" alt=""> -->
   </div>
 
   <div class="profile">
@@ -17,21 +17,20 @@
       >
     </p>
 
-    <div class="profile__links">
+    <!-- <div class="profile__links">
       <a [href]="link" target="_blank" class="profile__link" *ngFor="let link of channel.links">
         <i [class]="link | linkIcon"></i>
       </a>
       <a (click)="openMailDialog(channel.email)" class="profile__link">
         <i class="far fa-envelope"></i>
       </a>
-    </div>
+    </div> -->
     <p class="profile__description">{{ channel.description }}</p>
+    <div class="camp">
+      <button mat-raised-button color="primary" disabled>無料説明を受ける</button>
+      <!-- <p class="camp__price">50,000円 / 月</p> -->
+    </div>
   </div>
-
-  <ng-container *ngIf="plans && plans.length">
-    <mat-divider></mat-divider>
-    <app-plan-list [isOwner]="isOwner" [channel]="channel" [plans]="plans"></app-plan-list>
-  </ng-container>
 
   <ng-container *ngIf="jobs && jobs.length">
     <mat-divider></mat-divider>
