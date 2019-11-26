@@ -4,7 +4,7 @@ export interface ChannelMeta {
 
   authorId: string;
   title: string;
-  coverURL: string;
+  coverURL?: string;
   avatarURL: string;
   description?: string;
   contact: string;
