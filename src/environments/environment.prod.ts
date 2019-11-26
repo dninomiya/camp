@@ -20,6 +20,6 @@ export const environment = {
     apiKey: 'e4a4e27ff57df999aae2dda4f3ad367d',
     indexName: 'lessons'
   },
-  host: 'https://tml-prod-74d27.firebaseapp.com',
+  host: 'https://to.camp/',
   captchaKey: '6LdxgLIUAAAAAG7VOix4btA1S51f5kYqPugCNPeu'
 };
