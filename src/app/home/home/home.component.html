@@ -1,9 +1,23 @@
+<h2>注目のキャンプ</h2>
+<div class="camp-grid">
+  <div class="camp">
+    <div class="camp__footer">
+      <img src="" class="camp__avatar">
+      <div class="camp__footer-body">
+        <p class="camp__title">Nino</p>
+        <p></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="wrap" [class.home-loading]="isLoading">
   <ais-instantsearch [config]="algoliaConfig" class="list">
     <ais-configure [searchParameters]="trendSearchParameters"> </ais-configure>
     <ais-hits>
       <ng-template let-hits="hits" let-results="results">
         <ng-container *ngIf="hits && hits.length">
+          <h2>新着レッスン</h2>
           <div class="lesson-grid">
             <app-grid-lesson-item
               *ngFor="let hit of hits | attachmentUser | async"
