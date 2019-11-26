@@ -30,9 +30,12 @@
   background: #212121;
   display: grid;
   z-index: 1000;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   color: #ffffff;
-  padding: 8px 0 16px;
+  > * {
+    flex: 1;
+    padding: 8px 0 16px;
+  }
 }
 
 .bottom-nav-item {
