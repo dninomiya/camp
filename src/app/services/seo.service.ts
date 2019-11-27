@@ -24,7 +24,7 @@ export class SeoService {
     description: string;
     image: string;
   }) {
-    this.titleService.setTitle(`${config.title} | ${environment.title}`);
+    this.titleService.setTitle(config.title ? `${config.title} | ${environment.title}` : environment.title);
     this.meta.updateTag({ property: 'og:type', content: config.type });
     this.meta.updateTag({ property: 'og:title', content: config.title });
     this.meta.updateTag({ property: 'og:description', content: config.description });
