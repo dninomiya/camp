@@ -28,6 +28,9 @@ import { PlanTitleLabelPipe } from 'src/app/shared/plan-title-label.pipe';
   ]
 })
 export class ThreadComponent implements OnInit {
+  @ViewChild('commentTextArea', {
+    static: false
+  }) commentTextArea;
   thread: Thread;
   thread$ = this.route.paramMap.pipe(
     switchMap(params => this.forumService.getThread(params.get('id')).pipe(take(1))),
@@ -93,6 +96,11 @@ export class ThreadComponent implements OnInit {
 
   ngOnInit() {
     this.channel$.pipe(take(1)).subscribe(channel => this.channel = channel);
+    this.commentForm.valueChanges.subscribe(value => {
+      const elm = this.commentTextArea.nativeElement;
+      elm.style.height = '0px';
+      elm.style.height = (elm.scrollHeight) + 'px';
+    });
   }
 
   getNotificationTargetUID(): string {

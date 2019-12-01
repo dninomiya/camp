@@ -51,6 +51,7 @@ import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
 import { RefinementListComponent } from './refinement-list/refinement-list.component';
 import { MatChipsModule } from '@angular/material';
 import { FooterComponent } from './footer/footer.component';
+import { RatePipe } from './rate.pipe';
 
 
 
@@ -76,7 +77,8 @@ import { FooterComponent } from './footer/footer.component';
     FooterComponent,
     LinkIconPipe,
     SearchKitComponent,
-    RefinementListComponent
+    RefinementListComponent,
+    RatePipe
   ],
   imports: [
     CommonModule,
@@ -155,7 +157,8 @@ import { FooterComponent } from './footer/footer.component';
     PlanTitleLabelPipe,
     LinkIconPipe,
     SearchKitComponent,
-    RefinementListComponent
+    RefinementListComponent,
+    RatePipe
   ]
 })
 export class SharedModule { }

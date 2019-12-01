@@ -1,18 +1,52 @@
 @import "mixins";
 
+:host {
+  display: block;
+  padding-top: 24px;
+}
+
 .header {
-  padding: 24px 24px 0;
-  background: #fafafa;
-  @include sp {
-    padding: 16px 0 0;
+  display: flex;
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 24px;
+  &__cover {
+    display: block;
+    width: 480px;
+    height: 100%;
+    background: #000 url(https://www.head.com/uploads/pics/Djokovic_fullbanner_MOBILE_02.jpg) center/cover;
   }
-  &__row {
+  &__body {
+    flex: 1;
+    padding: 40px;
+  }
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    // font-weight: normal;
+    margin-bottom: 8px;
+  }
+  &__owner {
+    font-size: 13px;
+    color: rgba(black, .6);
+    margin-right: 16px;
+  }
+  &__bar {
+    display: flex;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  &__description {
+    margin-bottom: 24px;
+    color: rgba(black, .6);
+  }
+  &__footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    @include sp {
-      margin-bottom: 16px;
+    span {
+      margin-left: 16px;
+      font-size: 13px;
+      color: rgba(black, .38);
     }
   }
 }
@@ -69,5 +103,21 @@
   padding: 24px 0;
   @include sp {
     padding-top: 16px;
+  }
+}
+
+.rate {
+  padding: 8px 0;
+  cursor: pointer;
+  &__star {
+    font-size: 16px;
+    display: inline-block;
+    line-height: 1;
+  }
+  &__review-count {
+    font-size: 12px;
+    color: rgba(black, .38);
+    margin-left: 8px;
+    display: inline-block;
   }
 }

@@ -33,10 +33,7 @@
   display: block;
   img {
     display: block;
-    height: 32px;
-    @include sp {
-      height: 24px;
-    }
+    height: 24px;
   }
 }
 

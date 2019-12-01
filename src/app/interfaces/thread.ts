@@ -11,13 +11,18 @@ export interface Thread {
   targetId: string;
   user: ChannelMeta;
   status: ThreadStatus;
-  days?: object[];
+  days?: {
+    date: any,
+    time: string[],
+    allDay: boolean
+  }[];
   repository?: string;
   plan: Plan;
   sellerEmail: string;
   isComplete?: boolean;
   isReject?: boolean;
   rejectReason: string;
+  author?: ChannelMeta;
   browsers?: string[];
   unreadCount?: {
     [key: string]: number;

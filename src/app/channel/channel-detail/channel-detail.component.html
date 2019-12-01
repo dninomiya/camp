@@ -1,61 +1,51 @@
-<ng-container *ngIf="channel$ | async as channel">
-  <div class="header">
-    <div class="container">
-      <div class="header__row">
-        <div class="profile">
-          <figure class="profile__avatar">
-            <img src="{{ channel.avatarURL }}" />
-          </figure>
-          <div class="profile__body">
-            <p class="profile__name">{{ channel.title }}</p>
-            <p class="profile__info">
-              フォロワー {{ channel.statistics.followerCount || 0 }}人
-            </p>
-          </div>
-        </div>
-        <div class="actions">
-          <ng-container *ngIf="channel.authorId !== uid">
-            <button
-              class="weak"
-              *ngIf="isFollow$ | async; else noFollow"
-              (click)="unfollow(channel.id)"
-              mat-flat-button
-            >
-              フォロー中{{ (followerCount || 0) + followerBuff }}
-            </button>
-            <ng-template #noFollow>
-              <button
-                (click)="follow(channel.id)"
-                mat-flat-button
-                color="primary"
-              >
-              フォロー {{ (followerCount || 0) + followerBuff }}
-              </button>
-            </ng-template>
-          </ng-container>
+<div class="container" *ngIf="channel$ | async as channel">
+  <mat-card class="header">
+    <figure>
+      <span class="header__cover"></span>
+    </figure>
+    <div class="header__body">
+      <h1 class="header__title">{{ channel.title }}</h1>
+      <div class="header__bar">
+        <p class="header__owner">{{channel.title}}</p>
+        <div class="rate" (click)="openReviewDialog(channel)">
+          <span class="rate__star">
+            <app-mat-star-rating
+              [readonly]="true"
+              [rating]="channel | rate"
+            ></app-mat-star-rating>
+          </span>
+          <span class="rate__review-count"
+            >{{
+              (channel.statistics.reviewCount | number) || 0
+            }}件のレビュー</span
+          >
         </div>
       </div>
-      <p *ngIf="channel.description" class="description">{{ channel.description }}</p>
-
-      <nav mat-tab-nav-bar>
-          <a
-            *ngFor="let tab of tabs"
-            mat-tab-link
-            [routerLink]="tab.path"
-            routerLinkActive
-            #rla="routerLinkActive"
-            [active]="rla.isActive"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            {{ tab.label }}
-          </a>
-        </nav>
+      <p class="header__description">
+        {{channel.description}}
+      </p>
+      <div class="header__footer">
+        <button mat-raised-button color="primary">面談を予約する</button>
+        <span class="limit">残り4枠（定員5名）</span>
+      </div>
     </div>
-  </div>
+  </mat-card>
 
-  <div class="container">
-    <div class="tab-content">
-      <router-outlet></router-outlet>
-    </div>
+  <nav mat-tab-nav-bar>
+    <a
+      *ngFor="let tab of tabs"
+      mat-tab-link
+      [routerLink]="tab.path"
+      routerLinkActive
+      #rla="routerLinkActive"
+      [active]="rla.isActive"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      {{ tab.label }}
+    </a>
+  </nav>
+
+  <div class="tab-content">
+    <router-outlet></router-outlet>
   </div>
-</ng-container>
+</div>

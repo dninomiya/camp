@@ -9,20 +9,28 @@
     background: #fafafa center/cover;
     margin-bottom: 12px;
     position: relative;
-    span {
+    border-radius: 3px;
+    overflow: hidden;
+    > span {
       position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       top: 0;
       right: 0;
       left: 0;
       bottom: 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
       padding: 16px;
-      font-size: 24px;
-      background: #000;
+      background: #2a2730;
       color: #ffffff;
+      span {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        letter-spacing: 1px;
+        opacity: 0.87;
+      }
     }
   }
   &__title {

@@ -80,7 +80,7 @@ export class ForumService {
       .pipe(
         switchMap(thread => {
           threadTmp = thread;
-          return this.db.doc<User>(`channels/${thread.authorId}`).valueChanges();
+          return this.db.doc<ChannelMeta>(`channels/${thread.authorId}`).valueChanges();
         }),
         map(author => {
           return {

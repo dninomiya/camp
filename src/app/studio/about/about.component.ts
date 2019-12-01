@@ -82,6 +82,9 @@ export class AboutComponent implements OnInit {
           emitEvent: false
         });
       }
+      if (channel.coverURL) {
+        this.coverSrc = channel.coverURL;
+      }
     })
   );
 

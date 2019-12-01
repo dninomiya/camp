@@ -19,13 +19,13 @@
       <div *ngIf="thread.browsers">
         <h2>対象ブラウザ</h2>
         <p>
-          <span class="browser" *ngFor="let browser of thread.data?.browsers">
+          <span class="browser" *ngFor="let browser of thread?.browsers">
             {{ browser }}
           </span>
         </p>
       </div>
 
-      <div *ngIf="thread.data?.repository">
+      <div *ngIf="thread.repository">
         <a
           class="link"
           [href]="thread.repository"
@@ -162,6 +162,7 @@
       "
       [formControl]="commentForm"
       [appAutofocus]="true"
+      #commentTextArea
     ></textarea>
     <button
       [disabled]="commentForm.invalid"

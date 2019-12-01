@@ -4,7 +4,6 @@ import { Plan } from 'src/app/interfaces/plan';
 import { MAT_DATE_LOCALE } from '@angular/material';
 
 import * as moment from 'moment';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-coaching-dialog',

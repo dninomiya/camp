@@ -70,7 +70,10 @@
     flex: 1;
     outline: none;
     resize: none;
+    align-self: flex-start;
+    height: 72px;
     line-height: 1.6;
+    box-sizing: border-box;
   }
   &__button {
     width: 40px;

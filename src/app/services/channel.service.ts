@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, combineLatest, of, forkJoin } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ChannelMeta, Follower } from '../interfaces/channel';
 import { LessonList } from '../interfaces/lesson-list';
@@ -75,5 +75,11 @@ export class ChannelService {
           }
         })
       );
+  }
+
+  getCamps(ids: string[]): Observable<ChannelMeta[]> {
+    return forkJoin(
+      ids.map(id => this.db.doc<ChannelMeta>(`channels/${id}`).valueChanges().pipe(take(1)))
+    );
   }
 }

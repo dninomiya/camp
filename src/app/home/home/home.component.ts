@@ -7,6 +7,7 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { map, shareReplay, switchMap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,8 @@ export class HomeComponent implements OnInit {
     hitsPerPage: 20,
     filters: 'public:true AND NOT deleted:true'
   };
+
+  hotCamps$ = this.channelService.getCamps(['KkyCChATj4PmkWYD2Ut3S1zH7SI3']);
 
   noFollow = true;
   isLoading = true;
@@ -46,7 +49,8 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private channelService: ChannelService,
     private seoService: SeoService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private titleService: Title
   ) {
     this.loadingService.startLoading();
     this.follows$.subscribe(follows => {
@@ -78,6 +82,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.createCanonicalURL();
+    this.titleService.setTitle('CAMP');
   }
 
 }

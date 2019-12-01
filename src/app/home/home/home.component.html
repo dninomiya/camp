@@ -1,15 +1,21 @@
-<h2>注目のキャンプ</h2>
-<div class="camp-grid">
-  <div class="camp">
-    <div class="camp__footer">
-      <img src="" class="camp__avatar">
-      <div class="camp__footer-body">
-        <p class="camp__title">Nino</p>
-        <p></p>
+<section *ngIf="hotCamps$ | async as hotCamps">
+  <h2>注目のキャンプ</h2>
+  <div class="camp-grid">
+    <mat-card class="camp" *ngFor="let camp of hotCamps" routerLink="/channel/KkyCChATj4PmkWYD2Ut3S1zH7SI3">
+      <!-- <div class="camp__cover" [style.background-image]="'url(' + camp.coverURL + ')' | safe:'style'"></div> -->
+      <div class="camp__cover"></div>
+      <div class="camp__footer">
+        <figure>
+          <img class="camp__avatar" [src]="camp.avatarURL | safe:'url'" alt="">
+        </figure>
+        <div class="camp__footer-body">
+          <p class="camp__title">{{camp.title}}</p>
+          <p class="camp__owner">{{camp.title}}</p>
+        </div>
       </div>
-    </div>
+    </mat-card>
   </div>
-</div>
+</section>
 
 <div class="wrap" [class.home-loading]="isLoading">
   <ais-instantsearch [config]="algoliaConfig" class="list">
