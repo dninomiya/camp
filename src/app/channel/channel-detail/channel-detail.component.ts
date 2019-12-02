@@ -44,7 +44,7 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
     switchMap(({id}) => this.channelService.getChannel(id)),
     tap(channel => {
       if ( channel) {
-        const image = channel.coverURL || environment.host + '/assets/images/nino-camp.png';
+        const image = channel.coverURL || environment.host + 'assets/images/nino-camp.png';
         this.seoService.generateTags({
           title: channel.title,
           description: channel.description,

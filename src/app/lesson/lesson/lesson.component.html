@@ -10,7 +10,7 @@
       <h1 class="title">{{ lesson.title }}</h1>
       <div class="video-footer">
         <div class="actions">
-          <button
+          <!-- <button
             [disabled]="isOwner$ | async"
             class="actions__item actions__item--accent"
             color="accent"
@@ -21,8 +21,8 @@
           >
             <mat-icon class="mat-18">thumb_up</mat-icon>
             <span>{{ lesson.likeCount + likeBuff }}</span>
-          </button>
-          <ng-template #unlikeStatus>
+          </button> -->
+          <!-- <ng-template #unlikeStatus>
             <button
               [disabled]="isOwner$ | async"
               class="actions__item"
@@ -33,7 +33,7 @@
               <mat-icon class="mat-18">thumb_up</mat-icon>
               <span>{{ lesson.likeCount + likeBuff }}</span>
             </button>
-          </ng-template>
+          </ng-template> -->
           <a
             href="https://twitter.com/intent/tweet?url={{ lessonURL }}&text={{
               lesson.title
