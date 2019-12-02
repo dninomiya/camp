@@ -7,7 +7,7 @@
       <h1 class="header__title">{{ channel.title }}</h1>
       <div class="header__bar">
         <p class="header__owner">{{channel.title}}</p>
-        <div class="rate" (click)="openReviewDialog(channel)">
+        <!-- <div class="rate" (click)="openReviewDialog(channel)">
           <span class="rate__star">
             <app-mat-star-rating
               [readonly]="true"
@@ -19,14 +19,14 @@
               (channel.statistics.reviewCount | number) || 0
             }}件のレビュー</span
           >
-        </div>
+        </div> -->
       </div>
       <p class="header__description">
         {{channel.description}}
       </p>
       <div class="header__footer">
-        <button mat-raised-button color="primary">面談を予約する</button>
-        <span class="limit">残り4枠（定員5名）</span>
+        <a mat-raised-button color="primary" href="mailto:daichi.ninomiya@deer.co.jp?subject=CAMP:面談の予約&body=面談希望日を入力してください" target="_blank">面談を予約する</a>
+        <span class="limit">残り3枠（定員5名）</span>
       </div>
     </div>
   </mat-card>

@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
   afUser: AfUser;
-  authUser$: Observable<any>;
+  authUser$: Observable<User>;
   user: User;
   isAdmin: boolean;
 

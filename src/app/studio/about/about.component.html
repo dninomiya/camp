@@ -46,7 +46,7 @@
     <mat-card>
       <h3>タイトルと説明</h3>
       <mat-form-field>
-        <mat-label>チャンネル名</mat-label>
+        <mat-label>キャンプ名</mat-label>
         <input
           type="text"
           matInput
@@ -59,9 +59,8 @@
           >{{ titleInput.value.length }} / {{ maxLength.title }}</mat-hint
         >
       </mat-form-field>
-
       <mat-form-field>
-        <mat-label>チャンネル概要</mat-label>
+        <mat-label>キャンプ概要</mat-label>
         <textarea
           matInput
           formControlName="description"
@@ -72,6 +71,21 @@
         <mat-hint
           >{{ descriptionInput.value.length }} /
           {{ maxLength.description }}</mat-hint
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>オーナー名</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="ownerName"
+          autocomplete="off"
+          required
+          #ownerInput
+        />
+        <mat-hint
+          >{{ ownerInput.value.length }} / {{ maxLength.ownerName }}</mat-hint
         >
       </mat-form-field>
 

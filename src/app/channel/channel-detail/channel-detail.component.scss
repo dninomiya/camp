@@ -3,6 +3,9 @@
 :host {
   display: block;
   padding-top: 24px;
+  @include sp {
+    padding-top: 0;
+  }
 }
 
 .header {
@@ -10,21 +13,36 @@
   padding: 0;
   overflow: hidden;
   margin-bottom: 24px;
+  @include sp {
+    margin: 0 -16px 24px;
+    border-radius: 0;
+    box-shadow: 0;
+    display: block;
+  }
   &__cover {
     display: block;
     width: 480px;
     height: 100%;
-    background: #000 url(https://www.head.com/uploads/pics/Djokovic_fullbanner_MOBILE_02.jpg) center/cover;
+    background: #000 url(/assets/images/nino-camp.png) center/contain no-repeat;
+    @include sp {
+      width: auto;
+      padding-bottom: 52.5%;
+    }
   }
   &__body {
     flex: 1;
     padding: 40px;
+    @include sp {
+      padding: 16px;
+    }
   }
   &__title {
     font-size: 24px;
     font-weight: bold;
-    // font-weight: normal;
     margin-bottom: 8px;
+    @include sp {
+      font-size: 16px;
+    }
   }
   &__owner {
     font-size: 13px;

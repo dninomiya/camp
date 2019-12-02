@@ -8,7 +8,7 @@
     </div>
     <div class="lesson__body">
       <h3 [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__title" style="-webkit-box-orient: vertical;">{{lesson.title}}</h3>
-      <p  *ngIf="type !== 'simple'" [routerLink]="['/channel', lesson.author.id]" class="lesson__sub">{{lesson.author.title}} - {{lesson.createdAt | fromNow}}</p>
+      <p  *ngIf="type !== 'simple'" [routerLink]="['/channel', lesson.author.id]" class="lesson__sub">{{lesson.author.ownerName || lesson.author.title}} - {{lesson.createdAt | fromNow}}</p>
       <p  *ngIf="type === 'simple'" [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__sub">{{lesson.viewCount | number}} 回視聴 - {{lesson.createdAt | fromNow}}</p>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <section *ngIf="hotCamps$ | async as hotCamps">
-  <h2>注目のキャンプ</h2>
+  <h2>キャンプ</h2>
   <div class="camp-grid">
     <mat-card class="camp" *ngFor="let camp of hotCamps" routerLink="/channel/KkyCChATj4PmkWYD2Ut3S1zH7SI3">
       <!-- <div class="camp__cover" [style.background-image]="'url(' + camp.coverURL + ')' | safe:'style'"></div> -->
@@ -13,6 +13,9 @@
           <p class="camp__owner">{{camp.title}}</p>
         </div>
       </div>
+    </mat-card>
+    <mat-card class="invite">
+      <a href="mailto:info@deer.co.jp?subject=CAMP:メンターについて&body=メンターに興味があります" target="_blank" class="invite__body"></a>
     </mat-card>
   </div>
 </section>

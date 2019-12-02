@@ -10,6 +10,7 @@ export interface ChannelMeta {
   contact: string;
   links?: string[];
   createdAt: Date;
+  ownerName: string;
   totalRate?: number;
   statistics: ChannelStatistics;
   ads?: {

@@ -39,7 +39,8 @@ export class AboutComponent implements OnInit {
   src = {};
   maxLength = {
     title: 40,
-    description: 400
+    description: 400,
+    ownerName: 40
   };
   size = {
     avatar: {
@@ -56,6 +57,10 @@ export class AboutComponent implements OnInit {
     description: ['', [
       Validators.required,
       Validators.maxLength(this.maxLength.description)
+    ]],
+    ownerName: ['', [
+      Validators.required,
+      Validators.maxLength(this.maxLength.ownerName)
     ]],
     links: this.fb.array([])
   });

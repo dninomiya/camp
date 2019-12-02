@@ -13,6 +13,9 @@
 
 section {
   margin-bottom: 40px;
+  @include sp {
+    margin-bottom: 16px;
+  }
 }
 
 h2 {
@@ -40,9 +43,9 @@ h2 {
   grid-template-columns: repeat(3, 1fr);
   margin: 0;
   @include tablet {
-    padding: 0;
-    > mat-card:last-child {
-      display: none;
+    grid-template-columns: 1fr;
+    mat-card {
+      border-radius: 0;
     }
   }
 }
@@ -52,7 +55,7 @@ h2 {
   padding: 0;
   cursor: pointer;
   &__cover {
-    background: #000 url(https://www.head.com/uploads/pics/Djokovic_fullbanner_MOBILE_02.jpg) center/cover;
+    background: #000 url(/assets/images/nino-camp.png) center/cover;
     padding-bottom: 52.5%;
   }
   &__footer {
@@ -78,5 +81,17 @@ h2 {
   &__owner {
     font-size: 12px;
     opacity: 0.6;
+  }
+}
+
+.invite {
+  padding: 0;
+  background: url(/assets/images/invite-banner.png) center/cover;
+  @include sp {
+    display: none;
+  }
+  &__body {
+    display: block;
+    padding: 0 0 52.5%;
   }
 }

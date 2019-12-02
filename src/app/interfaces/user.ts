@@ -6,6 +6,8 @@ export interface User {
   readonly createdAt: Date;
   readonly isCustomer: boolean;
   readonly isSeller: boolean;
+  readonly mentor: boolean;
+  readonly admin: boolean;
 
   mailSettings: {
     forum: boolean;

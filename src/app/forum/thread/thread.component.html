@@ -138,7 +138,7 @@
             <img [src]="reply.author?.avatarURL" />
           </div>
           <div class="reply__main">
-            <div class="reply__body" markdown>{{ reply.body }}</div>
+            <div class="reply__body article" markdown>{{ reply.body }}</div>
             <p class="reply__footer">
               <span>{{ reply.author.title }}</span>
               <span>{{ reply.createdAt | fromNow }}</span>

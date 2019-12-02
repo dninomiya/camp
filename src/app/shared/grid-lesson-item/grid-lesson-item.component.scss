@@ -11,6 +11,9 @@
     position: relative;
     border-radius: 3px;
     overflow: hidden;
+    @include sp {
+      border-radius: 0;
+    }
     > span {
       position: absolute;
       display: flex;

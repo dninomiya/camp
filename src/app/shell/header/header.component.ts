@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     filters: 'NOT deleted:true'
   };
 
-  user$: Observable<ChannelMeta> = this.authService.authUser$.pipe(
+  user$: Observable<User> = this.authService.authUser$.pipe(
     tap((user: User) => {
       this.isLoading = false;
       if (user && !this.notifications$) {
@@ -41,13 +41,6 @@ export class HeaderComponent implements OnInit {
               this.unreadCount = items.filter(item => !item.isRead).length;
             })
           );
-      }
-    }),
-    switchMap(user => {
-      if (user) {
-        return this.channelService.getChannel(user.id);
-      } else {
-        return of(null);
       }
     }),
     tap(user => {

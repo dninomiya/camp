@@ -1,3 +1,5 @@
+@import "mixins";
+
 .wrap {
   width: 320px;
   margin: 0 auto;
@@ -19,6 +21,10 @@ h2 {
   font-size: 24px;
   margin-bottom: 26px;
   color: #2e3d49;
+  @include sp {
+    font-size: 16px;
+    bottom: 16px;
+  }
 }
 
 ul {
@@ -31,6 +37,9 @@ p, ul, ol, dl {
   font-size: 16px;
   color: #525c65;
   color: rgba(black, .6);
+  @include sp {
+    font-size: 14px;
+  }
 }
 
 h3 {
@@ -58,13 +67,30 @@ dl {
   padding: 80px 40px;
   display: flex;
   align-items: center;
+  @include sp {
+    padding: 24px;
+    display: block;
+  }
   figure {
     width: 400px;
     margin-right: 24px;
     text-align: center;
+    @include sp {
+      margin-right: 0;
+      width: auto;
+      margin-bottom: 24px;
+    }
     img {
       height: 240px;
       vertical-align: bottom;
+      @include sp {
+        height: 160px;
+      }
+    }
+  }
+  @include sp {
+    h2 {
+      text-align: center;
     }
   }
   &__body {
@@ -82,6 +108,9 @@ dl {
   &__item {
     position: relative;
     bottom: 13px;
+    @include sp {
+      bottom: 8px;
+    }
   }
   li {
     position: relative;
@@ -90,6 +119,9 @@ dl {
       font-size: 20px;
       color: #2e3d49;
       letter-spacing: 0;
+      @include sp {
+        font-size: 14px;
+      }
     }
     p {
       font-size: 14px;
