@@ -22,7 +22,6 @@ export const sendNotification = async (params: {
   }
   dynamicTemplateData?: any;
 }) => {
-  console.log(params);
   const { item, target, dynamicTemplateData } = params;
 
   let canMail = false;

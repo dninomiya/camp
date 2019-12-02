@@ -9,6 +9,8 @@ import { UiService } from 'src/app/services/ui.service';
 import { MatDialog } from '@angular/material';
 import { ChannelReviewDialogComponent } from 'src/app/core/channel-review-dialog/channel-review-dialog.component';
 import { RatePipe } from 'src/app/shared/rate.pipe';
+import { SeoService } from 'src/app/services/seo.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-channel-detail',
@@ -42,6 +44,13 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
     switchMap(({id}) => this.channelService.getChannel(id)),
     tap(channel => {
       if ( channel) {
+        const image = channel.coverURL || environment.host + '/assets/images/nino-camp.png';
+        this.seoService.generateTags({
+          title: channel.title,
+          description: channel.description,
+          image,
+          type: 'website'
+        });
         this.followerCount = channel.statistics.followerCount;
       } else {
         this.router.navigate(['not-found']);
@@ -78,7 +87,8 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
     private channelService: ChannelService,
     private uiService: UiService,
     private dialog: MatDialog,
-    private ratePipe: RatePipe
+    private ratePipe: RatePipe,
+    private seoService: SeoService
   ) { }
 
   ngOnInit() {
