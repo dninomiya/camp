@@ -29,7 +29,7 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
     },
     {
       path: './causes',
-      label: 'コース'
+      label: 'リスト'
     }
   ];
 

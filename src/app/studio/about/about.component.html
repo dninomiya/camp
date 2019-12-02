@@ -89,6 +89,28 @@
         >
       </mat-form-field>
 
+      <mat-form-field>
+        <mat-label>アクティブユーザー数</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="activeUser"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>最大ユーザー数</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="maxUser"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+
       <h3>リンク</h3>
 
       <div formArrayName="links">

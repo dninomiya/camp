@@ -11,6 +11,8 @@ export interface ChannelMeta {
   links?: string[];
   createdAt: Date;
   ownerName: string;
+  activeUser: number;
+  maxUser: number;
   totalRate?: number;
   statistics: ChannelStatistics;
   ads?: {

@@ -62,6 +62,15 @@ export class AboutComponent implements OnInit {
       Validators.required,
       Validators.maxLength(this.maxLength.ownerName)
     ]],
+    activeUser: ['', [
+      Validators.required,
+      Validators.pattern(/^\d+$/)
+    ]],
+    maxUser: ['', [
+      Validators.required,
+      Validators.pattern(/^\d+$/),
+      Validators.min(1)
+    ]],
     links: this.fb.array([])
   });
 

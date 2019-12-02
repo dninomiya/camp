@@ -8,9 +8,11 @@ const createChannel = (user: UserRecord) => {
     contact: user.email,
     authorId: user.uid,
     title: user.displayName + 'のブートキャンプ',
-    ownerName: user.displayName + 'のブートキャンプ',
+    ownerName: user.displayName,
     coverURL: '',
     avatarURL: user.photoURL,
+    activeUser: 0,
+    maxUser: 5,
     createdAt: new Date(),
     statistics: {
       followerCount: 0,
