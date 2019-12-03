@@ -1,7 +1,7 @@
 <ng-container *ngIf="user$ | async as user">
   <h1>アカウント</h1>
 
-  <div class="section">
+  <!-- <div class="section">
     <h3>メール通知</h3>
 
     <form class="mail-form" [formGroup]="mailForm" (ngSubmit)="udpateMailSettings(user.id)">
@@ -13,7 +13,7 @@
       </div>
       <button color="primary" [disabled]="mailForm.pristine" mat-flat-button>更新</button>
     </form>
-  </div>
+  </div> -->
 
   <div class="section">
     <h3>退会</h3>

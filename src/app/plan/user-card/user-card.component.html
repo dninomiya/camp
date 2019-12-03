@@ -7,7 +7,7 @@
 
   <div class="profile">
     <p class="profile__name">{{ channel.title }}</p>
-    <p class="rate" (click)="openReviewDialog()">
+    <!-- <p class="rate" (click)="openReviewDialog()">
       <span class="rate__star">
         <app-mat-star-rating
           [readonly]="true"
@@ -17,7 +17,7 @@
       <span class="rate__review-count"
         >{{ (channel.statistics.reviewCount | number) || 0 }}件のレビュー</span
       >
-    </p>
+    </p> -->
 
     <!-- <div class="profile__links">
       <a [href]="link" target="_blank" class="profile__link" *ngFor="let link of channel.links">
@@ -29,12 +29,12 @@
     </div> -->
     <p class="profile__description">{{ channel.description }}</p>
     <div class="camp">
-      <button mat-raised-button color="primary" disabled>無料説明を受ける</button>
+      <button mat-raised-button color="primary" routerLink="/channel/{{channel.id}}">詳細を見る</button>
       <!-- <p class="camp__price">50,000円 / 月</p> -->
     </div>
   </div>
 
-  <ng-container *ngIf="plans && plans.length">
+  <!-- <ng-container *ngIf="plans && plans.length">
     <mat-divider></mat-divider>
     <app-plan-list [isOwner]="isOwner" [channel]="channel" [plans]="plans"></app-plan-list>
   </ng-container>
@@ -42,5 +42,5 @@
   <ng-container *ngIf="jobs && jobs.length">
     <mat-divider></mat-divider>
     <app-job-list [isOwner]="isOwner" [channel]="channel" [jobs]="jobs"></app-job-list>
-  </ng-container>
+  </ng-container> -->
 </mat-card>
