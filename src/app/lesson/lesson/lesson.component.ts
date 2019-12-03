@@ -32,6 +32,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   uid: string;
   isCause: boolean;
   causeId?: string;
+  loading = true;
   loading$ = this.loadingService.isLoading$;
   lessonId?: string;
   settlementStatus: boolean;

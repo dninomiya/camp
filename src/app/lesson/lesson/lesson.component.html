@@ -1,5 +1,5 @@
 <ng-container *ngIf="channel$ | async as channel">
-  <div class="wrap" *ngIf="lesson$ | async as lesson" [class.loading-lesson]="isLoading$ | async">
+  <div class="wrap" *ngIf="lesson$ | async as lesson" [class.loading-lesson]="loading$ | async">
     <div class="lesson" *ngIf="!lesson.deleted; else delete">
       <ng-container *ngIf="permission$ | async as permission">
       <app-vimeo
@@ -85,7 +85,7 @@
             </p>
           </div>
         </div>
-        <div class="channel-actions">
+        <!-- <div class="channel-actions">
           <div>
             <button
               class="weak"
@@ -107,7 +107,7 @@
               </button>
             </ng-template>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <article class="article" *ngIf="permission$ | async">
@@ -175,13 +175,13 @@
         [isOwner]="isOwner$ | async"
         [channel]="channel"
       ></app-user-card>
-      <div *ngIf="channel.ads && channel.ads.public">
+      <!-- <div *ngIf="channel.ads && channel.ads.public">
         <mat-card class="ads">
           <a [href]="channel.ads.url" target="_blank" matCardImage>
             <img [src]="channel.ads.imageURL | safe: 'url'" alt="" />
           </a>
         </mat-card>
-      </div>
+      </div> -->
     </div>
   </div>
 </ng-container>

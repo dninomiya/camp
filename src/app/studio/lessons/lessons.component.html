@@ -50,7 +50,7 @@
             <mat-checkbox
               [(ngModel)]="causeOptions[cause.id].status"
               [indeterminate]="cause.indeterminate"
-              [checked]="cause.status?.checked"
+              [checked]="cause.status"
               [value]="cause.id"
               >{{ cause.title }}</mat-checkbox
             >
@@ -168,9 +168,10 @@
         </table>
 
         <mat-paginator
-          [length]="hits?.length"
+          *ngIf="channel$ | async as channel"
+          [length]="channel.statistics.lessonCount"
           [pageSize]="searchParameters.hitsPerPage"
-          [pageSizeOptions]="[searchParameters.hitsPerPage, 30, 50]"
+          [pageSizeOptions]="[10, 30, 50]"
           showFirstLastButtons
           (page)="changePager($event)"
         ></mat-paginator>

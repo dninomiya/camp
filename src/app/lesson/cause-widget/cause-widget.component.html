@@ -2,7 +2,7 @@
   <div matCardImage class="cause__cover" [style.background-image]="'url(' + cause.coverURL + ')' | safe:'style'"></div>
   <div class="cause__header">
     <div class="cause__header-body">
-      <h1 class="cause__title">{{ cause.title }} コース</h1>
+      <h1 class="cause__title">{{ cause.title }}</h1>
     </div>
     <ng-container *ngIf="isPurchased$ | async">
       <button disabled mat-button>購入済み</button>
