@@ -1,7 +1,7 @@
 <div class="lesson" *ngIf="lesson">
-  <figure [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__thumbnail" [style.background-image]="lesson.thumbnailURL ? 'url(' + lesson.thumbnailURL + ')' : null">
+  <a [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__thumbnail" [style.background-image]="lesson.thumbnailURL ? 'url(' + lesson.thumbnailURL + ')' : null">
     <span  *ngIf="!lesson.thumbnailURL"><span>{{lesson.title}}</span></span>
-  </figure>
+  </a>
   <div class="lesson__meta">
     <div *ngIf="type !== 'simple'" class="lesson__avatar" [routerLink]="['/channel', lesson.author.id]">
       <img [src]="lesson.author.avatarURL | safe:'url'" alt="">
