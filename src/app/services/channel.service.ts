@@ -42,8 +42,13 @@ export class ChannelService {
       );
   }
 
-  updateChannel(id: string, value: any): Promise<void> {
-    return this.db.doc<ChannelMeta>(`channels/${id}`).update(value);
+  updateChannel(
+    id: string,
+    value: Partial<ChannelMeta>
+  ): Promise<void> {
+    return this.db.doc(`channels/${id}`).set(value, {
+      merge: true
+    });
   }
 
   getFollows(cid: string): Observable<ChannelMeta[]> {

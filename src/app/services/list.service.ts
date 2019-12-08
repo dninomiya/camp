@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LessonList } from '../interfaces/lesson-list';
-import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
+import { first, map, switchMap } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 import { Lesson } from '../interfaces/lesson';
+import { ChannelMeta } from '../interfaces/channel';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,26 @@ export class ListService {
   ) { }
 
   getLists(channelId: string): Observable<LessonList[]> {
-    return this.db.collection<LessonList>('lists', ref => {
+    const channel$ = this.db.doc<ChannelMeta>(`channels/${channelId}`).valueChanges();
+    const lists$ = this.db.collection<LessonList>('lists', ref => {
       return ref
         .where('authorId', '==', channelId)
         .where('private', '==', false);
     }).valueChanges();
+
+    return combineLatest([
+      channel$,
+      lists$
+    ]).pipe(
+      map(([channel, lists]) => {
+        // return lists;
+        if (channel.listOrder) {
+          return channel.listOrder.map(id => lists.find(list => list.id === id));
+        } else {
+          return lists;
+        }
+      })
+    );
   }
 
   getList(id: string): Observable<LessonList> {
@@ -49,7 +65,13 @@ export class ListService {
       data.coverURL = await this.storageService.upload(`causes/${id}`, file);
     }
 
-    return this.db.doc(`lists/${id}`).set(data);
+    await this.db.doc(`lists/${id}`).set(data);
+
+    const channel = (await this.db.doc(`channels/${params.authorId}`).ref.get()).data() as ChannelMeta;
+    const listOrder = channel.listOrder;
+    listOrder.push(id);
+
+    return this.db.doc(`channels/${params.authorId}`).update({listOrder});
   }
 
   async updateList(params: {
@@ -106,7 +128,13 @@ export class ListService {
     );
   }
 
-  deleteList(id: string): Promise<void> {
+  async deleteList(channelId: string, id: string): Promise<void> {
+    const channel = (await this.db.doc(`channels/${channelId}`).ref.get()).data() as ChannelMeta;
+    const listOrder = channel.listOrder;
+    const index = listOrder.indexOf(id);
+    listOrder.splice(index, 1);
+
+    await this.db.doc(`channels/${channelId}`).update({listOrder});
     return this.db.doc(`lists/${id}`).delete();
   }
 

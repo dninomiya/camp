@@ -11,6 +11,7 @@ import { ListDeleteDialogComponent } from '../list-delete-dialog/list-delete-dia
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChannelService } from 'src/app/services/channel.service';
 
 @Component({
   selector: 'app-lists',
@@ -67,7 +68,8 @@ export class ListsComponent implements OnInit {
     private lessonService: LessonService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private channelService: ChannelService
   ) {
     this.route.parent.params.subscribe(params => {
       this.channelId = params.id;
@@ -143,5 +145,15 @@ export class ListsComponent implements OnInit {
         duration: 2000
       });
     });
+  }
+
+  orderList(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
+    this.channelService.updateChannel(
+      this.authService.afUser.uid,
+      {
+        listOrder: this.lists.map(list => list.id)
+      }
+    );
   }
 }

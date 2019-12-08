@@ -291,7 +291,9 @@ export class AboutComponent implements OnInit {
     this.channelService.updateChannel(
       this.authService.user.id,
       {
-        [`ads.imageURL`]: imageURL
+        ads: {
+          imageURL
+        }
       }
     );
   }

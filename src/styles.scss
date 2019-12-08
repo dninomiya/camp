@@ -59,6 +59,19 @@ body .root-loading {
   }
 }
 
+.cause-grid {
+  display: grid;
+  gap: 24px 4px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  margin: 0;
+  @include tablet {
+    padding: 0;
+  }
+  @include sp {
+    grid-template-columns: 1fr;
+  }
+}
+
 .plane-dialog .mat-dialog-container {
   padding: 0;
 }

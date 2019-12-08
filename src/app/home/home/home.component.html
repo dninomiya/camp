@@ -10,7 +10,25 @@
   </div>
 </section>
 
+
 <div class="wrap" [class.home-loading]="isLoading">
+  <div class="list" *ngIf="causes$ | async as causes">
+    <h2>リスト</h2>
+    <div class="cause-grid">
+      <a *ngFor="let cause of causes" [routerLink]="['/lesson']" [queryParams]="{
+        v: cause.firstLessonId,
+        cause: cause.id
+      }">
+        <mat-card class="cause">
+          <figure [style.background-image]="'url(' + cause.coverURL + ')' | safe:'style'" alt="" matCardImage></figure>
+          <div>
+            <p>{{cause.title}}</p>
+          </div>
+        </mat-card>
+      </a>
+    </div>
+  </div>
+
   <ais-instantsearch [config]="algoliaConfig" class="list">
     <ais-configure [searchParameters]="trendSearchParameters"> </ais-configure>
     <ais-hits>

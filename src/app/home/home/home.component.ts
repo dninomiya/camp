@@ -8,6 +8,8 @@ import { map, shareReplay, switchMap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Title } from '@angular/platform-browser';
+import { LessonList } from 'src/app/interfaces/lesson-list';
+import { ListService } from 'src/app/services/list.service';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +28,10 @@ export class HomeComponent implements OnInit {
     hitsPerPage: 20,
     filters: 'public:true AND NOT deleted:true'
   };
+
+  causes$: Observable<LessonList[]> = this.listService.getLists(
+    environment.production ? 'ypPxvg7WBUPkYZDN7ao3VyLs9OL2' : 'rN116cfQyfRfs9CnQ1C4DZSpb8k1'
+  );
 
   hotCamps$ = this.channelService.getCamps(['KkyCChATj4PmkWYD2Ut3S1zH7SI3']);
 
@@ -50,7 +56,8 @@ export class HomeComponent implements OnInit {
     private channelService: ChannelService,
     private seoService: SeoService,
     private loadingService: LoadingService,
-    private titleService: Title
+    private titleService: Title,
+    private listService: ListService
   ) {
     this.loadingService.startLoading();
     this.follows$.subscribe(follows => {
@@ -84,5 +91,4 @@ export class HomeComponent implements OnInit {
     this.seoService.createCanonicalURL();
     this.titleService.setTitle('CAMP');
   }
-
 }

@@ -15,6 +15,7 @@ export interface ChannelMeta {
   maxUser: number;
   totalRate?: number;
   statistics: ChannelStatistics;
+  listOrder?: string[];
   ads?: {
     public?: boolean;
     url?: string;

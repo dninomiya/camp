@@ -7,14 +7,20 @@
     padding: 24px;
   }
   @include sp {
-    padding: 0;
+    padding: 16px;
+  }
+}
+
+.lesson-grid {
+  @include sp {
+    margin: 0 -16px;
   }
 }
 
 section {
   margin-bottom: 40px;
   @include sp {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 }
 
@@ -24,7 +30,9 @@ h2 {
   font-weight: normal;
   line-height: 1;
   @include sp {
-    display: none;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: rgba(black, .6);
   }
 }
 
@@ -44,9 +52,13 @@ h2 {
   margin: 0;
   @include tablet {
     grid-template-columns: 1fr;
-    mat-card {
-      border-radius: 0;
-    }
+  }
+}
+
+.cause {
+  figure {
+    background: center/cover;
+    padding-bottom: 52.5%;
   }
 }
 
@@ -55,7 +67,7 @@ h2 {
   padding: 0;
   cursor: pointer;
   &__cover {
-    background: #000 url(/assets/images/nino-camp.png) center/cover;
+    background: url(/assets/images/nino-camp.png) center/cover;
     padding-bottom: 52.5%;
   }
   &__footer {

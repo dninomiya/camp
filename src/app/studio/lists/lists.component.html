@@ -6,15 +6,14 @@
         <mat-icon class="mat-18">add</mat-icon>
       </button>
     </div>
-    <mat-list dense>
+    <mat-list dense cdkDropList (cdkDropListDropped)="orderList($event)" *ngIf="lists$ | async">
       <mat-list-item
         (click)="getLessons(list.id)"
-        *ngFor="let list of lists$ | async"
+        *ngFor="let list of lists"
         [class.active]="list.id === activeList.id"
+        cdkDrag
       >
-        <mat-icon matListIcon class="privacy">{{
-          list.private ? 'lock' : 'public'
-        }}</mat-icon>
+        <mat-icon matListIcon class="handle" cdkDragHandle>drag_handle</mat-icon>
         <span matLine>
           {{ list.title }}
         </span>
@@ -90,7 +89,7 @@
               </button>
             </mat-menu>
             <button mat-icon-button cdkDragHandle>
-              <mat-icon class="handle">dehaze</mat-icon>
+              <mat-icon class="handle">drag_handle</mat-icon>
             </button>
           </mat-list-item>
         </mat-list>

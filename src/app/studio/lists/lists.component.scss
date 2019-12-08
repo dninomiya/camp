@@ -35,14 +35,15 @@
   height: 100%;
   overflow: auto;
   border-right: 1px solid rgba(black, .12);
-  .privacy {
-    color: rgba(black, .38);
-  }
   mat-list-item {
+    cursor: pointer;
     mat-icon {
       color: rgba(black, .6);
     }
-    cursor: pointer;
+    .handle {
+      color: rgba(black, .38);
+      cursor: move;
+    }
   }
 }
 

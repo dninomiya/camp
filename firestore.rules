@@ -83,6 +83,7 @@ service cloud.firestore {
       allow read: if true;
       allow create: if isSignIn();
       allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
+      allow delete: if isOwner(resource.data.authorId);
     }
   }
 }
