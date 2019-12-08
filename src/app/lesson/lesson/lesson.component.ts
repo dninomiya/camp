@@ -266,7 +266,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       title: lesson.title,
       image,
       type: 'article',
-      description: lesson.body.replace(/# -/gm, '')
+      description: lesson.body.replace(/# -/gm, '').substring(0, 100)
     });
   }
 
