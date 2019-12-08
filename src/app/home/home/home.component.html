@@ -20,9 +20,12 @@
         cause: cause.id
       }">
         <mat-card class="cause">
-          <figure [style.background-image]="'url(' + cause.coverURL + ')' | safe:'style'" alt="" matCardImage></figure>
+          <figure matCardImage>
+            <div class="cause__cover" [style.background-image]="'url(' + cause.coverURL + ')' | safe:'style'"></div>
+          </figure>
           <div>
-            <p>{{cause.title}}</p>
+            <p class="cause__title">{{cause.title}}</p>
+            <p class="cause__description">{{cause.description}}</p>
           </div>
         </mat-card>
       </a>
