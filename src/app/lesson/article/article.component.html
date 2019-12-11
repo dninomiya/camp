@@ -1,0 +1,190 @@
+<ng-container *ngIf="lesson$ | async as lesson" [class.loading-lesson]="loading$ | async">
+  <div class="lesson" *ngIf="!lesson.deleted; else delete">
+    <ng-container *ngIf="permission$ | async as permission">
+      <app-vimeo
+        *ngIf="lesson.videoId && permission"
+        class="video"
+        [id]="lesson.videoId"
+      ></app-vimeo>
+      <figure
+        class="lesson__cover"
+        *ngIf="!lesson.videoId && permission && lesson.thumbnailURL"
+        [style.background-image]="
+          'url(' + lesson.thumbnailURL + ')' | safe: 'style'
+        "
+      ></figure>
+      <h1 class="title">{{ lesson.title }}</h1>
+      <div class="video-footer">
+        <div class="actions">
+          <!-- <button
+          [disabled]="isOwner$ | async"
+          class="actions__item actions__item--accent"
+          color="accent"
+          mat-button
+          matTooltip="いいね"
+          *ngIf="isLiked$ | async; else unlikeStatus"
+          (click)="unlike(lesson.id)"
+        >
+          <mat-icon class="mat-18">thumb_up</mat-icon>
+          <span>{{ lesson.likeCount + likeBuff }}</span>
+        </button> -->
+          <!-- <ng-template #unlikeStatus>
+          <button
+            [disabled]="isOwner$ | async"
+            class="actions__item"
+            mat-button
+            matTooltip="いいね"
+            (click)="like(lesson.id)"
+          >
+            <mat-icon class="mat-18">thumb_up</mat-icon>
+            <span>{{ lesson.likeCount + likeBuff }}</span>
+          </button>
+        </ng-template> -->
+          <a
+            href="https://twitter.com/intent/tweet?url={{ lessonURL }}&text={{
+              lesson.title
+            }}%0a&hashtags={{ title }}"
+            target="_blank"
+            class="actions__item"
+            mat-button
+          >
+            <mat-icon class="mat-18">share</mat-icon>
+            <span>共有</span>
+          </a>
+          <a
+            *ngIf="!(isOwner$ | async)"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSd-V5Whsflq2ZSfOdFOOzxMLySC9FlNoAVUUZXmNtamxhYeGA/viewform?usp=pp_url&entry.1634212803={{
+              host
+            }}/lesson?v={{ lesson.id }}"
+            target="_blank"
+            rel="noopener"
+            class="actions__item"
+            mat-button
+          >
+            <mat-icon class="mat-18">flag</mat-icon>
+            <span>報告</span>
+          </a>
+          <button
+            class="actions__item"
+            *ngIf="!isMobile && (isOwner$ | async)"
+            mat-button
+            [routerLink]="['/edit']"
+            [queryParams]="{ v: lesson.id }"
+          >
+            <mat-icon class="mat-18">edit</mat-icon>
+            <span>編集</span>
+          </button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="channel-box" *ngIf="channel$ | async as channel">
+        <div class="channel">
+          <a class="channel__avatar" [routerLink]="['/channel', channel.id]">
+            <img [src]="channel.avatarURL" alt="" />
+          </a>
+          <div class="channel__body">
+            <a class="channel__title" [routerLink]="['/channel', channel.id]">{{
+              channel.ownerName || channel.title
+            }}</a>
+            <p class="channel__date">
+              {{ lesson.updatedAt?.toDate() | date: "yyyy/MM/dd" }} に更新
+            </p>
+          </div>
+        </div>
+        <!-- <div class="channel-actions">
+        <div>
+          <button
+            class="weak"
+            *ngIf="isFollow$ | async; else noFollow"
+            (click)="unfollow(channel.id)"
+            mat-flat-button
+            [disabled]="isOwner$ | async"
+          >
+            フォロー中 {{ (channel.statistics.followerCount || 0) + followerBuff }}
+          </button>
+          <ng-template #noFollow>
+            <button
+              (click)="follow(channel.id)"
+              mat-flat-button
+              [disabled]="isOwner$ | async"
+              color="primary"
+            >
+              フォロー {{ (channel.statistics.followerCount || 0) + followerBuff }}
+            </button>
+          </ng-template>
+        </div>
+      </div> -->
+      </div>
+
+      <article class="article" *ngIf="permission$ | async">
+        <markdown [data]="lesson.body"></markdown>
+      </article>
+    </ng-container>
+
+    <mat-card class="permission" *ngIf="(permission$ | async) === false">
+      <h1 class="permission__title">「{{ lesson.title }}」は有料です</h1>
+      <p class="permission__description">
+        ポスト、あるいはこのポストが含まれるコースを購入してください。
+      </p>
+
+      <div class="permission__items">
+        <div class="permission__item">
+          <figure
+            class="permission__icon"
+            [style.background-image]="
+              'url(' +
+              (lesson.thumbnailURL
+                ? lesson.thumbnailURL
+                : '/assets/images/plan-bg-1.png') +
+              ')'
+            "
+          >
+            <mat-icon inline class="mat-18">lock</mat-icon>
+          </figure>
+          <h2 class="permission__item-title">ポストを購入</h2>
+          <p class="permission__item-description">
+            購入したポストは無期限で見放題になります。
+          </p>
+          <button
+            mat-raised-button
+            (click)="chargeLesson(lesson)"
+            color="primary"
+            [disabled]="settlementStatus"
+          >
+            {{ lesson.amount | number }}円<small>税込</small>
+          </button>
+        </div>
+        <div
+          class="permission__item"
+          *ngIf="getParentCause$ | async as parentCause"
+        >
+          <figure
+            class="permission__icon"
+            [style.background-image]="'url(' + parentCause.coverURL + ')'"
+          >
+            <mat-icon inline class="mat-18">lock</mat-icon>
+          </figure>
+          <h2 class="permission__item-title" matLine>
+            {{ parentCause.title }}コースを購入
+          </h2>
+          <p class="permission__item-description">
+            コースに含まれているすべてのポストが見放題になります。
+          </p>
+          <button
+            [disabled]="settlementStatus"
+            mat-raised-button
+            color="primary"
+          >
+            {{ parentCause.amount | number }}円<small>税込</small>
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <ng-template #delete>
+    <div class="lesson">
+      <p class="delete">このポストは削除されました</p>
+    </div>
+  </ng-template>
+</ng-container>

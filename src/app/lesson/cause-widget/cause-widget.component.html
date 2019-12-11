@@ -16,8 +16,8 @@
 
   <div class="list">
     <mat-nav-list dense>
-      <mat-list-item *ngFor="let lesson of lessons$ | async" [routerLink]="['./']" [queryParams]="{v: lesson.id}" queryParamsHandling="merge" routerLinkActive="active">
-        <h2 class="item__title" matLine>{{ lesson.title }}</h2>
+      <mat-list-item *ngFor="let lesson of lessons$ | async; let i = index" [routerLink]="['./']" [queryParams]="{v: lesson.id}" queryParamsHandling="merge" routerLinkActive="active">
+        <h2 class="item__title" matLine>{{i + 1}}. {{ lesson.title }}</h2>
         <mat-icon class="mat-18" *ngIf="lesson.premium">lock</mat-icon>
       </mat-list-item>
     </mat-nav-list>

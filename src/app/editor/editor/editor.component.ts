@@ -329,7 +329,7 @@ export class EditorComponent implements OnInit {
 
   resizeFile(file: any): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.ngxPicaService.resizeImage(file, 840, 400, {
+      this.ngxPicaService.resizeImage(file, 2000, 1200, {
         aspectRatio: {
           keepAspectRatio: true,
         },

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChannelService } from 'src/app/services/channel.service';
-import { map, shareReplay, switchMap } from 'rxjs/operators';
+import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { SeoService } from 'src/app/services/seo.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Title } from '@angular/platform-browser';

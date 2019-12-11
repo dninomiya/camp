@@ -44,7 +44,7 @@
   h2 {
     margin: 56px 0 24px;
     font-size: 25.6px;
-    font-weight: normal;
+    font-weight: bold;
     border-bottom: 1px solid rgba(black, .12);
     &:first-child {
       margin-top: 0;
@@ -52,15 +52,20 @@
     @include sp {
       font-size: 18px;
       margin: 16px 0;
-      line-height: 1.4;
+      line-height: 1.6;
+      padding-bottom: 4px;
     }
   }
   h3 {
     margin: 50px 0 24px;
     font-size: 22.4px;
-    font-weight: normal;
+    font-weight: bold;
     &:first-child {
       margin-top: 0;
+    }
+    @include sp {
+      font-size: 16px;
+      line-height: 1.6;
     }
   }
   h3, li, p {

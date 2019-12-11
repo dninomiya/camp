@@ -5,10 +5,11 @@ import { SharedModule } from '../shared/shared.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PlanModule } from '../plan/plan.module';
 import { CauseWidgetComponent } from './cause-widget/cause-widget.component';
+import { ArticleComponent } from './article/article.component';
 
 
 @NgModule({
-  declarations: [LessonComponent, CauseWidgetComponent],
+  declarations: [LessonComponent, CauseWidgetComponent, ArticleComponent],
   imports: [
     SharedModule,
     LessonRoutingModule,

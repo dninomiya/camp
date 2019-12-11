@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LessonList } from '../interfaces/lesson-list';
-import { Observable, combineLatest } from 'rxjs';
-import { first, map, switchMap } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import { first, map, switchMap, filter } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 import { Lesson } from '../interfaces/lesson';
 import { ChannelMeta } from '../interfaces/channel';
@@ -30,9 +30,10 @@ export class ListService {
       lists$
     ]).pipe(
       map(([channel, lists]) => {
-        // return lists;
         if (channel.listOrder) {
-          return channel.listOrder.map(id => lists.find(list => list.id === id));
+          return channel.listOrder
+            .map(id => lists.find(list => list.id === id))
+            .filter(cause => !!cause);
         } else {
           return lists;
         }
