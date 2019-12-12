@@ -10,6 +10,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { Title } from '@angular/platform-browser';
 import { LessonList } from 'src/app/interfaces/lesson-list';
 import { ListService } from 'src/app/services/list.service';
+import { SearchParameters } from 'angular-instantsearch/instantsearch/instantsearch';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   trendSearchParameters = {
     hitsPerPage: 20,
-    filters: 'public:true AND NOT deleted:true'
+    filters: 'public:true AND NOT deleted:true AND NOT tags:mentor'
   };
 
   causes$: Observable<LessonList[]> = this.listService.getLists(
@@ -37,6 +38,11 @@ export class HomeComponent implements OnInit {
 
   noFollow = true;
   isLoading = true;
+
+  mentorParameters: SearchParameters = {
+    hitsPerPage: 20,
+    filters: 'public:true AND NOT deleted:true AND tags:mentor',
+  };
 
   follows$: Observable<string[]> = this.authService.authUser$.pipe(
     switchMap(user => {
@@ -51,7 +57,6 @@ export class HomeComponent implements OnInit {
   );
 
   constructor(
-    private trendService: TrendService,
     private authService: AuthService,
     private channelService: ChannelService,
     private seoService: SeoService,

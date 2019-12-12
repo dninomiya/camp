@@ -10,7 +10,7 @@
       <mat-icon class="mat-18">menu</mat-icon>
     </button>
     <a class="logo" routerLink="/">
-      <img src="/assets/images/logo.png" alt="CAMP">
+      <img src="/assets/images/logo.png" alt="CAMP" />
     </a>
     <ais-instantsearch
       *ngIf="!isMobile"
@@ -23,6 +23,16 @@
     <ng-container *ngIf="user$ | async as user; else loginButton">
       <div class="btns">
         <div class="toolbar">
+          <button
+            class="toolbar__item"
+            mat-icon-button
+            routerLink="/new"
+            [queryParams]="{ tag: 'mentor' }"
+            matTooltip="投稿"
+            *ngIf="user.mentor"
+          >
+            <mat-icon class="mat-18">speaker_notes</mat-icon>
+          </button>
           <button
             class="toolbar__item"
             mat-icon-button
@@ -89,13 +99,17 @@
           "
         ></button>
         <mat-menu #menu="matMenu">
-          <button *ngIf="user.mentor" mat-menu-item routerLink="/channel/{{ user.id }}">
+          <button
+            *ngIf="user.mentor"
+            mat-menu-item
+            routerLink="/channel/{{ user.id }}"
+          >
             <mat-icon>account_box</mat-icon>
             <span>チャンネル</span>
           </button>
           <button *ngIf="isStudio" mat-menu-item routerLink="/">
             <mat-icon>compare_arrows</mat-icon>
-            <span>{{title}}</span>
+            <span>{{ title }}</span>
           </button>
           <button
             *ngIf="!isStudio && !isMobile && user.mentor"
@@ -142,7 +156,7 @@
         (click)="login()"
         [disabled]="loginWaiting"
       >
-        {{loginWaiting ? 'アカウント作成中' : 'ログイン'}}
+        {{ loginWaiting ? "アカウント作成中" : "ログイン" }}
       </button>
     </ng-template>
   </mat-toolbar-row>

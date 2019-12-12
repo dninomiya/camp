@@ -23,12 +23,14 @@ export class SeoService {
     title: string;
     description: string;
     image: string;
+    size?: 'summary' | 'summary_large_image'
   }) {
     this.titleService.setTitle(config.title ? `${config.title} | ${environment.title}` : environment.title);
     this.meta.updateTag({ property: 'og:type', content: config.type });
     this.meta.updateTag({ property: 'og:title', content: config.title });
     this.meta.updateTag({ property: 'og:description', content: config.description });
     this.meta.updateTag({ property: 'og:url', content: location.href });
+    this.meta.updateTag({ name: 'twitter:card', content: config.size || 'summary_large_image' });
     if (config.image) {
       this.meta.updateTag({ property: 'og:image', content: config.image });
     }

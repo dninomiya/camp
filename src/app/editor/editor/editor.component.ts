@@ -154,6 +154,15 @@ export class EditorComponent implements OnInit {
     ).subscribe(vimeoUser => {
       this.vimeoUser = vimeoUser || null;
     });
+
+    this.route.queryParamMap.subscribe(params => {
+      const tag = params.get('tag');
+      if (tag === 'mentor') {
+        this.form.patchValue({
+          tags: ['mentor']
+        });
+      }
+    });
   }
 
   ngOnInit() {
@@ -203,7 +212,7 @@ export class EditorComponent implements OnInit {
     });
 
     this.form.get('body').valueChanges.pipe(debounceTime(500)).subscribe(res => {
-      ( window as any).twttr.widgets.load();
+      (window as any).twttr.widgets.load();
     });
   }
 
@@ -223,7 +232,7 @@ export class EditorComponent implements OnInit {
       }).pipe(
         tap(() => this.isValidWaiting = false),
         map(data => null),
-        catchError(() => of({videoId: true}))
+        catchError(() => of({ videoId: true }))
       );
     } else {
       return of(null);
@@ -248,11 +257,11 @@ export class EditorComponent implements OnInit {
 
       action = this.lessonService.updateLesson(
         this.oldLesson.id, {
-          body: this.form.value.body,
+        body: this.form.value.body,
         ...newValue
       });
     } else {
-      action =  this.lessonService.createLesson(
+      action = this.lessonService.createLesson(
         id,
         this.form.value,
         this.thumbnail

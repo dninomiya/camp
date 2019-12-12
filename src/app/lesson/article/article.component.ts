@@ -76,15 +76,15 @@ export class ArticleComponent implements OnInit, OnDestroy {
         return merge(
           of(lesson),
           this.lessonService.getOGPs(matchUrls).pipe(
-              map(ogps => {
-                matchUrls.forEach((url, i) => {
-                  if (ogps[i]) {
-                    lesson.body = lesson.body.replace(url, this.getOgpHTML(ogps[i]));
-                  }
-                });
-                return lesson;
-              })
-            )
+            map(ogps => {
+              matchUrls.forEach((url, i) => {
+                if (ogps[i]) {
+                  lesson.body = lesson.body.replace(url, this.getOgpHTML(ogps[i]));
+                }
+              });
+              return lesson;
+            })
+          )
         );
       } else {
         return of(lesson);
@@ -241,7 +241,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
         '@type': 'Person',
         name: channel.title
       },
-       publisher: {
+      publisher: {
         '@type': 'Organization',
         name: 'Google',
         logo: {
@@ -255,12 +255,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   async setMeta(lesson: Lesson) {
+    console.log(lesson.tags);
     const image = lesson.thumbnailURL || environment.host + '/assets/images/ogp-cover.png';
     this.seoService.generateTags({
       title: lesson.title,
       image,
       type: 'article',
-      description: lesson.body.replace(/# -/gm, '').substring(0, 100)
+      description: lesson.body.replace(/# -/gm, '').substring(0, 100),
+      size: lesson.tags.includes('mentor') ? 'summary' : 'summary_large_image'
     });
   }
 
@@ -287,7 +289,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       description = `<p class="ogp__description">${data.ogDescription.replace(/\n/gm, '').replace(/`/g, '&#096;')}</p>`;
     }
 
-    const result =  `<a href="${ogp.requestUrl}" target="_blank" class="ogp">
+    const result = `<a href="${ogp.requestUrl}" target="_blank" class="ogp">
       ${thumbnail}
       <div class="ogp__body">
         <p class="ogp__title">${title}</p>
@@ -306,14 +308,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
     ]).subscribe(([permission]) => {
       if (permission) {
         setTimeout(() => {
-          ( window as any).twttr.widgets.load();
+          (window as any).twttr.widgets.load();
         }, 500);
       }
     });
   }
 
   onLoadMarkdown() {
-    ( window as any).twttr.widgets.load();
+    (window as any).twttr.widgets.load();
   }
 
   /**

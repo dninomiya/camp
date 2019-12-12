@@ -11,7 +11,6 @@ import { User } from 'src/app/interfaces/user';
 import { ListService } from 'src/app/services/list.service';
 import { LessonList } from 'src/app/interfaces/lesson-list';
 import { LoadingService } from 'src/app/services/loading.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-lesson',
@@ -91,5 +90,5 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   ngOnInit() { }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 }
