@@ -41,10 +41,10 @@ export class ChannelDetailComponent implements OnInit, OnDestroy {
   isMobile = this.uiService.isMobile;
 
   channel$: Observable<ChannelMeta> = this.route.params.pipe(
-    switchMap(({id}) => this.channelService.getChannel(id)),
+    switchMap(({ id }) => this.channelService.getChannel(id)),
     tap(channel => {
-      if ( channel) {
-        const image = channel.coverURL || environment.host + 'assets/images/nino-camp.png';
+      if (channel) {
+        const image = channel.coverURL || environment.host + '/assets/images/nino-camp.png';
         this.seoService.generateTags({
           title: channel.title,
           description: channel.description,
