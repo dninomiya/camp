@@ -1,6 +1,7 @@
 @import "mixins";
 
-.article, .editor-preview {
+.article,
+.editor-preview {
   line-height: 1.8;
   letter-spacing: 0.2px;
   & &__body {
@@ -16,15 +17,15 @@
     position: relative;
     &--note {
       border-color: $brand-primary;
-      background: rgba($brand-primary, .12);
+      background: rgba($brand-primary, 0.12);
     }
     &--denger {
       border-color: #d32f2f;
-      background: rgba(#d32f2f, .12);
+      background: rgba(#d32f2f, 0.12);
     }
     &--notice {
       border-color: #e0c62e;
-      background: rgba(#e0c62e, .12);
+      background: rgba(#e0c62e, 0.12);
     }
     p {
       font-size: 14px;
@@ -45,7 +46,7 @@
     margin: 56px 0 24px;
     font-size: 25.6px;
     font-weight: bold;
-    border-bottom: 1px solid rgba(black, .12);
+    border-bottom: 1px solid rgba(black, 0.12);
     &:first-child {
       margin-top: 0;
     }
@@ -68,7 +69,9 @@
       line-height: 1.6;
     }
   }
-  h3, li, p {
+  h3,
+  li,
+  p {
     code {
       font-size: 14px;
       background: #f1f3f4;
@@ -82,7 +85,7 @@
     padding-left: 2em;
   }
   blockquote {
-    border-left: 4px solid rgba(black, .12);
+    border-left: 4px solid rgba(black, 0.12);
     margin: 16px 0;
     padding: 8px 0 8px 16px;
   }
@@ -92,7 +95,7 @@
   pre {
     margin: 2em 0;
     padding: 0;
-    border: 1px solid rgba(black, .12);
+    border: 1px solid rgba(black, 0.12);
     &.no-lang {
       padding-top: 0;
     }
@@ -114,15 +117,18 @@
     &:last-child {
       margin-bottom: 0;
     }
-    th, td {
-      border: 1px solid rgba(black, .12);
+    th,
+    td {
+      border: 1px solid rgba(black, 0.12);
       padding: 8px;
     }
     th {
       font-weight: normal;
     }
   }
-  p, ul, ol {
+  p,
+  ul,
+  ol {
     margin: 24px 0;
     font-size: 16px;
     line-height: 1.9;
@@ -136,6 +142,12 @@
       margin: 16px 0;
       font-size: 14px;
       line-height: 1.6;
+    }
+    .material-icons {
+      margin-right: 4px;
+      margin-left: 2px;
+      font-size: 16px;
+      vertical-align: -2px;
     }
   }
 
@@ -151,7 +163,7 @@
 
   & &__date {
     font-size: 12px;
-    color: rgba(black, .37);
+    color: rgba(black, 0.37);
     text-align: right;
     margin-bottom: 0;
   }
@@ -176,26 +188,20 @@
       text-shadow: none;
       font-family: "roboto";
       font-size: 13px;
-      color: rgba(black, .6);
+      color: rgba(black, 0.6);
       box-sizing: border-box;
       display: block;
       padding: 8px 16px;
       background: #eee;
-      border-bottom: 1px solid rgba(black, .12);
+      border-bottom: 1px solid rgba(black, 0.12);
     }
-  }
-  .material-icons {
-    margin-right: 4px;
-    margin-left: 2px;
-    font-size: 16px;
-    vertical-align: -2px;
   }
   figure {
     margin: 24px auto;
     img {
       display: block;
       border-radius: 4px;
-      box-shadow: 0 2px 16px rgba(black, .3);
+      box-shadow: 0 2px 16px rgba(black, 0.3);
       overflow: hidden;
       max-width: 100%;
       margin: 0 auto;
@@ -203,7 +209,7 @@
     figcaption {
       font-size: 12px;
       margin-top: 8px;
-      color: rgba(black, .6);
+      color: rgba(black, 0.6);
       text-align: center;
     }
   }
@@ -212,7 +218,7 @@
     background: #fff;
     display: flex;
     overflow: hidden;
-    border: 1px solid rgba(black, .12);
+    border: 1px solid rgba(black, 0.12);
     border-radius: 2px;
     @include sp {
       display: block;
@@ -229,7 +235,7 @@
     &__title {
       font-size: 14px;
       margin: 0 0 8px;
-      color: rgba(black, .87);
+      color: rgba(black, 0.87);
     }
     &__body {
       flex: 1;
@@ -238,7 +244,7 @@
     &__description {
       margin: 0 0 8px;
       font-size: 13px;
-      color: rgba(black, .6);
+      color: rgba(black, 0.6);
       overflow: hidden;
       -webkit-line-clamp: 2;
       display: -webkit-box;
@@ -246,7 +252,7 @@
     }
     &__url {
       font-size: 12px;
-      color: rgba(black, .38);
+      color: rgba(black, 0.38);
       margin: 0;
       @include sp {
         overflow: hidden;
@@ -263,5 +269,20 @@
 
   twitter-widget {
     margin: 24px auto;
+  }
+
+  h2,
+  h3,
+  h4,
+  h5 {
+    .material-icons {
+      margin-left: 8px;
+      vertical-align: middle;
+      display: none;
+      color: inherit;
+    }
+    &:hover .material-icons {
+      display: inline-block;
+    }
   }
 }

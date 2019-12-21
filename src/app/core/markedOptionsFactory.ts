@@ -23,10 +23,15 @@ export function markedOptionsFactory(): MarkedOptions {
   renderer.paragraph = (text) => {
     const newText = text.replace(/\n/g, '<br>');
     if (newText.startsWith('<figure') && newText.endsWith('</figure>')) {
-        return newText;
+      return newText;
     } else {
-        return '<p>' + newText + '</p>';
+      return '<p>' + newText + '</p>';
     }
+  };
+
+  renderer.heading = (text, level, raw, slugger) => {
+    const href = location.href.replace(/#.*$/, '');
+    return `<h${level} id="${text}">${text}<a href="${href}#${text}" class="material-icons">link</a></h${level}>`;
   };
 
   renderer.html = (html) => {
@@ -71,21 +76,22 @@ export function markedOptionsFactory(): MarkedOptions {
       return text;
     }
 
+    text = text.replace(/[&<>"'\/]/g, key => entityMap[key]);
+
     if (info) {
-      return `<div class="info info--${info[0]}">${marked(text, {renderer})}</div>`;
+      return `<div class="info info--${info[0]}">${marked(text, { renderer })}</div>`;
     } else if (dod) {
       const dodLabel = dod[0] === 'do' ? 'Do' : 'Don\'t';
       return `<pre class="language-${lang} ${dod[0]}">` +
-      `<span class="lang">${dodLabel}</span><code class="language-${lang}">` + text + '</code></pre>';
+        `<span class="lang">${dodLabel}</span><code class="language-${lang}">` + text + '</code></pre>';
     } else if (lang) {
       if (/editorconfig|gitignore/.test(lang)) {
         lang = 'bash';
       }
-      text = text.replace(/[&<>"'\/]/g, key => entityMap[key]);
       return `<pre class="language-${lang}"><span class="lang">${label}</span><code class="language-${lang}">` + text + '</code></pre>';
     } else {
       return `<pre class="no-lang"><code>` + text + '</code></pre>';
     }
   };
-  return {renderer};
+  return { renderer };
 }
