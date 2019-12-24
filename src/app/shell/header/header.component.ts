@@ -80,5 +80,5 @@ export class HeaderComponent implements OnInit {
     this.notificationService.clearNotifications(this.authService.afUser.uid);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }
