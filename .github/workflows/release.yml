@@ -33,6 +33,8 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: dist
+      - name: Install Dependencies
+        run: cd functions && npm install
       - name: index-copy
         run: npm run index-copy
       - name: Deploy to Firebase
