@@ -6,7 +6,7 @@
     <div class="header__body">
       <h1 class="header__title">{{ channel.title }}</h1>
       <div class="header__bar">
-        <p class="header__owner">{{channel.title}}</p>
+        <p class="header__owner">{{ channel.title }}</p>
         <!-- <div class="rate" (click)="openReviewDialog(channel)">
           <span class="rate__star">
             <app-mat-star-rating
@@ -22,11 +22,17 @@
         </div> -->
       </div>
       <p class="header__description">
-        {{channel.description}}
+        {{ channel.description }}
       </p>
       <div class="header__footer">
-        <a mat-raised-button color="primary" href="https://forms.gle/FLN1cjYr2vPZgqpa9" target="_blank">面談を予約する</a>
-        <span class="limit">残り{{channel.maxUser - channel.activeUser}}枠（定員{{channel.maxUser}}名）</span>
+        <a
+          mat-raised-button
+          color="primary"
+          href="https://forms.gle/FLN1cjYr2vPZgqpa9"
+          target="_blank"
+          >面談を予約する</a
+        >
+        <!-- <span class="limit">残り{{channel.maxUser - channel.activeUser}}枠（定員{{channel.maxUser}}名）</span> -->
       </div>
     </div>
   </mat-card>
