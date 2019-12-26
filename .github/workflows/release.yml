@@ -36,7 +36,7 @@ jobs:
       - name: Install Dependencies
         run: cd functions && npm install
       - name: index-copy
-        run: npm run index-copy
+        run: mkdir functions/hosting && npm run index-copy
       - name: check
         run: ls dist/workspace/ && ls functions/hosting/
       # - name: Deploy to Firebase
