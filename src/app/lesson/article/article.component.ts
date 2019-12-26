@@ -79,7 +79,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
             map(ogps => {
               matchUrls.forEach((url, i) => {
                 if (ogps[i]) {
-                  lesson.body = lesson.body.replace(url, this.getOgpHTML(ogps[i]));
+                  const reg = new RegExp(`^${url}$`, 'gm');
+                  lesson.body = lesson.body.replace(reg, this.getOgpHTML(ogps[i]));
                 }
               });
               return lesson;
@@ -255,7 +256,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   async setMeta(lesson: Lesson) {
-    console.log(lesson.tags);
     const image = lesson.thumbnailURL || environment.host + '/assets/images/ogp-cover.png';
     this.seoService.generateTags({
       title: lesson.title,
