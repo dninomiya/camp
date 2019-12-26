@@ -37,10 +37,13 @@ jobs:
         run: cd functions && npm install
       - name: index-copy
         run: npm run index-copy
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: prod
+      - name: check
+        run: ls dist/workspace/
+        run: ls functions/hosting/
+      # - name: Deploy to Firebase
+      #   uses: w9jds/firebase-action@master
+      #   with:
+      #     args: deploy
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      #     PROJECT_ID: prod
