@@ -19,7 +19,7 @@
   gap: 0 16px;
   padding: 8px 24px 8px 0;
   position: relative;
-  border-bottom: 1px solid rgba(black, .12);
+  border-bottom: 1px solid rgba(black, 0.12);
   z-index: 10;
   mat-form-field {
     display: block;
@@ -35,7 +35,7 @@
 .thumbnail {
   position: relative;
   margin: -8px 0;
-  border-right: 1px solid rgba(black, .12);
+  border-right: 1px solid rgba(black, 0.12);
   &--invalid {
     &:after {
       content: "";
@@ -46,7 +46,7 @@
       right: 0;
       left: 0;
       bottom: 0;
-      background: rgba(red, .12);
+      background: rgba(red, 0.12);
     }
   }
 }
@@ -90,7 +90,7 @@
   .editor-toolbar {
     border-radius: 0;
     border: none;
-    border-bottom: 1px solid rgba(black, .12);
+    border-bottom: 1px solid rgba(black, 0.12);
   }
 }
 
@@ -99,12 +99,12 @@
   position: relative;
   justify-content: space-between;
   z-index: 10;
-  border-top: 1px solid rgba(black, .12);
+  border-top: 1px solid rgba(black, 0.12);
   display: flex;
   align-items: center;
   mat-form-field {
     display: inline-block;
-     margin-left: 16px;
+    margin-left: 16px;
   }
   mat-slide-toggle {
     margin-left: 16px;
@@ -116,26 +116,20 @@
 
 :host ::ng-deep .CodeMirror {
   border: 0;
-  // border-radius: 0;
-  // position: absolute;
-  // top: 50px;
-  // bottom: 0;
-  // left: 0;
-  // right: 0;
-  // border: 0;
-  // border-top: 1px solid rgba(black, .12);
-  // .CodeMirror-scroll {
-  //   margin: 0;
-  //   padding: 0;
-  // }
+  flex: 1;
+  padding: 16px 16px 32px;
+  .CodeMirror-vscrollbar {
+    display: none;
+  }
   * {
-    font-size: 1em!important;
-    background: none!important;
-    line-height: 1.8!important;
-    font-weight: normal!important;
+    font-size: 1em !important;
+    background: none !important;
+    line-height: 1.8 !important;
+    color: inherit !important;
+    font-weight: normal !important;
   }
   .CodeMirror-selected {
-    background: #eee!important;
+    background: #eee !important;
   }
 }
 
@@ -143,7 +137,7 @@
   line-height: 42px;
   padding: 0 24px;
   display: block;
-  border-top: 1px solid rgba(black, .12);
+  border-top: 1px solid rgba(black, 0.12);
   cursor: pointer;
   &:hover {
     background: rgba(0, 0, 0, 0.04);
@@ -157,13 +151,13 @@
 .uploader {
   width: 400px;
   &__label {
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
     font-size: 13px;
     margin-bottom: 4px;
   }
   &__step {
     text-align: right;
-    color: rgba(black, .38);
+    color: rgba(black, 0.38);
     font-size: 12px;
   }
 }
