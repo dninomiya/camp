@@ -2,7 +2,9 @@
 
 .footer {
   padding: 24px;
-  border-top: 1px solid rgba(black, .12);
+  border-top: 1px solid rgba(black, 0.12);
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
   @include sp {
     padding-bottom: 90px;
   }
@@ -10,7 +12,7 @@
 
 .footer-navs {
   margin-bottom: 16px;
-  color: rgba(black, .6);
+  color: rgba(black, 0.6);
   font-size: 13px;
   a {
     display: inline-block;
@@ -19,6 +21,6 @@
 }
 
 .copyright {
-  color: rgba(black, .38);
+  color: rgba(black, 0.38);
   font-size: 12px;
 }
