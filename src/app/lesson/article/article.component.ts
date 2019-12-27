@@ -93,11 +93,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }),
     tap(() => {
       this.loadingService.endLoading();
-      setTimeout(() => {
-        const fragment = this.route.snapshot.fragment;
-        document.querySelector('#' + fragment).scrollIntoView();
-        window.scrollBy(0, -70);
-      }, 100);
+      const fragment = this.route.snapshot.fragment;
+      const target = document.querySelector('#' + fragment);
+      if (fragment && target) {
+        setTimeout(() => {
+          document.querySelector('#' + fragment).scrollIntoView();
+          window.scrollBy(0, -70);
+        }, 100);
+      }
     }),
     shareReplay(1)
   );
