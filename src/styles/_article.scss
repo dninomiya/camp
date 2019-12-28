@@ -51,8 +51,8 @@
       margin-top: 0;
     }
     @include sp {
-      font-size: 18px;
-      margin: 16px 0;
+      font-size: 24px;
+      margin: 52px 0 24px;
       line-height: 1.6;
       padding-bottom: 4px;
     }
@@ -65,8 +65,9 @@
       margin-top: 0;
     }
     @include sp {
-      font-size: 16px;
+      font-size: 20px;
       line-height: 1.6;
+      margin: 44px 0 24px;
     }
   }
   h3,
@@ -140,9 +141,9 @@
       margin-bottom: 0;
     }
     @include sp {
-      margin: 16px 0;
-      font-size: 14px;
-      line-height: 1.6;
+      margin: 24px 0;
+      font-size: 16px;
+      line-height: 1.9;
     }
     .material-icons {
       margin-right: 4px;
@@ -154,12 +155,12 @@
 
   ul {
     list-style: disc;
-    padding-left: 40px;
+    padding-left: 1.5em;
   }
 
   ol {
     list-style: decimal;
-    padding-left: 40px;
+    padding-left: 1.5em;
   }
 
   & &__date {
