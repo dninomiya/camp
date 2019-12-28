@@ -15,6 +15,9 @@
   gap: 24px;
   grid-template-columns: 1fr 320px;
   margin: 0 auto;
+  &__lesson {
+    overflow: hidden;
+  }
   @media print {
     display: block;
     width: 100%;
@@ -49,7 +52,7 @@
   display: grid;
   grid-auto-rows: min-content;
   gap: 16px;
-  transition: .3s;
+  transition: 0.3s;
   opacity: 0;
   @media print {
     display: none;
@@ -61,7 +64,7 @@
     grid-template-columns: 1fr;
   }
   > * {
-    transition: .8s;
+    transition: 0.8s;
   }
   &.show {
     opacity: 1;
@@ -70,7 +73,7 @@
 
 .ads {
   overflow: hidden;
-  transition: box-shadow .2s cubic-bezier(.4,0,.2,1);
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   &:hover {
     @include mat-elevation(8);
   }
@@ -86,21 +89,28 @@
 
 .profile {
   border-radius: 40px;
-  box-shadow: 0 8px 24px rgba(black, .12);
+  box-shadow: 0 8px 24px rgba(black, 0.12);
   &__header {
     padding: 56px 0;
     text-align: center;
-    background: #136a8a;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #267871, #136a8a);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #267871, #136a8a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background: #136a8a; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to top,
+      #267871,
+      #136a8a
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to top,
+      #267871,
+      #136a8a
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
   &__avatar {
     vertical-align: bottom;
     display: inline-block;
     border-radius: 50%;
     width: 120px;
-    box-shadow: 0 4px 10px rgba(black, .38);
+    box-shadow: 0 4px 10px rgba(black, 0.38);
   }
   &__body {
     padding: 24px 40px 40px;
@@ -116,6 +126,6 @@
   }
   &__description {
     font-size: 12px;
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
   }
 }
