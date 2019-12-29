@@ -49,11 +49,16 @@
     </div>
   </div>
 
-  <!-- <ng-container *ngIf="plans && plans.length">
+  <ng-container *ngIf="plans && plans.length">
     <mat-divider></mat-divider>
-    <app-plan-list [isOwner]="isOwner" [channel]="channel" [plans]="plans"></app-plan-list>
+    <app-plan-list
+      [isOwner]="isOwner"
+      [channel]="channel"
+      [plans]="plans"
+    ></app-plan-list>
   </ng-container>
 
+  <!--
   <ng-container *ngIf="jobs && jobs.length">
     <mat-divider></mat-divider>
     <app-job-list [isOwner]="isOwner" [channel]="channel" [jobs]="jobs"></app-job-list>
