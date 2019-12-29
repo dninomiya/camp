@@ -16,7 +16,7 @@
   grid-template-columns: 1fr 320px;
   margin: 0 auto;
   &__lesson {
-    overflow: hidden;
+    min-width: 0;
   }
   @media print {
     display: block;
