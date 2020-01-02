@@ -3,11 +3,14 @@
 .wrap {
   display: grid;
   grid-template-columns: 490px 1fr;
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 56px;
   left: 0;
   bottom: 0;
   right: 0;
+  @include sp {
+    top: 48px;
+  }
   @include tablet {
     display: block;
     grid-template-columns: 100vw 100vw;
@@ -16,7 +19,7 @@
 
 .side {
   overflow: hidden;
-  border-right: 1px solid rgba(black, .12);
+  border-right: 1px solid rgba(black, 0.12);
 }
 
 .nav {
@@ -29,7 +32,7 @@
     overflow: auto;
   }
   @include tablet {
-    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(0);
     .is-thread & {
       transform: translateX(-15%);
@@ -47,7 +50,7 @@
     right: 0;
     bottom: 0;
     padding-top: 56px;
-    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(100%);
     background: #fff;
     z-index: 10;
@@ -84,7 +87,7 @@
   background: #fff;
   width: 100%;
   z-index: 100;
-  border-bottom: 1px solid rgba(black, .12);
+  border-bottom: 1px solid rgba(black, 0.12);
   display: none;
   line-height: 47px;
   box-sizing: border-box;

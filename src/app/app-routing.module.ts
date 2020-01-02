@@ -28,10 +28,15 @@ const routes: Routes = [
         loadChildren: () => import('./channel/channel.module').then(m => m.ChannelModule),
       },
       {
+        path: 'cause',
+        loadChildren: () => import('./cause/cause.module').then(m => m.CauseModule),
+      },
+      {
         path: 'forum',
         canLoad: [AuthGuard],
         data: {
-          noHeader: true
+          noHeader: true,
+          hideNav: true
         },
         loadChildren: () => import('./forum/forum.module').then(m => m.ForumModule),
       },

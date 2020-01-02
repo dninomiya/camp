@@ -1,0 +1,11 @@
+<mat-nav-list dense>
+  <h2 mat-subheader>カテゴリ</h2>
+  <a
+    mat-list-item
+    *ngFor="let cause of causes$ | async"
+    routerLinkActive="active"
+    [routerLink]="['/cause', cause.id]"
+  >
+    <span mat-line>{{ cause.title }}</span>
+  </a>
+</mat-nav-list>

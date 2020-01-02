@@ -1,0 +1,11 @@
+<ng-container *ngIf="cause$ | async as cause">
+  <h1>{{ cause.title }}</h1>
+
+  <div class="lesson-grid">
+    <app-grid-lesson-item
+      *ngFor="let lesson of lessons$ | async"
+      [lesson]="lesson"
+      type="simple"
+    ></app-grid-lesson-item>
+  </div>
+</ng-container>

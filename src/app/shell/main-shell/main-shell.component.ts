@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { LoadingService } from 'src/app/services/loading.service';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -11,14 +12,16 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./main-shell.component.scss']
 })
 export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('sideNav', {static: true}) sideNav: MatSidenav;
+  @ViewChild('sideNav', { static: true }) sideNav: MatSidenav;
 
   isLoading$ = this.loadingService.isLoading$;
   noHeader: boolean;
   noBottomNav: boolean;
   noFooter: boolean;
+  hideNav: boolean;
   isMobile = this.uiService.isMobile;
   user$ = this.authService.authUser$;
+  causeLoading$ = new BehaviorSubject(true);
 
   constructor(
     private loadingService: LoadingService,
@@ -37,6 +40,7 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
         this.noHeader = lastChild.data.noHeader;
         this.noBottomNav = lastChild.data.noBottomNav;
         this.noFooter = lastChild.data.noFooter;
+        this.hideNav = lastChild.data.hideNav;
       }
     });
   }
@@ -49,6 +53,10 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  completeCauseList() {
+    this.causeLoading$.next(false);
   }
 
 }

@@ -1,17 +1,19 @@
 <mat-toolbar class="header">
   <mat-toolbar-row>
-    <button
-      class="menu"
-      mat-icon-button
-      aria-label="メニューを開く"
-      (click)="toggleSideNav()"
-      *ngIf="sideNav"
-    >
-      <mat-icon class="mat-18">menu</mat-icon>
-    </button>
-    <a class="logo" routerLink="/">
-      <img src="/assets/images/logo.png" alt="CAMP" />
-    </a>
+    <div class="header__left">
+      <button
+        class="menu"
+        mat-icon-button
+        aria-label="メニューを開く"
+        (click)="toggleSideNav()"
+        *ngIf="sideNav"
+      >
+        <mat-icon class="mat-18">menu</mat-icon>
+      </button>
+      <a class="logo" routerLink="/">
+        <img src="/assets/images/logo.png" alt="CAMP" />
+      </a>
+    </div>
     <ais-instantsearch
       *ngIf="!isMobile"
       [config]="algoliaConfig"

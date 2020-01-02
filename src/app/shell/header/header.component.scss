@@ -14,13 +14,17 @@
   left: 0;
   width: 100%;
   min-height: 0;
-  border-bottom: 1px solid rgba(black, .12);
+  border-bottom: 1px solid rgba(black, 0.12);
   .mat-toolbar-row {
     height: 56px;
     justify-content: space-between;
     @include sp {
       height: 48px;
     }
+  }
+  &__left {
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -70,7 +74,7 @@
 
 .blank-notification {
   padding: 8px 16px;
-  color: rgba(black, .6);
+  color: rgba(black, 0.6);
 }
 
 .alert {
@@ -86,7 +90,7 @@
     border-radius: 50%;
   }
   &__date {
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
   }
 }
 

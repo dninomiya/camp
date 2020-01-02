@@ -9,6 +9,7 @@ import { LessonMetaWithChannel } from 'src/app/interfaces/lesson';
 export class GridLessonItemComponent implements OnInit {
   @Input() lesson: LessonMetaWithChannel;
   @Input() type?: string;
+  @Input() causeId?: string;
 
   constructor() { }
 

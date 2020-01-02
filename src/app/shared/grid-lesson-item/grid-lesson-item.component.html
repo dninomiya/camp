@@ -1,15 +1,53 @@
 <div class="lesson" *ngIf="lesson">
-  <a [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__thumbnail" [style.background-image]="lesson.thumbnailURL ? 'url(' + lesson.thumbnailURL + ')' : null">
-    <span  *ngIf="!lesson.thumbnailURL"><span>{{lesson.title}}</span></span>
+  <a
+    [routerLink]="['/lesson']"
+    [queryParams]="{
+      v: lesson.id,
+      cause: causeId
+    }"
+    class="lesson__thumbnail"
+    [style.background-image]="
+      lesson.thumbnailURL ? 'url(' + lesson.thumbnailURL + ')' : null
+    "
+  >
+    <span *ngIf="!lesson.thumbnailURL"
+      ><span>{{ lesson.title }}</span></span
+    >
   </a>
   <div class="lesson__meta">
-    <div *ngIf="type !== 'simple'" class="lesson__avatar" [routerLink]="['/channel', lesson.author.id]">
-      <img [src]="lesson.author.avatarURL | safe:'url'" alt="">
+    <div
+      *ngIf="type !== 'simple'"
+      class="lesson__avatar"
+      [routerLink]="['/channel', lesson.author.id]"
+    >
+      <img [src]="lesson.author.avatarURL | safe: 'url'" alt="" />
     </div>
     <div class="lesson__body">
-      <h3 [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__title" style="-webkit-box-orient: vertical;">{{lesson.title}}</h3>
-      <p  *ngIf="type !== 'simple'" [routerLink]="['/channel', lesson.author.id]" class="lesson__sub">{{lesson.author.ownerName || lesson.author.title}} - {{lesson.createdAt | fromNow}}</p>
-      <p  *ngIf="type === 'simple'" [routerLink]="['/lesson']" [queryParams]="{v: lesson.id}" class="lesson__sub">{{lesson.viewCount | number}} 回視聴 - {{lesson.createdAt | fromNow}}</p>
+      <h3
+        [routerLink]="['/lesson']"
+        [queryParams]="{ v: lesson.id }"
+        class="lesson__title"
+        style="-webkit-box-orient: vertical;"
+      >
+        {{ lesson.title }}
+      </h3>
+      <p
+        *ngIf="type !== 'simple'"
+        [routerLink]="['/channel', lesson.author.id]"
+        class="lesson__sub"
+      >
+        {{ lesson.author.ownerName || lesson.author.title }} -
+        {{ lesson.createdAt | fromNow }}
+      </p>
+      <p
+        *ngIf="type === 'simple'"
+        [routerLink]="['/lesson']"
+        [queryParams]="{ v: lesson.id }"
+        class="lesson__sub"
+      >
+        {{ lesson.viewCount | number }} 回視聴 -
+        {{ lesson.createdAt | fromNow }}
+      </p>
     </div>
   </div>
 </div>

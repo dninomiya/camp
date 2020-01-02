@@ -5,22 +5,29 @@
 }
 
 .main {
-  position: absolute;
-  top: 56px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  @media print {
-    top: 0;
-  }
+  padding-top: 56px;
   @include sp {
-    position: static;
-    margin-top: 48px;
-    &.full {
-      margin-top: 0;
-    }
+    padding-top: 48px;
   }
 }
+
+// .main {
+//   position: absolute;
+//   top: 56px;
+//   right: 0;
+//   bottom: 0;
+//   left: 0;
+//   @media print {
+//     top: 0;
+//   }
+//   @include sp {
+//     position: static;
+//     margin-top: 48px;
+//     &.full {
+//       margin-top: 0;
+//     }
+//   }
+// }
 
 .bottom-nav {
   position: fixed;
@@ -36,7 +43,7 @@
   padding-bottom: env(safe-area-inset-bottom);
   > * {
     flex: 1;
-    padding: 8px 0 16px;
+    padding: 8px 0;
   }
 }
 

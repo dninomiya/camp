@@ -1,14 +1,29 @@
-<app-header *ngIf="!isMobile || !noHeader"></app-header>
+<app-header [sideNav]="sideNav" *ngIf="!isMobile || !noHeader"></app-header>
 <mat-progress-bar
   *ngIf="isLoading$ | async"
   color="accent"
   class="root-loading"
   mode="indeterminate"
 ></mat-progress-bar>
-<div class="main" [class.full]="isMobile && noHeader">
-  <router-outlet></router-outlet>
-  <app-footer *ngIf="!(isLoading$ | async) && !noFooter"></app-footer>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav
+    [opened]="!isMobile && !hideNav"
+    [mode]="isMobile ? 'over' : 'side'"
+    class="side"
+    #sideNav
+    [fixedInViewport]="true"
+    [fixedTopGap]="isMobile ? 48 : 56"
+  >
+    <app-drawer [isLoading$]="causeLoading$">
+      <app-cause-list (complete)="completeCauseList()"></app-cause-list>
+    </app-drawer>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="main" [class.full]="isMobile && noHeader">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
 <div *ngIf="isMobile && !noBottomNav" class="bottom-nav">
   <div class="bottom-nav-item" routerLink="/">

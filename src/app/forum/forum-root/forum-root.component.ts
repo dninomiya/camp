@@ -1,3 +1,4 @@
+import { UiService } from 'src/app/services/ui.service';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { ForumService } from 'src/app/services/forum.service';
 import { ForumUnreadCount } from 'src/app/interfaces/thread';
@@ -19,15 +20,18 @@ export class ForumRootComponent implements OnInit {
   tabs = [
     {
       label: 'リクエスト',
-      status: 'request'
+      status: 'request',
+      badge: null
     },
     {
       label: 'オープン',
-      status: 'open'
+      status: 'open',
+      badge: null
     },
     {
       label: 'クローズ',
-      status: 'closed'
+      status: 'closed',
+      badge: null
     },
   ];
 
@@ -39,13 +43,16 @@ export class ForumRootComponent implements OnInit {
     private afMessaging: AngularFireMessaging,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private uiService: UiService
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isThread = !this.route.firstChild.snapshot.data.formRoot;
       }
     });
+
+    this.uiService.isMainNavOpenSource.next(false);
 
     this.forumService.getUnreadCount(
       this.authService.user.id

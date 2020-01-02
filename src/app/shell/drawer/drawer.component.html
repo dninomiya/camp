@@ -1,22 +1,18 @@
-<div class="side">
-<ng-content></ng-content>
-</div>
+<ng-container *ngIf="!(isLoading$ | async)">
+  <ng-content></ng-content>
 
-<mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 
-<div class="footer">
-  <div class="footer-navs">
-    <a routerLink="/intl/about">サービスについて</a>
-    <a routerLink="/intl/guideline">ガイドライン</a>
-    <a routerLink="/intl/help">ヘルプ</a>
-    <a routerLink="/intl/press">プレスルーム</a>
-    <a routerLink="/intl/contact">お問い合わせ</a>
+  <mat-nav-list dense>
+    <a routerLink="/intl/about" mat-list-item>CAMPについて</a>
+    <a routerLink="/intl/help" mat-list-item>ヘルプ</a>
+    <a routerLink="/intl/terms" mat-list-item>利用規約</a>
+    <a routerLink="/intl/privacypolicy" mat-list-item>プライバシー</a>
+  </mat-nav-list>
+
+  <mat-divider></mat-divider>
+
+  <div class="footer">
+    <p class="copyright">© {{ date | date: "yyyy" }} Deer, inc</p>
   </div>
-
-  <div class="footer-navs">
-    <a routerLink="/intl/terms">利用規約</a>
-    <a routerLink="/intl/privacypolicy">プライバシー</a>
-  </div>
-
-  <p class="copyright">© {{ date | date: 'yyyy' }} Deer, inc</p>
-</div>
+</ng-container>

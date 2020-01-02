@@ -1,49 +1,4 @@
-<section *ngIf="hotCamps$ | async as hotCamps">
-  <h2>キャンプ</h2>
-  <div class="camp-grid">
-    <mat-card
-      class="camp"
-      *ngFor="let camp of hotCamps"
-      routerLink="/channel/ypPxvg7WBUPkYZDN7ao3VyLs9OL2"
-    >
-      <div class="camp__cover"></div>
-    </mat-card>
-    <!-- <mat-card class="invite">
-      <a href="mailto:info@deer.co.jp?subject=CAMP:メンターについて&body=メンターに興味があります" target="_blank" class="invite__body"></a>
-    </mat-card> -->
-  </div>
-</section>
-
 <div class="wrap" [class.home-loading]="isLoading">
-  <div class="list" *ngIf="causes$ | async as causes">
-    <h2>リスト</h2>
-    <div class="cause-grid">
-      <a
-        *ngFor="let cause of causes"
-        [routerLink]="['/lesson']"
-        [queryParams]="{
-          v: cause.firstLessonId,
-          cause: cause.id
-        }"
-      >
-        <mat-card class="cause">
-          <figure matCardImage>
-            <div
-              class="cause__cover"
-              [style.background-image]="
-                'url(' + cause.coverURL + ')' | safe: 'style'
-              "
-            ></div>
-          </figure>
-          <div>
-            <p class="cause__title">{{ cause.title }}</p>
-            <p class="cause__description">{{ cause.description }}</p>
-          </div>
-        </mat-card>
-      </a>
-    </div>
-  </div>
-
   <ais-instantsearch [config]="algoliaConfig" class="list">
     <ais-configure [searchParameters]="trendSearchParameters"> </ais-configure>
     <ais-hits>

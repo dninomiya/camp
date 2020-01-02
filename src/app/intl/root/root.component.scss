@@ -5,9 +5,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 10;
   background: #fff;
-  border-bottom: 1px solid rgba(black, .12);
+  border-bottom: 1px solid rgba(black, 0.12);
 }
 
 .side {
@@ -53,6 +53,7 @@ mat-nav-list {
 
 .in-intl {
   padding-top: 64px;
+  min-height: 100vh;
   @include sp {
     padding-top: 56px;
   }
