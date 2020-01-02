@@ -6,8 +6,8 @@
   mode="indeterminate"
 ></mat-progress-bar>
 <div class="main" [class.full]="isMobile && noHeader">
-<router-outlet></router-outlet>
-<app-footer *ngIf="!(isLoading$ | async) && !noFooter"></app-footer>
+  <router-outlet></router-outlet>
+  <app-footer *ngIf="!(isLoading$ | async) && !noFooter"></app-footer>
 </div>
 
 <div *ngIf="isMobile && !noBottomNav" class="bottom-nav">
@@ -20,7 +20,11 @@
     <span class="bottom-nav-item__label">検索</span>
   </div>
   <ng-container *ngIf="user$ | async">
-    <div class="bottom-nav-item" [routerLink]="['/forum']" [queryParams]="{ status: 'request' }">
+    <div
+      class="bottom-nav-item"
+      [routerLink]="['/forum']"
+      [queryParams]="{ status: 'request' }"
+    >
       <mat-icon class="bottom-nav-item__icon">question_answer</mat-icon>
       <span class="bottom-nav-item__label">メッセージ</span>
     </div>
