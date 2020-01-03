@@ -41,6 +41,9 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
         this.noBottomNav = lastChild.data.noBottomNav;
         this.noFooter = lastChild.data.noFooter;
         this.hideNav = lastChild.data.hideNav;
+        if (this.isMobile) {
+          this.sideNav.close();
+        }
       }
     });
   }
