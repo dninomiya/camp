@@ -43,11 +43,17 @@ const routes: Routes = [
       {
         path: 'new',
         canLoad: [AuthGuard],
+        data: {
+          hideNav: true
+        },
         loadChildren: () => import('./editor/editor.module').then(m => m.EditorModule),
       },
       {
         path: 'edit',
         canLoad: [AuthGuard],
+        data: {
+          hideNav: true
+        },
         loadChildren: () => import('./editor/editor.module').then(m => m.EditorModule),
       },
       {

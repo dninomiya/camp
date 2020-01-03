@@ -1,9 +1,30 @@
+@import "mixins";
+
 :host {
   display: block;
-  padding: 24px;
+  padding: 24px 24px 80px;
+  @include tablet {
+    padding: 24px;
+  }
+  @include sp {
+    padding: 16px;
+  }
 }
 
 h1 {
   font-size: 16px;
+  margin-bottom: 24px;
   font-weight: normal;
+  line-height: 1;
+  @include sp {
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: rgba(black, 0.6);
+  }
+}
+
+.lesson-grid {
+  @include sp {
+    margin: 0 -16px;
+  }
 }
