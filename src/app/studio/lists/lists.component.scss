@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 320px 1fr;
   position: absolute;
-  top: 0;
+  top: 56px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -11,12 +11,12 @@
 .toolbar {
   padding: 8px 16px;
   align-items: center;
-  border-bottom: 1px solid rgba(black, .12);
+  border-bottom: 1px solid rgba(black, 0.12);
   display: flex;
   justify-content: space-between;
   background: #fafafa;
   mat-icon {
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
   }
   h2 {
     font-size: 14px;
@@ -24,7 +24,7 @@
     margin: 0;
     display: flex;
     align-items: center;
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
     mat-icon {
       margin-right: 16px;
     }
@@ -34,14 +34,14 @@
 .lists {
   height: 100%;
   overflow: auto;
-  border-right: 1px solid rgba(black, .12);
+  border-right: 1px solid rgba(black, 0.12);
   mat-list-item {
     cursor: pointer;
     mat-icon {
-      color: rgba(black, .6);
+      color: rgba(black, 0.6);
     }
     .handle {
-      color: rgba(black, .38);
+      color: rgba(black, 0.38);
       cursor: move;
     }
   }
@@ -50,21 +50,21 @@
 .lessons {
   &__header {
     padding: 16px;
-    border-bottom: 1px solid rgba(black, .12);
+    border-bottom: 1px solid rgba(black, 0.12);
     text-align: right;
   }
 }
 
 .lesson {
-  border-bottom: 1px solid rgba(black, .12);
+  border-bottom: 1px solid rgba(black, 0.12);
   mat-icon {
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
   }
   .privacy {
-    color: rgba(black, .38);
+    color: rgba(black, 0.38);
   }
   .handle {
-    color: rgba(black, .38);
+    color: rgba(black, 0.38);
     cursor: move;
   }
 }
@@ -91,7 +91,7 @@
 .empty {
   padding: 24px;
   text-align: center;
-  color: rgba(black, .38);
+  color: rgba(black, 0.38);
 }
 
 .hide {
