@@ -51,8 +51,8 @@ export class EditorComponent implements OnInit {
   thumbnailOption = {
     path: '',
     size: {
-      width: 1920,
-      height: 1080,
+      width: 1800,
+      height: 945,
       limitMb: 3
     }
   };
