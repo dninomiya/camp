@@ -1,19 +1,30 @@
 @import "mixins";
+@import "~@angular/material/theming";
+
+:host {
+  @include mat-elevation(2);
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    @include mat-elevation(4);
+  }
+  @include sp {
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
 
 .lesson {
-  * {
-    cursor: pointer;
-  }
   &__thumbnail {
     display: block;
     padding-bottom: 56%;
     background: #fafafa center/cover;
-    margin-bottom: 12px;
     position: relative;
-    border-radius: 3px;
-    overflow: hidden;
     @include sp {
-      border-radius: 0;
+      margin-bottom: 12px;
     }
     > span {
       position: absolute;
@@ -50,12 +61,13 @@
   }
   &__sub {
     font-size: 13px;
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
     line-height: 1;
   }
   &__meta {
     display: flex;
     align-items: center;
+    padding: 16px;
     @include sp {
       padding: 0 16px;
     }

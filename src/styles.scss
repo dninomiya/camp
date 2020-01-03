@@ -51,8 +51,8 @@ body .root-loading {
 
 .lesson-grid {
   display: grid;
-  gap: 24px 4px;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   margin: 0;
   @include tablet {
     padding: 0;
