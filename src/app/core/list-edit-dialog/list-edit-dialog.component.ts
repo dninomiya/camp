@@ -28,9 +28,9 @@ export class ListEditDialogComponent implements OnInit {
 
   imageOpts = {
     size: {
-      width: 800,
-      height: 630,
-      limitMb: 1
+      width: 1920,
+      height: 1080,
+      limitMb: 2
     }
   };
 
