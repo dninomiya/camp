@@ -272,6 +272,10 @@
     width: 100%;
     margin: 24px 0;
     border: none;
+    height: 400px;
+    @include sp {
+      height: 200px;
+    }
   }
 
   twitter-widget {

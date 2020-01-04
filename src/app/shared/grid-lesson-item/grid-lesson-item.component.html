@@ -1,4 +1,12 @@
-<div class="lesson" *ngIf="lesson">
+<div
+  class="lesson"
+  *ngIf="lesson"
+  [routerLink]="['/lesson']"
+  [queryParams]="{
+    v: lesson.id,
+    cause: causeId
+  }"
+>
   <a
     [routerLink]="['/lesson']"
     [queryParams]="{

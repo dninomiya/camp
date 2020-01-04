@@ -1,7 +1,7 @@
 @import "mixins";
 @import "~@angular/material/theming";
 
-:host {
+.lesson {
   @include mat-elevation(2);
   border-radius: 4px;
   overflow: hidden;
@@ -9,6 +9,7 @@
   cursor: pointer;
   background: #fff;
   transition: 0.3s;
+  height: 100%;
   &:hover {
     @include mat-elevation(4);
   }
@@ -16,9 +17,6 @@
     box-shadow: none;
     border-radius: 0;
   }
-}
-
-.lesson {
   &__thumbnail {
     display: block;
     padding-bottom: 56%;
