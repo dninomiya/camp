@@ -83,7 +83,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
       } : {};
 
       if (urlMap.stackblitz) {
-        console.log(urlMap.stackblitz);
         this.generateStackBlitz(lesson, urlMap.stackblitz);
       }
 
