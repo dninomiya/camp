@@ -34,16 +34,15 @@
       right: 0;
       left: 0;
       bottom: 0;
-      padding: 16px;
-      background: #2a2730;
-      color: #ffffff;
+      padding: 16px 24px;
+      background: #fff;
+      color: rgba(black, 0.87);
       span {
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         letter-spacing: 1px;
-        opacity: 0.87;
       }
     }
   }
