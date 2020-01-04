@@ -6,28 +6,12 @@
 
 .main {
   padding-top: 56px;
+  min-height: 100vh;
+  box-sizing: border-box;
   @include sp {
     padding-top: 48px;
   }
 }
-
-// .main {
-//   position: absolute;
-//   top: 56px;
-//   right: 0;
-//   bottom: 0;
-//   left: 0;
-//   @media print {
-//     top: 0;
-//   }
-//   @include sp {
-//     position: static;
-//     margin-top: 48px;
-//     &.full {
-//       margin-top: 0;
-//     }
-//   }
-// }
 
 .bottom-nav {
   position: fixed;
