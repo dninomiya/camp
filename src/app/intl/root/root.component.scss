@@ -52,11 +52,7 @@ mat-nav-list {
 }
 
 .in-intl {
-  padding-top: 64px;
   min-height: 100vh;
-  @include sp {
-    padding-top: 56px;
-  }
 }
 
 .active {
@@ -65,4 +61,8 @@ mat-nav-list {
 
 .intl-content {
   margin-bottom: 80px;
+  padding-top: 64px;
+  @include sp {
+    padding-top: 56px;
+  }
 }
