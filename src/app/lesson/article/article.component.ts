@@ -72,14 +72,29 @@ export class ArticleComponent implements OnInit, OnDestroy {
       this.countUpView(lesson.id);
 
       const matchUrls = lesson.body.match(/^http.*$/gm);
-      if (matchUrls) {
+
+      const urlMap = matchUrls ? {
+        externalUrls: matchUrls.filter(url => {
+          return !url.match(/stackblitz\.com/);
+        }),
+        stackblitz: matchUrls.filter(url => {
+          return url.match(/stackblitz\.com/);
+        }),
+      } : {};
+
+      if (urlMap.stackblitz) {
+        console.log(urlMap.stackblitz);
+        this.generateStackBlitz(lesson, urlMap.stackblitz);
+      }
+
+      if (urlMap.externalUrls) {
         return merge(
           of(lesson),
-          this.lessonService.getOGPs(matchUrls).pipe(
+          this.lessonService.getOGPs(urlMap.externalUrls).pipe(
             map(ogps => {
-              matchUrls.forEach((url, i) => {
+              urlMap.externalUrls.forEach((url, i) => {
                 if (ogps[i]) {
-                  const reg = new RegExp(`^${url}$`, 'gm');
+                  const reg = new RegExp(`^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`, 'gm');
                   lesson.body = lesson.body.replace(reg, this.getOgpHTML(ogps[i]));
                 }
               });
@@ -273,6 +288,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
       type: 'article',
       description: lesson.body.replace(/# -/gm, '').substring(0, 100),
       size: lesson.tags.includes('mentor') ? 'summary' : 'summary_large_image'
+    });
+  }
+
+  generateStackBlitz(lesson: Lesson, urls: string[]) {
+    urls.forEach((url, i) => {
+      const reg = new RegExp(`^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`, 'gm');
+      const result = this.isMobile ? '[コードを見る](' + url.replace(/\?.*/, '') + ')' : '<iframe src="' + url + '"></iframe>';
+      lesson.body = lesson.body.replace(reg, result);
     });
   }
 
