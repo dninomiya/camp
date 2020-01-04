@@ -1,9 +1,16 @@
 .side {
   width: 240px;
   background: white;
-  border-right: 1px solid rgba(black, .12);
+  border-right: 1px solid rgba(black, 0.12);
 }
 
 .active {
   background: rgba(0, 0, 0, 0.04);
+}
+
+.content {
+  padding-top: 56px;
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
