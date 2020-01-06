@@ -1,20 +1,4 @@
 <mat-drawer-container class="in-intl">
-  <mat-toolbar class="header">
-    <mat-toolbar-row>
-      <button
-        class="menu"
-        mat-icon-button
-        aria-label="メニューを開く"
-        (click)="drawer.open()"
-      >
-        <mat-icon class="mat-18">menu</mat-icon>
-      </button>
-      <a class="logo" routerLink="/">
-        <img src="/assets/images/logo.png" alt="CAMP" />
-      </a>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
   <mat-drawer #drawer [mode]="'over'" class="side" [autoFocus]="false">
     <div class="side__close">
       <button mat-icon-button (click)="drawer.close()">
@@ -83,16 +67,34 @@
       </a>
     </mat-nav-list>
   </mat-drawer>
-  <mat-progress-bar
-    *ngIf="isLoading$ | async"
-    color="accent"
-    class="loading"
-    mode="indeterminate"
-  ></mat-progress-bar>
+  <mat-drawer-content>
+    <mat-toolbar class="header">
+      <mat-toolbar-row>
+        <button
+          class="menu"
+          mat-icon-button
+          aria-label="メニューを開く"
+          (click)="drawer.open()"
+        >
+          <mat-icon class="mat-18">menu</mat-icon>
+        </button>
+        <a class="logo" routerLink="/">
+          <img src="/assets/images/logo.png" alt="CAMP" />
+        </a>
+      </mat-toolbar-row>
+    </mat-toolbar>
 
-  <div class="intl-content">
-    <router-outlet></router-outlet>
-  </div>
+    <mat-progress-bar
+      *ngIf="isLoading$ | async"
+      color="accent"
+      class="loading"
+      mode="indeterminate"
+    ></mat-progress-bar>
 
-  <app-footer></app-footer>
+    <div class="intl-content">
+      <router-outlet></router-outlet>
+    </div>
+
+    <app-footer></app-footer>
+  </mat-drawer-content>
 </mat-drawer-container>

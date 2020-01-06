@@ -1,5 +1,9 @@
 body .mat-drawer-container {
   min-height: 100%;
+  overflow: visible;
+  .mat-drawer-content {
+    overflow: visible;
+  }
 }
 
 .mat-drawer {

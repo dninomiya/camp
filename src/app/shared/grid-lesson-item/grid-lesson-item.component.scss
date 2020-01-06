@@ -16,6 +16,10 @@
   @include sp {
     box-shadow: none;
     border-radius: 0;
+    background: none;
+    &:hover {
+      box-shadow: none;
+    }
   }
   &__thumbnail {
     display: block;
