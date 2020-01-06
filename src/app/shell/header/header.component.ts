@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   loginWaiting: boolean;
 
   searchParameters = {
-    hitsPerPage: 5,
+    hitsPerPage: 10,
     filters: 'NOT deleted:true'
   };
 
