@@ -52,7 +52,7 @@ export class EditorComponent implements OnInit {
     path: '',
     size: {
       width: 1800,
-      height: 945,
+      height: 1075.2,
       limitMb: 3
     }
   };
