@@ -1,4 +1,4 @@
-<div
+<a
   class="lesson"
   *ngIf="lesson"
   [routerLink]="['/lesson']"
@@ -7,7 +7,7 @@
     cause: causeId
   }"
 >
-  <a
+  <figure
     class="lesson__thumbnail"
     [style.background-image]="
       lesson.thumbnailURL ? 'url(' + lesson.thumbnailURL + ')' : null
@@ -16,7 +16,7 @@
     <span *ngIf="!lesson.thumbnailURL"
       ><span>{{ lesson.title }}</span></span
     >
-  </a>
+  </figure>
   <div class="lesson__meta">
     <div *ngIf="type !== 'simple'" class="lesson__avatar">
       <img [src]="lesson.author.avatarURL | safe: 'url'" alt="" />
@@ -34,4 +34,4 @@
       </p>
     </div>
   </div>
-</div>
+</a>
