@@ -5,6 +5,7 @@
     <app-grid-lesson-item
       *ngFor="let lesson of lessons$ | async"
       [lesson]="lesson"
+      [causeId]="cause.id"
       type="simple"
     ></app-grid-lesson-item>
   </div>
