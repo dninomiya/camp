@@ -11,7 +11,7 @@
     background: #f2f2f2;
     margin: -16px -16px 8px;
     padding: 8px 16px;
-    border-bottom: 1px solid rgba(black, .12);
+    border-bottom: 1px solid rgba(black, 0.12);
   }
   &__cover {
     padding-bottom: 50%;
@@ -31,12 +31,12 @@
   }
   &__description {
     font-size: 13px;
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
   }
 }
 
 .active {
-  background: #fafafa;
+  background: #cfd8dc;
 }
 
 .list {
