@@ -29,16 +29,6 @@
             class="toolbar__item"
             mat-icon-button
             routerLink="/new"
-            [queryParams]="{ tag: 'mentor' }"
-            matTooltip="投稿"
-            *ngIf="user.mentor"
-          >
-            <mat-icon class="mat-18">speaker_notes</mat-icon>
-          </button>
-          <button
-            class="toolbar__item"
-            mat-icon-button
-            routerLink="/new"
             matTooltip="投稿"
             *ngIf="user.mentor"
           >

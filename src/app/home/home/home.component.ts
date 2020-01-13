@@ -39,11 +39,6 @@ export class HomeComponent implements OnInit {
   noFollow = true;
   isLoading = true;
 
-  mentorParameters: SearchParameters = {
-    hitsPerPage: 20,
-    filters: 'public:true AND NOT deleted:true AND tags:mentor',
-  };
-
   follows$: Observable<string[]> = this.authService.authUser$.pipe(
     switchMap(user => {
       if (user) {
