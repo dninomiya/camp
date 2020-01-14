@@ -8,7 +8,7 @@
   }
   &__review-count {
     font-size: 12px;
-    color: rgba(black, .38);
+    color: rgba(black, 0.38);
     margin-left: 8px;
     display: inline-block;
   }
@@ -19,7 +19,7 @@
 }
 
 .header {
-  background: black center/cover no-repeat;
+  background: black 50% 99% / cover no-repeat;
   height: 160px;
   position: relative;
   margin-bottom: 32px;
@@ -52,7 +52,7 @@
     font-size: 16px;
     margin-bottom: 16px;
     line-height: 1;
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
   }
   &__links {
     margin: 16px 0;
@@ -71,19 +71,18 @@
   }
   &__description {
     font-size: 13px;
-    color: rgba(black, .6);
+    color: rgba(black, 0.6);
     margin-bottom: 24px;
     text-align: left;
   }
 }
-
 
 .camp {
   button {
     margin-bottom: 8px;
   }
   &__price {
-    color: rgba(black, .38);
+    color: rgba(black, 0.38);
     font-size: 12px;
   }
 }
