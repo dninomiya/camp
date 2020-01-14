@@ -27,7 +27,8 @@
               "src/assets",
               "src/manifest.json",
               "src/firebase-messaging-sw.js",
-              "src/robots.txt"
+              "src/robots.txt",
+              "src/ads.txt"
             ],
             "styles": [
               "node_modules/prismjs/themes/prism.css",
