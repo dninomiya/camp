@@ -47,3 +47,5 @@ testem.log
 Thumbs.db
 
 firebase-debug.log
+
+launch.json
