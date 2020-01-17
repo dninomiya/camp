@@ -7,5 +7,7 @@ typings/
 
 node_modules/
 
+launch.json
+
 firebase-debug.log
 index.html
