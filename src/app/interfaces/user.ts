@@ -1,13 +1,17 @@
+import { firestore } from 'firebase/app';
 export interface User {
   readonly id: string;
   readonly name: string;
   readonly email: string;
   readonly avatarURL: string;
-  readonly createdAt: Date;
+  readonly createdAt: firestore.Timestamp;
   readonly isCustomer: boolean;
   readonly isSeller: boolean;
   readonly mentor: boolean;
   readonly admin: boolean;
+  readonly plan: 'free' | 'isa' | 'standart';
+  readonly endAt: firestore.Timestamp;
+  readonly payLimitDate?: firestore.Timestamp;
 
   mailSettings: {
     forum: boolean;

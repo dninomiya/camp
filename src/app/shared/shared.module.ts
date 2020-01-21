@@ -52,6 +52,7 @@ import { RefinementListComponent } from './refinement-list/refinement-list.compo
 import { MatChipsModule } from '@angular/material';
 import { FooterComponent } from './footer/footer.component';
 import { RatePipe } from './rate.pipe';
+import { PlanPipe } from './plan.pipe';
 
 
 
@@ -78,7 +79,8 @@ import { RatePipe } from './rate.pipe';
     LinkIconPipe,
     SearchKitComponent,
     RefinementListComponent,
-    RatePipe
+    RatePipe,
+    PlanPipe
   ],
   imports: [
     CommonModule,
@@ -158,7 +160,8 @@ import { RatePipe } from './rate.pipe';
     LinkIconPipe,
     SearchKitComponent,
     RefinementListComponent,
-    RatePipe
+    RatePipe,
+    PlanPipe
   ]
 })
 export class SharedModule { }

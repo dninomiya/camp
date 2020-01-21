@@ -22,7 +22,7 @@ export class PaymentService {
     const { address_zip, exp_month, exp_year, last4, brand, id } = card;
     return this.db.doc(`users/${uid}/private/payment`).set({
       card: { address_zip, exp_month, exp_year, last4, brand, id }
-    }, {merge: true});
+    }, { merge: true });
   }
 
   createCustomer(params: {
@@ -55,6 +55,11 @@ export class PaymentService {
   }): Promise<void> {
     const callable = this.fns.httpsCallable('subscribePlan');
     return callable(body).toPromise();
+  }
+
+  deleteSubscription(customerId: string) {
+    const callable = this.fns.httpsCallable('deleteSubscription');
+    return callable({ customerId }).toPromise();
   }
 
   async unsubscribePlan(body: {
@@ -189,5 +194,12 @@ export class PaymentService {
   getDashboardURL(accountId: string) {
     const collable = this.fns.httpsCallable('getDashboardURL');
     return collable(accountId).toPromise();
+  }
+
+  createSubscription(customerId: string): Promise<void> {
+    const callable = this.fns.httpsCallable('createSubscription');
+    return callable({
+      customerId
+    }).toPromise();
   }
 }

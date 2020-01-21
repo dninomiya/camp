@@ -99,6 +99,10 @@
             <mat-icon>account_box</mat-icon>
             <span>チャンネル</span>
           </button>
+          <button mat-menu-item routerLink="/users/{{ user.id }}">
+            <mat-icon>account_box</mat-icon>
+            <span>マイページ</span>
+          </button>
           <button *ngIf="isStudio" mat-menu-item routerLink="/">
             <mat-icon>compare_arrows</mat-icon>
             <span>{{ title }}</span>
@@ -116,10 +120,6 @@
             <span>ログアウト</span>
           </button>
           <mat-divider></mat-divider>
-          <!-- <button mat-menu-item routerLink="/admin">
-            <mat-icon>build</mat-icon>
-            <span>管理者</span>
-          </button> -->
           <button mat-menu-item routerLink="/setting">
             <mat-icon>settings</mat-icon>
             <span>設定</span>

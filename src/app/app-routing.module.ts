@@ -32,6 +32,11 @@ const routes: Routes = [
         loadChildren: () => import('./cause/cause.module').then(m => m.CauseModule),
       },
       {
+        path: 'users',
+        loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+        canLoad: [AuthGuard]
+      },
+      {
         path: 'forum',
         canLoad: [AuthGuard],
         data: {

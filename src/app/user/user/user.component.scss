@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  padding: 24px 0;
+}
+
+.join-standard {
+  margin: 40px 0;
+  &__cost {
+    margin-left: 16px;
+    color: rgba(black, 0.6);
+    font-size: 13px;
+  }
+}
+
+dl {
+  dt {
+    font-weight: bold;
+    margin: 1.5em 0 8px;
+  }
+  dd {
+    margin-left: 0;
+  }
+}
