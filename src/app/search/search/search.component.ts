@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
 
   searchParameters = {
     query: '',
-    hitsPerPage: 10,
+    hitsPerPage: 100,
     filters: 'NOT deleted:true'
   };
 
