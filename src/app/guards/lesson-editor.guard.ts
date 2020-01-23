@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate } from '@angular/router';
+import { CanDeactivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { EditorComponent } from '../editor/editor/editor.component';
 
@@ -9,8 +9,6 @@ import { EditorComponent } from '../editor/editor/editor.component';
 export class LessonEditorGuard implements CanDeactivate<EditorComponent> {
   canDeactivate(
     component: EditorComponent,
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
     if (component.form.pristine || component.isComplete) {
       return true;

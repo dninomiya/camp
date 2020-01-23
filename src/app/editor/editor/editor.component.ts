@@ -219,6 +219,7 @@ export class EditorComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (this.form.dirty) {
+      $event.preventDefault();
       $event.returnValue = true;
     }
   }
