@@ -18,11 +18,14 @@ import { SearchParameters } from 'angular-instantsearch/instantsearch/instantsea
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  algoliaConfig = environment.algolia;
+  algoliaConfig = {
+    ...environment.algolia,
+    indexName: environment.algolia.indexName + '-latest'
+  };
 
-  searchParameters = {
+  searchParameters: SearchParameters = {
     hitsPerPage: 20,
-    filters: 'public:true AND NOT deleted:true'
+    filters: 'public:true AND NOT deleted:true',
   };
 
   trendSearchParameters = {
