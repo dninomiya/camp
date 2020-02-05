@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
