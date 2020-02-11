@@ -11,12 +11,16 @@ import { GuidelineComponent } from './guideline/guideline.component';
 import { ContactComponent } from './contact/contact.component';
 import { LegalComponent } from './legal/legal.component';
 
-
 const routes: Routes = [
   {
     path: '',
     component: RootComponent,
     children: [
+      {
+        path: 'welcome',
+        loadChildren: () =>
+          import('../welcome/welcome.module').then(m => m.WelcomeModule)
+      },
       {
         path: 'about',
         component: AboutComponent
@@ -52,7 +56,7 @@ const routes: Routes = [
       {
         path: 'law',
         component: LawComponent
-      },
+      }
     ]
   }
 ];
@@ -61,4 +65,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class IntlRoutingModule { }
+export class IntlRoutingModule {}

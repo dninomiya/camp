@@ -80,6 +80,11 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
+    path: 'welcome',
+    loadChildren: () =>
+      import('./welcome/welcome.module').then(m => m.WelcomeModule)
+  },
+  {
     path: 'connect-stripe',
     component: ConnectStripeComponent,
     canActivate: [AuthGuard]

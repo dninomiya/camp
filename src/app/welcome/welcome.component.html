@@ -1,0 +1,163 @@
+<div class="wrap">
+  <div class="hero">
+    <div class="container">
+      <div class="hero__wrap">
+        <div class="hero__body">
+          <p class="hero__msg">
+            <span>CAMP</span>
+          </p>
+          <p class="hero__sub">
+            <span
+              >Angular x
+              Firebaseを使ったモダンなサービス開発を覚えましょう。</span
+            >
+          </p>
+          <button routerLink="/create" mat-raised-button color="primary">
+            入会する
+          </button>
+        </div>
+        <div class="hero__img">
+          <img src="assets/images/lp/cover.svg" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <mat-card class="section">
+      <h2>CAMPとは</h2>
+      <div class="concept">
+        <figure class="concept__image">
+          <img src="assets/images/logo-icon.png" alt="" />
+        </figure>
+        <div class="concept__body">
+          <p>
+            現在、Rubyを軸としたサーバーサイドエンジニアを育てるスクールが多い中、フロントエンドの技術を軸としたサービス開発を教えているスクールはほとんどありません。そして今、Web業界ではフロントエンドエンジニア不足が叫ばれています。
+          </p>
+          <p>
+            その課題を解決すべく、CAMPではフロントエンドの技術を軸としたサービス開発を教えています。具体的にはGoogleが提供しているAngular&Firebaseというモダンなフレームワークを使います。この開発スキルを身に付けると一人でも短期間でサービス開発を行うことができるので、就職はもちろん、自分で新しいサービス開発をはじめる上でも有利に働きます。
+          </p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="section">
+      <h2>身に付くスキル</h2>
+      <p class="lead">
+        Angular x Firebaseを軸としたサービス開発
+      </p>
+      <div class="grid">
+        <div class="skill" *ngFor="let skill of skills">
+          <figure class="skill__icon" *ngIf="skill.image">
+            <img src="assets/images/welcome/{{ skill.image }}.svg" alt="" />
+          </figure>
+          <h3 class="skill__title">{{ skill.title }}</h3>
+          <p class="skill__description">
+            {{ skill.description }}
+          </p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="section">
+      <h2>学習スタイル</h2>
+      <p class="lead">
+        CAMPは完全オンラインで、自分のオリジナルアプリを作成していきます。
+      </p>
+      <div class="grid">
+        <div class="skill" *ngFor="let style of styles">
+          <figure class="skill__icon skill__icon--lg" *ngIf="style.image">
+            <img src="assets/images/welcome/{{ style.image }}.svg" alt="" />
+          </figure>
+          <h3 class="skill__title">{{ style.title }}</h3>
+          <p class="skill__description">
+            {{ style.description }}
+          </p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="section">
+      <h2>ユーザーボイス</h2>
+      <p class="lead">
+        様々な声をいただいています。
+      </p>
+      <div class="voices">
+        <div>
+          <blockquote class="twitter-tweet">
+            <p lang="ja" dir="ltr">
+              【MIRU開発の進捗】<br />いいね機能が完成しました！😎<br />Firestoreのトリガーはまだβ版で、関数がたまに複数回走る不具合があります。<br /><br />そのため公式ドキュメントの指示通り、べき等処理を追加して対策しています。<br />ぶっちゃけ、いいねはかなり苦戦しました🤦<a
+                href="https://t.co/q1mdUNw2Ua"
+                >https://t.co/q1mdUNw2Ua</a
+              ><a
+                href="https://twitter.com/hashtag/to_camp?src=hash&amp;ref_src=twsrc%5Etfw"
+                >#to_camp</a
+              >
+              43日目
+              <a href="https://t.co/I6FVgph2AQ">pic.twitter.com/I6FVgph2AQ</a>
+            </p>
+            &mdash; お茶マル🍵SPA開発中 (@uotya)
+            <a
+              href="https://twitter.com/uotya/status/1218988366370242560?ref_src=twsrc%5Etfw"
+              >January 19, 2020</a
+            >
+          </blockquote>
+        </div>
+
+        <div>
+          <blockquote class="twitter-tweet">
+            <p lang="ja" dir="ltr">
+              1週間学習してみて思ったことは、すごくいい環境で勉強させて頂けると実感をして、時間をかけてでもいいものを作りたいという意識がより強くなった。<br />わからないこともあれば気軽に質問ができるのが魅力的。自分にもできるんだというのを学習を通してサービスを作って証明したい。<a
+                href="https://twitter.com/hashtag/to_camp?src=hash&amp;ref_src=twsrc%5Etfw"
+                >#to_camp</a
+              >
+            </p>
+            &mdash; Robinson (@Robinson_R0)
+            <a
+              href="https://twitter.com/Robinson_R0/status/1221011683369336833?ref_src=twsrc%5Etfw"
+              >January 25, 2020</a
+            >
+          </blockquote>
+        </div>
+        <div>
+          <blockquote class="twitter-tweet">
+            <p lang="ja" dir="ltr">
+              サクッとTodo管理作ったら意外といい感じになった。<br />Camp最高！！
+              <a href="https://t.co/mulNpAavME">pic.twitter.com/mulNpAavME</a>
+            </p>
+            &mdash; masaaki (@masaaki6262)
+            <a
+              href="https://twitter.com/masaaki6262/status/1219815307188944896?ref_src=twsrc%5Etfw"
+              >January 22, 2020</a
+            >
+          </blockquote>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="section">
+      <h2>プラン</h2>
+      <p class="lead">
+        一度入会すると退会後も教材を見続けることができます
+      </p>
+      <div class="plans">
+        <div class="plan" *ngFor="let plan of plans">
+          <h3 class="plan__title">{{ plan.title }}</h3>
+          <p class="plan__sub-title">{{ plan.subTitle }}</p>
+          <p class="plan__price-label">月額料金</p>
+          <p class="plan__price">
+            <small>¥</small><span>{{ plan.price | number }}</span
+            ><small>/月</small>
+          </p>
+          <ul class="plan__points">
+            <li *ngFor="let point of plan.points">{{ point }}</li>
+          </ul>
+
+          <button class="plan__action" mat-raised-button color="primary">
+            {{ plan.price ? '登録' : '詳しく' }}
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { Plan } from 'src/app/interfaces/plan';
 import { Observable } from 'rxjs';
 import { PlanService } from 'src/app/services/plan.service';
 import { PaymentService } from 'src/app/services/payment.service';
-import { map, tap } from 'rxjs/operators';
-import { ChannelService } from 'src/app/services/channel.service';
+import { tap } from 'rxjs/operators';
 import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
 
 @Component({
@@ -15,10 +13,9 @@ import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
   styleUrls: ['./plans.component.scss']
 })
 export class PlansComponent implements OnInit {
-
-  stripeAccount$ = this.paymentService.getStirpeAccountId(
-    this.authService.user.id
-  ).pipe(tap(() => this.isLoading = false));
+  stripeAccount$ = this.paymentService
+    .getStirpeAccountId(this.authService.user.id)
+    .pipe(tap(() => (this.isLoading = false)));
   plans$: Observable<Plan[]> = this.planService.getPlansByChannelId(
     this.authService.user.id
   );
@@ -42,25 +39,25 @@ export class PlansComponent implements OnInit {
     private authService: AuthService,
     private planService: PlanService,
     private paymentService: PaymentService,
-    private channelService: ChannelService,
     private snackBar: MatSnackBar
-  ) {
-  }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   changeStatus(plan: Plan, status: MatSlideToggleChange) {
-    this.planService.updatePlan(
-      this.authService.user.id,
-      {
+    this.planService
+      .updatePlan(this.authService.user.id, {
         ...plan,
         active: status.checked
-      }
-    ).then(() => {
-      this.snackBar.open(`プランを${status.checked ? '公開' : '非公開'}しました`, null, {
-        duration: 2000
+      })
+      .then(() => {
+        this.snackBar.open(
+          `プランを${status.checked ? '公開' : '非公開'}しました`,
+          null,
+          {
+            duration: 2000
+          }
+        );
       });
-    });
   }
 }
