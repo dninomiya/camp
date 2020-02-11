@@ -115,6 +115,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',
+      useHash: false,
       scrollOffset: [0, 72]
     })
   ],

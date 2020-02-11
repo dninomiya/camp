@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { NgxStripeModule } from 'ngx-stripe';
+
 import {
   AngularFireFunctionsModule,
   FunctionsRegionToken
