@@ -13,8 +13,7 @@
             >
           </p>
           <button
-            href="#plans"
-            pageScroll
+            (click)="scrollToElement(target)"
             fragment="plans"
             mat-raised-button
             color="primary"
@@ -141,7 +140,8 @@
       </div>
     </mat-card>
 
-    <mat-card class="section" id="plans">
+    <div #target></div>
+    <mat-card class="section">
       <h2>プラン</h2>
       <p class="lead">
         一度入会すると退会後も教材を見続けることができます

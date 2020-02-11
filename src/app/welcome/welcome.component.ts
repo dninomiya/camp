@@ -103,4 +103,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     (window as any).twttr.widgets.load();
   }
+
+  scrollToElement($element): void {
+    console.log($element);
+    $element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest'
+    });
+  }
 }
