@@ -6,7 +6,6 @@ import { PlanService } from 'src/app/services/plan.service';
 import { map } from 'rxjs/operators';
 import { Job } from 'src/app/interfaces/job';
 import { Plan } from 'src/app/interfaces/plan';
-import { ChannelReviewDialogComponent } from 'src/app/core/channel-review-dialog/channel-review-dialog.component';
 import { MatDialog } from '@angular/material';
 import { MailDialogComponent } from 'src/app/core/mail-dialog/mail-dialog.component';
 
@@ -16,7 +15,6 @@ import { MailDialogComponent } from 'src/app/core/mail-dialog/mail-dialog.compon
   styleUrls: ['./user-card.component.scss']
 })
 export class UserCardComponent implements OnInit {
-
   @Input() channel: ChannelMeta;
   @Input() isOwner: boolean;
   @Output() loaded = new EventEmitter<boolean>();
@@ -28,41 +26,19 @@ export class UserCardComponent implements OnInit {
   constructor(
     private channelService: ChannelService,
     private planService: PlanService,
-    private dialog: MatDialog,
-  ) { }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     combineLatest([
       this.channelService.getJobs(this.channel.id),
-      this.planService.getPlansByChannelId(this.channel.id).pipe(
-        map(plans => plans.filter(plan => plan.active)),
-      ),
+      this.planService
+        .getPlansByChannelId(this.channel.id)
+        .pipe(map(plans => plans.filter(plan => plan.active)))
     ]).subscribe(([jobs, plans]) => {
       this.jobs = jobs.filter(job => job.public);
       this.plans = plans;
       this.loaded.emit(true);
-    });
-
-    this.rate = this.getRate();
-  }
-
-  getRate(): number {
-    if (this.channel.totalRate && this.channel.totalRate) {
-      return this.channel.totalRate / this.channel.statistics.reviewCount;
-    } else {
-      return 0;
-    }
-  }
-
-  openReviewDialog() {
-    this.dialog.open(ChannelReviewDialogComponent, {
-      width: '640px',
-      autoFocus: false,
-      restoreFocus: false,
-      data: {
-        channel: this.channel,
-        rate: this.rate
-      }
     });
   }
 
@@ -74,5 +50,4 @@ export class UserCardComponent implements OnInit {
       data: this.channel.email
     });
   }
-
 }

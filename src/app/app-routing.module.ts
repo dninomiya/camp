@@ -10,40 +10,30 @@ import { ConnectVimeoComponent } from './core/connect-vimeo/connect-vimeo.compon
 const routes: Routes = [
   {
     path: 'intl',
-    loadChildren: () => import('./intl/intl.module').then(m => m.IntlModule),
+    loadChildren: () => import('./intl/intl.module').then(m => m.IntlModule)
   },
   {
     path: '',
     component: MainShellComponent,
     data: {
-      root: true,
+      root: true
     },
     children: [
       {
         path: 'lesson',
-        loadChildren: () => import('./lesson/lesson.module').then(m => m.LessonModule),
-      },
-      {
-        path: 'channel',
-        loadChildren: () => import('./channel/channel.module').then(m => m.ChannelModule),
+        loadChildren: () =>
+          import('./lesson/lesson.module').then(m => m.LessonModule)
       },
       {
         path: 'cause',
-        loadChildren: () => import('./cause/cause.module').then(m => m.CauseModule),
+        loadChildren: () =>
+          import('./cause/cause.module').then(m => m.CauseModule)
       },
       {
         path: 'users',
-        loadChildren: () => import('./user/user.module').then(m => m.UserModule),
+        loadChildren: () =>
+          import('./user/user.module').then(m => m.UserModule),
         canLoad: [AuthGuard]
-      },
-      {
-        path: 'forum',
-        canLoad: [AuthGuard],
-        data: {
-          noHeader: true,
-          hideNav: true
-        },
-        loadChildren: () => import('./forum/forum.module').then(m => m.ForumModule),
       },
       {
         path: 'new',
@@ -51,7 +41,8 @@ const routes: Routes = [
         data: {
           hideNav: true
         },
-        loadChildren: () => import('./editor/editor.module').then(m => m.EditorModule),
+        loadChildren: () =>
+          import('./editor/editor.module').then(m => m.EditorModule)
       },
       {
         path: 'edit',
@@ -59,11 +50,13 @@ const routes: Routes = [
         data: {
           hideNav: true
         },
-        loadChildren: () => import('./editor/editor.module').then(m => m.EditorModule),
+        loadChildren: () =>
+          import('./editor/editor.module').then(m => m.EditorModule)
       },
       {
         path: 'setting',
-        loadChildren: () => import('./setting/setting.module').then(m => m.SettingModule),
+        loadChildren: () =>
+          import('./setting/setting.module').then(m => m.SettingModule),
         canLoad: [AuthGuard]
       },
       {
@@ -71,21 +64,19 @@ const routes: Routes = [
         data: {
           noHeader: true
         },
-        loadChildren: () => import('./search/search.module').then(m => m.SearchModule),
-      },
-      {
-        path: 'notifications',
-        loadChildren: () => import('./notification/notification.module').then(m => m.NotificationModule),
+        loadChildren: () =>
+          import('./search/search.module').then(m => m.SearchModule)
       },
       {
         path: '',
-        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-      },
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+      }
     ]
   },
   {
     path: 'receipts',
-    loadChildren: () => import('./receipt/receipt.module').then(m => m.ReceiptModule),
+    loadChildren: () =>
+      import('./receipt/receipt.module').then(m => m.ReceiptModule),
     canLoad: [AuthGuard]
   },
   {
@@ -100,7 +91,8 @@ const routes: Routes = [
   },
   {
     path: 'studio/:id',
-    loadChildren: () => import('./studio/studio.module').then(m => m.StudioModule),
+    loadChildren: () =>
+      import('./studio/studio.module').then(m => m.StudioModule),
     canActivate: [StudioGuard]
   },
   {
@@ -110,15 +102,17 @@ const routes: Routes = [
   {
     path: '**',
     component: NotFoundComponent
-  },
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'enabled',
-    anchorScrolling: 'enabled',
-    scrollOffset: [0, 72]
-  })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      scrollOffset: [0, 72]
+    })
+  ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

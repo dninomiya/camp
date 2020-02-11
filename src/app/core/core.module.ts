@@ -9,7 +9,10 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { NgxStripeModule } from 'ngx-stripe';
-import { AngularFireFunctionsModule, FunctionsRegionToken } from '@angular/fire/functions';
+import {
+  AngularFireFunctionsModule,
+  FunctionsRegionToken
+} from '@angular/fire/functions';
 import { AppRoutingModule } from '../app-routing.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DatePipe } from '@angular/common';
@@ -21,7 +24,6 @@ import { ShellModule } from '../shell/shell.module';
 import { ConnectStripeComponent } from './connect-stripe/connect-stripe.component';
 import { ConfirmUnsubscribeDialogComponent } from './confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { SharedConfirmDialogComponent } from './shared-confirm-dialog/shared-confirm-dialog.component';
-import { ChannelReviewDialogComponent } from './channel-review-dialog/channel-review-dialog.component';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { NgxJsonLdModule } from '@ngx-lite/json-ld';
 import { MailDialogComponent } from './mail-dialog/mail-dialog.component';
@@ -41,7 +43,6 @@ import { AdsenseModule } from 'ng2-adsense';
     ConnectStripeComponent,
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
-    ChannelReviewDialogComponent,
     MailDialogComponent,
     ConnectVimeoComponent,
     LoginDialogComponent,
@@ -62,14 +63,14 @@ import { AdsenseModule } from 'ng2-adsense';
     RecaptchaModule,
     AdsenseModule.forRoot({
       adClient: 'ca-pub-7168539043345662',
-      adSlot: 3916268861,
+      adSlot: 3916268861
     }),
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {
         provide: MarkedOptions,
-        useFactory: markedOptionsFactory,
-      },
+        useFactory: markedOptionsFactory
+      }
     }),
     NgxStripeModule.forRoot(environment.stripe.publicKey),
     DeviceDetectorModule.forRoot()
@@ -95,10 +96,9 @@ import { AdsenseModule } from 'ng2-adsense';
     AddListDialogComponent,
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
-    ChannelReviewDialogComponent,
     MailDialogComponent,
     LoginDialogComponent,
     TagEditorDialogComponent
   ]
 })
-export class CoreModule { }
+export class CoreModule {}
