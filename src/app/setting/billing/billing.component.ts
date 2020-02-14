@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UserPayment } from 'src/app/interfaces/user';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { CardDialogComponent } from 'src/app/shared/card-dialog/card-dialog.component';
 import { switchMap, tap, map } from 'rxjs/operators';
 import { PaymentService } from 'src/app/services/payment.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-billing',
@@ -15,8 +15,10 @@ import { PaymentService } from 'src/app/services/payment.service';
   styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit {
-
+  plans = ['free', 'lite', 'standard', 'isa'];
+  planSelect = new FormControl('');
   loading = true;
+  defaultPlan: string;
   payment: UserPayment;
   isCardEditor: boolean;
   subs = new Subscription();
@@ -28,30 +30,37 @@ export class BillingComponent implements OnInit {
       this.loading = false;
     })
   );
-  card$ = this.payment$.pipe(map(payment => {
-    if (payment) {
-      return payment.card;
-    } else {
-      return null;
-    }
-  }));
-
-  settlements$ = this.paymentService.getSettlements(
-    this.authService.user.id
+  card$ = this.payment$.pipe(
+    map(payment => {
+      if (payment) {
+        return payment.card;
+      } else {
+        return null;
+      }
+    })
   );
+
+  settlements$ = this.paymentService.getSettlements(this.authService.user.id);
 
   constructor(
     private authService: AuthService,
     private paymentService: PaymentService,
     private loadingService: LoadingService,
-    private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
     this.loadingService.startLoading();
+
+    this.user$.subscribe(user => {
+      this.defaultPlan = user.plan;
+      this.planSelect.patchValue(user.plan);
+    });
+
+    this.planSelect.valueChanges.subscribe(plan => {
+      this.dialog.open(SharedConfirmDialogComponent);
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   openCardDialog(customerId = null) {
     this.dialog.open(CardDialogComponent, {
@@ -59,5 +68,4 @@ export class BillingComponent implements OnInit {
       data: customerId
     });
   }
-
 }

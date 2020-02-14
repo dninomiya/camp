@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import 'mixins';
 
 @include mat-core();
 
@@ -32,12 +33,18 @@
 
 .hero {
   padding: 160px 0;
+  @include sp {
+    padding: 40px 0;
+  }
   span {
     display: block;
   }
   &__wrap {
     display: flex;
     align-items: center;
+    @include sp {
+      display: block;
+    }
   }
   &__body {
     flex: 1;
@@ -48,6 +55,9 @@
     letter-spacing: 2px;
     margin: 0 0 16px 0;
     line-height: 1.4;
+    @include sp {
+      font-size: 24px;
+    }
   }
   &__sub {
     line-height: 1.8;
@@ -62,6 +72,10 @@
 .section {
   padding: 80px 80px 120px;
   margin: 48px 0;
+  @include sp {
+    padding: 16px;
+    margin: 24px 0;
+  }
 }
 
 h2 {
@@ -70,6 +84,10 @@ h2 {
   letter-spacing: 2px;
   margin-bottom: 80px;
   font-weight: 500;
+  @include sp {
+    margin-bottom: 24px;
+    font-size: 24px;
+  }
 }
 
 .features {
@@ -103,6 +121,9 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+  @include sp {
+    grid-template-columns: 1fr;
+  }
 }
 
 .plan {
@@ -123,6 +144,9 @@ h2 {
   &__price-label {
     margin: 40px 0 16px;
     font-weight: 500;
+    @include sp {
+      margin-top: 24px;
+    }
   }
   &__points {
     margin: 24px 0 32px;
@@ -152,6 +176,14 @@ h2 {
   }
   &__action {
     margin-top: 24px;
+    @include sp {
+      margin-top: 0;
+    }
+  }
+  &__trial {
+    font-size: 13px;
+    margin-top: 8px;
+    color: rgba(black, 0.6);
   }
 }
 
@@ -182,21 +214,41 @@ h2 {
   margin: -40px 0 80px;
   color: rgba(black, 0.6);
   font-size: 16px;
+  @include sp {
+    margin: -16px 0 40px;
+    font-size: 14px;
+  }
 }
 
 .concept {
   display: flex;
   align-items: center;
+  margin-bottom: 40px;
+  @include sp {
+    display: block;
+  }
   &__image {
     width: 160px;
     margin-right: 80px;
+    @include sp {
+      text-align: center;
+      margin-right: 0;
+      margin-bottom: 16px;
+      width: 100%;
+    }
     img {
       max-width: 100%;
+      @include sp {
+        width: 80px;
+      }
     }
   }
   &__body {
     flex: 1;
     font-size: 16px;
+    @include sp {
+      font-size: 14px;
+    }
     p + p {
       margin-top: 1em;
     }
@@ -207,6 +259,9 @@ h2 {
   display: grid;
   gap: 16px;
   grid-template-columns: 1fr 1fr 1fr;
+  @include sp {
+    grid-template-columns: 1fr;
+  }
   > * {
     width: 100%;
     min-width: 0px;
@@ -217,6 +272,10 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 40px 80px;
+  @include sp {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 
 .feature {
@@ -243,5 +302,57 @@ h2 {
   }
   &__description {
     color: rgba(black, 0.6);
+  }
+}
+
+.youtube {
+  margin: 32px 0 0;
+}
+
+.qa-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.qa {
+  &__question {
+    font-weight: 500;
+    margin-top: 0;
+  }
+  &__answer {
+    color: rgba(black, 0.6);
+    ::ng-deep a {
+      color: skyblue;
+      &:after {
+        font-family: 'Material Icons';
+        content: 'open_in_new';
+      }
+    }
+  }
+}
+
+.target {
+  &__wrap {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  padding: 40px;
+  border-radius: 3px;
+  border: 1px solid rgba(black, 0.12);
+  &__hdg {
+    font-weight: 500;
+  }
+}
+
+.notice {
+  margin-top: 24px;
+  li {
+    &:before {
+      content: '※';
+      margin-right: 8px;
+    }
+    color: rgba(black, 0.38);
   }
 }

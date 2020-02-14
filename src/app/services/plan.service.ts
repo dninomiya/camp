@@ -15,11 +15,13 @@ export class PlanService {
   constructor(
     private db: AngularFirestore,
     private fns: AngularFireFunctions
-  ) { }
+  ) {}
 
   getPlansByChannelId(cid: string): Observable<Plan[]> {
-    return this.db.collection<Plan>(`channels/${cid}/plans`)
-      .valueChanges().pipe(
+    return this.db
+      .collection<Plan>(`channels/${cid}/plans`)
+      .valueChanges()
+      .pipe(
         map(plans => {
           return this.sort
             .map(type => plans.find(plan => plan.type === type))

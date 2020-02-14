@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 import { RootComponent } from './root/root.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HelpComponent } from './help/help.component';
-import { AboutComponent } from './about/about.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PressComponent } from './press/press.component';
 import { GuidelineComponent } from './guideline/guideline.component';
@@ -21,7 +20,6 @@ import { LegalComponent } from './legal/legal.component';
     LawComponent,
     RootComponent,
     HelpComponent,
-    AboutComponent,
     PressComponent,
     GuidelineComponent,
     ContactComponent,
@@ -34,4 +32,4 @@ import { LegalComponent } from './legal/legal.component';
     MatExpansionModule
   ]
 })
-export class IntlModule { }
+export class IntlModule {}

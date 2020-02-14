@@ -21,9 +21,15 @@
             入会する
           </button>
         </div>
-        <div class="hero__img">
-          <img src="assets/images/lp/cover.svg" alt="" />
-        </div>
+        <iframe
+          class="youtube"
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/F5sSI6P5uJo?start=104"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
   </div>
@@ -37,11 +43,36 @@
         </figure>
         <div class="concept__body">
           <p>
-            現在、Rubyを軸としたサーバーサイドエンジニアを育てるスクールが多い中、フロントエンドの技術を軸としたサービス開発を教えているスクールはほとんどありません。そして今、Web業界ではフロントエンドエンジニア不足が叫ばれています。
+            最新の技術を使って実務で通用するWebサービス開発スキルを身に付けたいですか？そうお考えならCAMPはうってつけの場所です。CAMPの動画教材では、第一線で活躍する現役メンターがログインや決済を含む高度なWebサービスをゼロから解説しながら組み立てていきます。もちろん、分からないことがあれば何度でも質問してください。
           </p>
           <p>
-            その課題を解決すべく、CAMPではフロントエンドの技術を軸としたサービス開発を教えています。具体的にはGoogleが提供しているAngular&Firebaseというモダンなフレームワークを使います。この開発スキルを身に付けると一人でも短期間でサービス開発を行うことができるので、就職はもちろん、自分で新しいサービス開発をはじめる上でも有利に働きます。
+            CAMPで身に付けたスキルがあれば、自分で新しWebサービスを開発したり、あるいはサービスを開発している企業に就職することができます。まずは1週間の無料トライアルをお試しください。
           </p>
+        </div>
+      </div>
+      <div class="target">
+        <div class="target__wrap">
+          <div>
+            <h3 class="target__hdg">ゴール</h3>
+            <ul>
+              <li>マイWebサービスをリリースさせる</li>
+              <li>Webサービスエンジニアとして就職する</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="target__hdg">参加資格</h3>
+            <ul>
+              <li>自分専用のPCを持っている人</li>
+              <li>十分な速度のネット環境がある人</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="target__hdg">目安期間</h3>
+            <ul>
+              <li>学習時間に応じて3〜6ヶ月は必要</li>
+              <li>途中退会は自由に可能（退会金なし）</li>
+            </ul>
+          </div>
         </div>
       </div>
     </mat-card>
@@ -78,6 +109,19 @@
           <p class="skill__description">
             {{ style.description }}
           </p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="section">
+      <h2>Q&A</h2>
+      <p class="lead">
+        ご不明な点はお気軽にお問い合わせください。
+      </p>
+      <div class="qa-grid">
+        <div class="qa" *ngFor="let qa of qas">
+          <h3 class="qa__question">{{ qa.q }}</h3>
+          <p class="qa__answer" [innerHTML]="qa.a"></p>
         </div>
       </div>
     </mat-card>
@@ -159,11 +203,24 @@
             <li *ngFor="let point of plan.points">{{ point }}</li>
           </ul>
 
-          <button class="plan__action" mat-raised-button color="primary">
+          <button
+            (click)="register(plan.id)"
+            class="plan__action"
+            mat-raised-button
+            color="primary"
+          >
             {{ plan.price ? '登録' : '詳しく' }}
           </button>
+          <p class="plan__trial">1週間の無料トライアルあり</p>
         </div>
       </div>
+
+      <ul class="notice">
+        <li>価格はすべて税込です。</li>
+        <li>入会金、退会金はございません。</li>
+        <li>PC、ネット代は自己負担です。</li>
+        <li>追加教材費等一切ございません。</li>
+      </ul>
     </mat-card>
   </div>
 </div>

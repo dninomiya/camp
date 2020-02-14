@@ -12,32 +12,34 @@ import { ChannelMeta } from '../interfaces/channel';
   providedIn: 'root'
 })
 export class PaymentService {
-
   constructor(
     private db: AngularFirestore,
     private fns: AngularFireFunctions
-  ) { }
+  ) {}
 
   setCard(uid: string, card: any): Promise<void> {
     const { address_zip, exp_month, exp_year, last4, brand, id } = card;
-    return this.db.doc(`users/${uid}/private/payment`).set({
-      card: { address_zip, exp_month, exp_year, last4, brand, id }
-    }, { merge: true });
+    return this.db.doc(`users/${uid}/private/payment`).set(
+      {
+        card: { address_zip, exp_month, exp_year, last4, brand, id }
+      },
+      { merge: true }
+    );
   }
 
   createCustomer(params: {
-    source: string,
-    email: string,
-    description: string,
+    source: string;
+    email: string;
+    description: string;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('createPlatformCustomer');
     return callable(params).toPromise();
   }
 
   updateCustomer(params: {
-    customerId: string
-    source: string,
-    description: string,
+    customerId: string;
+    source: string;
+    description: string;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('updatePlatformCustomer');
     return callable(params).toPromise();
@@ -49,9 +51,9 @@ export class PaymentService {
   }
 
   subscribePlan(body: {
-    customerId: string,
-    planId: string,
-    channelId: string
+    customerId: string;
+    planId: string;
+    uid: string;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('subscribePlan');
     return callable(body).toPromise();
@@ -73,11 +75,14 @@ export class PaymentService {
   }
 
   getUserPayment(uid: string): Observable<UserPayment> {
-    return this.db.doc<UserPayment>(`users/${uid}/private/payment`).valueChanges();
+    return this.db
+      .doc<UserPayment>(`users/${uid}/private/payment`)
+      .valueChanges();
   }
 
   getStripeUserId(uid: string): Promise<string> {
-    return this.db.doc<UserConnect>(`users/${uid}/private/connect`)
+    return this.db
+      .doc<UserConnect>(`users/${uid}/private/connect`)
       .valueChanges()
       .pipe(
         map(connect => {
@@ -88,12 +93,16 @@ export class PaymentService {
           }
         }),
         first()
-      ).toPromise();
+      )
+      .toPromise();
   }
 
-  checkThreadPaymentStatus(customerId: string, sellerId: string): Observable<{
-    customer: boolean,
-    seller: boolean
+  checkThreadPaymentStatus(
+    customerId: string,
+    sellerId: string
+  ): Observable<{
+    customer: boolean;
+    seller: boolean;
   }> {
     const callable = this.fns.httpsCallable('checkThreadPaymentStatus');
     return callable({
@@ -103,7 +112,8 @@ export class PaymentService {
   }
 
   getStirpeAccountId(uid: string): Observable<string> {
-    return this.db.doc<UserConnect>(`users/${uid}/private/connect`)
+    return this.db
+      .doc<UserConnect>(`users/${uid}/private/connect`)
       .valueChanges()
       .pipe(
         map(connect => {
@@ -122,7 +132,9 @@ export class PaymentService {
   }
 
   getSubscriptions(uid: string): Observable<UserSubscription[]> {
-    return this.db.collection<UserSubscription>(`users/${uid}/subscriptions`).valueChanges();
+    return this.db
+      .collection<UserSubscription>(`users/${uid}/subscriptions`)
+      .valueChanges();
   }
 
   createCharge(params: {
@@ -133,7 +145,7 @@ export class PaymentService {
       body: string;
       amount: number;
       type: string;
-    },
+    };
     sellerUid: string;
     customerUid: string;
   }): Promise<void> {
@@ -142,8 +154,10 @@ export class PaymentService {
   }
 
   checkPurchased(uid: string, contentId: string): Observable<boolean> {
-    return this.db.doc<UserSubscription>(`users/${uid}/settlements/${contentId}`)
-      .valueChanges().pipe(
+    return this.db
+      .doc<UserSubscription>(`users/${uid}/settlements/${contentId}`)
+      .valueChanges()
+      .pipe(
         map(purchased => !!purchased),
         take(1)
       );
@@ -152,9 +166,11 @@ export class PaymentService {
   getSettlements(uid: string): Observable<Settlement[]> {
     // let items;
 
-    return this.db.collection<Settlement>(`users/${uid}/settlements`, ref => {
-      return ref.orderBy('createdAt', 'desc');
-    }).valueChanges();
+    return this.db
+      .collection<Settlement>(`users/${uid}/settlements`, ref => {
+        return ref.orderBy('createdAt', 'desc');
+      })
+      .valueChanges();
     //   switchMap(settlements => {
     //     items = settlements;
     //     const ids = settlements
@@ -188,7 +204,9 @@ export class PaymentService {
   }
 
   getReceipt(uid: string, id: string): Observable<Settlement> {
-    return this.db.doc<Settlement>(`users/${uid}/settlements/${id}`).valueChanges();
+    return this.db
+      .doc<Settlement>(`users/${uid}/settlements/${id}`)
+      .valueChanges();
   }
 
   getDashboardURL(accountId: string) {

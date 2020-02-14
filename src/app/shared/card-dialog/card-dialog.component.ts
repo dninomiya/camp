@@ -1,7 +1,21 @@
-import { Component, OnInit, Inject, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  OnDestroy,
+  AfterViewInit
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
-import { StripeService, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
+import {
+  MatSnackBar,
+  MatSnackBarRef,
+  SimpleSnackBar
+} from '@angular/material/snack-bar';
+import {
+  StripeService,
+  Element as StripeElement,
+  ElementsOptions
+} from 'ngx-stripe';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PaymentService } from 'src/app/services/payment.service';
 import { Subscription } from 'rxjs';
@@ -13,7 +27,6 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./card-dialog.component.scss']
 })
 export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
-
   isEdit: boolean;
 
   user$ = this.authService.authUser$;
@@ -41,14 +54,15 @@ export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
     private fb: FormBuilder,
     private stripeService: StripeService,
     @Inject(MAT_DIALOG_DATA) public customerId?: string
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isEdit = !!this.customerId;
   }
 
   ngAfterViewInit() {
-    const sub = this.stripeService.elements(this.elementsOptions)
+    const sub = this.stripeService
+      .elements(this.elementsOptions)
       .subscribe(elements => {
         if (!this.card) {
           this.card = elements.create('card', {
@@ -67,7 +81,7 @@ export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
           this.card.mount('#card-element');
-          this.card.on('change', (event) => {
+          this.card.on('change', event => {
             this.invalidCard = !event.complete;
           });
         }
@@ -80,10 +94,7 @@ export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
     const action = this.customerId ? '更新' : '登録';
     this.bar = this.snackBar.open(`カード情報を${action}しています...`);
     if (this.customerId) {
-      this.updateCustomer(
-        this.authService.user.id,
-        this.customerId
-      );
+      this.updateCustomer(this.authService.user.id, this.customerId);
     } else {
       this.createCustomer(this.authService.user.id);
     }
@@ -96,17 +107,20 @@ export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(result => {
         if (result.token) {
           this.paymentService.setCard(uid, result.token.card);
-          this.paymentService.updateCustomer({
-            customerId,
-            source: result.token.id,
-            description: name
-          }).then(() => {
-            this.isLoading = false;
-            this.bar.dismiss();
-            this.saved();
-          }).catch(() => {
-            this.saved();
-          });
+          this.paymentService
+            .updateCustomer({
+              customerId,
+              source: result.token.id,
+              description: name
+            })
+            .then(() => {
+              this.isLoading = false;
+              this.bar.dismiss();
+              this.saved();
+            })
+            .catch(() => {
+              this.saved();
+            });
         } else if (result.error) {
           this.snackBar.open(result.error.message, null, {
             duration: 2000
@@ -125,19 +139,23 @@ export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(result => {
         if (result.token) {
           this.paymentService.setCard(uid, result.token.card);
-          this.paymentService.createCustomer({
-            source: result.token.id,
-            email: this.authService.afUser.email,
-            description: name
-          }).then(() => {
-            this.saved();
-          }).catch(error => {
-            console.log(error);
-            this.saved();
-          }).finally(() => {
-            this.isLoading = false;
-            this.bar.dismiss();
-          });
+          this.paymentService
+            .createCustomer({
+              source: result.token.id,
+              email: this.authService.afUser.email,
+              description: name
+            })
+            .then(() => {
+              this.saved();
+            })
+            .catch(error => {
+              console.log(error);
+              this.saved();
+            })
+            .finally(() => {
+              this.isLoading = false;
+              this.bar.dismiss();
+            });
         } else if (result.error) {
           console.error(result.error.message);
           this.isLoading = false;
@@ -151,14 +169,17 @@ export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   saved() {
-    this.dialogRef.close();
-    this.snackBar.open(`カードを${this.isEdit ? '変更' : '作成'}しました`, null, {
-      duration: 2000
-    });
+    this.dialogRef.close(true);
+    this.snackBar.open(
+      `カードを${this.isEdit ? '変更' : '作成'}しました`,
+      null,
+      {
+        duration: 2000
+      }
+    );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
 }

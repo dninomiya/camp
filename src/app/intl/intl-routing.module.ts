@@ -5,7 +5,6 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
 import { LawComponent } from './law/law.component';
 import { RootComponent } from './root/root.component';
 import { HelpComponent } from './help/help.component';
-import { AboutComponent } from './about/about.component';
 import { PressComponent } from './press/press.component';
 import { GuidelineComponent } from './guideline/guideline.component';
 import { ContactComponent } from './contact/contact.component';
@@ -20,10 +19,6 @@ const routes: Routes = [
         path: 'welcome',
         loadChildren: () =>
           import('../welcome/welcome.module').then(m => m.WelcomeModule)
-      },
-      {
-        path: 'about',
-        component: AboutComponent
       },
       {
         path: 'help',
