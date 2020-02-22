@@ -1,3 +1,4 @@
+import { ConfirmUnsubscribeDialogComponent } from './../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { take } from 'rxjs/operators';
@@ -5,7 +6,6 @@ import { User, UserPayment } from './../interfaces/user';
 import { CardDialogComponent } from './../shared/card-dialog/card-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentService } from './../services/payment.service';
-import { PlanService } from './../services/plan.service';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
@@ -151,7 +151,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
       if (user) {
         this.paymentService
           .getUserPayment(user.id)
-          .pipe(take(1))
           .subscribe(payment => (this.payment = payment));
       } else {
         this.payment = null;
@@ -190,7 +189,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
             .subscribePlan({
               customerId: this.payment.customerId,
               planId,
-              uid: this.user.id
+              subscriptionId: this.payment.subscriptionId
             })
             .then(() => {
               this.snackBar.open('アップグレードしました', null, {
@@ -202,29 +201,38 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   }
 
   register(planId: string) {
-    if (this.user) {
-      if (!this.payment) {
-        this.dialog
-          .open(CardDialogComponent)
-          .afterClosed()
-          .subscribe(status => {
-            if (status) {
-              this.upgrade(planId);
-            }
-          });
-      } else {
-        this.upgrade(planId);
-      }
+    if (!this.payment) {
+      this.dialog
+        .open(CardDialogComponent)
+        .afterClosed()
+        .subscribe(status => {
+          if (status) {
+            this.upgrade(planId);
+          }
+        });
     } else {
-      this.authService.login().then(result => {
-        this.paymentService
-          .getUserPayment(result.user.uid)
-          .pipe(take(1))
-          .subscribe(payment => {
-            this.payment = payment;
-            this.register(planId);
-          });
-      });
+      this.upgrade(planId);
     }
+  }
+
+  unsubscribe(planId: string) {
+    this.dialog.open(ConfirmUnsubscribeDialogComponent, {
+      data: {
+        uid: this.user.id,
+        planId
+      }
+    });
+  }
+
+  login(planId: string) {
+    this.authService.login().then(result => {
+      this.paymentService
+        .getUserPayment(result.user.uid)
+        .pipe(take(1))
+        .subscribe(payment => {
+          this.payment = payment;
+          this.register(planId);
+        });
+    });
   }
 }

@@ -9,7 +9,7 @@ export interface User {
   readonly isSeller: boolean;
   readonly mentor: boolean;
   readonly admin: boolean;
-  readonly plan: 'free' | 'isa' | 'standart';
+  readonly plan: 'free' | 'isa' | 'standart' | 'lite';
   readonly endAt: firestore.Timestamp;
   readonly payLimitDate?: firestore.Timestamp;
 
@@ -31,6 +31,9 @@ export interface PaymentCard {
 export interface UserPayment {
   card: PaymentCard;
   customerId: string;
+  subscriptionId?: string;
+  planId: string;
+  startAt: Date;
 }
 
 export interface UserConnect {

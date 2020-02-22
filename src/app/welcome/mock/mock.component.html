@@ -1,0 +1,133 @@
+<div class="mock-frame">
+  <div class="mock">
+    <div class="mock__bg"></div>
+    <div class="mock__header">
+      <div
+        class="mock__search"
+        [class.active]="mode === 'algolia'"
+        [class.float]="isFloat"
+        (click)="mode = 'algolia'; startAnimation()"
+      >
+        <p>動画教材を検索</p>
+        <button mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="mode = 'firebase'; startAnimation()"
+        [class.active]="mode === 'firebase'"
+        [class.float]="isFloat"
+      >
+        ログイン
+      </button>
+    </div>
+    <div class="mock__body">
+      <mat-card
+        class="stripe"
+        [class.active]="mode === 'stripe'"
+        [class.float]="isFloat"
+      >
+        <figure>
+          <img src="assets/images/logo.png" alt="" />
+        </figure>
+        <p>10,000円でスキルを購入しますか？</p>
+        <button
+          mat-button
+          mat-raised-button
+          color="primary"
+          (click)="mode = 'stripe'; startAnimation()"
+        >
+          <span>カードで購入</span>
+          <mat-icon>credit_card</mat-icon>
+        </button>
+      </mat-card>
+    </div>
+    <div class="mock__footer"></div>
+  </div>
+
+  <div class="tool tool--algolia" [class.active]="mode === 'algolia'">
+    <img
+      class="tool__logo"
+      src="assets/images/welcome/algolia-logo.svg"
+      alt="algolia"
+      (click)="mode = 'algolia'; startAnimation()"
+    />
+    <div class="note note--algolia">
+      <h3 class="note__title">Algolia</h3>
+      <p class="note__description">
+        Algoliaを使うとタグ絞り込み、テキスト一致、ソート（並べ替え）などの高度な検索を実装することができます。
+      </p>
+      <button
+        mat-icon-button
+        class="note__close"
+        (click)="mode = null; stopAnimation()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="tool tool--firebase" [class.active]="mode === 'firebase'">
+    <img
+      class="tool__logo"
+      src="assets/images/welcome/firebase.svg"
+      alt="firebase"
+      (click)="mode = 'firebase'; startAnimation()"
+    />
+    <div class="note note--firebase">
+      <h3 class="note__title">Firebase</h3>
+      <p class="note__description">
+        FirebaseはGoogleが提供するバックエンド管理サービスです。データベースやログイン機能を直感的に実装することができます。
+      </p>
+      <button
+        mat-icon-button
+        class="note__close"
+        (click)="mode = null; stopAnimation()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="tool tool--angular" [class.active]="mode === 'angular'">
+    <img
+      class="tool__logo"
+      src="assets/images/welcome/angular.svg"
+      alt="angular"
+      (click)="mode = 'angular'"
+    />
+    <div class="note note--angular">
+      <h3 class="note__title">Angular</h3>
+      <p class="note__description">
+        AngularはGoogleが開発したアプリケーション開発フレームワークです。Angularを使えば短期間で高品質なWebアプリケーションを開発することができます。
+      </p>
+      <button mat-icon-button class="note__close" (click)="mode = null">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="tool tool--stripe" [class.active]="mode === 'stripe'">
+    <img
+      class="tool__logo"
+      src="assets/images/welcome/stripe.svg"
+      alt="stripe"
+      (click)="mode = 'stripe'; startAnimation()"
+    />
+    <div class="note note--stripe">
+      <h3 class="note__title">Stripe</h3>
+      <p class="note__description">
+        Stripeを使えばクレジットカードを使った決済システムを実装することができます。ショッピングサイトやユーザー同士の売買など幅広いシーンに対応できます。
+      </p>
+      <button
+        mat-icon-button
+        class="note__close"
+        (click)="mode = null; stopAnimation()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

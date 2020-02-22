@@ -4,13 +4,10 @@
       <div class="hero__wrap">
         <div class="hero__body">
           <p class="hero__msg">
-            <span>CAMP</span>
+            <span>本気でやるなら、CAMP</span>
           </p>
           <p class="hero__sub">
-            <span
-              >Angular x
-              Firebaseを使ったモダンなサービス開発を覚えましょう。</span
-            >
+            <span>Webサービス開発専門のオンラインブートキャンプ</span>
           </p>
           <button
             (click)="scrollToElement(target)"
@@ -21,7 +18,7 @@
             入会する
           </button>
         </div>
-        <iframe
+        <!-- <iframe
           class="youtube"
           width="560"
           height="315"
@@ -29,12 +26,34 @@
           frameborder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
-        ></iframe>
+        ></iframe> -->
+        <app-mock></app-mock>
       </div>
     </div>
   </div>
 
   <div class="container">
+    <mat-card class="section section--fill">
+      <div class="menter">
+        <figure class="menter__photo">
+          <div class="menter__image"></div>
+        </figure>
+        <div class="menter__body">
+          <h2>最先端を、最短で。</h2>
+          <p>
+            CAMPではGoogleが提供するAngularとFirebaseを使った最先端のサービス開発を教えています。この技術を扱えるエンジニアは数が少なく、対応するスクールもありません。現在このスキルが学べるスクールはCAMPだけです。
+          </p>
+          <p>
+            サービス開発を覚えると高単価で就職できるだけでなく、週末起業をすることもできます。AngularとFirebaseを使えば決済やログイン、チャットといった一般的な要件を含むWebサービスを一人で、しかも短期間で開発することができます。
+          </p>
+          <p>
+            AngularとFirebaseはGoogleが提供しているため、非常に信頼性が高く高品質な存在です。これから覚えるスキルとしては胸を張ってオススメします。では肝心の教育力はどうでしょう？CAMPでは安心して参加いただけるよう、一部教材の公開やYouTube
+            Liveでの公開勉強会を行っています。
+          </p>
+        </div>
+      </div>
+    </mat-card>
+
     <mat-card class="section">
       <h2>CAMPとは</h2>
       <div class="concept">
@@ -171,6 +190,19 @@
         <div>
           <blockquote class="twitter-tweet">
             <p lang="ja" dir="ltr">
+              CAMPに入って1ヶ月経ちました〜<br />単語帳webサービスを作ってますが、ようやく単語帳を登録したらFirebaseからデータを取ってきて組み合わせて条件つけて表示させることができました！<br />1人だと心折れるけど、Ninoさんや、他の受講生の方に助けられて、なんとかやれてます😂
+              <a href="https://t.co/ZdtlxLneS1">pic.twitter.com/ZdtlxLneS1</a>
+            </p>
+            &mdash; はるか (@OZNBniiEG2AKjTL)
+            <a
+              href="https://twitter.com/OZNBniiEG2AKjTL/status/1228278014108024835?ref_src=twsrc%5Etfw"
+              >February 14, 2020</a
+            >
+          </blockquote>
+        </div>
+        <div>
+          <blockquote class="twitter-tweet">
+            <p lang="ja" dir="ltr">
               サクッとTodo管理作ったら意外といい感じになった。<br />Camp最高！！
               <a href="https://t.co/mulNpAavME">pic.twitter.com/mulNpAavME</a>
             </p>
@@ -203,14 +235,35 @@
             <li *ngFor="let point of plan.points">{{ point }}</li>
           </ul>
 
-          <button
-            (click)="register(plan.id)"
-            class="plan__action"
-            mat-raised-button
-            color="primary"
-          >
-            {{ plan.price ? '登録' : '詳しく' }}
-          </button>
+          <ng-container *ngIf="user; else loginButton">
+            <button
+              (click)="register(plan.id)"
+              class="plan__action"
+              mat-raised-button
+              color="primary"
+              *ngIf="user.plan !== plan.id"
+            >
+              {{ plan.price ? '登録' : '詳しく' }}
+            </button>
+            <button
+              (click)="unsubscribe(plan.id)"
+              class="plan__action"
+              mat-stroked-button
+              *ngIf="user.plan === plan.id"
+            >
+              解約
+            </button>
+          </ng-container>
+          <ng-template #loginButton>
+            <button
+              (click)="login(plan.id)"
+              class="plan__action"
+              mat-raised-button
+              color="primary"
+            >
+              ログイン
+            </button>
+          </ng-template>
           <p class="plan__trial">1週間の無料トライアルあり</p>
         </div>
       </div>
@@ -221,6 +274,8 @@
         <li>PC、ネット代は自己負担です。</li>
         <li>追加教材費等一切ございません。</li>
       </ul>
+
+      <h3>プラン詳細</h3>
     </mat-card>
   </div>
 </div>

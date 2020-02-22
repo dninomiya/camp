@@ -54,8 +54,6 @@ import { FooterComponent } from './footer/footer.component';
 import { RatePipe } from './rate.pipe';
 import { PlanPipe } from './plan.pipe';
 
-
-
 @NgModule({
   declarations: [
     FromNowPipe,
@@ -164,4 +162,4 @@ import { PlanPipe } from './plan.pipe';
     PlanPipe
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -32,10 +32,8 @@
 }
 
 .hero {
-  padding: 160px 0;
-  @include sp {
-    padding: 40px 0;
-  }
+  position: relative;
+  z-index: 2;
   span {
     display: block;
   }
@@ -72,6 +70,10 @@
 .section {
   padding: 80px 80px 120px;
   margin: 48px 0;
+  overflow: hidden;
+  &--fill {
+    padding: 0;
+  }
   @include sp {
     padding: 16px;
     margin: 24px 0;
@@ -256,22 +258,24 @@ h2 {
 }
 
 .voices {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr 1fr 1fr;
+  column-count: 3;
+  column-gap: 16px;
   @include sp {
-    grid-template-columns: 1fr;
+    column-count: 1;
   }
   > * {
     width: 100%;
-    min-width: 0px;
+    break-inside: avoid-column;
+    > * {
+      margin: 0 0 16px;
+    }
   }
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px 80px;
+  gap: 80px;
   @include sp {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -354,5 +358,49 @@ h2 {
       margin-right: 8px;
     }
     color: rgba(black, 0.38);
+  }
+}
+
+.menter {
+  overflow: hidden;
+  display: flex;
+  &__photo {
+    flex: 1;
+    order: 2;
+    position: relative;
+  }
+  &__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: -100px;
+    bottom: 0;
+    background: center top/cover url(/assets/images/welcome/menter.jpeg);
+  }
+  h2 {
+    margin-bottom: 40px;
+  }
+  p {
+    color: rgba(black, 0.6);
+  }
+  &__body {
+    flex: 1;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+    p + p {
+      margin-top: 24px;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: skewX(10deg);
+      background: #fff;
+    }
   }
 }

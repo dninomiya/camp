@@ -1,46 +1,31 @@
 <ng-container *ngIf="!isLoading; else loading">
-  <h1>{{ data.plan.nickname }}プランを解約しますか？</h1>
+  <h1>{{ data.planId | plan }}プランを解約しますか？</h1>
 
-  <form [formGroup]="form" (ngSubmt)="unsubscribe()">
+  <form [formGroup]="form" (ngSubmit)="unsubscribe()">
+    <mat-dialog-content>
+      <mat-form-field>
+        <mat-label>理由</mat-label>
+        <mat-select formControlName="type" multiple required>
+          <mat-option
+            [value]="reasonsType.value"
+            *ngFor="let reasonsType of reasonsTypes"
+            >{{ reasonsType.label }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>理由</mat-label>
-    <mat-select formControlName="type" multiple required>
-        <mat-option [value]="reasonsType.value" *ngFor="let reasonsType of reasonsTypes">{{reasonsType.label}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>感想</mat-label>
+        <textarea matInput formControlName="detail"></textarea>
+      </mat-form-field>
+    </mat-dialog-content>
 
-  <mat-form-field>
-    <mat-label>感想</mat-label>
-    <textarea matInput formControlName="detail"></textarea>
-  </mat-form-field>
-
-  <mat-dialog-content>
-    <p>
-      解約するとプランにまつわる以下の権限が無くなります。また、プランメンバー専用ポストの閲覧ができなくなります。他のプラン、他のチャンネルの登録には影響しません。
-    </p>
-
-    <ul class="features">
-      <li *ngIf="data.plan.forum?.read">フォーラム閲覧</li>
-      <li *ngIf="data.plan.forum?.write">
-        フォーラム投稿（{{ data.plan.forum.writeLimit | limit }}）
-      </li>
-      <li *ngIf="data.plan.review?.write">
-        レビュー（{{ data.plan.review.writeLimit | limit }}）
-      </li>
-      <li *ngIf="data.plan.coaching?.appointment">
-        コーチング{{ data.plan.coaching.appointmentLimit | limit }}）
-      </li>
-    </ul>
-  </mat-dialog-content>
-
-  <mat-dialog-actions>
-    <button mat-button type="button" matDialogClose>キャンセル</button>
-    <button mat-raised-button color="primary" [disabled]="form.invalid">
-      解約
-    </button>
-  </mat-dialog-actions>
-
+    <mat-dialog-actions>
+      <button mat-button type="button" matDialogClose>キャンセル</button>
+      <button mat-raised-button color="primary" [disabled]="form.invalid">
+        解約
+      </button>
+    </mat-dialog-actions>
   </form>
 </ng-container>
 

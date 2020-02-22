@@ -50,13 +50,14 @@ export class PaymentService {
     return callable(data).toPromise();
   }
 
-  subscribePlan(body: {
+  subscribePlan(data: {
     customerId: string;
     planId: string;
-    uid: string;
+    subscriptionId?: string;
   }): Promise<void> {
+    console.log(data);
     const callable = this.fns.httpsCallable('subscribePlan');
-    return callable(body).toPromise();
+    return callable(data).toPromise();
   }
 
   deleteSubscription(customerId: string) {
@@ -67,7 +68,6 @@ export class PaymentService {
   async unsubscribePlan(body: {
     userId: string;
     planId: string;
-    channelId: string;
     reason: any;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('unsubscribePlan');

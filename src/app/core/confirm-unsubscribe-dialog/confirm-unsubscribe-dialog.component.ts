@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PaymentService } from 'src/app/services/payment.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Plan } from 'src/app/interfaces/plan';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -14,7 +13,7 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
   isLoading: boolean;
   form = this.fb.group({
     type: ['', Validators.required],
-    detail: [''],
+    detail: ['']
   });
 
   reasonsTypes = [
@@ -33,30 +32,28 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
     {
       value: 'other',
       label: 'その他'
-    },
+    }
   ];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: {
-      uid: string,
-      plan: Plan;
-      channelId: string
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      uid: string;
+      planId: string;
     },
     private fb: FormBuilder,
     private paymentService: PaymentService,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<ConfirmUnsubscribeDialogComponent>
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   unsubscribe() {
     this.isLoading = true;
     const body = {
       userId: this.data.uid,
-      channelId: this.data.channelId,
-      planId: this.data.plan.id,
+      planId: this.data.planId,
       reason: this.form.value
     };
     this.paymentService.unsubscribePlan(body).then(() => {
@@ -66,5 +63,4 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
       this.dialogRef.close();
     });
   }
-
 }

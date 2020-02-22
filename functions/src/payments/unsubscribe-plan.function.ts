@@ -1,47 +1,37 @@
 import * as functions from 'firebase-functions';
-import { db, countDown } from '../utils';
+import { db } from '../utils';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
-export const unsubscribePlan = functions.https.onCall(async (data: {
-  userId: string;
-  planId: string;
-  channelId: string;
-  reason?: object;
-}, context) => {
-  if (!context.auth) {
-    throw new Error('認証エラー');
-  }
+export const unsubscribePlan = functions.https.onCall(
+  async (
+    data: {
+      userId: string;
+      planId: string;
+      reason?: object;
+    },
+    context
+  ) => {
+    if (!context.auth) {
+      throw new Error('認証エラー');
+    }
+    const userPayment = (
+      await db.doc(`users/${data.userId}/private/payment`).get()
+    ).data();
 
-  const memberPath = `channels/${data.channelId}/plans/${data.planId}/members/${data.userId}`;
-  const member = (await db.doc(memberPath).get()).data();
+    if (!userPayment) {
+      return;
+    }
 
-  await db.doc(memberPath).delete();
-  await db.doc(`users/${data.userId}/subscriptions/${data.planId}`).delete();
-  await countDown(`channels/${data.channelId}/plans/${data.planId}`, 'memberCount');
+    await stripe.subscriptions.del(userPayment.subscriptionId);
 
-  if (context.auth.uid !== data.userId) {
-    await db.collection(`forcedWithdrawals`).add({
-      date: new Date(),
-      ...data,
+    await db.doc(`users/${data.userId}`).update({
+      plan: 'free'
     });
-  } else {
-    await db.collection(`channels/${data.channelId}/plans/${data.planId}/withdrawals`).add({
-      date: new Date(),
-      ...data,
+
+    return db.doc(`users/${data.userId}/private/payment`).update({
+      subscriptionId: null,
+      planId: 'free'
     });
   }
-
-  const connect = (await db.doc(`users/${data.planId}/private/connect`).get()).data();
-
-  if (member && connect) {
-    return stripe.subscriptions.del(
-      member.subscriptionId,
-      {
-        stripe_account: connect.stripeUserId
-      }
-    );
-  } else {
-    throw new Error('メンバーが存在しません');
-  }
-});
+);
