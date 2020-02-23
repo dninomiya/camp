@@ -7,6 +7,7 @@ import { CardDialogComponent } from './../shared/card-dialog/card-dialog.compone
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentService } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
+import { SwiperOptions } from 'swiper';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
@@ -15,6 +16,33 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit, AfterViewInit {
+  pages = new Array(5);
+  config: SwiperOptions = {
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    spaceBetween: 30
+  };
+
+  constructor(
+    private authService: AuthService,
+    private paymentService: PaymentService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
+    this.authService.authUser$.subscribe(user => {
+      this.user = user;
+      if (user) {
+        this.paymentService
+          .getUserPayment(user.id)
+          .subscribe(payment => (this.payment = payment));
+      } else {
+        this.payment = null;
+      }
+    });
+  }
   planFeatures = [
     {
       image: null,
@@ -175,25 +203,14 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   user: User;
   payment: UserPayment;
 
-  constructor(
-    private authService: AuthService,
-    private paymentService: PaymentService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) {
-    this.authService.authUser$.subscribe(user => {
-      this.user = user;
-      if (user) {
-        this.paymentService
-          .getUserPayment(user.id)
-          .subscribe(payment => (this.payment = payment));
-      } else {
-        this.payment = null;
-      }
-    });
-  }
+  player: YT.Player;
+  private id = 'qDuKsiwS5xw';
 
-  ngOnInit() {}
+  ngOnInit() {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(tag);
+  }
 
   ngAfterViewInit() {
     (window as any).twttr.widgets.load();
@@ -269,5 +286,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
           this.register(planId);
         });
     });
+  }
+
+  savePlayer(player) {
+    this.player = player;
+    console.log('player instance', player);
+  }
+  onStateChange(event) {
+    console.log('player state', event.data);
   }
 }

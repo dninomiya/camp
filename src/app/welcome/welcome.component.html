@@ -28,7 +28,24 @@
 
   <div class="container">
     <section class="special">
-      <figure class="special__image"></figure>
+      <figure class="special__image">
+        <swiper [config]="config">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let item of pages">
+              <youtube-player
+                [videoId]="id"
+                (ready)="savePlayer($event)"
+                (change)="onStateChange($event)"
+              ></youtube-player>
+            </div>
+          </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination"></div>
+          <!-- Add Arrows -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </swiper>
+      </figure>
       <div class="special__body">
         <h2 class="special__hdg">100本以上の動画教材が見放題</h2>
         <p class="special__description">
