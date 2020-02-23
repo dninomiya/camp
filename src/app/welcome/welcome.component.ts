@@ -15,6 +15,41 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit, AfterViewInit {
+  planFeatures = [
+    {
+      image: null,
+      title: '有料教材の閲覧',
+      description:
+        '今後追加されるコンテンツを含め、永続的な教材閲覧権が得られます。'
+    },
+    {
+      image: null,
+      title: '質問し放題',
+      description: 'テキストで何度でもメンターに質問することができます。'
+    },
+    {
+      image: null,
+      title: 'コードレビュー',
+      description: 'メンターに書いたコードのレビューを依頼することができます。'
+    },
+    {
+      image: null,
+      title: '進捗管理',
+      description: '毎日〜毎月の任意のタイミングで進捗管理を行います。'
+    },
+    {
+      image: null,
+      title: '完全オンライン',
+      description:
+        '場所を選ばず参加いただけます。Slackで質問や情報交換を行います。'
+    },
+    {
+      image: null,
+      title: '完全オンライン',
+      description:
+        '場所を選ばず参加いただけます。Slackで質問や情報交換を行います。'
+    }
+  ];
   styles = [
     {
       image: 'remote',
@@ -62,7 +97,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
         '1週間の無料トライアル以降は1ヶ月ごとに前払いとなり、途中退会においても返金はできません。'
     },
     {
-      q: 'なぜ技術を制限しているのですか？',
+      q: 'なぜ技術を限定しているのですか？',
       a:
         '最新の正しいスキルを教えるために、Googleが提供するAngularとFirebaseを使ったサービス開発に限定しています。'
     },

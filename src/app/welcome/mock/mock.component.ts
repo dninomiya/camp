@@ -9,10 +9,15 @@ export class MockComponent implements OnInit {
   mode: string;
   isFloat: boolean;
   animation;
+  initialized: boolean;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    setTimeout(() => {
+      this.initialized = true;
+    }, 2000);
+  }
 
   startAnimation() {
     this.animation = setInterval(() => {

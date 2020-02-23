@@ -4,13 +4,15 @@ html {
 body {
   height: 100%;
   margin: 0;
-  background: #F9F9F9;
+  background: #f9f9f9;
   font-size: 14px;
   font-family: 'Roboto', Arial, sans-serif;
-  color: rgba(black, .87);
+  color: rgba(black, 0.87);
+  -webkit-font-smoothing: antialiased;
 }
 
-html, body {
+html,
+body {
   @include sp {
     height: auto;
   }
@@ -20,11 +22,14 @@ p {
   margin: 0;
 }
 
-p, ol, ul {
+p,
+ol,
+ul {
   line-height: 1.8;
 }
 
-ol, ul {
+ol,
+ul {
   list-style: none;
   padding-left: 0;
 }
@@ -33,7 +38,8 @@ figure {
   margin: 0;
 }
 
-h1, h2 {
+h1,
+h2 {
   margin-top: 0;
 }
 
