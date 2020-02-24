@@ -148,7 +148,8 @@
     top: 0;
     left: 0;
     &.active {
-      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate(0px, 420px);
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg)
+        translate(60px, 160px);
     }
   }
   &--angular {
