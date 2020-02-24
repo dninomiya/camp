@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { PlanService } from 'src/app/services/plan.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { tap } from 'rxjs/operators';
-import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-plans',

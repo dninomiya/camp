@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Plan } from '../interfaces/plan';
 import { ChannelMeta } from '../interfaces/channel';
 
@@ -9,13 +9,13 @@ import { ChannelMeta } from '../interfaces/channel';
   styleUrls: ['./plan-dialog.component.scss']
 })
 export class PlanDialogComponent implements OnInit {
-
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: {
-      plan: Plan,
-      channel: ChannelMeta
+    @Inject(MAT_DIALOG_DATA)
+    private data: {
+      plan: Plan;
+      channel: ChannelMeta;
     }
-  ) { }
+  ) {}
 
   ngOnInit() {}
 

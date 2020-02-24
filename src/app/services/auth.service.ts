@@ -9,14 +9,14 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { User } from '../interfaces/user';
 import * as moment from 'moment';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
   afUser: AfUser;
   authUser$: Observable<User>;
   user: User;
@@ -127,7 +127,7 @@ export class AuthService {
         throw new Error(`トークンの有効期限が切れました:${data.path}`);
       } else {
         const callable = this.fns.httpsCallable('connectVimeo');
-        await callable({code}).toPromise();
+        await callable({ code }).toPromise();
         return data.path;
       }
     } else {
@@ -141,10 +141,7 @@ export class AuthService {
     });
   }
 
-  async createSCRF(body: {
-    uid: string,
-    path: string
-  }): Promise<string> {
+  async createSCRF(body: { uid: string; path: string }): Promise<string> {
     const id = this.db.createId();
     await this.db.doc(`csrf/${id}`).set({
       ...body,
@@ -154,17 +151,20 @@ export class AuthService {
   }
 
   openLoginDialog() {
-    this.dialog.open(LoginDialogComponent, {
-      restoreFocus: false,
-      width: '400px'
-    }).afterClosed().subscribe(status => {
-      if (status) {
-        this.login().then(() => {
-          this.snackBar.open(`${environment.title}へようこそ！`, null, {
-            duration: 2000
+    this.dialog
+      .open(LoginDialogComponent, {
+        restoreFocus: false,
+        width: '400px'
+      })
+      .afterClosed()
+      .subscribe(status => {
+        if (status) {
+          this.login().then(() => {
+            this.snackBar.open(`${environment.title}へようこそ！`, null, {
+              duration: 2000
+            });
           });
-        });
-      }
-    });
+        }
+      });
   }
 }

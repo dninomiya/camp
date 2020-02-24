@@ -49,7 +49,7 @@ import { PlanTitleLabelPipe } from './plan-title-label.pipe';
 import { LinkIconPipe } from './link-icon.pipe';
 import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
 import { RefinementListComponent } from './refinement-list/refinement-list.component';
-import { MatChipsModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
 import { FooterComponent } from './footer/footer.component';
 import { RatePipe } from './rate.pipe';
 import { PlanPipe } from './plan.pipe';

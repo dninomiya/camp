@@ -6,21 +6,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RootComponent } from './root/root.component';
 import { AccountComponent } from './account/account.component';
 import { BillingComponent } from './billing/billing.component';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
-  declarations: [
-    RootComponent,
-    AccountComponent,
-    BillingComponent
-  ],
-  imports: [
-    SharedModule,
-    SettingRoutingModule,
-    MatDialogModule,
-    MatTabsModule
-  ],
-  entryComponents: [
-  ]
+  declarations: [RootComponent, AccountComponent, BillingComponent],
+  imports: [SharedModule, SettingRoutingModule, MatDialogModule, MatTabsModule],
+  entryComponents: []
 })
-export class SettingModule { }
+export class SettingModule {}

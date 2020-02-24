@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-multiple-lesson-edit-dialog',
@@ -8,23 +8,12 @@ import { MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./multiple-lesson-edit-dialog.component.scss']
 })
 export class MultipleLessonEditDialogComponent implements OnInit {
-
   form = this.fb.group({
     premium: [false],
     amount: []
   });
 
-  amounts = [
-    100,
-    500,
-    1000,
-    1500,
-    5000,
-    10000,
-    25000,
-    50000,
-    100000,
-  ];
+  amounts = [100, 500, 1000, 1500, 5000, 10000, 25000, 50000, 100000];
 
   get amount(): number {
     return this.form.get('amount').value;
@@ -45,7 +34,5 @@ export class MultipleLessonEditDialogComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

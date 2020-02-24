@@ -1,10 +1,10 @@
 import { SharedConfirmDialogComponent } from './../../core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { CardDialogComponent } from 'src/app/shared/card-dialog/card-dialog.component';
-import { map } from 'rxjs/operators';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PaymentService } from './../../services/payment.service';
 import { Observable } from 'rxjs';
-import { User, UserPayment } from 'src/app/interfaces/user';
+import { User } from 'src/app/interfaces/user';
 import { AuthService } from './../../services/auth.service';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,10 +17,7 @@ import * as moment from 'moment';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-
-  user$: Observable<User> = this.userService.getUser(
-    this.authService.user.id
-  );
+  user$: Observable<User> = this.userService.getUser(this.authService.user.id);
 
   loading: boolean;
 
@@ -33,13 +30,14 @@ export class UserComponent implements OnInit {
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
-    this.paymentService.getUserPayment(
-      this.authService.user.id
-    ).subscribe(customer => this.customerId = customer && customer.customerId);
+    this.paymentService
+      .getUserPayment(this.authService.user.id)
+      .subscribe(
+        customer => (this.customerId = customer && customer.customerId)
+      );
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getDays(from: Date): number {
     return moment().diff(moment(from), 'days');
@@ -52,49 +50,47 @@ export class UserComponent implements OnInit {
   }
 
   getLimitDate(from: Date): Date {
-    return moment(from).add(4, 'years').toDate();
+    return moment(from)
+      .add(4, 'years')
+      .toDate();
   }
 
   createSubscription() {
     if (this.customerId) {
       this.loading = true;
-      this.paymentService.createSubscription(
-        this.customerId
-      ).then(() => {
+      this.paymentService.createSubscription(this.customerId).then(() => {
         this.snackBar.open('会員登録しました', null, {
           duration: 2000
         });
         this.loading = false;
       });
     } else {
-      this.dialog.open(
-        CardDialogComponent
-      );
+      this.dialog.open(CardDialogComponent);
     }
   }
 
   cancellation() {
     if (this.customerId) {
-      this.dialog.open(SharedConfirmDialogComponent, {
-        restoreFocus: false,
-        data: {
-          title: '本当に解約しますか？',
-          description: '解約するとCAMPから退会となります'
-        }
-      }).afterClosed().subscribe(status => {
-        if (status) {
-          this.loading = true;
-          this.paymentService.deleteSubscription(
-            this.customerId
-          ).then(() => {
-            this.snackBar.open('解約しました', null, {
-              duration: 2000
+      this.dialog
+        .open(SharedConfirmDialogComponent, {
+          restoreFocus: false,
+          data: {
+            title: '本当に解約しますか？',
+            description: '解約するとCAMPから退会となります'
+          }
+        })
+        .afterClosed()
+        .subscribe(status => {
+          if (status) {
+            this.loading = true;
+            this.paymentService.deleteSubscription(this.customerId).then(() => {
+              this.snackBar.open('解約しました', null, {
+                duration: 2000
+              });
+              this.loading = false;
             });
-            this.loading = false;
-          });
-        }
-      });
+          }
+        });
     }
   }
-
 }

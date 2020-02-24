@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { take } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDisconnectStripeDialogComponent } from '../../confirm-disconnect-stripe-dialog/confirm-disconnect-stripe-dialog.component';
 
 @Component({
@@ -11,7 +11,6 @@ import { ConfirmDisconnectStripeDialogComponent } from '../../confirm-disconnect
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-
   loading = true;
   accountId: string;
   dashboardURL: string;
@@ -21,20 +20,20 @@ export class SettingsComponent implements OnInit {
     private paymentService: PaymentService,
     private dialog: MatDialog
   ) {
-    this.paymentService.getStirpeAccountId(
-      this.authService.user.id
-    ).pipe(take(1)).subscribe(id => {
-      if (id) {
-        this.accountId = id;
-        this.setDashboardURL(id);
-      } else {
-        this.loading = false;
-      }
-    });
+    this.paymentService
+      .getStirpeAccountId(this.authService.user.id)
+      .pipe(take(1))
+      .subscribe(id => {
+        if (id) {
+          this.accountId = id;
+          this.setDashboardURL(id);
+        } else {
+          this.loading = false;
+        }
+      });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async setDashboardURL(id: string) {
     this.dashboardURL = (await this.paymentService.getDashboardURL(id)).url;
@@ -54,5 +53,4 @@ export class SettingsComponent implements OnInit {
       }
     });
   }
-
 }

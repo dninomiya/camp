@@ -6,7 +6,7 @@ import { PlanService } from 'src/app/services/plan.service';
 import { map } from 'rxjs/operators';
 import { Job } from 'src/app/interfaces/job';
 import { Plan } from 'src/app/interfaces/plan';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { MailDialogComponent } from 'src/app/core/mail-dialog/mail-dialog.component';
 
 @Component({

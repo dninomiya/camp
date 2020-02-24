@@ -3,7 +3,14 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Lesson } from 'src/app/interfaces/lesson';
 import { Observable, combineLatest, Subscription, of, merge } from 'rxjs';
-import { switchMap, tap, take, shareReplay, map, catchError } from 'rxjs/operators';
+import {
+  switchMap,
+  tap,
+  take,
+  shareReplay,
+  map,
+  catchError
+} from 'rxjs/operators';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { LessonService } from 'src/app/services/lesson.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +21,7 @@ import { ListService } from 'src/app/services/list.service';
 import { LessonList } from 'src/app/interfaces/lesson-list';
 import { PaymentService } from 'src/app/services/payment.service';
 import { SharedConfirmDialogComponent } from 'src/app/core/shared-confirm-dialog/shared-confirm-dialog.component';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SeoService } from 'src/app/services/seo.service';
 import { UiService } from 'src/app/services/ui.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -51,7 +58,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       this.loadingService.startLoading();
       this.lessonId = params.get('v');
     }),
-    switchMap((params) => {
+    switchMap(params => {
       const lid = params.get('v');
       if (lid) {
         return this.lessonService.getLesson(lid).pipe(take(1));
@@ -63,7 +70,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       console.error(error);
       return of(null);
     }),
-    switchMap((lesson) => {
+    switchMap(lesson => {
       if (!lesson) {
         this.router.navigate(['not-found']);
         return of(null);
@@ -73,14 +80,16 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
       const matchUrls = lesson.body.match(/^http.*$/gm);
 
-      const urlMap = matchUrls ? {
-        externalUrls: matchUrls.filter(url => {
-          return !url.match(/stackblitz\.com/);
-        }),
-        stackblitz: matchUrls.filter(url => {
-          return url.match(/stackblitz\.com/);
-        }),
-      } : {};
+      const urlMap = matchUrls
+        ? {
+            externalUrls: matchUrls.filter(url => {
+              return !url.match(/stackblitz\.com/);
+            }),
+            stackblitz: matchUrls.filter(url => {
+              return url.match(/stackblitz\.com/);
+            })
+          }
+        : {};
 
       if (urlMap.stackblitz) {
         this.generateStackBlitz(lesson, urlMap.stackblitz);
@@ -93,8 +102,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
             map(ogps => {
               urlMap.externalUrls.forEach((url, i) => {
                 if (ogps[i]) {
-                  const reg = new RegExp(`^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`, 'gm');
-                  lesson.body = lesson.body.replace(reg, this.getOgpHTML(ogps[i]));
+                  const reg = new RegExp(
+                    `^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`,
+                    'gm'
+                  );
+                  lesson.body = lesson.body.replace(
+                    reg,
+                    this.getOgpHTML(ogps[i])
+                  );
                 }
               });
               return lesson;
@@ -124,7 +139,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   );
 
   user$: Observable<User> = this.authService.authUser$.pipe(
-    tap(user => this.uid = user && user.id)
+    tap(user => (this.uid = user && user.id))
   );
 
   isOwner$: Observable<boolean> = combineLatest([
@@ -168,9 +183,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
           cause.authorId
         );
       } else {
-        return this.lessonService.checkPermission(
-          this.lessonId,
-        );
+        return this.lessonService.checkPermission(this.lessonId);
       }
     }),
     shareReplay(1)
@@ -184,7 +197,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
         return of(null);
       }
     }),
-    tap(channel => this.channel = channel),
+    tap(channel => (this.channel = channel)),
     shareReplay(1)
   );
   followerBuff = 0;
@@ -213,7 +226,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       } else {
         return of(null);
       }
-    }),
+    })
   );
 
   viewTimer;
@@ -240,14 +253,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
       }
     });
 
-    combineLatest([
-      this.lesson$,
-      this.channel$
-    ]).subscribe(([lesson, channel]) => {
-      if (lesson && channel) {
-        this.setSchema(lesson, channel);
+    combineLatest([this.lesson$, this.channel$]).subscribe(
+      ([lesson, channel]) => {
+        if (lesson && channel) {
+          this.setSchema(lesson, channel);
+        }
       }
-    });
+    );
   }
 
   async setSchema(lesson: Lesson, channel: ChannelMeta) {
@@ -261,7 +273,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
       headline: lesson.title,
       image: [image],
       datePublished: lesson.createdAt.toDate().toISOString(),
-      dateModified: lesson.updatedAt ? lesson.updatedAt.toDate().toISOString() : '',
+      dateModified: lesson.updatedAt
+        ? lesson.updatedAt.toDate().toISOString()
+        : '',
       author: {
         '@type': 'Person',
         name: channel.title
@@ -275,12 +289,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
         }
       },
       description: 'A most wonderful article',
-      articleBody: lesson.body,
+      articleBody: lesson.body
     });
   }
 
   async setMeta(lesson: Lesson) {
-    const image = lesson.thumbnailURL || environment.host + '/assets/images/ogp-cover.png';
+    const image =
+      lesson.thumbnailURL || environment.host + '/assets/images/ogp-cover.png';
     this.seoService.generateTags({
       title: lesson.title,
       image,
@@ -292,8 +307,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   generateStackBlitz(lesson: Lesson, urls: string[]) {
     urls.forEach((url, i) => {
-      const reg = new RegExp(`^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`, 'gm');
-      const result = this.isMobile ? '[コードを見る](' + url.replace(/\?.*/, '') + ')' : '<iframe src="' + url + '"></iframe>';
+      const reg = new RegExp(
+        `^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`,
+        'gm'
+      );
+      const result = this.isMobile
+        ? '[コードを見る](' + url.replace(/\?.*/, '') + ')'
+        : '<iframe src="' + url + '"></iframe>';
       lesson.body = lesson.body.replace(reg, result);
     });
   }
@@ -318,7 +338,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
     let description = '';
 
     if (data.ogDescription) {
-      description = `<p class="ogp__description">${data.ogDescription.replace(/\n/gm, '').replace(/`/g, '&#096;')}</p>`;
+      description = `<p class="ogp__description">${data.ogDescription
+        .replace(/\n/gm, '')
+        .replace(/`/g, '&#096;')}</p>`;
     }
 
     const result = `<a href="${ogp.requestUrl}" target="_blank" class="ogp">
@@ -328,22 +350,23 @@ export class ArticleComponent implements OnInit, OnDestroy {
         ${description}
         <p class="ogp__url">${ogp.requestUrl}</p>
       </div>
-    </a>`.replace(/\n|^ +/gm, '').replace(/\n/gm, '');
+    </a>`
+      .replace(/\n|^ +/gm, '')
+      .replace(/\n/gm, '');
 
     return '```ogp_export\n' + result + '\n```';
   }
 
   ngOnInit() {
-    combineLatest([
-      this.permission$,
-      this.lesson$
-    ]).subscribe(([permission]) => {
-      if (permission) {
-        setTimeout(() => {
-          (window as any).twttr.widgets.load();
-        }, 500);
+    combineLatest([this.permission$, this.lesson$]).subscribe(
+      ([permission]) => {
+        if (permission) {
+          setTimeout(() => {
+            (window as any).twttr.widgets.load();
+          }, 500);
+        }
       }
-    });
+    );
   }
 
   onLoadMarkdown() {
@@ -418,39 +441,46 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   chargeLesson(lesson: Lesson) {
-    return this.dialog.open(SharedConfirmDialogComponent, {
-      data: {
-        title: `「${lesson.title}」ポストを購入しますか？`,
-        description: `返金、返品はできません。`
-      }
-    }).afterClosed().subscribe(status => {
-      if (status) {
-        const snackBar = this.snackBar.open('ポストを購入しています');
-        this.settlementStatus = true;
-        this.paymentService.createCharge({
-          item: {
-            id: lesson.id,
-            path: this.router.url,
-            title: lesson.title,
-            body: lesson.body,
-            amount: lesson.amount,
-            type: 'lesson'
-          },
-          sellerUid: lesson.authorId,
-          customerUid: this.authService.user.id
-        }).then(() => {
-          this.snackBar.open('ポストを購入しました', null, {
-            duration: 2000
-          });
-        }).catch(() => {
-          this.snackBar.open('購入できませんでした', null, {
-            duration: 2000
-          });
-        }).finally(() => {
-          snackBar.dismiss();
-          this.settlementStatus = false;
-        });
-      }
-    });
+    return this.dialog
+      .open(SharedConfirmDialogComponent, {
+        data: {
+          title: `「${lesson.title}」ポストを購入しますか？`,
+          description: `返金、返品はできません。`
+        }
+      })
+      .afterClosed()
+      .subscribe(status => {
+        if (status) {
+          const snackBar = this.snackBar.open('ポストを購入しています');
+          this.settlementStatus = true;
+          this.paymentService
+            .createCharge({
+              item: {
+                id: lesson.id,
+                path: this.router.url,
+                title: lesson.title,
+                body: lesson.body,
+                amount: lesson.amount,
+                type: 'lesson'
+              },
+              sellerUid: lesson.authorId,
+              customerUid: this.authService.user.id
+            })
+            .then(() => {
+              this.snackBar.open('ポストを購入しました', null, {
+                duration: 2000
+              });
+            })
+            .catch(() => {
+              this.snackBar.open('購入できませんでした', null, {
+                duration: 2000
+              });
+            })
+            .finally(() => {
+              snackBar.dismiss();
+              this.settlementStatus = false;
+            });
+        }
+      });
   }
 }

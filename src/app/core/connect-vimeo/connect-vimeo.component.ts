@@ -1,7 +1,7 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-connect-vimeo',
@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./connect-vimeo.component.scss']
 })
 export class ConnectVimeoComponent implements OnInit {
-
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -18,7 +17,8 @@ export class ConnectVimeoComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe(params => {
       if (params.state && params.code) {
-        this.authService.connectVimeo(params.code, params.state)
+        this.authService
+          .connectVimeo(params.code, params.state)
           .then(path => {
             this.router.navigateByUrl(path);
           })
@@ -36,7 +36,5 @@ export class ConnectVimeoComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
