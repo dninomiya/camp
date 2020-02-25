@@ -101,7 +101,7 @@
           <span>いつでも聞き放題</span>
         </h2>
         <p class="special__description">
-          時間を選ばずいつでも、何度でも質問することができます。過去の質問と回答はすべてアーカイブされているため、類似の質問がないか調べることもできます。教材に関する質問はもちろん、キャリア相談や自分のサービスにまつわる質問にも対応しています。教材に関する要望も歓迎しています。
+          CAMPは完全オンラインなので時間を選ばずいつでも、何度でも質問することができます。現役エンジニアのメンターが速やかに回答します。他の人の質問を見ることもできます。教材に関する質問はもちろん、キャリア相談や自分のサービスにまつわる質問も可能です。
         </p>
         <div class="special__action"></div>
       </div>
@@ -111,15 +111,20 @@
       <figure class="special__image"></figure>
       <div class="special__body">
         <h2 class="special__hdg">
-          <span>完全オンラインでも</span>
-          <span>やり切る仕組み</span>
+          <span>オリジナルサービスを</span>
+          <span>リリースまで作り切る</span>
         </h2>
         <p class="special__description">
-          CAMPは完全オンラインなので場所を選ばず参加することができます。開発の進め方は完全に実務をベースにしています。GitHubというソース管理ツールを使ってソースレビューを行います。定期的に進捗管理を行うので、学習が三日坊主になりがちな人も確実にやり切ることができます。
+          CAMPではまずメンターと一緒にあなたのオリジナルサービスを企画します。その後、メンターのレビューやアドバイスを受けながらリリースを目指して開発を進めます。スタンダードプランの場合頻繁に進捗管理を行うので、三日坊主になりがちな人もリリースまで確実にやり切ることができます。
         </p>
         <div class="special__action">
-          <button routerLink="/" mat-button color="primary">
-            すべての動画を見る
+          <button
+            mat-button
+            color="primary"
+            (click)="scrollToElement(target)"
+            fragment="plans"
+          >
+            プラン詳細
           </button>
         </div>
       </div>
