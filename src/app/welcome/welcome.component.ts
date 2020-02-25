@@ -18,13 +18,31 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 export class WelcomeComponent implements OnInit, AfterViewInit {
   pages = new Array(5);
   config: SwiperOptions = {
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    },
-    spaceBetween: 30
+    slidesPerView: 3,
+    centeredSlides: true,
+    loop: true,
+    autoplay: true,
+    allowTouchMove: false
   };
+  id = '4gM5kgk5brs';
+  isActive: boolean;
+
+  asks = [
+    {
+      title:
+        'いいね機能を実装したのですがいいね数がカウントされません。なぜでしょうか？コードはこちらです。',
+      date: new Date()
+    },
+    {
+      title:
+        '24行目でカウント関数の指定が間違っているようです。分からなければ画面共有しましょう。',
+      date: new Date()
+    },
+    {
+      title: '解決しました！素早い回答ありがとうございます！',
+      date: new Date()
+    }
+  ];
 
   constructor(
     private authService: AuthService,
@@ -204,7 +222,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   payment: UserPayment;
 
   player: YT.Player;
-  private id = 'qDuKsiwS5xw';
+  playerVars: YT.PlayerVars = {
+    controls: 0
+  };
 
   ngOnInit() {
     const tag = document.createElement('script');
@@ -214,10 +234,12 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     (window as any).twttr.widgets.load();
+    setTimeout(() => {
+      this.isActive = true;
+    }, 1000);
   }
 
   scrollToElement($element): void {
-    console.log($element);
     $element.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
@@ -290,9 +312,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
 
   savePlayer(player) {
     this.player = player;
-    console.log('player instance', player);
   }
-  onStateChange(event) {
-    console.log('player state', event.data);
-  }
+  onStateChange(event) {}
 }

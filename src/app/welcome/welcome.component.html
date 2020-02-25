@@ -9,7 +9,7 @@
           </p>
           <p class="hero__sub">
             <span
-              >CAMPは現役エンジニアから最新の正しいWebサービス開発を学べるエキスパート養成キャンプです。即戦力エンジニアや週末起業家に必要な実装力を身に付けることができます。</span
+              >CAMPは現役エンジニアから最新の正しいWebサービス開発を学べるエキスパート養成キャンプです。即戦力のエンジニアや週末起業家に必要なスキルを身に付けることができます。</span
             >
           </p>
           <button
@@ -29,40 +29,71 @@
   <div class="container">
     <section class="special">
       <figure class="special__image">
-        <swiper [config]="config">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" *ngFor="let item of pages">
-              <youtube-player
-                [videoId]="id"
-                (ready)="savePlayer($event)"
-                (change)="onStateChange($event)"
-              ></youtube-player>
+        <div
+          class="videos"
+          (mouseenter)="usefulSwiper.swiper.autoplay.stop()"
+          (mouseleave)="usefulSwiper.swiper.autoplay.start()"
+        >
+          <swiper [config]="config" [initialize]="isActive" #usefulSwiper>
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" *ngFor="let item of pages">
+                <youtube-player
+                  width="100%"
+                  [videoId]="id"
+                  [playerVars]="playerVars"
+                  (ready)="savePlayer($event)"
+                  (change)="onStateChange($event)"
+                ></youtube-player>
+              </div>
             </div>
-          </div>
-          <!-- Add Pagination -->
-          <div class="swiper-pagination"></div>
-          <!-- Add Arrows -->
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-        </swiper>
+          </swiper>
+        </div>
       </figure>
       <div class="special__body">
-        <h2 class="special__hdg">100本以上の動画教材が見放題</h2>
+        <h2 class="special__hdg">
+          <span>100本以上の動画教材が</span>
+          <span>永久に見放題</span>
+        </h2>
         <p class="special__description">
           専門用語が並ぶ小難しい技術書を読み込む必要はありません。CAMPの動画教材を使えば直感的に素早く学習することができます。丁寧に解説しながら実際に実装していくのでプロの実装をダイレクトに学習することができます。一度入会すれば退会後も永続的に教材を閲覧することができます。教材は日々アップデートし、増え続けています。
         </p>
         <div class="special__action">
           <button routerLink="/" mat-button color="primary">
-            すべての動画を見る
+            <span>すべての無料動画を見る</span>
+            <mat-icon inline>open_in_new</mat-icon>
           </button>
         </div>
       </div>
     </section>
 
     <section class="special">
-      <figure class="special__image special__image--right"></figure>
+      <figure class="special__image special__image--right">
+        <div class="asks">
+          <mat-card class="ask" *ngFor="let ask of asks; index as i">
+            <figure class="ask__icon">
+              <img
+                [src]="
+                  'assets/images/welcome/' +
+                  (i % 2 ? 'mentor-icon.jpeg' : 'user.png')
+                "
+                alt=""
+              />
+            </figure>
+            <div class="ask__body">
+              <p class="ask__title">{{ ask.title }}</p>
+              <p class="ask__date">
+                {{ i % 2 ? 'メンター' : 'ゲスト' }} -
+                {{ ask.date | date: 'yyyy年MM月dd日 14:' + (12 + i * 2) }}
+              </p>
+            </div>
+          </mat-card>
+        </div>
+      </figure>
       <div class="special__body">
-        <h2 class="special__hdg">質問し放題</h2>
+        <h2 class="special__hdg">
+          <span>現役エンジニアに</span>
+          <span>いつでも聞き放題</span>
+        </h2>
         <p class="special__description">
           時間を選ばずいつでも、何度でも質問することができます。過去の質問と回答はすべてアーカイブされているため、類似の質問がないか調べることもできます。教材に関する質問はもちろん、キャリア相談や自分のサービスにまつわる質問にも対応しています。教材に関する要望も歓迎しています。
         </p>
@@ -77,9 +108,12 @@
     <section class="special">
       <figure class="special__image"></figure>
       <div class="special__body">
-        <h2 class="special__hdg">完全オンライン</h2>
+        <h2 class="special__hdg">
+          <span>完全オンラインでも</span>
+          <span>やり切れる仕組み</span>
+        </h2>
         <p class="special__description">
-          CAMPは完全オンラインなので誰でも参加することができます。オンラインとはいえ、開発の進め方は完全に実務をベースにしています。GitHubというソース管理ツールを使ってソースレビューを行い、日々進捗確認のMTGを行います。
+          CAMPは完全オンラインなので場所を選ばず参加することができます。開発の進め方は完全に実務をベースにしています。GitHubというソース管理ツールを使ってソースレビューを行います。定期的に進捗管理を行うので、学習が三日坊主になりがちな人も確実にやり切ることができます。
         </p>
         <div class="special__action">
           <button routerLink="/" mat-button color="primary">

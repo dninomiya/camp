@@ -410,26 +410,119 @@ h2 {
 }
 
 .special {
-  padding: 80px 0;
+  padding: 120px 0;
   display: flex;
-  align-items: center;
   color: #ffffff;
+  position: relative;
+  perspective: 1500px;
   &__image {
-    width: 50%;
+    position: relative;
+    width: 60%;
+    padding-right: 80px;
+    box-sizing: border-box;
     &--right {
+      padding-left: 80px;
+      padding-right: 0;
       order: 2;
     }
   }
   &__body {
     flex: 1;
+    position: relative;
   }
   &__hdg {
     text-align: left;
     margin-bottom: 40px;
+    span {
+      display: block;
+    }
   }
   &__description {
     opacity: 0.6;
     font-size: 16px;
     margin-bottom: 40px;
+  }
+}
+
+button mat-icon {
+  margin-left: 8px;
+}
+
+.videos {
+  $width: 1100px;
+  position: absolute;
+  top: 0;
+  width: $width;
+  left: calc(50% - #{$width} / 2);
+  transform: rotateX(20deg) rotateY(30deg) rotateZ(-20deg);
+  transform-style: preserve-3d;
+}
+
+.asks {
+  padding-left: 80px;
+}
+
+@keyframes askIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes answerIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+.ask {
+  display: flex;
+  padding: 24px;
+  background: #fff;
+  &:nth-child(even) {
+    margin-left: 80px;
+  }
+  &:nth-child(odd) {
+    margin-right: 80px;
+  }
+  &:nth-child(1) {
+    animation: askIn 1s 1s both;
+  }
+  &:nth-child(2) {
+    animation: answerIn 1s 3s both;
+  }
+  &:nth-child(3) {
+    animation: askIn 1s 4s both;
+  }
+  & + & {
+    margin-top: 16px;
+  }
+  &__icon {
+    margin-right: 16px;
+    img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: block;
+    }
+  }
+  &__title {
+    font-weight: 500;
+  }
+  &__date {
+    color: rgba(black, 0.6);
+    font-size: 13px;
+  }
+  &__body {
+    flex: 1;
   }
 }
