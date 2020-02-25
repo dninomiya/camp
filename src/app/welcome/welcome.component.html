@@ -66,15 +66,18 @@
       </div>
     </section>
 
-    <section class="special">
+    <section class="special special--center">
       <figure class="special__image special__image--right">
-        <div class="asks">
-          <mat-card class="ask" *ngFor="let ask of asks; index as i">
+        <div class="asks" data-aos data-aos-once="true">
+          <mat-card
+            class="ask"
+            *ngFor="let ask of asks; index as i; odd as odd; last as last"
+          >
             <figure class="ask__icon">
               <img
                 [src]="
                   'assets/images/welcome/' +
-                  (i % 2 ? 'mentor-icon.jpeg' : 'user.png')
+                  (odd ? 'mentor-icon.jpeg' : 'user.svg')
                 "
                 alt=""
               />
@@ -82,10 +85,13 @@
             <div class="ask__body">
               <p class="ask__title">{{ ask.title }}</p>
               <p class="ask__date">
-                {{ i % 2 ? 'メンター' : 'ゲスト' }} -
+                {{ odd ? 'メンター' : 'ゲスト' }} -
                 {{ ask.date | date: 'yyyy年MM月dd日 14:' + (12 + i * 2) }}
               </p>
             </div>
+            <mat-icon *ngIf="last" class="ask__check" inline>
+              check_circle_outline
+            </mat-icon>
           </mat-card>
         </div>
       </figure>
@@ -97,11 +103,7 @@
         <p class="special__description">
           時間を選ばずいつでも、何度でも質問することができます。過去の質問と回答はすべてアーカイブされているため、類似の質問がないか調べることもできます。教材に関する質問はもちろん、キャリア相談や自分のサービスにまつわる質問にも対応しています。教材に関する要望も歓迎しています。
         </p>
-        <div class="special__action">
-          <button routerLink="/" mat-button color="primary">
-            すべての動画を見る
-          </button>
-        </div>
+        <div class="special__action"></div>
       </div>
     </section>
 
@@ -110,7 +112,7 @@
       <div class="special__body">
         <h2 class="special__hdg">
           <span>完全オンラインでも</span>
-          <span>やり切れる仕組み</span>
+          <span>やり切る仕組み</span>
         </h2>
         <p class="special__description">
           CAMPは完全オンラインなので場所を選ばず参加することができます。開発の進め方は完全に実務をベースにしています。GitHubというソース管理ツールを使ってソースレビューを行います。定期的に進捗管理を行うので、学習が三日坊主になりがちな人も確実にやり切ることができます。

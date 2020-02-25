@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 import { User, UserPayment } from './../interfaces/user';
 import { CardDialogComponent } from './../shared/card-dialog/card-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import * as AOS from 'aos';
 import { PaymentService } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
 import { SwiperOptions } from 'swiper';
@@ -35,7 +36,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     },
     {
       title:
-        '24行目でカウント関数の指定が間違っているようです。分からなければ画面共有しましょう。',
+        '24行目でカウント関数の指定が間違っているようです。分からなければ画面共有して解説します！',
       date: new Date()
     },
     {
@@ -230,6 +231,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
+    AOS.init();
   }
 
   ngAfterViewInit() {

@@ -415,6 +415,9 @@ h2 {
   color: #ffffff;
   position: relative;
   perspective: 1500px;
+  &--center {
+    align-items: center;
+  }
   &__image {
     position: relative;
     width: 60%;
@@ -484,24 +487,43 @@ button mat-icon {
   }
 }
 
+@keyframes checkIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .ask {
   display: flex;
   padding: 24px;
   background: #fff;
+  position: relative;
+  opacity: 0;
   &:nth-child(even) {
     margin-left: 80px;
   }
   &:nth-child(odd) {
     margin-right: 80px;
   }
-  &:nth-child(1) {
-    animation: askIn 1s 1s both;
-  }
-  &:nth-child(2) {
-    animation: answerIn 1s 3s both;
-  }
-  &:nth-child(3) {
-    animation: askIn 1s 4s both;
+  .aos-animate & {
+    &:nth-child(1) {
+      animation: askIn 1s both;
+    }
+    &:nth-child(2) {
+      animation: answerIn 1s 0.8s both;
+    }
+    &:nth-child(3) {
+      animation: askIn 1s 1.6s both;
+    }
   }
   & + & {
     margin-top: 16px;
@@ -524,5 +546,15 @@ button mat-icon {
   }
   &__body {
     flex: 1;
+  }
+  &__check {
+    position: absolute;
+    top: calc(50% - 20px);
+    right: -64px;
+    font-size: 40px;
+    color: #00c853;
+    .aos-animate & {
+      animation: checkIn 0.3s 2.6s both;
+    }
   }
 }
