@@ -39,6 +39,7 @@
               <div class="swiper-slide" *ngFor="let item of pages">
                 <youtube-player
                   width="100%"
+                  height="200"
                   [videoId]="id"
                   [playerVars]="playerVars"
                   (ready)="savePlayer($event)"
@@ -103,12 +104,18 @@
         <p class="special__description">
           CAMPは完全オンラインなので時間を選ばずいつでも、何度でも質問することができます。現役エンジニアのメンターが速やかに回答します。他の人の質問を見ることもできます。教材に関する質問はもちろん、キャリア相談や自分のサービスにまつわる質問も可能です。
         </p>
-        <div class="special__action"></div>
+        <div class="special__action">
+          <a mat-button color="primary">学習の進めかた</a>
+        </div>
       </div>
     </section>
 
-    <section class="special">
-      <figure class="special__image"></figure>
+    <section class="special special--center">
+      <figure class="special__image">
+        <div class="idea">
+          <img src="assets/images/welcome/idea.svg" alt="" />
+        </div>
+      </figure>
       <div class="special__body">
         <h2 class="special__hdg">
           <span>オリジナルサービスを</span>
@@ -124,76 +131,46 @@
             (click)="scrollToElement(target)"
             fragment="plans"
           >
-            プラン詳細
+            学習の進めかた
           </button>
         </div>
       </div>
     </section>
 
-    <mat-card class="section section--fill">
-      <div class="menter">
-        <figure class="menter__photo">
-          <div class="menter__image"></div>
-        </figure>
-        <div class="menter__body">
-          <h2>最先端を、最短で。</h2>
-          <p>
-            CAMPではGoogleが提供するAngularとFirebaseを使った最先端のサービス開発を教えています。この技術を扱えるエンジニアは数が少なく、対応するスクールもありません。現在このスキルが学べるスクールはCAMPだけです。
-          </p>
-          <p>
-            サービス開発を覚えると高単価で就職できるだけでなく、週末起業をすることもできます。AngularとFirebaseを使えば決済やログイン、チャットといった一般的な要件を含むWebサービスを一人で、しかも短期間で開発することができます。
-          </p>
-          <p>
-            AngularとFirebaseはGoogleが提供しているため、非常に信頼性が高く高品質な存在です。これから覚えるスキルとしては胸を張ってオススメします。では肝心の教育力はどうでしょう？CAMPでは安心して参加いただけるよう、一部教材の公開やYouTube
-            Liveでの公開勉強会を行っています。
-          </p>
-        </div>
-      </div>
-    </mat-card>
-
     <mat-card class="section">
-      <h2>CAMPとは</h2>
-      <div class="concept">
-        <figure class="concept__image">
-          <img src="assets/images/logo-icon.png" alt="" />
-        </figure>
-        <div class="concept__body">
-          <p>
-            最新の技術を使って実務で通用するWebサービス開発スキルを身に付けたいですか？そうお考えならCAMPはうってつけの場所です。CAMPの動画教材では、第一線で活躍する現役メンターがログインや決済を含む高度なWebサービスをゼロから解説しながら組み立てていきます。もちろん、分からないことがあれば何度でも質問してください。
+      <h2>2つの学習スタイルが選べます</h2>
+      <p class="lead">
+        ひとりで進めるか、メンターと進めるか
+      </p>
+      <div class="causes">
+        <div class="cause">
+          <figure class="cause__image">
+            <img src="assets/images/welcome/alone.svg" alt="" />
+          </figure>
+          <h3 class="cause__title">ひとりで進める</h3>
+          <p class="cause__description">
+            動画教材をみながら自分のペースで学習を進め、詰まったら質問するスタイルです。メンターがあなたの開発や進捗に干渉することはないので、気軽に学習を進めることができます。
           </p>
-          <p>
-            CAMPで身に付けたスキルがあれば、自分で新しWebサービスを開発したり、あるいはサービスを開発している企業に就職することができます。まずは1週間の無料トライアルをお試しください。
-          </p>
+          <div class="cause__button">
+            <button color="primary" mat-button>ソロプラン</button>
+          </div>
         </div>
-      </div>
-      <div class="target">
-        <div class="target__wrap">
-          <div>
-            <h3 class="target__hdg">ゴール</h3>
-            <ul>
-              <li>マイWebサービスをリリースさせる</li>
-              <li>Webサービスエンジニアとして就職する</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="target__hdg">参加資格</h3>
-            <ul>
-              <li>自分専用のPCを持っている人</li>
-              <li>十分な速度のネット環境がある人</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="target__hdg">目安期間</h3>
-            <ul>
-              <li>学習時間に応じて3〜6ヶ月は必要</li>
-              <li>途中退会は自由に可能（退会金なし）</li>
-            </ul>
+        <div class="cause">
+          <figure class="cause__image">
+            <img src="assets/images/welcome/team.svg" alt="" />
+          </figure>
+          <h3 class="cause__title">メンターと進める</h3>
+          <p class="cause__description">
+            メンターが一緒にサービス企画を行い、毎日進捗管理やソースレビューをしながらしっかりと開発をサポートします。確実にサービスを作り切りたい人にオススメです。
+          </p>
+          <div class="cause__button">
+            <button color="primary" mat-button>メンタープラン</button>
           </div>
         </div>
       </div>
     </mat-card>
 
-    <mat-card class="section">
+    <section class="skills">
       <h2>身に付くスキル</h2>
       <p class="lead">
         Angular x Firebaseを軸としたサービス開発
@@ -209,22 +186,17 @@
           </p>
         </div>
       </div>
-    </mat-card>
+    </section>
 
-    <mat-card class="section">
-      <h2>学習スタイル</h2>
-      <p class="lead">
-        CAMPは完全オンラインで、自分のオリジナルアプリを作成していきます。
-      </p>
-      <div class="grid">
-        <div class="skill" *ngFor="let style of styles">
-          <figure class="skill__icon skill__icon--lg" *ngIf="style.image">
-            <img src="assets/images/welcome/{{ style.image }}.svg" alt="" />
-          </figure>
-          <h3 class="skill__title">{{ style.title }}</h3>
-          <p class="skill__description">
-            {{ style.description }}
-          </p>
+    <mat-card class="section section--fill">
+      <div class="mentor">
+        <figure class="mentor__photo">
+          <div class="mentor__image"></div>
+          <p class="mentor__name">Daich</p>
+        </figure>
+        <div class="mentor__body">
+          <h2>CAMPのこだわり</h2>
+          <p>何もわからない人に型落ちしたスキルを付け焼き刃で教えて</p>
         </div>
       </div>
     </mat-card>

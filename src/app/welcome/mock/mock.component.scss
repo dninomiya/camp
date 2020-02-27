@@ -250,9 +250,10 @@
 
 .stripe {
   transition: 1s ease-in-out;
-  text-align: center;
-  padding: 40px;
+  padding: 24px;
   @include initElement(0.9s);
+  display: flex;
+  align-items: center;
   &.active {
     transform: translate3d(0, 0, 24px);
     &.float {
@@ -261,13 +262,19 @@
     box-shadow: 16px 30px 20px -10px rgba(0, 0, 0, 0.4);
   }
   figure {
-    margin-bottom: 16px;
-    width: 200px;
-    display: inline-block;
+    width: 120px;
+    margin-right: 24px;
   }
-  p {
-    margin-bottom: 16px;
+  &__title {
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+  &__description {
     color: rgba(black, 0.6);
+    margin-bottom: 16px;
+  }
+  &__body {
+    flex: 1;
   }
   mat-icon {
     margin-left: 8px;

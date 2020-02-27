@@ -34,18 +34,20 @@
         [class.float]="isFloat"
       >
         <figure>
-          <img src="assets/images/logo.png" alt="" />
+          <img src="assets/images/welcome/shirt.png" alt="" />
         </figure>
-        <p>10,000円でスキルを購入しますか？</p>
-        <button
-          mat-button
-          mat-raised-button
-          color="accent"
-          (click)="mode = 'stripe'; startAnimation()"
-        >
-          <span>カードで購入</span>
-          <mat-icon>credit_card</mat-icon>
-        </button>
+        <div class="stripe__body">
+          <h3 class="stripe__title">CAMPロゴ入りTシャツ</h3>
+          <p class="stripe__description">非売品</p>
+          <button
+            mat-flat-button
+            color="accent"
+            (click)="mode = 'stripe'; startAnimation()"
+          >
+            <span>カートに追加</span>
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+        </div>
       </mat-card>
 
       <iframe

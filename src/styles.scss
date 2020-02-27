@@ -108,7 +108,7 @@ img {
 
 .swiper-container {
   position: relative;
-  padding: 40px 0;
+  padding: 80px 0;
   &:before,
   &:after {
     content: '';
@@ -123,18 +123,18 @@ img {
     left: 0;
     background: linear-gradient(
       to right,
-      #222,
-      rgba(#222, 0.9) 60%,
-      rgba(#222, 0)
+      white,
+      rgba(white, 0.9) 60%,
+      rgba(white, 0)
     );
   }
   &:after {
     right: 0;
     background: linear-gradient(
       to left,
-      #222,
-      rgba(#222, 0.9) 60%,
-      rgba(#222, 0)
+      white,
+      rgba(white, 0.9) 60%,
+      rgba(white, 0)
     );
   }
 }

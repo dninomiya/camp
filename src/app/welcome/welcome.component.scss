@@ -13,7 +13,7 @@
     left: 0;
     right: 0;
     height: 30%;
-    background: #222;
+    background: #fff;
     transform: skewY(-12deg);
     z-index: -1;
   }
@@ -291,6 +291,10 @@ h2 {
   }
 }
 
+.skills {
+  margin: 160px 0;
+}
+
 .skill {
   &__icon {
     height: 40px;
@@ -364,7 +368,7 @@ h2 {
   }
 }
 
-.menter {
+.mentor {
   overflow: hidden;
   display: flex;
   &__photo {
@@ -378,7 +382,7 @@ h2 {
     right: 0;
     left: -100px;
     bottom: 0;
-    background: center top/cover url(/assets/images/welcome/menter.jpeg);
+    background: center top/cover url(/assets/images/welcome/mentor.jpeg);
   }
   h2 {
     margin-bottom: 40px;
@@ -412,7 +416,6 @@ h2 {
 .special {
   padding: 120px 0;
   display: flex;
-  color: #ffffff;
   position: relative;
   perspective: 1500px;
   &--center {
@@ -444,6 +447,9 @@ h2 {
     opacity: 0.6;
     font-size: 16px;
     margin-bottom: 40px;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -452,7 +458,7 @@ button mat-icon {
 }
 
 .videos {
-  $width: 1100px;
+  $width: 960px;
   position: absolute;
   top: 0;
   width: $width;
@@ -556,5 +562,31 @@ button mat-icon {
     .aos-animate & {
       animation: checkIn 0.3s 2.6s both;
     }
+  }
+}
+
+.idea {
+  vertical-align: bottom;
+  text-align: center;
+  img {
+    width: 400px;
+  }
+}
+
+.causes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+
+.cause {
+  &__image {
+    height: 240px;
+  }
+  &__title {
+    font-weight: 500;
+  }
+  &__description {
+    margin-bottom: 40px;
   }
 }

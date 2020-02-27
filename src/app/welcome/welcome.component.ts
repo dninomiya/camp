@@ -173,7 +173,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
         '課金システム最大手のStripeを使い、BtoCやCtoC課金システムの実装を行います。'
     },
     {
-      image: 'algolia',
+      image: 'algolia-logo',
       title: '検索 / Algolia',
       description:
         'Algoliaを使って検索システムを開発します。タグ検索、絞り込みなどを行います。'
@@ -193,15 +193,15 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   plans = [
     {
       id: 'lite',
-      title: 'ライト',
-      subTitle: '自分のペースで学びたい方',
+      title: 'ソロ',
+      subTitle: 'ひとりで学びたい人',
       price: 10000,
       points: ['有料教材の閲覧', '質問し放題']
     },
     {
       id: 'standard',
-      title: 'スタンダード',
-      subTitle: '本気ガッツリ学びたい方',
+      title: 'メンター',
+      subTitle: 'メンターと進めたい人',
       price: 50000,
       points: ['有料教材の閲覧', '質問し放題', 'コードレビュー', '進捗管理']
     },
