@@ -145,32 +145,34 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     },
     {
       q: 'なぜ技術を限定しているのですか？',
-      a:
-        '最新の正しいスキルを教えるために、Googleが提供するAngularとFirebaseを使ったサービス開発に限定しています。'
+      a: '教材の鮮度を保つために手を広げすぎないようにしています。'
     },
     {
       q: '説明会、勉強会はありますか？',
       a:
         'メンターが不定期で<a href="https://www.youtube.com/channel/UCUPq5dKFGnOziaqYI-ejYcg?view_as=subscriber" target="_blank">YouTube Live</a>をやっているのでそちらにご参加いただくか、過去のアーカイブをご参照ください。'
+    },
+    {
+      q: '誰でも参加できますか？',
+      a: '自分個人のPCと快適なネット環境があれば誰でもご参加いただけます。'
     }
   ];
   skills = [
     {
       image: 'angular',
       title: 'フロントエンド / Angular',
-      description: '高品質なサービスのUIを実装します。'
+      description: 'Angularを使ってモダンなWebサービスを開発します。'
     },
     {
       image: 'firebase',
       title: 'バックエンド / Firebase',
-      description:
-        'ログイン認証やデータベース設計、外部サービス連携を行います。'
+      description: 'Firebaseを使ってログイン認証やデータベース設計します。'
     },
     {
       image: 'stripe',
       title: '決済 / Stripe',
       description:
-        '課金システム最大手のStripeを使い、BtoCやCtoC課金システムの実装を行います。'
+        '課金システム最大手Stripeを使って、BtoCやCtoCの決済システムを開発します。'
     },
     {
       image: 'algolia-logo',
@@ -186,7 +188,8 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     {
       image: 'github',
       title: 'Git開発 / GitHub',
-      description: 'GitHubを使ったレビュー駆動開発を行います（一部プランのみ）'
+      description:
+        'GitHubを使ったレビュー駆動開発を行います。（メンタープランのみ）'
     }
   ];
 
@@ -231,7 +234,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
-    AOS.init();
   }
 
   ngAfterViewInit() {
@@ -239,6 +241,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.isActive = true;
     }, 1000);
+    AOS.init();
   }
 
   scrollToElement($element): void {

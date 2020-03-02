@@ -115,7 +115,7 @@
 }
 
 .tool {
-  transition: transform 1s, z-index 1s 2s;
+  transition: transform 1s, z-index 1s 0.8s;
   position: absolute;
   z-index: 1;
   &.active {
