@@ -430,6 +430,20 @@ h2 {
   display: flex;
   position: relative;
   perspective: 1500px;
+  &--chat {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 520px;
+      height: 520px;
+      transform: translateY(-50%) skew(10deg, 10deg);
+      border-radius: 50%;
+      display: block;
+      background: #fafafa;
+    }
+  }
   &--center {
     align-items: center;
   }
