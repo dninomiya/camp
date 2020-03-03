@@ -77,7 +77,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     {
       image: null,
       title: 'コードレビュー',
-      description: 'メンターに書いたコードのレビューを依頼することができます。'
+      description: 'メンターにコードレビューを依頼することができます。'
     },
     {
       image: null,
@@ -86,9 +86,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     },
     {
       image: null,
-      title: '完全オンライン',
+      title: 'サービス企画',
       description:
-        '場所を選ばず参加いただけます。Slackで質問や情報交換を行います。'
+        'サービスとして必要な画面、機能の洗い出しや画面設計を手引きします。'
     },
     {
       image: null,
@@ -206,7 +206,14 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
       title: 'メンター',
       subTitle: 'メンターと進めたい人',
       price: 50000,
-      points: ['有料教材の閲覧', '質問し放題', 'コードレビュー', '進捗管理']
+      points: [
+        '有料教材の閲覧',
+        '質問し放題',
+        'サービス企画',
+        'サービス開発のアドバイス',
+        'コードレビュー',
+        '進捗管理'
+      ]
     },
     {
       id: 'isa',

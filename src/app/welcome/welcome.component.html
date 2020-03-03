@@ -173,7 +173,7 @@
     <section class="skills">
       <h2 class="left">身に付くスキル</h2>
       <p class="lead left">
-        Angular x Firebaseを軸としたサービス開発
+        Angular x Firebaseを軸とした最先端のサービス開発スキルが身につきます。
       </p>
       <div class="grid">
         <div class="skill" *ngFor="let skill of skills">
@@ -339,7 +339,7 @@
               mat-raised-button
               color="primary"
             >
-              ログイン
+              無料ではじめる
             </button>
           </ng-template>
           <p class="plan__trial">1週間の無料トライアルあり</p>
@@ -348,17 +348,27 @@
 
       <ul class="notice">
         <li>価格はすべて税込です。</li>
-        <li>入会金、退会金はございません。</li>
+        <li>入会金、退会金はありません</li>
         <li>PC、ネット代は自己負担です。</li>
-        <li>追加教材費等一切ございません。</li>
+        <li>追加教材費等はありません。上記の金額がすべてです。</li>
       </ul>
 
-      <mat-divider></mat-divider>
+      <div class="price-up">
+        <figure>
+          <img src="assets/images/welcome/price-system.png" alt="" />
+        </figure>
+        <div>
+          <h3 class="price-up__hdg">早期入会者特典</h3>
+          <p class="price-up__detail">
+            CAMPは正しい知識をしっかりと教えるため、アルバイトではなく経験豊富なメンターが限られたリソースで運営しています。ユーザーの増加に伴いより多くの工数が発生するため、人数に比例して<strong>新規入会者に対する</strong>授業料が変動します。すでに入会された方については途中から月額料金が上がることはないのでご安心ください。つまり早期にご参加いただくほどお得なシステムとなっています。
+          </p>
+        </div>
+      </div>
 
       <div class="plan-features">
-        <h3>プラン詳細</h3>
+        <h3 class="plan-features__hdg">プラン詳細</h3>
 
-        <div class="grid">
+        <div class="grid grid--sm">
           <div class="skill" *ngFor="let planFeature of planFeatures">
             <figure
               class="skill__icon skill__icon--lg"

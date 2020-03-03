@@ -285,6 +285,9 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 80px;
+  &--sm {
+    gap: 40px 80px;
+  }
   @include sp {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -365,7 +368,7 @@ h2 {
 }
 
 .notice {
-  margin-top: 24px;
+  margin: 24px 0 40px;
   li {
     &:before {
       content: '※';
@@ -596,6 +599,33 @@ button mat-icon {
     font-weight: 500;
   }
   &__description {
+    margin-bottom: 40px;
+  }
+}
+
+.price-up {
+  background: #fafafa;
+  border-radius: 3px;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  padding: 40px;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 80px;
+  &__hdg {
+    font-weight: 500;
+  }
+  &__detail {
+    color: rgba(black, 0.6);
+  }
+  figure {
+    text-align: center;
+    height: 240px;
+  }
+}
+
+.plan-features {
+  &__hdg {
     margin-bottom: 40px;
   }
 }
