@@ -13,7 +13,7 @@
             >
           </p>
           <button
-            (click)="scrollToElement(target)"
+            (click)="scrollToElement(plan)"
             fragment="plans"
             mat-raised-button
             color="primary"
@@ -28,7 +28,7 @@
 
   <div class="container">
     <section class="special">
-      <figure class="special__image">
+      <figure class="special__image special__image--videos">
         <div
           class="videos"
           (mouseenter)="usefulSwiper.swiper.autoplay.stop()"
@@ -59,10 +59,15 @@
           専門用語が並ぶ小難しい技術書を読み込む必要はありません。CAMPの動画教材を使えば直感的に素早く学習することができます。丁寧に解説しながら実際に実装していくのでプロの実装をダイレクトに学習することができます。一度入会すれば退会後も永続的に教材を閲覧することができます。教材は日々アップデートし、増え続けています。
         </p>
         <div class="special__action">
-          <button routerLink="/" mat-button color="primary">
+          <a
+            target="_blank"
+            href="https://www.youtube.com/channel/UCUPq5dKFGnOziaqYI-ejYcg?view_as=subscriber"
+            mat-button
+            color="primary"
+          >
             <span>すべての無料動画を見る</span>
             <mat-icon inline>open_in_new</mat-icon>
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -105,7 +110,9 @@
           CAMPは完全オンラインなので時間を選ばずいつでも、何度でも質問することができます。現役エンジニアのメンターが速やかに回答します。他の人の質問を見ることもできます。教材に関する質問はもちろん、キャリア相談や自分のサービスにまつわる質問も可能です。
         </p>
         <div class="special__action">
-          <a mat-button color="primary">学習の進めかた</a>
+          <button (click)="scrollToElement(flow)" mat-button color="primary">
+            学習の進めかた
+          </button>
         </div>
       </div>
     </section>
@@ -128,15 +135,16 @@
           <button
             mat-button
             color="primary"
-            (click)="scrollToElement(target)"
+            (click)="scrollToElement(skillSection)"
             fragment="plans"
           >
-            学習の進めかた
+            使う技術
           </button>
         </div>
       </div>
     </section>
 
+    <div #flow></div>
     <mat-card class="section">
       <h2>2つの学習スタイルから選べます</h2>
       <p class="lead">
@@ -170,7 +178,7 @@
       </div>
     </mat-card>
 
-    <section class="skills">
+    <section class="skills" #skillSection>
       <h2 class="left">身に付くスキル</h2>
       <p class="lead left">
         Angular x Firebaseを軸とした最先端のサービス開発スキルが身につきます。
@@ -191,7 +199,9 @@
     <mat-card class="section section--fill">
       <div class="mentor">
         <figure class="mentor__photo">
-          <div class="mentor__image"></div>
+          <div class="mentor__image">
+            <img src="assets/images/logo-icon-white.png" alt="CAMP" />
+          </div>
           <p class="mentor__name">Daich</p>
         </figure>
         <div class="mentor__body">
@@ -205,7 +215,6 @@
           <p>
             その課題を解決すべく、CAMPではSPAに特化したサービス開発を教えています。開発の進め方は完全に実務を再現しているので、CAMPでプロジェクトをリリースすることができれば多くの現場で即戦力として活躍できるでしょう。
           </p>
-          <p>CAMP Mentor - Daichi Ninomiya</p>
         </div>
       </div>
     </mat-card>
@@ -294,7 +303,7 @@
       </div>
     </mat-card>
 
-    <div #target></div>
+    <div #plan></div>
     <mat-card class="section">
       <h2>プラン</h2>
       <p class="lead">
@@ -304,10 +313,17 @@
         <div class="plan" *ngFor="let plan of plans">
           <h3 class="plan__title">{{ plan.title }}</h3>
           <p class="plan__sub-title">{{ plan.subTitle }}</p>
-          <p class="plan__price-label">月額料金</p>
+          <p class="plan__price-label">
+            {{ plan.id === 'isa' ? '就職後' : '月額料金' }}
+          </p>
           <p class="plan__price">
-            <small>¥</small><span>{{ plan.price | number }}</span
-            ><small>/月</small>
+            <ng-container *ngIf="plan.id !== 'isa'; else isa">
+              <small>¥</small><span>{{ plan.price | number }}</span
+              ><small>/月</small>
+            </ng-container>
+            <ng-template #isa>
+              <span class="plan__isa-label">給与払い</span>
+            </ng-template>
           </p>
           <ul class="plan__points">
             <li *ngFor="let point of plan.points">{{ point }}</li>
@@ -339,7 +355,7 @@
               mat-raised-button
               color="primary"
             >
-              無料ではじめる
+              {{ plan.id === 'isa' ? '詳しく見る' : '無料ではじめる' }}
             </button>
           </ng-template>
           <p class="plan__trial">1週間の無料トライアルあり</p>
@@ -388,4 +404,56 @@
       </div>
     </mat-card>
   </div>
+
+  <section class="contact">
+    <div class="container">
+      <h2>お問い合わせ</h2>
+      <p class="lead">
+        お気軽にお問い合わせください。メンターが直接回答します。
+      </p>
+      <div class="contact-wrap">
+        <div class="contact__profile">
+          <div>
+            <img
+              src="assets/images/welcome/mentor-icon.jpeg"
+              alt=""
+              class="contact__avatar"
+            />
+          </div>
+          <div class="contact__profile-body">
+            <p class="contact__name">Daichi Ninomiya</p>
+            <p class="contact__sub-title">CAMP代表</p>
+          </div>
+        </div>
+        <div class="contact__icons">
+          <div class="contact__buttons">
+            <a
+              href="https://twitter.com/messages/compose?recipient_id=632665203&ref_src=twsrc%5Etfw"
+              mat-button
+              target="_blank"
+            >
+              <i class="fab fa-twitter"></i>
+              <span>Twitter</span>
+            </a>
+            <a
+              href="https://line.me/R/ti/p/%40832cmuvp"
+              mat-button
+              target="_blank"
+            >
+              <i class="fab fa-line"></i>
+              <span>LINE</span>
+            </a>
+            <a
+              href="https://twitter.com/messages/compose?recipient_id=632665203&ref_src=twsrc%5Etfw"
+              mat-button
+              target="_blank"
+            >
+              <i class="fa fa-envelope"></i>
+              <span>フォーム</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

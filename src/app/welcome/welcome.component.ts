@@ -92,9 +92,15 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     },
     {
       image: null,
-      title: '完全オンライン',
+      title: '開発顧問',
       description:
-        '場所を選ばず参加いただけます。Slackで質問や情報交換を行います。'
+        '技術的、UX的視点からサービスのコードレベルでアドバイスを行います。'
+    },
+    {
+      image: null,
+      title: '就職支援',
+      description:
+        '応募先企業の評価、レジュメ添削、模擬面接など必要に応じて支援します。'
     }
   ];
   styles = [
@@ -209,10 +215,11 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
       points: [
         '有料教材の閲覧',
         '質問し放題',
-        'サービス企画',
-        'サービス開発のアドバイス',
         'コードレビュー',
-        '進捗管理'
+        '進捗管理',
+        'サービス企画',
+        '開発顧問',
+        '就職支援'
       ]
     },
     {
@@ -224,7 +231,10 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
         '有料教材の閲覧',
         '質問し放題',
         'コードレビュー',
-        '毎日の進捗管理'
+        '毎日の進捗管理',
+        'サービス企画',
+        '開発顧問',
+        '就職支援'
       ]
     }
   ];
@@ -247,8 +257,8 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     (window as any).twttr.widgets.load();
     setTimeout(() => {
       this.isActive = true;
+      AOS.init();
     }, 1000);
-    AOS.init();
   }
 
   scrollToElement($element): void {

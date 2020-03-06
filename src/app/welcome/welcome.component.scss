@@ -31,10 +31,19 @@
   }
 }
 
+app-mock {
+  @include sp {
+    display: none;
+  }
+}
+
 .hero {
   position: relative;
   z-index: 2;
   margin: 80px 0 160px;
+  @include sp {
+    margin: 80px 0;
+  }
   span {
     display: block;
   }
@@ -42,11 +51,15 @@
     display: flex;
     align-items: center;
     @include sp {
-      display: block;
+      flex-flow: column;
     }
   }
   &__body {
     flex: 1;
+    order: 1;
+    @include sp {
+      order: 2;
+    }
   }
   &__msg {
     font-weight: bold;
@@ -64,6 +77,9 @@
     font-size: 16px;
     width: 400px;
     color: rgba(black, 0.6);
+    @include sp {
+      width: auto;
+    }
   }
   &__img {
     flex: 1;
@@ -74,6 +90,7 @@
   padding: 80px 80px 120px;
   margin: 48px 0;
   overflow: hidden;
+  display: block;
   &--fill {
     padding: 0;
   }
@@ -192,6 +209,9 @@ h2 {
     font-size: 13px;
     margin-top: 8px;
     color: rgba(black, 0.6);
+  }
+  &__isa-label {
+    font-size: 32px;
   }
 }
 
@@ -333,6 +353,10 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
+  @include sp {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
 
 .qa {
@@ -378,13 +402,30 @@ h2 {
   }
 }
 
+@keyframes light {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(black, 0.2));
+  }
+  100% {
+    filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.8));
+  }
+}
+
 .mentor {
   overflow: hidden;
   display: flex;
+  @include sp {
+    flex-flow: column;
+    margin: -16px !important;
+  }
   &__photo {
     flex: 1;
     order: 2;
     position: relative;
+    @include sp {
+      flex: 160px;
+      order: 1;
+    }
   }
   &__image {
     position: absolute;
@@ -392,9 +433,23 @@ h2 {
     right: 0;
     left: -100px;
     bottom: 0;
-    background: center top/cover url(/assets/images/welcome/mentor.jpeg);
-    filter: grayscale(0.2);
+    background: linear-gradient(to top right, #808e95, #b0bec5);
     transition: 1s 2s filter;
+    @include sp {
+      left: 0;
+    }
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 160px;
+      transform: translate(-13%, -50%);
+      animation: light 5s infinite alternate ease-in-out;
+      @include sp {
+        width: 90px;
+        transform: translate(-50%, -50%);
+      }
+    }
   }
   h2 {
     margin-bottom: 40px;
@@ -408,6 +463,10 @@ h2 {
     position: relative;
     font-size: 16px;
     z-index: 1;
+    @include sp {
+      padding: 16px;
+      order: 2;
+    }
     p + p {
       margin-top: 24px;
     }
@@ -430,6 +489,10 @@ h2 {
   display: flex;
   position: relative;
   perspective: 1500px;
+  @include sp {
+    padding: 0 0 40px;
+    flex-flow: column;
+  }
   &--chat {
     &:before {
       content: '';
@@ -452,15 +515,31 @@ h2 {
     width: 60%;
     padding-right: 80px;
     box-sizing: border-box;
+    @include sp {
+      width: 100%;
+      padding-right: 0;
+    }
+    &--videos {
+      @include sp {
+        height: 400px;
+      }
+    }
     &--right {
       padding-left: 80px;
       padding-right: 0;
       order: 2;
+      @include sp {
+        padding-left: 0;
+        order: 1;
+      }
     }
   }
   &__body {
     flex: 1;
     position: relative;
+    @include sp {
+      order: 2;
+    }
   }
   &__hdg {
     text-align: left;
@@ -495,6 +574,11 @@ button mat-icon {
 
 .asks {
   padding-left: 80px;
+  @include sp {
+    margin: -100px 0;
+    padding-left: 0;
+    transform: scale(0.8) rotateX(60deg);
+  }
 }
 
 @keyframes askIn {
@@ -542,9 +626,15 @@ button mat-icon {
   opacity: 0;
   &:nth-child(even) {
     margin-left: 80px;
+    @include sp {
+      margin-left: 0;
+    }
   }
   &:nth-child(odd) {
     margin-right: 80px;
+    @include sp {
+      margin-right: 0;
+    }
   }
   .aos-animate & {
     &:nth-child(1) {
@@ -594,8 +684,15 @@ button mat-icon {
 .idea {
   vertical-align: bottom;
   text-align: center;
+  @include sp {
+    margin-bottom: 40px;
+    height: 240px;
+  }
   img {
     width: 400px;
+    @include sp {
+      width: 100%;
+    }
   }
 }
 
@@ -603,17 +700,27 @@ button mat-icon {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
+  @include sp {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 
 .cause {
   &__image {
     height: 240px;
+    @include sp {
+      height: 160px;
+    }
   }
   &__title {
     font-weight: 500;
   }
   &__description {
     margin-bottom: 40px;
+    @include sp {
+      margin-bottom: 24px;
+    }
   }
 }
 
@@ -626,6 +733,10 @@ button mat-icon {
   gap: 80px;
   align-items: center;
   margin-bottom: 80px;
+  @include sp {
+    padding: 16px;
+    display: block;
+  }
   &__hdg {
     font-weight: 500;
   }
@@ -635,6 +746,10 @@ button mat-icon {
   figure {
     text-align: center;
     height: 240px;
+    @include sp {
+      height: auto;
+      margin-bottom: 16px;
+    }
   }
 }
 
@@ -642,4 +757,45 @@ button mat-icon {
   &__hdg {
     margin-bottom: 40px;
   }
+}
+
+.contact {
+  padding: 80px 0;
+  background: linear-gradient(to top right, #808e95, #b0bec5);
+  margin-bottom: -80px;
+  &__profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  &__profile-body {
+    flex: 1;
+    padding-left: 16px;
+  }
+  &__name {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  &__sub-title {
+    color: rgba(black, 0.6);
+  }
+  &__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  &__buttons {
+    text-align: center;
+    a + a {
+      margin-left: 16px;
+    }
+    i {
+      margin-right: 8px;
+    }
+  }
+}
+
+.contact-wrap {
+  display: inline-block;
 }
