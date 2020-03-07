@@ -34,13 +34,17 @@
           (mouseenter)="usefulSwiper.swiper.autoplay.stop()"
           (mouseleave)="usefulSwiper.swiper.autoplay.start()"
         >
-          <swiper [config]="config" [initialize]="isActive" #usefulSwiper>
+          <swiper
+            [config]="swiperConfig"
+            [initialize]="isSwiperReady"
+            #usefulSwiper
+          >
             <div class="swiper-wrapper">
-              <div class="swiper-slide" *ngFor="let item of pages">
+              <div class="swiper-slide" *ngFor="let video of videos">
                 <youtube-player
                   width="100%"
                   height="200"
-                  [videoId]="id"
+                  [videoId]="video"
                   [playerVars]="playerVars"
                   (ready)="savePlayer($event)"
                   (change)="onStateChange($event)"
@@ -350,7 +354,7 @@
           </ng-container>
           <ng-template #loginButton>
             <button
-              (click)="login(plan.id)"
+              (click)="start(plan.id)"
               class="plan__action"
               mat-raised-button
               color="primary"

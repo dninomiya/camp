@@ -1,10 +1,21 @@
 <h1 matDialogTitle>ログイン</h1>
 
 <mat-dialog-content>
-  <p>この機能を使うためにはログインが必要です。{{title}}はGoogleアカウントでログインすることができます。</p>
+  <p>
+    ログインが必要です。{{
+      title
+    }}はGoogleアカウントでログイン（アカウント作成）をすることができます。
+  </p>
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <button mat-button matDialogClose>キャンセル</button>
-  <button mat-raised-button cdkFocusInitial color="primary" [matDialogClose]="true">ログイン</button>
+  <button
+    mat-raised-button
+    cdkFocusInitial
+    color="primary"
+    [matDialogClose]="true"
+  >
+    ログイン
+  </button>
 </mat-dialog-actions>

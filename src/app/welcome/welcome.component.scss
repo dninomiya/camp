@@ -32,6 +32,7 @@
 }
 
 app-mock {
+  order: 2;
   @include sp {
     display: none;
   }
