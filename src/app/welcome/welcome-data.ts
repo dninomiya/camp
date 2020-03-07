@@ -127,9 +127,18 @@ export const SKILLS = [
 export const PLANS = [
   {
     id: 'lite',
+    title: 'ライト',
+    subTitle: '教材閲覧のみ',
+    price: 5000,
+    factPrice: 12500,
+    points: ['有料教材の閲覧']
+  },
+  {
+    id: 'lite',
     title: 'ソロ',
     subTitle: 'ひとりで学びたい人',
     price: 10000,
+    factPrice: 30000,
     points: ['有料教材の閲覧', '質問し放題']
   },
   {
@@ -137,6 +146,7 @@ export const PLANS = [
     title: 'メンター',
     subTitle: 'メンターと進めたい人',
     price: 50000,
+    factPrice: 85000,
     points: [
       '有料教材の閲覧',
       '質問し放題',
@@ -146,20 +156,20 @@ export const PLANS = [
       '開発顧問',
       '就職支援'
     ]
-  },
-  {
-    id: 'isa',
-    title: 'ISA',
-    subTitle: '学費の確保が難しい方',
-    price: 0,
-    points: [
-      '有料教材の閲覧',
-      '質問し放題',
-      'コードレビュー',
-      '毎日の進捗管理',
-      'サービス企画',
-      '開発顧問',
-      '就職支援'
-    ]
   }
+  // {
+  //   id: 'isa',
+  //   title: 'ISA',
+  //   subTitle: '学費の確保が難しい方',
+  //   price: 0,
+  //   points: [
+  //     '有料教材の閲覧',
+  //     '質問し放題',
+  //     'コードレビュー',
+  //     '毎日の進捗管理',
+  //     'サービス企画',
+  //     '開発顧問',
+  //     '就職支援'
+  //   ]
+  // }
 ];

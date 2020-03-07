@@ -179,6 +179,10 @@ h2 {
     color: rgba(black, 0.6);
     flex: 1;
   }
+  &__campaign {
+    margin-top: 24px;
+    color: #3f51b5;
+  }
   &__price {
     font-size: 40px;
     margin: 0;
@@ -200,8 +204,13 @@ h2 {
       font-size: 32px;
     }
   }
+  &__fact-price {
+    margin-top: 16px;
+    font-size: 13px;
+    text-decoration: line-through;
+    color: rgba(black, 0.38);
+  }
   &__action {
-    margin-top: 24px;
     @include sp {
       margin-top: 0;
     }

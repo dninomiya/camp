@@ -317,6 +317,7 @@
         <div class="plan" *ngFor="let plan of plans">
           <h3 class="plan__title">{{ plan.title }}</h3>
           <p class="plan__sub-title">{{ plan.subTitle }}</p>
+          <p class="plan__campaign">新規入会キャンペーン中</p>
           <p class="plan__price-label">
             {{ plan.id === 'isa' ? '就職後' : '月額料金' }}
           </p>
@@ -328,6 +329,9 @@
             <ng-template #isa>
               <span class="plan__isa-label">給与払い</span>
             </ng-template>
+          </p>
+          <p class="plan__fact-price">
+            正規価格 {{ plan.factPrice | number }} 円
           </p>
           <ul class="plan__points">
             <li *ngFor="let point of plan.points">{{ point }}</li>
