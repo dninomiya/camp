@@ -32,15 +32,23 @@
     </div>
 
     <ng-container *ngIf="payment$ | async as payment">
-      <button
-        *ngIf="plan.id !== payment.planId; else disabled"
-        mat-raised-button
-        color="primary"
-        (click)="signUp(plan.id, payment.customerId)"
-        [disabled]="!payment.customerId || loading"
-      >
-        はじめる
-      </button>
+      <ng-container *ngIf="plan.id !== payment.planId; else disabled">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="signUp(plan.id, payment.customerId)"
+          [disabled]="!payment.customerId || loading"
+        >
+          {{ user.trialUsed ? '' : '無料で' }}はじめる
+        </button>
+        <p class="trial" *ngIf="!user?.trialUsed; else noTrial">
+          7日のフリートライアル後に決済がスタートします。
+        </p>
+        <ng-template #noTrial>
+          <p class="trial">以前登録しているためトライアルはありません。</p>
+        </ng-template>
+      </ng-container>
+
       <ng-template #disabled>
         <p>既に{{ plan.title }}に登録しています。</p>
       </ng-template>

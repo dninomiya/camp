@@ -39,6 +39,7 @@ const createAccount = (user: UserRecord) => {
     email: user.email,
     avatarURL: user.photoURL,
     createdAt: new Date(),
+    trialUsed: false,
     mailSettings: {
       purchase: true,
       reply: true

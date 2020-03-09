@@ -35,7 +35,8 @@ export const subscribePlan = functions.https.onCall(
     }
 
     await db.doc(`users/${userId}`).update({
-      plan: data.planId
+      plan: data.planId,
+      trialUsed: true
     });
 
     await db.doc(`users/${userId}/private/payment/`).update({

@@ -13,6 +13,7 @@ export interface User {
   readonly plan: PlanID;
   readonly endAt: firestore.Timestamp;
   readonly payLimitDate?: firestore.Timestamp;
+  readonly trialUsed: boolean;
 
   mailSettings: {
     forum: boolean;
