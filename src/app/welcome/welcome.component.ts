@@ -1,9 +1,11 @@
-import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS, PLANS } from './welcome-data';
+import { PlanService } from 'src/app/services/plan.service';
+import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
 import { Router } from '@angular/router';
 import { ConfirmUnsubscribeDialogComponent } from './../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
+import { of } from 'rxjs';
 import { take, switchMap } from 'rxjs/operators';
 import { User, UserPayment } from './../interfaces/user';
 import { CardDialogComponent } from './../shared/card-dialog/card-dialog.component';
@@ -33,7 +35,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   planFeatures = PLAN_FEATURES;
   qas = QUESTIONS;
   skills = SKILLS;
-  plans = PLANS;
+  plans = this.planService.plans;
   user: User;
   payment: UserPayment;
   player: YT.Player;
@@ -44,6 +46,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private paymentService: PaymentService,
+    private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router
@@ -68,7 +71,11 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     this.authService.authUser$
       .pipe(
         switchMap(user => {
-          return this.paymentService.getUserPayment(user.id).pipe(take(1));
+          if (user) {
+            return this.paymentService.getUserPayment(user.id).pipe(take(1));
+          } else {
+            return of(null);
+          }
         })
       )
       .subscribe(payment => (this.payment = payment));
@@ -150,7 +157,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
         .afterClosed()
         .subscribe(status => {
           if (status) {
-            this.router.navigateByUrl('/intl/signup?planId=' + planId);
+            this.authService.login().then(() => {
+              this.router.navigateByUrl('/intl/signup?planId=' + planId);
+            });
           }
         });
     }
@@ -159,5 +168,5 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   savePlayer(player) {
     this.player = player;
   }
-  onStateChange(event) {}
+  onStateChange(event) { }
 }

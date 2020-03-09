@@ -57,10 +57,10 @@
       <div class="special__body">
         <h2 class="special__hdg">
           <span>100本以上の動画教材が</span>
-          <span>永久に見放題</span>
+          <span>すべて見放題</span>
         </h2>
         <p class="special__description">
-          専門用語が並ぶ小難しい技術書を読み込む必要はありません。CAMPの動画教材を使えば直感的に素早く学習することができます。丁寧に解説しながら実際に実装していくのでプロの実装をダイレクトに学習することができます。一度入会すれば退会後も永続的に教材を閲覧することができます。教材は日々アップデートし、増え続けています。
+          専門用語が並ぶ小難しい技術書を読み込む必要はありません。CAMPの動画教材を使えば直感的に素早く学習することができます。丁寧に解説しながら実際に実装していくのでプロの実装をダイレクトに学習することができます。教材は日々アップデートし、増え続けています。
         </p>
         <div class="special__action">
           <a
@@ -69,7 +69,7 @@
             mat-button
             color="primary"
           >
-            <span>すべての無料動画を見る</span>
+            <span>無料動画を見る</span>
             <mat-icon inline>open_in_new</mat-icon>
           </a>
         </div>
@@ -337,35 +337,14 @@
             <li *ngFor="let point of plan.points">{{ point }}</li>
           </ul>
 
-          <ng-container *ngIf="user; else loginButton">
-            <button
-              (click)="register(plan.id)"
-              class="plan__action"
-              mat-raised-button
-              color="primary"
-              *ngIf="user.plan !== plan.id"
-            >
-              {{ plan.price ? '登録' : '詳しく' }}
-            </button>
-            <button
-              (click)="unsubscribe(plan.id)"
-              class="plan__action"
-              mat-stroked-button
-              *ngIf="user.plan === plan.id"
-            >
-              解約
-            </button>
-          </ng-container>
-          <ng-template #loginButton>
-            <button
-              (click)="start(plan.id)"
-              class="plan__action"
-              mat-raised-button
-              color="primary"
-            >
-              {{ plan.id === 'isa' ? '詳しく見る' : '無料ではじめる' }}
-            </button>
-          </ng-template>
+          <button
+            (click)="start(plan.id)"
+            class="plan__action"
+            mat-raised-button
+            color="primary"
+          >
+            無料ではじめる
+          </button>
           <p class="plan__trial">1週間の無料トライアルあり</p>
         </div>
       </div>
