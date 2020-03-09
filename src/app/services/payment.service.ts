@@ -15,7 +15,7 @@ export class PaymentService {
   constructor(
     private db: AngularFirestore,
     private fns: AngularFireFunctions
-  ) {}
+  ) { }
 
   setCard(uid: string, card: any): Promise<void> {
     const { address_zip, exp_month, exp_year, last4, brand, id } = card;
@@ -55,7 +55,6 @@ export class PaymentService {
     planId: string;
     subscriptionId?: string;
   }): Promise<void> {
-    console.log(data);
     const callable = this.fns.httpsCallable('subscribePlan');
     return callable(data).toPromise();
   }

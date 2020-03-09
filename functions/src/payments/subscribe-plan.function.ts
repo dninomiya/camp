@@ -39,7 +39,7 @@ export const subscribePlan = functions.https.onCall(
     });
 
     await db.doc(`users/${userId}/private/payment/`).update({
-      planId,
+      planId: data.planId,
       subscriptionId: subscription.id,
       startedAt: new Date()
     });

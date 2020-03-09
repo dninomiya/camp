@@ -1,3 +1,4 @@
+import { PlanID } from './plan';
 import { firestore } from 'firebase/app';
 export interface User {
   readonly id: string;
@@ -9,7 +10,7 @@ export interface User {
   readonly isSeller: boolean;
   readonly mentor: boolean;
   readonly admin: boolean;
-  readonly plan: 'free' | 'isa' | 'standart' | 'lite';
+  readonly plan: PlanID;
   readonly endAt: firestore.Timestamp;
   readonly payLimitDate?: firestore.Timestamp;
 

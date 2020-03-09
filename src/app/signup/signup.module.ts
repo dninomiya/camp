@@ -1,3 +1,4 @@
+import { CreditCardModule } from './../credit-card/credit-card.module';
 import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 
@@ -10,6 +11,7 @@ import { SignupComponent } from './signup.component';
   imports: [
     SharedModule,
     SignupRoutingModule,
+    CreditCardModule
   ]
 })
 export class SignupModule { }

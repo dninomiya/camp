@@ -3,7 +3,7 @@ import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
 import { Router } from '@angular/router';
 import { ConfirmUnsubscribeDialogComponent } from './../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { of } from 'rxjs';
 import { take, switchMap } from 'rxjs/operators';
@@ -42,6 +42,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   playerVars: YT.PlayerVars = {
     controls: 0
   };
+  user$ = this.authService.authUser$;
+  loading: boolean;
+  loginSnackBar: MatSnackBarRef<any>;
 
   constructor(
     private authService: AuthService,
@@ -157,8 +160,23 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
         .afterClosed()
         .subscribe(status => {
           if (status) {
+            this.loading = true;
+            this.loginSnackBar = this.snackBar.open('ログインしています', null, {
+              duration: 2000
+            });
             this.authService.login().then(() => {
-              this.router.navigateByUrl('/intl/signup?planId=' + planId);
+              this.user$.subscribe(user => {
+                if (user) {
+                  this.loginSnackBar.dismiss();
+                  this.router.navigateByUrl('/intl/signup?planId=' + planId);
+                } else {
+                  this.loginSnackBar.dismiss();
+                  this.loading = false;
+                }
+              });
+            }).catch(() => {
+              this.loginSnackBar.dismiss();
+              this.loading = false;
             });
           }
         });
