@@ -2,7 +2,7 @@
 
 <h2>プラン</h2>
 
-<ng-container *ngIf="payment$ | async as payment; else free">
+<!-- <ng-container *ngIf="payment$ | async as payment; else free">
   <mat-form-field>
     <mat-label>プラン変更</mat-label>
     <mat-select [formControl]="planSelect">
@@ -15,7 +15,7 @@
       >
     </mat-select>
   </mat-form-field>
-</ng-container>
+</ng-container> -->
 
 <ng-template #free>
   <p>フリープラン</p>

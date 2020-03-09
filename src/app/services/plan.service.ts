@@ -1,33 +1,26 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { Plan } from '../interfaces/plan';
-import { AngularFireFunctions } from '@angular/fire/functions';
-import { map } from 'rxjs/operators';
 
-export const PLANS = [
+export const PLANS: Plan[] = [
   {
     id: 'lite',
     title: 'ライト',
     subTitle: '教材閲覧のみ',
-    price: 5000,
-    factPrice: 12500,
+    amount: 12500,
     points: ['有料教材の閲覧']
   },
   {
     id: 'lite',
     title: 'ソロ',
     subTitle: 'ひとりで学びたい人',
-    price: 10000,
-    factPrice: 30000,
+    amount: 30000,
     points: ['有料教材の閲覧', '質問し放題']
   },
   {
     id: 'standard',
     title: 'メンター',
     subTitle: 'メンターと進めたい人',
-    price: 50000,
-    factPrice: 85000,
+    amount: 85000,
     points: [
       '有料教材の閲覧',
       '質問し放題',
@@ -44,42 +37,11 @@ export const PLANS = [
   providedIn: 'root'
 })
 export class PlanService {
-  private sort = ['question', 'review', 'trouble', 'coaching'];
   plans = PLANS;
 
-  constructor(
-    private db: AngularFirestore,
-    private fns: AngularFireFunctions
-  ) { }
+  constructor() { }
 
-  getPlansByChannelId(cid: string): Observable<Plan[]> {
-    return this.db
-      .collection<Plan>(`channels/${cid}/plans`)
-      .valueChanges()
-      .pipe(
-        map(plans => {
-          return this.sort
-            .map(type => plans.find(plan => plan.type === type))
-            .filter(plan => !!plan);
-        })
-      );
-  }
-
-  getPlan(userId: string, type: string): Observable<Plan> {
-    return this.db.doc<Plan>(`channels/${userId}/plans/${type}`).valueChanges();
-  }
-
-  createPlan(plan: Plan): Promise<void> {
-    const collable = this.fns.httpsCallable('createPlan');
-    return collable(plan).toPromise();
-  }
-
-  updatePlan(channelId: string, plan: Plan) {
-    return this.db.doc(`channels/${channelId}/plans/${plan.type}`).update(plan);
-  }
-
-  deletePlan(id: string) {
-    const collable = this.fns.httpsCallable('deletePlan');
-    return collable({ id }).toPromise();
+  getPlan(planId: string): Plan {
+    return this.plans.find(plan => plan.id === planId);
   }
 }

@@ -21,12 +21,20 @@
 
     <p class="form__notice">
       <a href="https://stripe.com" target="_blank" rel="noopener">
-        <img src="/assets/images/powered-by-stripe.svg" alt="powered by stripe">
+        <img
+          src="/assets/images/powered-by-stripe.svg"
+          alt="powered by stripe"
+        />
       </a>
     </p>
 
     <div class="form__footer">
-      <button type="submit" mat-raised-button color="accent" [disabled]="invalid">
+      <button
+        type="submit"
+        mat-raised-button
+        color="accent"
+        [disabled]="invalid"
+      >
         {{ customerId ? '変更' : '登録' }}
       </button>
     </div>

@@ -1,9 +1,13 @@
-<!-- <div class="container" *ngIf="plan$ | async as plan">
-  <h1>{{ plan.id | plan }}プランに登録する</h1>
-</div> -->
+<div class="container" *ngIf="plan$ | async as plan">
+  <div class="wrap">
+    <h1>{{ plan.title }}プランをはじめる</h1>
 
-<p>
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat nulla nisi
-  animi ex porro qui distinctio eum quos numquam velit ea, doloremque non in
-  reprehenderit perspiciatis sed! Voluptatem, magnam aperiam.
-</p>
+    <p>全プラン3ヶ月半額キャンペーン 3/31まで！</p>
+    <p>{{ plan.amount / 2 | number }}円/月</p>
+    <p class="default-price">定価: {{ plan.amount | number }}円/月</p>
+
+    <h2>決済方法</h2>
+
+    <button mat-raised-button color="primary">はじめる</button>
+  </div>
+</div>

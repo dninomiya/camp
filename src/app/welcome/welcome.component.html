@@ -323,16 +323,14 @@
           </p>
           <p class="plan__price">
             <ng-container *ngIf="plan.id !== 'isa'; else isa">
-              <small>¥</small><span>{{ plan.price | number }}</span
+              <small>¥</small><span>{{ plan.amount / 2 | number }}</span
               ><small>/月</small>
             </ng-container>
             <ng-template #isa>
               <span class="plan__isa-label">給与払い</span>
             </ng-template>
           </p>
-          <p class="plan__fact-price">
-            正規価格 {{ plan.factPrice | number }} 円
-          </p>
+          <p class="plan__fact-price">正規価格 {{ plan.amount | number }} 円</p>
           <ul class="plan__points">
             <li *ngFor="let point of plan.points">{{ point }}</li>
           </ul>
@@ -373,15 +371,6 @@
 
         <div class="grid grid--sm">
           <div class="skill" *ngFor="let planFeature of planFeatures">
-            <figure
-              class="skill__icon skill__icon--lg"
-              *ngIf="planFeature.image"
-            >
-              <img
-                src="assets/images/welcome/{{ planFeature.image }}.svg"
-                alt=""
-              />
-            </figure>
             <h3 class="skill__title">{{ planFeature.title }}</h3>
             <p class="skill__description">
               {{ planFeature.description }}
