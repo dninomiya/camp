@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Plan } from '../interfaces/plan';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { User } from '../interfaces/user';
-import { switchMap, map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

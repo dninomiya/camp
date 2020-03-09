@@ -143,14 +143,14 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
 
   start(planId: string) {
     if (this.authService.user) {
-      this.router.navigateByUrl('/start-plan?planId=' + planId);
+      this.router.navigateByUrl('/intl/signup?planId=' + planId);
     } else {
       this.dialog
         .open(LoginDialogComponent)
         .afterClosed()
         .subscribe(status => {
           if (status) {
-            this.router.navigateByUrl('/start-plan?planId=' + planId);
+            this.router.navigateByUrl('/intl/signup?planId=' + planId);
           }
         });
     }
