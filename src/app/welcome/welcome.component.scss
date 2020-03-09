@@ -1,7 +1,12 @@
 @import '~@angular/material/theming';
 @import 'mixins';
-
 @include mat-core();
+
+:host {
+  display: block;
+  overflow: hidden;
+  margin-bottom: -80px;
+}
 
 .wrap {
   position: relative;
@@ -250,7 +255,7 @@ h2 {
 .lead {
   text-align: center;
   margin: -40px 0 80px;
-  color: rgba(black, 0.6);
+  opacity: 0.6;
   font-size: 16px;
   &.left {
     text-align: left;
@@ -771,12 +776,14 @@ button mat-icon {
 
 .contact {
   padding: 80px 0;
-  background: linear-gradient(to top right, #808e95, #b0bec5);
-  margin-bottom: -80px;
+  color: white;
+  background: center/cover url(/assets/images/welcome/contact-bg.png);
+  text-align: center;
   &__profile {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    text-align: left;
   }
   &__profile-body {
     flex: 1;
@@ -787,7 +794,7 @@ button mat-icon {
     font-weight: 500;
   }
   &__sub-title {
-    color: rgba(black, 0.6);
+    color: rgba(white, 0.6);
   }
   &__avatar {
     width: 80px;

@@ -164,7 +164,9 @@
             動画教材をみながら自分のペースで学習を進め、詰まったら質問するスタイルです。メンターがあなたの開発や進捗に干渉することはないので、気軽に学習を進めることができます。
           </p>
           <div class="cause__button">
-            <button color="primary" mat-button>ソロプラン</button>
+            <button (click)="scrollToElement(plan)" color="primary" mat-button>
+              ソロプラン
+            </button>
           </div>
         </div>
         <div class="cause">
@@ -176,13 +178,16 @@
             メンターが一緒にサービス企画を行い、毎日進捗管理やソースレビューをしながらしっかりと開発をサポートします。確実にサービスを作り切りたい人にオススメです。
           </p>
           <div class="cause__button">
-            <button color="primary" mat-button>メンタープラン</button>
+            <button (click)="scrollToElement(plan)" color="primary" mat-button>
+              メンタープラン
+            </button>
           </div>
         </div>
       </div>
     </mat-card>
 
-    <section class="skills" #skillSection>
+    <div #skillSection></div>
+    <section class="skills">
       <h2 class="left">身に付くスキル</h2>
       <p class="lead left">
         Angular x Firebaseを軸とした最先端のサービス開発スキルが身につきます。
@@ -406,7 +411,7 @@
           <div class="contact__buttons">
             <a
               href="https://twitter.com/messages/compose?recipient_id=632665203&ref_src=twsrc%5Etfw"
-              mat-button
+              mat-stroked-button
               target="_blank"
             >
               <i class="fab fa-twitter"></i>
@@ -414,15 +419,15 @@
             </a>
             <a
               href="https://line.me/R/ti/p/%40832cmuvp"
-              mat-button
+              mat-stroked-button
               target="_blank"
             >
               <i class="fab fa-line"></i>
               <span>LINE</span>
             </a>
             <a
-              href="https://twitter.com/messages/compose?recipient_id=632665203&ref_src=twsrc%5Etfw"
-              mat-button
+              href="https://forms.gle/Q2EKoPgYXygyMGNJ9"
+              mat-stroked-button
               target="_blank"
             >
               <i class="fa fa-envelope"></i>
