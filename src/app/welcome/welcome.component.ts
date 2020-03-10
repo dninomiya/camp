@@ -14,7 +14,8 @@ import * as AOS from 'aos';
 import { PaymentService } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
 import { SwiperOptions } from 'swiper';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef } from '@angular/core';
+import { Player } from '@vimeo/player';
 
 @Component({
   selector: 'app-welcome',
@@ -22,6 +23,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit, AfterViewInit {
+  @ViewChildren('.video') playerContainers: ElementRef[];
+
   videos = new Array(5).fill('4gM5kgk5brs');
   swiperConfig: SwiperOptions = {
     slidesPerView: 3,
@@ -70,6 +73,13 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
+
+    this.videos.forEach((video, i) => {
+      const player = new Player(this.playerContainers[i].nativeElement, {
+        id: 367959301,
+        width: 300
+      });
+    });
 
     this.authService.authUser$
       .pipe(

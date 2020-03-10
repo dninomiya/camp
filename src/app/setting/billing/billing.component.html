@@ -30,7 +30,14 @@
 <ng-container *ngIf="payment$ | async as payment; else new">
   <div class="card" *ngIf="card$ | async as card">
     <p class="card__number">
-      <i class="fab fa-cc-{{ card.brand.toLowerCase() }}"></i>**** **** ****
+      <i
+        class="fab fa-cc-{{
+          card.brand.toLowerCase() === 'american express'
+            ? 'amex'
+            : card.brand.toLowerCase()
+        }}"
+      ></i
+      >**** **** ****
       {{ card.last4 }}
     </p>
 
