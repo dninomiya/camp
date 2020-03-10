@@ -19,27 +19,17 @@ export class UserCardComponent implements OnInit {
   @Input() isOwner: boolean;
   @Output() loaded = new EventEmitter<boolean>();
 
-  jobs: Job[];
-  plans: Plan[];
+  plans: Plan[] = this.planService.plans;
   rate: number;
 
   constructor(
     private channelService: ChannelService,
     private planService: PlanService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
-    combineLatest([
-      this.channelService.getJobs(this.channel.id),
-      this.planService
-        .getPlansByChannelId(this.channel.id)
-        .pipe(map(plans => plans.filter(plan => plan.active)))
-    ]).subscribe(([jobs, plans]) => {
-      this.jobs = jobs.filter(job => job.public);
-      this.plans = plans;
-      this.loaded.emit(true);
-    });
+    this.loaded.emit(true);
   }
 
   openMailDialog(email: string) {

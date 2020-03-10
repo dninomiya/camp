@@ -50,9 +50,7 @@ export class ListEditDialogComponent implements OnInit {
     premium: [false]
   });
 
-  plans$ = this.planService.getPlansByChannelId(
-    this.authService.user.id
-  );
+  plans = this.planService.plans;
 
   getFile(file: string) {
     this.file = file;

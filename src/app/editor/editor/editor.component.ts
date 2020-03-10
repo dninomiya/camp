@@ -101,9 +101,7 @@ export class EditorComponent implements OnInit {
     ]
   };
 
-  plans$ = this.planService.getPlansByChannelId(
-    this.authService.user.id
-  );
+  plans = this.planService.plans;
 
   codemirrorOpts = {
     lineNumbers: false,
