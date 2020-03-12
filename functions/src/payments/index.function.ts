@@ -1,3 +1,4 @@
+export { paymentSucceeded } from './payment-succeeded.function';
 export { createPlatformCustomer } from './create-platform-customer.function';
 export { updatePlatformCustomer } from './update-platform-customer.function';
 export { subscribePlan } from './subscribe-plan.function';

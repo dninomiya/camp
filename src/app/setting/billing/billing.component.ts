@@ -1,3 +1,4 @@
+import { PlanService } from 'src/app/services/plan.service';
 import { SharedConfirmDialogComponent } from './../../core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { UserPayment } from 'src/app/interfaces/user';
@@ -16,10 +17,9 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit {
-  plans = ['free', 'lite', 'standard', 'isa'];
+  plans = this.planService.plans;
   planSelect = new FormControl('');
   loading = true;
-  defaultPlan: string;
   payment: UserPayment;
   isCardEditor: boolean;
   subs = new Subscription();
@@ -47,12 +47,12 @@ export class BillingComponent implements OnInit {
     private authService: AuthService,
     private paymentService: PaymentService,
     private loadingService: LoadingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private planService: PlanService
   ) {
     this.loadingService.startLoading();
 
     this.user$.subscribe(user => {
-      this.defaultPlan = user.plan;
       this.planSelect.patchValue(user.plan);
     });
 

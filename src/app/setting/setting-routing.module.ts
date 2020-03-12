@@ -16,10 +16,16 @@ const routes: Routes = [
       },
       {
         path: 'account',
+        data: {
+          hideNav: true
+        },
         component: AccountComponent
       },
       {
         path: 'billing',
+        data: {
+          hideNav: true
+        },
         component: BillingComponent
       },
     ]

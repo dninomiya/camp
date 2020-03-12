@@ -55,6 +55,9 @@ const routes: Routes = [
       },
       {
         path: 'setting',
+        data: {
+          hideNav: true
+        },
         loadChildren: () =>
           import('./setting/setting.module').then(m => m.SettingModule),
         canLoad: [AuthGuard]
@@ -121,4 +124,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

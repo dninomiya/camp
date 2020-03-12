@@ -3,7 +3,6 @@ const express = require('express');
 const fs = require('fs');
 const fetch = require('node-fetch');
 const url = require('url');
-
 const useragent = require('express-useragent');
 
 const generateUrl = (req: any) => {

@@ -62,6 +62,9 @@
         <p class="special__description">
           専門用語が並ぶ小難しい技術書を読み込む必要はありません。CAMPの動画教材を使えば直感的に素早く学習することができます。丁寧に解説しながら実際に実装していくのでプロの実装をダイレクトに学習することができます。教材は日々アップデートし、増え続けています。
         </p>
+        <ul class="special-plans">
+          <li class="special-plans__plan">全プラン</li>
+        </ul>
         <div class="special__action">
           <a
             target="_blank"
@@ -113,6 +116,11 @@
         <p class="special__description">
           CAMPは完全オンラインなので時間を選ばずいつでも、何度でも質問することができます。現役エンジニアのメンターが速やかに回答します。他の人の質問を見ることもできます。教材に関する質問はもちろん、キャリア相談や自分のサービスにまつわる質問も可能です。
         </p>
+        <ul class="special-plans">
+          <li class="special-plans__plan">ソロプラン</li>
+          <li class="special-plans__plan">メンタープラン</li>
+          <li class="special-plans__plan">ISAプラン</li>
+        </ul>
         <div class="special__action">
           <button (click)="scrollToElement(flow)" mat-button color="primary">
             学習の進めかた
@@ -133,8 +141,12 @@
           <span>リリースまで作り切る</span>
         </h2>
         <p class="special__description">
-          CAMPではまずメンターと一緒にあなたのオリジナルサービスを企画します。その後、メンターのレビューやアドバイスを受けながらリリースを目指して開発を進めます。スタンダードプランの場合頻繁に進捗管理を行うので、三日坊主になりがちな人もリリースまで確実にやり切ることができます。
+          スクールが用意するお題を言われるがままに組んでもスキルは身につきません。CAMPではまずメンターと一緒にあなたのオリジナルサービスを企画します。その後、メンターのレビューやアドバイスを受けながらリリースを目指して開発を進めます。毎日進捗管理を行うので三日坊主になりがちな人もリリースまで確実にやり切ることができます。
         </p>
+        <ul class="special-plans">
+          <li class="special-plans__plan">メンタープラン</li>
+          <li class="special-plans__plan">ISAプラン</li>
+        </ul>
         <div class="special__action">
           <button
             mat-button
@@ -164,6 +176,9 @@
             動画教材をみながら自分のペースで学習を進め、詰まったら質問するスタイルです。メンターがあなたの開発や進捗に干渉することはないので、気軽に学習を進めることができます。
           </p>
           <div class="cause__button">
+            <button (click)="scrollToElement(plan)" color="primary" mat-button>
+              ライトプラン
+            </button>
             <button (click)="scrollToElement(plan)" color="primary" mat-button>
               ソロプラン
             </button>
@@ -384,6 +399,25 @@
           </div>
         </div>
       </div>
+
+      <div class="isa">
+        <div class="isa__wrap">
+          <figure class="isa__image">
+            <img src="" alt="" />
+          </figure>
+          <div class="isa__body">
+            <h3 class="isa__title">ISAプラン</h3>
+            <p class="isa__description">
+              経済的に授業料が払えない学生の方や社会人の方を対象としたプランです。就職後に給与の一部をシェアしてもらうことを条件に、無料でメンタープランと同等の訓練を受けることができます。
+            </p>
+            <div class="isa__button">
+              <button routerLink="" mat-raised-button color="primary">
+                詳細を見る
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </mat-card>
   </div>
 
@@ -404,7 +438,7 @@
           </div>
           <div class="contact__profile-body">
             <p class="contact__name">Daichi Ninomiya</p>
-            <p class="contact__sub-title">CAMP代表</p>
+            <p class="contact__sub-title">CAMPメンター</p>
           </div>
         </div>
         <div class="contact__icons">

@@ -566,7 +566,7 @@ h2 {
   &__description {
     opacity: 0.6;
     font-size: 16px;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     &:last-child {
       margin-bottom: 0;
     }
@@ -815,4 +815,36 @@ button mat-icon {
 
 .contact-wrap {
   display: inline-block;
+}
+
+.special-plans {
+  margin-bottom: 40px;
+  &__plan {
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 16px;
+    padding: 0 8px;
+    border-radius: 12px;
+    line-height: 24px;
+    border: 1px solid rgba(black, 0.12);
+    color: rgba(black, 0.38);
+  }
+}
+
+.isa-wrap {
+  display: flex;
+  align-items: center;
+  &__image {
+    width: 400px;
+  }
+  &__body {
+    flex: 1;
+  }
+  &__title {
+    margin-bottom: 16px;
+  }
+  &__description {
+    color: rgba(black, 0.6);
+    margin-bottom: 16px;
+  }
 }

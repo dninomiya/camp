@@ -44,11 +44,8 @@ export const charge = async (data: {
     });
 
     return addSettlement({
-      id: item.id,
       userId: customer.uid,
-      sellerEmail: seller.email,
       title: item.title,
-      path: item.path,
       amount: item.amount
     })
   }
