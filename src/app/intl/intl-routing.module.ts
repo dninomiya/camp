@@ -17,11 +17,6 @@ const routes: Routes = [
     component: RootComponent,
     children: [
       {
-        path: 'welcome',
-        loadChildren: () =>
-          import('../welcome/welcome.module').then(m => m.WelcomeModule)
-      },
-      {
         path: 'help',
         component: HelpComponent
       },

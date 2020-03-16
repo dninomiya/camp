@@ -1,3 +1,20 @@
+<header class="header">
+  <h1 class="header__logo">
+    <a routerLink="/">
+      <img src="assets/images/logo.png" alt="" />
+    </a>
+  </h1>
+  <nav class="nav">
+    <a mat-button (click)="scrollToElement(plan)">特徴</a>
+    <a mat-button (click)="scrollToElement(skillSection)">スキル</a>
+    <a mat-button (click)="scrollToElement(mission)">ミッション</a>
+    <a mat-button (click)="scrollToElement(voiceArea)">ボイス</a>
+    <a mat-button (click)="scrollToElement(plan)">プラン</a>
+    <a mat-button (click)="scrollToElement(faq)">Q&A</a>
+    <a mat-button (click)="scrollToElement(contact)">お問い合わせ</a>
+  </nav>
+</header>
+
 <div class="wrap">
   <div class="hero">
     <div class="container">
@@ -220,6 +237,7 @@
       </div>
     </section>
 
+    <div #mission></div>
     <mat-card class="section section--fill">
       <div class="mentor">
         <figure class="mentor__photo">
@@ -243,19 +261,7 @@
       </div>
     </mat-card>
 
-    <mat-card class="section">
-      <h2>Q&A</h2>
-      <p class="lead">
-        ご不明な点はお気軽にお問い合わせください。
-      </p>
-      <div class="qa-grid">
-        <div class="qa" *ngFor="let qa of qas">
-          <h3 class="qa__question">{{ qa.q }}</h3>
-          <p class="qa__answer" [innerHTML]="qa.a"></p>
-        </div>
-      </div>
-    </mat-card>
-
+    <div #voiceArea></div>
     <mat-card class="section">
       <h2>ユーザーボイス</h2>
       <p class="lead">
@@ -337,18 +343,11 @@
         <div class="plan" *ngFor="let plan of plans">
           <h3 class="plan__title">{{ plan.title }}</h3>
           <p class="plan__sub-title">{{ plan.subTitle }}</p>
-          <p class="plan__campaign">新規入会キャンペーン中</p>
-          <p class="plan__price-label">
-            {{ plan.id === 'isa' ? '就職後' : '月額料金' }}
-          </p>
+          <p class="plan__campaign">半額キャンペーン中（4/30まで）</p>
+          <p class="plan__price-label">月額料金</p>
           <p class="plan__price">
-            <ng-container *ngIf="plan.id !== 'isa'; else isa">
-              <small>¥</small><span>{{ plan.amount / 2 | number }}</span
-              ><small>/月</small>
-            </ng-container>
-            <ng-template #isa>
-              <span class="plan__isa-label">給与払い</span>
-            </ng-template>
+            <small>¥</small><span>{{ plan.amount / 2 | number }}</span
+            ><small>/月</small>
           </p>
           <p class="plan__fact-price">正規価格 {{ plan.amount | number }} 円</p>
           <ul class="plan__points">
@@ -403,7 +402,7 @@
       <div class="isa">
         <div class="isa__wrap">
           <figure class="isa__image">
-            <img src="" alt="" />
+            <img src="assets/images/welcome/isa.png" alt="" />
           </figure>
           <div class="isa__body">
             <h3 class="isa__title">ISAプラン</h3>
@@ -411,7 +410,7 @@
               経済的に授業料が払えない学生の方や社会人の方を対象としたプランです。就職後に給与の一部をシェアしてもらうことを条件に、無料でメンタープランと同等の訓練を受けることができます。
             </p>
             <div class="isa__button">
-              <button routerLink="" mat-raised-button color="primary">
+              <button routerLink="/isa" mat-button color="primary">
                 詳細を見る
               </button>
             </div>
@@ -419,8 +418,23 @@
         </div>
       </div>
     </mat-card>
+
+    <div #faq></div>
+    <mat-card class="section">
+      <h2>Q&A</h2>
+      <p class="lead">
+        ご不明な点はお気軽にお問い合わせください。
+      </p>
+      <div class="qa-grid">
+        <div class="qa" *ngFor="let qa of qas">
+          <h3 class="qa__question">{{ qa.q }}</h3>
+          <p class="qa__answer" [innerHTML]="qa.a"></p>
+        </div>
+      </div>
+    </mat-card>
   </div>
 
+  <div #contact></div>
   <section class="contact">
     <div class="container">
       <h2>お問い合わせ</h2>
@@ -473,3 +487,5 @@
     </div>
   </section>
 </div>
+
+<app-footer></app-footer>

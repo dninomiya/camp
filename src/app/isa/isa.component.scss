@@ -1,0 +1,134 @@
+@import 'mixins';
+
+.logo {
+  text-align: center;
+  margin: 80px 0;
+  img {
+    width: 160px;
+    vertical-align: bottom;
+  }
+}
+
+h1 {
+  margin-bottom: 80px;
+}
+
+h2 + p {
+  margin-bottom: 2em;
+}
+
+h3 {
+  margin-top: 40px;
+}
+
+.wrap {
+  padding: 80px;
+  margin-bottom: 80px;
+  @include sp {
+    padding: 16px;
+  }
+}
+
+section {
+  margin-bottom: 80px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 2em;
+  margin: 2em 0;
+}
+
+.spec {
+  dt {
+    color: rgba(black, 0.6);
+    font-size: 12px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  dd {
+    margin-left: 0;
+    margin-bottom: 1em;
+  }
+}
+
+.qa {
+  dt {
+    margin-bottom: 2px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    &:before {
+      content: 'Q.';
+    }
+  }
+  dd {
+    &:before {
+      content: 'A.';
+    }
+    margin-bottom: 2em;
+    color: rgba(black, 0.6);
+    margin-left: 0;
+  }
+}
+
+.demo {
+  &__input {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    margin-bottom: 24px;
+  }
+  &__result {
+    padding: 16px;
+    background: #fafafa;
+    border-radius: 3px;
+    h4 {
+      font-weight: 500;
+      margin: 0 0 12px;
+      line-height: 1;
+      font-size: 12px;
+    }
+  }
+  &__detail {
+    margin: 16px 0;
+  }
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.notice {
+  list-style: none;
+  padding-left: 0;
+  li {
+    color: rgba(black, 0.38);
+    &:before {
+      content: '※';
+      margin-right: 4px;
+    }
+  }
+}
+
+ol {
+  margin: 2em 0;
+  list-style: decimal;
+  padding-left: 2em;
+}
+
+p {
+  margin-bottom: 2em;
+}
+
+.test-image {
+  width: 400px;
+  max-width: 100%;
+  figcaption {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(black, 0.38);
+  }
+}

@@ -83,9 +83,13 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'welcome',
+    path: 'about',
     loadChildren: () =>
       import('./welcome/welcome.module').then(m => m.WelcomeModule)
+  },
+  {
+    path: 'isa',
+    loadChildren: () => import('./isa/isa.module').then(m => m.IsaModule)
   },
   {
     path: 'connect-stripe',
@@ -124,4 +128,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
