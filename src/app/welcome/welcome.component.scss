@@ -36,13 +36,6 @@
   }
 }
 
-app-mock {
-  order: 2;
-  @include sp {
-    display: none;
-  }
-}
-
 .hero {
   position: relative;
   z-index: 2;
@@ -56,6 +49,9 @@ app-mock {
   &__wrap {
     display: flex;
     align-items: center;
+    @include tablet {
+      flex-flow: column;
+    }
     @include sp {
       flex-flow: column;
     }
@@ -63,8 +59,20 @@ app-mock {
   &__body {
     flex: 1;
     order: 1;
-    @include sp {
+    @include tablet {
       order: 2;
+    }
+  }
+  &__mock {
+    order: 2;
+    @include tablet {
+      order: 1;
+      margin-bottom: 140px;
+    }
+    @include sp {
+      transform: scale(0.5) translateX(-70px);
+      transform-origin: center center;
+      margin: -200px 0 -100px;
     }
   }
   &__msg {
@@ -97,6 +105,10 @@ app-mock {
   margin: 48px 0;
   overflow: hidden;
   display: block;
+  @include tablet {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
   &--fill {
     padding: 0;
   }
@@ -193,13 +205,22 @@ h2 {
     margin: 0;
     line-height: 1;
     font-weight: 500;
+    @include tablet {
+      font-size: 24px;
+    }
     small {
       font-size: 24px;
       margin: 0 8px;
+      @include tablet {
+        font-size: 14px;
+      }
       &:first-child {
         margin-left: 0;
         font-size: 32px;
         font-weight: normal;
+        @include tablet {
+          font-size: 24px;
+        }
       }
       &:last-child {
         margin-right: 0;
@@ -224,6 +245,9 @@ h2 {
     font-size: 13px;
     margin-top: 8px;
     color: rgba(black, 0.6);
+    @include tablet {
+      font-size: 11px;
+    }
   }
   &__isa-label {
     font-size: 32px;
@@ -478,6 +502,9 @@ h2 {
     position: relative;
     font-size: 16px;
     z-index: 1;
+    @include tablet {
+      padding: 40px;
+    }
     @include sp {
       padding: 16px;
       order: 2;
@@ -530,6 +557,10 @@ h2 {
     width: 60%;
     padding-right: 80px;
     box-sizing: border-box;
+    @include tablet {
+      width: 50%;
+      padding-right: 40px;
+    }
     @include sp {
       width: 100%;
       padding-right: 0;
@@ -543,6 +574,9 @@ h2 {
       padding-left: 80px;
       padding-right: 0;
       order: 2;
+      @include tablet {
+        padding-left: 40px;
+      }
       @include sp {
         padding-left: 0;
         order: 1;
@@ -585,14 +619,20 @@ button mat-icon {
   left: calc(50% - #{$width} / 2);
   transform: rotateX(20deg) rotateY(30deg) rotateZ(-20deg);
   transform-style: preserve-3d;
+  @include sp {
+    transform: rotateX(20deg) rotateY(20deg) rotateZ(-20deg) scale(0.7);
+  }
 }
 
 .asks {
   padding-left: 80px;
-  @include sp {
-    margin: -100px 0;
+  @include tablet {
     padding-left: 0;
-    transform: scale(0.8) rotateX(60deg);
+  }
+  @include sp {
+    margin: -100px 0 -30px;
+    padding-left: 0;
+    transform: scale(0.7) rotateY(-30deg) rotateX(30deg);
   }
 }
 
@@ -748,6 +788,10 @@ button mat-icon {
   gap: 80px;
   align-items: center;
   margin-bottom: 80px;
+  @include tablet {
+    grid-template-columns: 200px 1fr;
+    grid-area: 40px;
+  }
   @include sp {
     padding: 16px;
     display: block;
@@ -889,11 +933,22 @@ button mat-icon {
   padding: 16px;
   background: #fff;
   align-items: center;
+  @include sp {
+    display: block;
+  }
   &__logo {
-    height: 24px;
     margin: 0;
+    @include sp {
+      margin-bottom: 16px;
+    }
+    a {
+      padding: 8px 16px;
+      display: block;
+      height: 100%;
+    }
     img {
       display: block;
+      height: 24px;
     }
   }
 }

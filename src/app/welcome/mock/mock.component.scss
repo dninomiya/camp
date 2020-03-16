@@ -4,6 +4,9 @@
 :host {
   display: block;
   width: 50%;
+  @include sp {
+    width: 100%;
+  }
 }
 
 .mock-frame {

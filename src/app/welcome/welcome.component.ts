@@ -14,7 +14,13 @@ import * as AOS from 'aos';
 import { PaymentService } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
 import { SwiperOptions } from 'swiper';
-import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChildren,
+  ElementRef
+} from '@angular/core';
 
 @Component({
   selector: 'app-welcome',
@@ -22,7 +28,13 @@ import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef } from '@ang
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit, AfterViewInit {
-  videos = new Array(5).fill('4gM5kgk5brs');
+  videos = [
+    'Dey97I72JtI',
+    'QCJ1THnyAec',
+    'MDyCX0d-NOE',
+    'F5sSI6P5uJo',
+    'nww-Y7HiaGE'
+  ];
   swiperConfig: SwiperOptions = {
     slidesPerView: 3,
     centeredSlides: true,
@@ -161,23 +173,30 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
         .subscribe(status => {
           if (status) {
             this.loading = true;
-            this.loginSnackBar = this.snackBar.open('ログインしています', null, {
-              duration: 2000
-            });
-            this.authService.login().then(() => {
-              this.user$.subscribe(user => {
-                if (user) {
-                  this.loginSnackBar.dismiss();
-                  this.router.navigateByUrl('/intl/signup?planId=' + planId);
-                } else {
-                  this.loginSnackBar.dismiss();
-                  this.loading = false;
-                }
+            this.loginSnackBar = this.snackBar.open(
+              'ログインしています',
+              null,
+              {
+                duration: 2000
+              }
+            );
+            this.authService
+              .login()
+              .then(() => {
+                this.user$.subscribe(user => {
+                  if (user) {
+                    this.loginSnackBar.dismiss();
+                    this.router.navigateByUrl('/intl/signup?planId=' + planId);
+                  } else {
+                    this.loginSnackBar.dismiss();
+                    this.loading = false;
+                  }
+                });
+              })
+              .catch(() => {
+                this.loginSnackBar.dismiss();
+                this.loading = false;
               });
-            }).catch(() => {
-              this.loginSnackBar.dismiss();
-              this.loading = false;
-            });
           }
         });
     }
@@ -186,5 +205,5 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   savePlayer(player) {
     this.player = player;
   }
-  onStateChange(event) { }
+  onStateChange(event) {}
 }
