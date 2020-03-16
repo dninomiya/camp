@@ -1,14 +1,21 @@
 const functions = require('firebase-functions');
 const express = require('express');
-const fs = require('fs');
 const fetch = require('node-fetch');
 const url = require('url');
 const useragent = require('express-useragent');
 
+const appUrl =
+  functions.config().env.mode === 'prod'
+    ? 'to.camp'
+    : 'dev-update.firebaseapp.com';
+
 const generateUrl = (req: any) => {
   return url.format({
     protocol: 'https',
-    host: functions.config().env.mode === 'prod' ? 'tml-prod-74d27.firebaseapp.com' : 'dev-update.firebaseapp.com',
+    host:
+      functions.config().env.mode === 'prod'
+        ? 'tml-prod-74d27.firebaseapp.com'
+        : 'dev-update.firebaseapp.com',
     pathname: req.originalUrl
   });
 };
@@ -28,9 +35,11 @@ app.get('*', async (req: any, res: any) => {
     res.set('Vary', 'User-Agent');
     res.send(body.toString());
   } else {
-    res
-      .status(200)
-      .send(fs.readFileSync(__dirname + '/../hosting/index.html').toString());
+    fetch(`https://${appUrl}`)
+      .then((result: any) => result.text())
+      .then((body: any) => {
+        res.send(body.toString());
+      });
   }
 });
 

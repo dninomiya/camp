@@ -9,11 +9,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "sw-copy": "concat dist/workspace/ngsw-worker.js src/firebase-messaging-sw.js -o dist/workspace/combined-worker.js",
-    "index-copy": "cp dist/workspace/index.html functions/hosting",
     "deploy": "firebase deploy",
-    "release": "firebase use prod && run-s build sw-copy index-copy deploy",
+    "release": "firebase use prod && run-s build sw-copy deploy",
     "prestaging": "ng build",
-    "staging": "firebase use dev && run-s sw-copy index-copy deploy",
+    "staging": "firebase use dev && run-s sw-copy deploy",
     "size": "ng build --prod --source-map && node_modules/.bin/source-map-explorer ./dist/workspace/main.*.js"
   },
   "private": true,
