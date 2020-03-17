@@ -14,6 +14,8 @@ export interface User {
   readonly endAt: firestore.Timestamp;
   readonly payLimitDate?: firestore.Timestamp;
   readonly trialUsed: boolean;
+  readonly currentPeriodStart?: number;
+  readonly currentPeriodEnd?: number;
 
   mailSettings: {
     forum: boolean;

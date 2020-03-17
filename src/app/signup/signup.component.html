@@ -39,7 +39,7 @@
           (click)="signUp(plan.id, payment.customerId)"
           [disabled]="!payment.customerId || loading"
         >
-          {{ user.trialUsed ? '' : '無料で' }}はじめる
+          {{ getSignUpLabel(plan.id) }}
         </button>
         <p class="trial" *ngIf="!user?.trialUsed; else noTrial">
           7日のフリートライアル後に決済がスタートします。
@@ -50,7 +50,15 @@
       </ng-container>
 
       <ng-template #disabled>
-        <p>既に{{ plan.title }}に登録しています。</p>
+        <p>
+          既に{{ plan.title }}に登録しています。（{{
+            user.currentPeriodStart * 1000 | date: 'yyyy年MM月dd日'
+          }}〜{{ user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd' }}）
+        </p>
+
+        <button mat-stroked-button (click)="openUnsubscribeDialog()">
+          自動更新を止める
+        </button>
       </ng-template>
     </ng-container>
   </div>

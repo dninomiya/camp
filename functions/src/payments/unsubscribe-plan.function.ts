@@ -25,13 +25,8 @@ export const unsubscribePlan = functions.https.onCall(
 
     await stripe.subscriptions.del(userPayment.subscriptionId);
 
-    await db.doc(`users/${data.userId}`).update({
-      plan: 'free'
-    });
-
     return db.doc(`users/${data.userId}/private/payment`).update({
-      subscriptionId: null,
-      planId: 'free'
+      subscriptionId: null
     });
   }
 );

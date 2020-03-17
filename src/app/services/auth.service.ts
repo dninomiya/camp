@@ -44,6 +44,7 @@ export class AuthService {
         if (user && user.admin) {
           this.isAdmin = true;
         }
+        this.checkPlanStatus(user);
       }),
       shareReplay(1)
     );
@@ -80,6 +81,20 @@ export class AuthService {
 
   updateUser(data: any): Promise<void> {
     return this.db.doc(`users/${this.afUser.uid}`).update(data);
+  }
+
+  checkPlanStatus(user: User) {
+    if (user.plan === 'free') {
+      return;
+    }
+
+    const from = moment.unix(user.currentPeriodEnd);
+    const to = moment();
+    const diff = from.diff(to, 'days');
+
+    if (diff + 2 < 0) {
+      console.log('object');
+    }
   }
 
   async connectStripe(code: string, scrf: string): Promise<string> {

@@ -18,16 +18,24 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
 
   reasonsTypes = [
     {
+      value: 'goal',
+      label: '目標達成した'
+    },
+    {
       value: 'quality',
       label: 'クオリティが低い'
     },
     {
-      value: 'reply',
-      label: '返信、反応がない'
+      value: 'volume',
+      label: 'コンテンツが少ない'
     },
     {
-      value: 'goal',
-      label: '目標達成した'
+      value: 'cost',
+      label: '料金が高い'
+    },
+    {
+      value: 'reply',
+      label: '返信、反応がない、遅い'
     },
     {
       value: 'other',

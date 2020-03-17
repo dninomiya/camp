@@ -17,7 +17,6 @@ export class CreditCardComponent implements OnInit {
   payment$ = this.user$.pipe(
     switchMap(user => this.paymentService.getUserPayment(user.id)),
     tap(payment => {
-      console.log(payment);
       this.loadingService.endLoading();
       this.loading = false;
     })
@@ -37,10 +36,9 @@ export class CreditCardComponent implements OnInit {
     private authService: AuthService,
     private paymentService: PaymentService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   openCardDialog(customerId = null) {
     this.dialog.open(CardDialogComponent, {
@@ -48,5 +46,4 @@ export class CreditCardComponent implements OnInit {
       data: customerId
     });
   }
-
 }

@@ -35,8 +35,6 @@ jobs:
           name: dist
       - name: Install Dependencies
         run: cd functions && npm install
-      - name: index-copy
-        run: mkdir functions/hosting && npm run index-copy
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:

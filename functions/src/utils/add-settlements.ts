@@ -7,7 +7,7 @@ export const addSettlement = async (data: {
   currentPeriodStart?: number;
   currentPeriodEnd?: number;
 }) => {
-  await db.doc(`users/${data.userId}/private/payment`).update({
+  await db.doc(`users/${data.userId}`).update({
     currentPeriodStart: data.currentPeriodStart,
     currentPeriodEnd: data.currentPeriodEnd
   });
