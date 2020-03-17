@@ -16,6 +16,7 @@ export interface User {
   readonly trialUsed: boolean;
   readonly currentPeriodStart?: number;
   readonly currentPeriodEnd?: number;
+  readonly isCaneclSubscription?: boolean;
 
   mailSettings: {
     forum: boolean;

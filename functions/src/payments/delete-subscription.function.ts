@@ -15,7 +15,8 @@ export const deleteSubscription = functions.https.onRequest(
       await db.doc(`users/${uid}`).update({
         plan: 'free',
         currentPeriodStart: null,
-        currentPeriodEnd: null
+        currentPeriodEnd: null,
+        isCaneclSubscription: false
       });
     }
 

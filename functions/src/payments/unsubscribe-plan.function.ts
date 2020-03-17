@@ -26,5 +26,9 @@ export const unsubscribePlan = functions.https.onCall(
     await stripe.subscriptions.update(userPayment.subscriptionId, {
       cancel_at_period_end: true
     });
+
+    return db.doc(`users/${data.userId}`).update({
+      isCaneclSubscription: true
+    });
   }
 );
