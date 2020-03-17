@@ -93,7 +93,9 @@ export class AuthService {
     const diff = from.diff(to, 'days');
 
     if (diff + 2 < 0) {
-      console.log('object');
+      this.updateUser({
+        plan: 'free'
+      });
     }
   }
 

@@ -71,7 +71,8 @@ export class SignupComponent implements OnInit {
     this.paymentService
       .subscribePlan({
         planId,
-        customerId
+        customerId,
+        trialUsed: this.user.trialUsed
       })
       .then(() => {
         snackBar.dismiss();

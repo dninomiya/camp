@@ -23,10 +23,8 @@ export const unsubscribePlan = functions.https.onCall(
       return;
     }
 
-    await stripe.subscriptions.del(userPayment.subscriptionId);
-
-    return db.doc(`users/${data.userId}/private/payment`).update({
-      subscriptionId: null
+    await stripe.subscriptions.update(userPayment.subscriptionId, {
+      cancel_at_period_end: true
     });
   }
 );

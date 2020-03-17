@@ -15,7 +15,7 @@ export class PaymentService {
   constructor(
     private db: AngularFirestore,
     private fns: AngularFireFunctions
-  ) { }
+  ) {}
 
   setCard(uid: string, card: any): Promise<void> {
     const { address_zip, exp_month, exp_year, last4, brand, id } = card;
@@ -54,6 +54,7 @@ export class PaymentService {
     customerId: string;
     planId: string;
     subscriptionId?: string;
+    trialUsed: boolean;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('subscribePlan');
     return callable(data).toPromise();
@@ -166,7 +167,8 @@ export class PaymentService {
     return this.db
       .collection<Settlement>(`users/${uid}/settlements`, ref => {
         return ref.orderBy('createdAt', 'desc');
-      }).valueChanges();
+      })
+      .valueChanges();
   }
 
   getReceipt(uid: string, id: string): Observable<Settlement> {

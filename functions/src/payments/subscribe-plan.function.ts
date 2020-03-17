@@ -8,8 +8,8 @@ export const subscribePlan = functions.https.onCall(
     data: {
       customerId: string;
       planId: string;
-      channelId: string;
       subscriptionId?: string;
+      trialUsed: boolean;
     },
     context
   ) => {
@@ -29,7 +29,7 @@ export const subscribePlan = functions.https.onCall(
       subscription = await stripe.subscriptions.create({
         customer: data.customerId,
         default_tax_rates: [functions.config().stripe.tax],
-        trial_period_days: 7,
+        trial_period_days: data.trialUsed ? 0 : 7,
         items: [{ plan: planId }]
       });
     }

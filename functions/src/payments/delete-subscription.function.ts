@@ -1,28 +1,24 @@
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
 
-const stripe = require('stripe')(functions.config().stripe.key);
-const planId = functions.config().stripe.plan;
+export const deleteSubscription = functions.https.onRequest(
+  async (req: any, res: any) => {
+    const data = req.body.data.object;
 
-export const deleteSubscription = functions.https.onCall(async (data: {
-  customerId: string,
-}, context) => {
+    const payment = await db
+      .collectionGroup('private')
+      .where('customerId', '==', data.customer)
+      .get();
 
-  if (!context.auth) {
-    throw new Error('認証エラー');
+    if (payment.docs[0].ref.parent.parent) {
+      const uid = payment.docs[0].ref.parent.parent.id;
+      await db.doc(`users/${uid}`).update({
+        plan: 'free',
+        currentPeriodStart: null,
+        currentPeriodEnd: null
+      });
+    }
+
+    res.send(true);
   }
-
-  const userId = context.auth.uid;
-
-  await db.doc(`users/${userId}`).update({
-    plan: 'free'
-  });
-
-  const subscription = (await db.doc(`users/${userId}/subscriptions/${planId}`).get()).data();
-
-  await db.doc(`users/${userId}/subscriptions/${planId}`).delete();
-
-  if (subscription) {
-    await stripe.subscriptions.del(subscription.subscriptionId);
-  }
-});
+);
