@@ -34,6 +34,8 @@ export class SignupComponent implements OnInit {
     })
   );
 
+  cancellationInProgress: boolean;
+
   payment$: Observable<UserPayment> = this.authService.authUser$.pipe(
     switchMap(user => {
       this.user = user;
@@ -106,6 +108,7 @@ export class SignupComponent implements OnInit {
   }
 
   openUnsubscribeDialog() {
+    this.cancellationInProgress = true;
     this.dialog
       .open(SharedConfirmDialogComponent, {
         data: {
@@ -125,13 +128,14 @@ export class SignupComponent implements OnInit {
       .afterClosed()
       .subscribe(status => {
         if (status) {
-          this.canceled = true;
           this.dialog.open(ConfirmUnsubscribeDialogComponent, {
             data: {
               uid: this.user.id,
               planId: this.user.plan
             }
           });
+        } else {
+          this.cancellationInProgress = false;
         }
       });
   }

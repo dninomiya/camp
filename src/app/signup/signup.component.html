@@ -63,7 +63,8 @@
         <button
           *ngIf="!canceled"
           mat-stroked-button
-          (click)="openUnsubscribeDialog(); canceled = true"
+          (click)="openUnsubscribeDialog()"
+          [disabled]="cancellationInProgress"
         >
           自動更新を止める
         </button>
