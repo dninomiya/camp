@@ -137,8 +137,10 @@ export class SignupComponent implements OnInit {
               }
             })
             .afterClosed()
-            .subscribe(() => {
-              this.cancellationInProgress = false;
+            .subscribe(unsubStatus => {
+              if (!unsubStatus) {
+                this.cancellationInProgress = false;
+              }
             });
         } else {
           this.cancellationInProgress = false;

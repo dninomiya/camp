@@ -61,13 +61,20 @@
         </p>
 
         <button
-          *ngIf="!canceled"
+          *ngIf="!canceled; else canceledArea"
           mat-stroked-button
           (click)="openUnsubscribeDialog()"
           [disabled]="cancellationInProgress"
         >
           自動更新を止める
         </button>
+        <ng-template #canceledArea>
+          <p>
+            {{
+              user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd'
+            }}に課金停止（フリープランに変更）
+          </p>
+        </ng-template>
       </ng-template>
     </ng-container>
   </div>
