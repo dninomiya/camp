@@ -128,12 +128,17 @@ export class SignupComponent implements OnInit {
       .afterClosed()
       .subscribe(status => {
         if (status) {
-          this.dialog.open(ConfirmUnsubscribeDialogComponent, {
-            data: {
-              uid: this.user.id,
-              planId: this.user.plan
-            }
-          });
+          this.dialog
+            .open(ConfirmUnsubscribeDialogComponent, {
+              data: {
+                uid: this.user.id,
+                planId: this.user.plan
+              }
+            })
+            .afterClosed()
+            .subscribe(() => {
+              this.cancellationInProgress = false;
+            });
         } else {
           this.cancellationInProgress = false;
         }
