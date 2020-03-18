@@ -48,7 +48,7 @@ export class SignupComponent implements OnInit {
   isUpgrade: boolean;
   loading: boolean;
   canceled: boolean;
-  campaign = moment().isAfter();
+  campaign = moment().isBefore('2020-05-01');
 
   constructor(
     private route: ActivatedRoute,
@@ -60,6 +60,7 @@ export class SignupComponent implements OnInit {
     private dialog: MatDialog,
     private planPipe: PlanPipe
   ) {
+    console.log(this.campaign);
     combineLatest([this.payment$, this.plan$]).subscribe(([payment, plan]) => {
       this.isUpgrade = this.planService.isUpgrade(payment.planId, plan.id);
     });
