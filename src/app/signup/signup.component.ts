@@ -14,6 +14,7 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-signup',
@@ -36,6 +37,7 @@ export class SignupComponent implements OnInit {
   payment$: Observable<UserPayment> = this.authService.authUser$.pipe(
     switchMap(user => {
       this.user = user;
+      this.canceled = user.isCaneclSubscription;
       return this.paymentService.getUserPayment(user.id);
     })
   );
@@ -43,6 +45,8 @@ export class SignupComponent implements OnInit {
   user: User;
   isUpgrade: boolean;
   loading: boolean;
+  canceled: boolean;
+  campaign = moment().isAfter();
 
   constructor(
     private route: ActivatedRoute,
@@ -121,6 +125,7 @@ export class SignupComponent implements OnInit {
       .afterClosed()
       .subscribe(status => {
         if (status) {
+          this.canceled = true;
           this.dialog.open(ConfirmUnsubscribeDialogComponent, {
             data: {
               uid: this.user.id,

@@ -13,6 +13,7 @@
     "release": "firebase use prod && run-s build sw-copy deploy",
     "prestaging": "ng build",
     "staging": "firebase use dev && run-s sw-copy deploy",
+    "devBuild": "ng build && firebase deploy",
     "size": "ng build --prod --source-map && node_modules/.bin/source-map-explorer ./dist/workspace/main.*.js"
   },
   "private": true,

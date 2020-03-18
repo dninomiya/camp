@@ -2,25 +2,16 @@ import { PlanService } from 'src/app/services/plan.service';
 import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
 import { Router } from '@angular/router';
-import { ConfirmUnsubscribeDialogComponent } from './../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { of } from 'rxjs';
 import { take, switchMap } from 'rxjs/operators';
 import { User, UserPayment } from './../interfaces/user';
-import { CardDialogComponent } from './../shared/card-dialog/card-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import * as AOS from 'aos';
 import { PaymentService } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
 import { SwiperOptions } from 'swiper';
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChildren,
-  ElementRef
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-welcome',
@@ -109,57 +100,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
       behavior: 'smooth',
       block: 'start',
       inline: 'nearest'
-    });
-  }
-
-  private upgrade(planId: string) {
-    this.dialog
-      .open(SharedConfirmDialogComponent, {
-        data: {
-          title: '本当にアップグレードしますか？',
-          description:
-            '１週間の無料トライアル後、自動的に引き落としが始まります。'
-        }
-      })
-      .afterClosed()
-      .subscribe(status => {
-        if (status) {
-          this.paymentService
-            .subscribePlan({
-              customerId: this.payment.customerId,
-              planId,
-              subscriptionId: this.payment.subscriptionId
-            })
-            .then(() => {
-              this.snackBar.open('アップグレードしました', null, {
-                duration: 2000
-              });
-            });
-        }
-      });
-  }
-
-  register(planId: string) {
-    if (!this.payment) {
-      this.dialog
-        .open(CardDialogComponent)
-        .afterClosed()
-        .subscribe(status => {
-          if (status) {
-            this.upgrade(planId);
-          }
-        });
-    } else {
-      this.upgrade(planId);
-    }
-  }
-
-  unsubscribe(planId: string) {
-    this.dialog.open(ConfirmUnsubscribeDialogComponent, {
-      data: {
-        uid: this.user.id,
-        planId
-      }
     });
   }
 

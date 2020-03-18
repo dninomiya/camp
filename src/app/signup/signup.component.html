@@ -4,16 +4,20 @@
 
     <div class="section">
       <h2>料金</h2>
-      <p>全プラン3ヶ月半額キャンペーン実施中！ 3/31まで！</p>
-      <p>
-        {{ plan.amount / 2 | number }}円/月
-        <span class="default-price">定価: {{ plan.amount | number }}円/月</span>
-      </p>
+      <ng-container *ngIf="campaign; else default">
+        <p>全プラン3ヶ月半額キャンペーン実施中！ 4/31まで！</p>
+        <p>
+          {{ plan.amount / 2 | number }}円（税込）/月
+          <span class="default-price"
+            >定価: {{ plan.amount | number }}円/月</span
+          >
+        </p>
 
-      <ul class="notice">
-        <li>価格はすべて税込です</li>
-        <li>3ヶ月以降は通常価格で決済がはじまります</li>
-      </ul>
+        <ul class="notice">
+          <li>3ヶ月以降は通常価格で決済がはじまります</li>
+        </ul>
+      </ng-container>
+      <ng-template #default> {{ plan.amount | number }}円/月 </ng-template>
     </div>
 
     <div class="section">
@@ -51,12 +55,16 @@
 
       <ng-template #disabled>
         <p>
-          既に{{ plan.title }}に登録しています。（{{
+          既に{{ plan.title }}プランに登録しています。（{{
             user.currentPeriodStart * 1000 | date: 'yyyy年MM月dd日'
           }}〜{{ user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd' }}）
         </p>
 
-        <button mat-stroked-button (click)="openUnsubscribeDialog()">
+        <button
+          *ngIf="!canceled"
+          mat-stroked-button
+          (click)="openUnsubscribeDialog(); canceled = true"
+        >
           自動更新を止める
         </button>
       </ng-template>
