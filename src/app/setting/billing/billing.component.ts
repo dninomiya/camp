@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { PlanService } from 'src/app/services/plan.service';
 import { SharedConfirmDialogComponent } from './../../core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { Component, OnInit } from '@angular/core';
@@ -48,7 +49,8 @@ export class BillingComponent implements OnInit {
     private paymentService: PaymentService,
     private loadingService: LoadingService,
     private dialog: MatDialog,
-    private planService: PlanService
+    private planService: PlanService,
+    private router: Router
   ) {
     this.loadingService.startLoading();
 
@@ -57,11 +59,11 @@ export class BillingComponent implements OnInit {
     });
 
     this.planSelect.valueChanges.subscribe(plan => {
-      this.dialog.open(SharedConfirmDialogComponent);
+      this.router.navigateByUrl('/intl/signup?planId=' + plan);
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   openCardDialog(customerId = null) {
     this.dialog.open(CardDialogComponent, {

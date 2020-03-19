@@ -18,6 +18,9 @@ export const deleteSubscription = functions.https.onRequest(
         currentPeriodEnd: null,
         isCaneclSubscription: false
       });
+      await db.doc(`users/${uid}/payment`).update({
+        subscriptionId: null
+      });
     }
 
     res.send(true);

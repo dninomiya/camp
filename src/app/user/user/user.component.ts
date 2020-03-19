@@ -55,20 +55,6 @@ export class UserComponent implements OnInit {
       .toDate();
   }
 
-  createSubscription() {
-    if (this.customerId) {
-      this.loading = true;
-      this.paymentService.createSubscription(this.customerId).then(() => {
-        this.snackBar.open('会員登録しました', null, {
-          duration: 2000
-        });
-        this.loading = false;
-      });
-    } else {
-      this.dialog.open(CardDialogComponent);
-    }
-  }
-
   cancellation() {
     if (this.customerId) {
       this.dialog

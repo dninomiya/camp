@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class VimeoService {
-  uploadStepSource = new ReplaySubject<number>();
+  uploadStepSource = new ReplaySubject<number>(1);
   uploadStep$ = this.uploadStepSource.asObservable();
 
   constructor(

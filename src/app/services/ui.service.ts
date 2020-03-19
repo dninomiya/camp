@@ -7,9 +7,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 })
 export class UiService {
   isMobile = this.deviceService.isMobile();
-  isMainNavOpenSource = new ReplaySubject();
+  isMainNavOpenSource = new ReplaySubject(1);
   isMainNavOpen$ = this.isMainNavOpenSource.asObservable();
-  constructor(
-    private deviceService: DeviceDetectorService
-  ) { }
+  constructor(private deviceService: DeviceDetectorService) {}
 }

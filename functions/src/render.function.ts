@@ -6,23 +6,19 @@ const useragent = require('express-useragent');
 
 const appUrl =
   functions.config().env.mode === 'prod'
-    ? 'to.camp'
+    ? 'tml-prod-74d27.firebaseapp.com'
     : 'dev-update.firebaseapp.com';
 
 const generateUrl = (req: any) => {
   return url.format({
     protocol: 'https',
-    host:
-      functions.config().env.mode === 'prod'
-        ? 'tml-prod-74d27.firebaseapp.com'
-        : 'dev-update.firebaseapp.com',
+    host: appUrl,
     pathname: req.originalUrl
   });
 };
 
 const app = express();
 
-app.use(express.static(__dirname + '/../hosting'));
 app.use(useragent.express());
 
 app.get('*', async (req: any, res: any) => {

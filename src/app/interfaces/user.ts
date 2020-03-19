@@ -37,8 +37,6 @@ export interface UserPayment {
   card: PaymentCard;
   customerId: string;
   subscriptionId?: string;
-  planId: string;
-  startAt: Date;
 }
 
 export interface UserConnect {

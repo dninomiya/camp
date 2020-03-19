@@ -1,5 +1,5 @@
 <div class="container" *ngIf="plan$ | async as plan">
-  <div class="wrap">
+  <div class="wrap" *ngIf="user$ | async as user">
     <h1>{{ plan.title }}プランをはじめる</h1>
 
     <div class="section">
@@ -35,47 +35,52 @@
       <app-credit-card></app-credit-card>
     </div>
 
-    <ng-container *ngIf="payment$ | async as payment">
-      <ng-container *ngIf="plan.id !== payment.planId; else disabled">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="signUp(plan.id, payment.customerId)"
-          [disabled]="!payment.customerId || loading"
-        >
-          {{ getSignUpLabel(plan.id) }}
-        </button>
-        <p class="trial" *ngIf="!user?.trialUsed; else noTrial">
-          7日のフリートライアル後に決済がスタートします。
-        </p>
-        <ng-template #noTrial>
-          <p class="trial">以前登録しているためトライアルはありません。</p>
+    <div class="section">
+      <h2>登録</h2>
+      <ng-container *ngIf="payment$ | async as payment">
+        <ng-container *ngIf="plan.id !== user.plan; else disabled">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="
+              signUp(plan.id, payment.customerId, payment.subscriptionId)
+            "
+            [disabled]="!payment.customerId || loading"
+          >
+            {{ getSignUpLabel(plan.id) }}
+          </button>
+          <p class="trial" *ngIf="!user?.trialUsed; else noTrial">
+            7日のフリートライアル後に決済がスタートします。
+          </p>
+          <ng-template #noTrial>
+            <p class="trial">以前登録しているためトライアルはありません。</p>
+          </ng-template>
+        </ng-container>
+
+        <ng-template #disabled>
+          <p>
+            既に{{ plan.title }}プランに登録しています。（{{
+              user.currentPeriodStart * 1000 | date: 'yyyy年MM月dd日'
+            }}〜{{ user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd' }}）
+          </p>
+
+          <button
+            *ngIf="!canceled; else canceledArea"
+            mat-stroked-button
+            (click)="openUnsubscribeDialog()"
+            [disabled]="cancellationInProgress"
+          >
+            自動更新を止める
+          </button>
+          <ng-template #canceledArea>
+            <p>
+              {{
+                user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd'
+              }}に課金停止（フリープランに変更）予定
+            </p>
+          </ng-template>
         </ng-template>
       </ng-container>
-
-      <ng-template #disabled>
-        <p>
-          既に{{ plan.title }}プランに登録しています。（{{
-            user.currentPeriodStart * 1000 | date: 'yyyy年MM月dd日'
-          }}〜{{ user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd' }}）
-        </p>
-
-        <button
-          *ngIf="!canceled; else canceledArea"
-          mat-stroked-button
-          (click)="openUnsubscribeDialog()"
-          [disabled]="cancellationInProgress"
-        >
-          自動更新を止める
-        </button>
-        <ng-template #canceledArea>
-          <p>
-            {{
-              user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd'
-            }}に課金停止（フリープランに変更）
-          </p>
-        </ng-template>
-      </ng-template>
-    </ng-container>
+    </div>
   </div>
 </div>

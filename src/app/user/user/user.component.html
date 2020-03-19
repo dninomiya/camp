@@ -6,12 +6,7 @@
       class="join-standard"
       *ngIf="!user.plan || user.plan === 'free'; else unsubscribeSection"
     >
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="createSubscription()"
-        [disabled]="loading"
-      >
+      <button mat-raised-button color="primary" [disabled]="loading">
         有料会員登録
       </button>
       <span class="join-standard__cost">10万円（税別）/月</span>
@@ -33,7 +28,7 @@
       <dd>{{ user.plan | plan }}</dd>
       <ng-container *ngIf="user.plan === 'isa'">
         <dt>開始</dt>
-        <dd>{{ user.createdAt.toDate() | date: "yyyy年MM月dd日" }}</dd>
+        <dd>{{ user.createdAt.toDate() | date: 'yyyy年MM月dd日' }}</dd>
         <dt>在籍日数</dt>
         <dd>{{ getDays(user.createdAt.toDate()) | number }}日</dd>
         <dt>分配金額: (16,666円/日)</dt>
@@ -43,12 +38,12 @@
         </dd>
         <dt>卒業日</dt>
         <dd *ngIf="user.endAt">
-          {{ user.endAt.toDate() | date: "yyyy年MM月dd日" }}
+          {{ user.endAt.toDate() | date: 'yyyy年MM月dd日' }}
         </dd>
         <dd *ngIf="!user.endAt">-</dd>
         <dt>分配期限</dt>
         <dd *ngIf="user.payLimitDate">
-          {{ user.payLimitDate.toDate() | date: "yyyy年MM月dd日" }}
+          {{ user.payLimitDate.toDate() | date: 'yyyy年MM月dd日' }}
         </dd>
         <dd *ngIf="!user.payLimitDate">
           -

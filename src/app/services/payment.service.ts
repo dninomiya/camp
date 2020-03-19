@@ -181,11 +181,4 @@ export class PaymentService {
     const collable = this.fns.httpsCallable('getDashboardURL');
     return collable(accountId).toPromise();
   }
-
-  createSubscription(customerId: string): Promise<void> {
-    const callable = this.fns.httpsCallable('createSubscription');
-    return callable({
-      customerId
-    }).toPromise();
-  }
 }

@@ -44,6 +44,8 @@ export class SignupComponent implements OnInit {
     })
   );
 
+  user$ = this.authService.authUser$;
+
   user: User;
   isUpgrade: boolean;
   loading: boolean;
@@ -62,13 +64,13 @@ export class SignupComponent implements OnInit {
   ) {
     console.log(this.campaign);
     combineLatest([this.payment$, this.plan$]).subscribe(([payment, plan]) => {
-      this.isUpgrade = this.planService.isUpgrade(payment.planId, plan.id);
+      this.isUpgrade = this.planService.isUpgrade(this.user.plan, plan.id);
     });
   }
 
   ngOnInit(): void {}
 
-  signUp(planId: string, customerId: string) {
+  signUp(planId: string, customerId: string, subscriptionId?: string) {
     const snackBar = this.snackBar.open('プランに登録しています...', null, {
       duration: 2000
     });
@@ -79,7 +81,8 @@ export class SignupComponent implements OnInit {
       .subscribePlan({
         planId,
         customerId,
-        trialUsed: this.user.trialUsed
+        trialUsed: this.user.trialUsed,
+        subscriptionId
       })
       .then(() => {
         snackBar.dismiss();

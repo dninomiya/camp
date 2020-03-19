@@ -16,8 +16,8 @@ export const paymentSucceeded = functions.https.onRequest(
         userId: payment.docs[0].ref.parent.parent.id,
         title: data.lines.data[0].plan.nickname + 'プラン決済',
         amount: data.amount_paid,
-        currentPeriodStart: data.current_period_start,
-        currentPeriodEnd: data.current_period_end
+        currentPeriodStart: data.period_start,
+        currentPeriodEnd: data.period_end
       });
     }
 
