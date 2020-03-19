@@ -7,6 +7,11 @@
     <mat-form-field>
       <mat-label>プラン変更</mat-label>
       <mat-select [formControl]="planSelect">
+        <mat-option value="free" [disabled]="'free' === user.plan"
+          >フリー{{
+            'free' === user.plan ? '（現在のプラン）' : ''
+          }}</mat-option
+        >
         <mat-option
           *ngFor="let plan of plans"
           [value]="plan.id"

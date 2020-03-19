@@ -28,9 +28,9 @@ const createChannel = (user: UserRecord) => {
       closed: 0,
       request: 0
     }
-  }
+  };
   return db.doc(`channels/${user.uid}`).set(channelMeta);
-}
+};
 
 const createAccount = (user: UserRecord) => {
   return db.doc(`users/${user.uid}`).set({
@@ -40,14 +40,15 @@ const createAccount = (user: UserRecord) => {
     avatarURL: user.photoURL,
     createdAt: new Date(),
     trialUsed: false,
+    plan: 'free',
     mailSettings: {
       purchase: true,
       reply: true
     }
   });
-}
+};
 
-export const createUser = functions.auth.user().onCreate(async (user) => {
+export const createUser = functions.auth.user().onCreate(async user => {
   await createAccount(user);
   await createChannel(user);
   if (user && user.email) {

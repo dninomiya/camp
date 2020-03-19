@@ -84,7 +84,7 @@ export class AuthService {
   }
 
   checkPlanStatus(user: User) {
-    if (user.plan === 'free') {
+    if (!user || user.plan === 'free') {
       return;
     }
 

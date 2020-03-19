@@ -2,16 +2,6 @@
   <mat-card *ngIf="user$ | async as user">
     <h1>{{ user.name }}</h1>
 
-    <div
-      class="join-standard"
-      *ngIf="!user.plan || user.plan === 'free'; else unsubscribeSection"
-    >
-      <button mat-raised-button color="primary" [disabled]="loading">
-        有料会員登録
-      </button>
-      <span class="join-standard__cost">10万円（税別）/月</span>
-    </div>
-
     <ng-template #unsubscribeSection>
       <button
         (click)="cancellation()"

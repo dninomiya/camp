@@ -55,7 +55,9 @@ export class BillingComponent implements OnInit {
     this.loadingService.startLoading();
 
     this.user$.subscribe(user => {
-      this.planSelect.patchValue(user.plan);
+      this.planSelect.patchValue(user.plan, {
+        emitEvent: false
+      });
     });
 
     this.planSelect.valueChanges.subscribe(plan => {

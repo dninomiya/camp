@@ -1,3 +1,4 @@
+import { PlanID } from './../interfaces/plan';
 import { ConfirmUnsubscribeDialogComponent } from './../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { PlanPipe } from './../shared/plan.pipe';
 import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
@@ -62,18 +63,17 @@ export class SignupComponent implements OnInit {
     private dialog: MatDialog,
     private planPipe: PlanPipe
   ) {
-    console.log(this.campaign);
     combineLatest([this.payment$, this.plan$]).subscribe(([payment, plan]) => {
-      this.isUpgrade = this.planService.isUpgrade(this.user.plan, plan.id);
+      if (plan) {
+        this.isUpgrade = this.planService.isUpgrade(this.user.plan, plan.id);
+      }
     });
   }
 
   ngOnInit(): void {}
 
-  signUp(planId: string, customerId: string, subscriptionId?: string) {
-    const snackBar = this.snackBar.open('プランに登録しています...', null, {
-      duration: 2000
-    });
+  signUp(planId: PlanID, customerId: string, subscriptionId?: string) {
+    const snackBar = this.snackBar.open('プランに登録しています...');
 
     this.loading = true;
 
@@ -86,9 +86,13 @@ export class SignupComponent implements OnInit {
       })
       .then(() => {
         snackBar.dismiss();
-        this.snackBar.open('ライトプランを開始しました', null, {
-          duration: 2000
-        });
+        this.snackBar.open(
+          `${this.planPipe.transform(planId)}プランを開始しました`,
+          null,
+          {
+            duration: 2000
+          }
+        );
         this.router.navigate(['/']);
       });
   }

@@ -54,7 +54,7 @@ export class CardDialogComponent implements OnInit, OnDestroy, AfterViewInit {
     private fb: FormBuilder,
     private stripeService: StripeService,
     @Inject(MAT_DIALOG_DATA) public customerId?: string
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isEdit = !!this.customerId;
