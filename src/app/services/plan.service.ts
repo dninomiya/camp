@@ -39,7 +39,7 @@ export const PLANS: Plan[] = [
 export class PlanService {
   plans = PLANS;
 
-  constructor() { }
+  constructor() {}
 
   getPlan(planId: string): Plan {
     return this.plans.find(plan => plan.id === planId);

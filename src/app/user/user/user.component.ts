@@ -22,6 +22,8 @@ export class UserComponent implements OnInit {
   loading: boolean;
 
   customerId: string;
+  dayCost = 16666;
+  maxCost = 3000000;
 
   constructor(
     private authService: AuthService,
@@ -39,19 +41,24 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {}
 
-  getDays(from: Date): number {
-    return moment().diff(moment(from), 'days');
+  getDays(start: number, end: number = Date.now()): number {
+    return moment(end).diff(moment(start), 'days');
   }
 
-  getTotalPay(from: Date): number {
-    const monthConst = 500000;
-    const dayCost = monthConst / 30;
-    return Math.round(this.getDays(from) * dayCost);
+  getTotalPay(start: number, end: number): number {
+    return Math.min(this.getDays(start, end) * this.dayCost, this.maxCost);
   }
 
   getLimitDate(from: Date): Date {
     return moment(from)
       .add(4, 'years')
+      .toDate();
+  }
+
+  getPayLimit(end: number) {
+    console.log(end);
+    return moment(end)
+      .add(5, 'years')
       .toDate();
   }
 

@@ -17,6 +17,10 @@ export interface User {
   readonly currentPeriodStart?: number;
   readonly currentPeriodEnd?: number;
   readonly isCaneclSubscription?: boolean;
+  readonly isa?: {
+    start: number;
+    end: number;
+  };
 
   mailSettings: {
     forum: boolean;

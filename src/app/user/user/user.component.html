@@ -2,43 +2,56 @@
   <mat-card *ngIf="user$ | async as user">
     <h1>{{ user.name }}</h1>
 
-    <ng-template #unsubscribeSection>
-      <button
-        (click)="cancellation()"
-        mat-button
-        *ngIf="user.plan === 'standard'"
-        [disabled]="loading"
-      >
-        解約
-      </button>
-    </ng-template>
+    <ng-container *ngIf="user.plan !== 'isa'">
+      <section>
+        <h2>プラン</h2>
+        <p>{{ user.plan | plan }}プラン</p>
+      </section>
 
-    <dl>
-      <dt>プラン</dt>
-      <dd>{{ user.plan | plan }}</dd>
-      <ng-container *ngIf="user.plan === 'isa'">
-        <dt>開始</dt>
-        <dd>{{ user.createdAt.toDate() | date: 'yyyy年MM月dd日' }}</dd>
-        <dt>在籍日数</dt>
-        <dd>{{ getDays(user.createdAt.toDate()) | number }}日</dd>
-        <dt>分配金額: (16,666円/日)</dt>
+      <section>
+        <ng-container *ngIf="user.plan !== 'free'">
+          <h2>プラン更新停止</h2>
+          <p class="note">
+            更新停止すると{{
+              user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd日'
+            }}にフリープランになります
+          </p>
+          <button
+            (click)="cancellation()"
+            mat-stroked-button
+            [disabled]="loading"
+          >
+            更新停止
+          </button>
+        </ng-container>
+      </section>
+    </ng-container>
+
+    <section *ngIf="user.plan === 'isa'">
+      <h2>ISA</h2>
+      <dl>
+        <dt>開始日</dt>
+        <dd>{{ user.isa?.start | date: 'yyyy年MM月dd日' }}</dd>
+        <dt>終了日</dt>
         <dd>
-          {{ getTotalPay(user.createdAt.toDate()) | number }}円 /
-          {{ 3000000 | number }}円
+          {{ user.isa?.end ? (user.isa?.end | date: 'yyyy年MM月dd日') : '-' }}
         </dd>
-        <dt>卒業日</dt>
-        <dd *ngIf="user.endAt">
-          {{ user.endAt.toDate() | date: 'yyyy年MM月dd日' }}
+        <dt>在籍日数</dt>
+        <dd>{{ getDays(user.isa?.start, user.isa?.end) | number }}日</dd>
+        <dt>分配金額: ({{ dayCost | number }}円/日)</dt>
+        <dd>
+          {{ getTotalPay(user.isa?.start, user.isa?.end) | number }}円 /
+          {{ maxCost | number }}円
         </dd>
-        <dd *ngIf="!user.endAt">-</dd>
         <dt>分配期限</dt>
-        <dd *ngIf="user.payLimitDate">
-          {{ user.payLimitDate.toDate() | date: 'yyyy年MM月dd日' }}
+        <dd>
+          {{
+            user.isa?.end
+              ? (getPayLimit(user.isa?.end) | date: 'yyyy年MM月dd日')
+              : '-'
+          }}
         </dd>
-        <dd *ngIf="!user.payLimitDate">
-          -
-        </dd>
-      </ng-container>
-    </dl>
+      </dl>
+    </section>
   </mat-card>
 </div>

@@ -6,12 +6,14 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'plan'
 })
 export class PlanPipe implements PipeTransform {
-  constructor(private planService: PlanService) { }
+  constructor(private planService: PlanService) {}
 
   transform(planId: PlanID): any {
     switch (planId) {
       case 'free':
         return 'フリー';
+      case 'isa':
+        return 'ISA';
       default:
         return this.planService.plans.find(plan => plan.id === planId).title;
     }
