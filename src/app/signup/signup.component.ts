@@ -1,8 +1,5 @@
 import { PlanID } from './../interfaces/plan';
-import { ConfirmUnsubscribeDialogComponent } from './../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { PlanPipe } from './../shared/plan.pipe';
-import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 import { User } from './../interfaces/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserPayment } from 'src/app/interfaces/user';
@@ -14,7 +11,6 @@ import { Observable, combineLatest } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { formatDate } from '@angular/common';
 import * as moment from 'moment';
 
 @Component({
@@ -34,8 +30,6 @@ export class SignupComponent implements OnInit {
       }
     })
   );
-
-  cancellationInProgress: boolean;
 
   payment$: Observable<UserPayment> = this.authService.authUser$.pipe(
     switchMap(user => {
@@ -60,7 +54,6 @@ export class SignupComponent implements OnInit {
     private paymentService: PaymentService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private dialog: MatDialog,
     private planPipe: PlanPipe
   ) {
     combineLatest([this.payment$, this.plan$]).subscribe(([payment, plan]) => {
@@ -113,45 +106,5 @@ export class SignupComponent implements OnInit {
       );
       return newPlanIndex > oldPlanIndex ? 'アップグレード' : 'ダウングレード';
     }
-  }
-
-  openUnsubscribeDialog() {
-    this.cancellationInProgress = true;
-    this.dialog
-      .open(SharedConfirmDialogComponent, {
-        data: {
-          title: '自動更新を停止しますか？',
-          description:
-            '自動更新を停止すると' +
-            formatDate(
-              new Date(this.user.currentPeriodEnd * 1000),
-              'yyyy年MM月dd日',
-              'ja'
-            ) +
-            '以降フリープランになります。それまでは引き続き' +
-            this.planPipe.transform(this.user.plan) +
-            'プランをご利用いただけます。'
-        }
-      })
-      .afterClosed()
-      .subscribe(status => {
-        if (status) {
-          this.dialog
-            .open(ConfirmUnsubscribeDialogComponent, {
-              data: {
-                uid: this.user.id,
-                planId: this.user.plan
-              }
-            })
-            .afterClosed()
-            .subscribe(unsubStatus => {
-              if (!unsubStatus) {
-                this.cancellationInProgress = false;
-              }
-            });
-        } else {
-          this.cancellationInProgress = false;
-        }
-      });
   }
 }

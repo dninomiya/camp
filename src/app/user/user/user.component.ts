@@ -1,3 +1,5 @@
+import { PlanPipe } from './../../shared/plan.pipe';
+import { ConfirmUnsubscribeDialogComponent } from './../../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { SharedConfirmDialogComponent } from './../../core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { CardDialogComponent } from 'src/app/shared/card-dialog/card-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,13 +10,15 @@ import { User } from 'src/app/interfaces/user';
 import { AuthService } from './../../services/auth.service';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
 
 import * as moment from 'moment';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
+  providers: [PlanPipe]
 })
 export class UserComponent implements OnInit {
   user$: Observable<User> = this.userService.getUser(this.authService.user.id);
@@ -24,13 +28,15 @@ export class UserComponent implements OnInit {
   customerId: string;
   dayCost = 16666;
   maxCost = 3000000;
+  cancellationInProgress: boolean;
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private paymentService: PaymentService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private planPipe: PlanPipe
   ) {
     this.paymentService
       .getUserPayment(this.authService.user.id)
@@ -62,28 +68,43 @@ export class UserComponent implements OnInit {
       .toDate();
   }
 
-  cancellation() {
-    if (this.customerId) {
-      this.dialog
-        .open(SharedConfirmDialogComponent, {
-          restoreFocus: false,
-          data: {
-            title: '本当に解約しますか？',
-            description: '解約するとCAMPから退会となります'
-          }
-        })
-        .afterClosed()
-        .subscribe(status => {
-          if (status) {
-            this.loading = true;
-            this.paymentService.deleteSubscription(this.customerId).then(() => {
-              this.snackBar.open('解約しました', null, {
-                duration: 2000
-              });
-              this.loading = false;
+  openUnsubscribeDialog(user: User) {
+    this.cancellationInProgress = true;
+    this.dialog
+      .open(SharedConfirmDialogComponent, {
+        data: {
+          title: '自動更新を停止しますか？',
+          description:
+            '自動更新を停止すると' +
+            formatDate(
+              new Date(user.currentPeriodEnd * 1000),
+              'yyyy年MM月dd日',
+              'ja'
+            ) +
+            '以降フリープランになります。それまでは引き続き' +
+            this.planPipe.transform(user.plan) +
+            'プランをご利用いただけます。'
+        }
+      })
+      .afterClosed()
+      .subscribe(status => {
+        if (status) {
+          this.dialog
+            .open(ConfirmUnsubscribeDialogComponent, {
+              data: {
+                uid: user.id,
+                planId: user.plan
+              }
+            })
+            .afterClosed()
+            .subscribe(unsubStatus => {
+              if (!unsubStatus) {
+                this.cancellationInProgress = false;
+              }
             });
-          }
-        });
-    }
+        } else {
+          this.cancellationInProgress = false;
+        }
+      });
   }
 }
