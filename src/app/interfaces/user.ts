@@ -9,7 +9,6 @@ export interface User {
   readonly createdAt: firestore.Timestamp;
   readonly isCustomer: boolean;
   readonly isSeller: boolean;
-  readonly mentor: boolean;
   readonly admin: boolean;
   readonly plan: PlanID;
   readonly endAt: firestore.Timestamp;

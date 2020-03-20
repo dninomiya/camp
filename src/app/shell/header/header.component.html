@@ -30,7 +30,7 @@
             mat-icon-button
             routerLink="/new"
             matTooltip="投稿"
-            *ngIf="user.mentor"
+            *ngIf="user.admin"
           >
             <mat-icon class="mat-18">video_call</mat-icon>
           </button>
@@ -45,14 +45,6 @@
           "
         ></button>
         <mat-menu #menu="matMenu">
-          <button
-            *ngIf="user.mentor"
-            mat-menu-item
-            routerLink="/channel/{{ user.id }}"
-          >
-            <mat-icon>account_box</mat-icon>
-            <span>チャンネル</span>
-          </button>
           <button mat-menu-item routerLink="/users/{{ user.id }}">
             <mat-icon>account_box</mat-icon>
             <span>マイページ</span>
@@ -62,7 +54,7 @@
             <span>{{ title }}</span>
           </button>
           <button
-            *ngIf="!isStudio && !isMobile && user.mentor"
+            *ngIf="!isStudio && !isMobile && user.admin"
             mat-menu-item
             routerLink="/studio/{{ user.id }}"
           >
@@ -102,7 +94,7 @@
         (click)="login()"
         [disabled]="loginWaiting"
       >
-        {{ loginWaiting ? "アカウント作成中" : "ログイン" }}
+        {{ loginWaiting ? 'アカウント作成中' : 'ログイン' }}
       </button>
     </ng-template>
   </mat-toolbar-row>
