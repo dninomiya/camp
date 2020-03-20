@@ -1,3 +1,4 @@
+import { tap } from 'rxjs/operators';
 import { PlanPipe } from './../../shared/plan.pipe';
 import { ConfirmUnsubscribeDialogComponent } from './../../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { SharedConfirmDialogComponent } from './../../core/shared-confirm-dialog/shared-confirm-dialog.component';
@@ -21,10 +22,12 @@ import * as moment from 'moment';
   providers: [PlanPipe]
 })
 export class UserComponent implements OnInit {
-  user$: Observable<User> = this.userService.getUser(this.authService.user.id);
+  user$: Observable<User> = this.userService
+    .getUser(this.authService.user.id)
+    .pipe(tap(user => (this.canceled = user.isCaneclSubscription)));
 
   loading: boolean;
-
+  canceled: boolean;
   customerId: string;
   dayCost = 16666;
   maxCost = 3000000;
