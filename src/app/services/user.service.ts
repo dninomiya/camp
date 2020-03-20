@@ -7,10 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class UserService {
-
-  constructor(
-    private db: AngularFirestore
-  ) { }
+  constructor(private db: AngularFirestore) {}
 
   getUser(uid: string): Observable<User> {
     return this.db.doc<User>(`users/${uid}`).valueChanges();
@@ -21,19 +18,15 @@ export class UserService {
   }
 
   getRanking(): Observable<User[]> {
-    return this.db.collection<User>('users', ref => {
-      return ref.orderBy('point', 'desc').limit(5);
-    }).valueChanges();
+    return this.db
+      .collection<User>('users', ref => {
+        return ref.orderBy('point', 'desc').limit(5);
+      })
+      .valueChanges();
   }
 
-  getUsers(plan?: string): Observable<User[]> {
-    if (plan) {
-      return this.db.collection<User>('users', ref => {
-        return ref.where('plan', '==', plan);
-      }).valueChanges();
-    } else {
-      return this.db.collection<User>('users').valueChanges();
-    }
+  getUsers(): Observable<User[]> {
+    return this.db.collection<User>('users').valueChanges();
   }
 
   async createInviteCode(): Promise<string> {

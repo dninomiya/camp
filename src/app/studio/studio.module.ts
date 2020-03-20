@@ -19,6 +19,7 @@ import { NgAisModule } from 'angular-instantsearch';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { SearchLessonInputComponent } from './search-lesson-input/search-lesson-input.component';
 import { ImageDialogComponent } from './image-dialog/image-dialog.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ImageDialogComponent } from './image-dialog/image-dialog.component';
     MultipleLessonEditDialogComponent,
     SearchLessonInputComponent,
     ImageDialogComponent,
+    UserListComponent,
   ],
   imports: [
     SharedModule,

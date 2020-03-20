@@ -43,7 +43,7 @@ export class LessonsComponent implements OnInit {
     switchMap(({ id }) => {
       return this.listService.getLists(id).pipe(take(1));
     }),
-    shareReplay()
+    shareReplay(1)
   );
   causeOptions$: Observable<LessonListWithCheckStatus[]>;
   lessons$ = this.route.parent.params.pipe(
