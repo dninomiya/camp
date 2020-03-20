@@ -1,13 +1,20 @@
+import { sendEmail } from './../utils/sendgrid';
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
+const PLAN_LABELS = {
+  lite: 'ライト',
+  solo: 'ソロ',
+  mentor: 'メンター'
+};
+
 export const subscribePlan = functions.https.onCall(
   async (
     data: {
       customerId: string;
-      planId: string;
+      planId: 'lite' | 'solo' | 'mentor';
       subscriptionId?: string;
       trialUsed: boolean;
     },
@@ -40,6 +47,18 @@ export const subscribePlan = functions.https.onCall(
       trialUsed: true,
       currentPeriodStart: subscription.current_period_start,
       currentPeriodEnd: subscription.current_period_end
+    });
+
+    const user = (await db.doc(`users/${userId}`).get()).data() as any;
+
+    await sendEmail({
+      to: 'daichi.ninomiya@deer.co.jp',
+      templateId: 'registerToAdmin',
+      dynamicTemplateData: {
+        email: user.email,
+        name: user.name,
+        plan: PLAN_LABELS[data.planId]
+      }
     });
 
     await db.doc(`users/${userId}/private/payment/`).update({
