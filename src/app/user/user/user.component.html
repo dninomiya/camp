@@ -5,13 +5,26 @@
     <ng-container *ngIf="user.plan !== 'isa'">
       <section>
         <h2>プラン</h2>
-        <p>{{ user.plan | plan }}プラン</p>
+        <p class="current-plan">{{ user.plan | plan }}プラン</p>
+        <button mat-stroked-button routerLink="/about" fragment="plan">
+          プラン変更
+        </button>
+
+        <h3>プラン内容</h3>
+        <ul *ngIf="getPlan(user.plan); else free">
+          <li *ngFor="let point of getPlan(user.plan).points">
+            {{ point }}
+          </li>
+        </ul>
+        <ng-template #free>
+          <p>なし</p>
+        </ng-template>
       </section>
 
       <section>
         <ng-container *ngIf="user.plan !== 'free'">
           <h2>プラン更新停止</h2>
-          <p class="note">
+          <p class="note" *ngIf="!canceled">
             更新停止すると{{
               user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd日'
             }}にフリープランになります

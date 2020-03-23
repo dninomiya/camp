@@ -1,7 +1,7 @@
 import { PlanService } from 'src/app/services/plan.service';
 import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { take, switchMap } from 'rxjs/operators';
@@ -55,7 +55,8 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.authService.authUser$.subscribe(user => {
       this.user = user;

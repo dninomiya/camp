@@ -1,3 +1,4 @@
+import { PlanService } from 'src/app/services/plan.service';
 import { tap } from 'rxjs/operators';
 import { PlanPipe } from './../../shared/plan.pipe';
 import { ConfirmUnsubscribeDialogComponent } from './../../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
@@ -37,7 +38,7 @@ export class UserComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private paymentService: PaymentService,
-    private snackBar: MatSnackBar,
+    private planService: PlanService,
     private dialog: MatDialog,
     private planPipe: PlanPipe
   ) {
@@ -52,6 +53,10 @@ export class UserComponent implements OnInit {
 
   getDays(start: number, end: number = Date.now()): number {
     return moment(end).diff(moment(start), 'days');
+  }
+
+  getPlan(planId: string) {
+    return this.planService.getPlan(planId);
   }
 
   getTotalPay(start: number, end: number): number {
