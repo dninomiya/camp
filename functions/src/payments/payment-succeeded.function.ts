@@ -11,7 +11,7 @@ export const paymentSucceeded = functions.https.onRequest(
       .where('customerId', '==', data.customer)
       .get();
 
-    if (payment.docs[0].ref.parent.parent) {
+    if (payment.docs[0].ref.parent.parent && data.amount_paid > 0) {
       await addSettlement({
         userId: payment.docs[0].ref.parent.parent.id,
         title: data.lines.data[0].plan.nickname + 'プラン決済',
