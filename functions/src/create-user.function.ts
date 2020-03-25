@@ -48,15 +48,18 @@ const createAccount = (user: UserRecord) => {
   });
 };
 
-export const createUser = functions.auth.user().onCreate(async user => {
-  await createAccount(user);
-  await createChannel(user);
-  if (user && user.email) {
-    return sendEmail({
-      to: user.email,
-      templateId: 'register'
-    });
-  } else {
-    return;
-  }
-});
+export const createUser = functions
+  .region('asia-northeast1')
+  .auth.user()
+  .onCreate(async user => {
+    await createAccount(user);
+    await createChannel(user);
+    if (user && user.email) {
+      return sendEmail({
+        to: user.email,
+        templateId: 'register'
+      });
+    } else {
+      return;
+    }
+  });

@@ -41,8 +41,9 @@ export const createReply = functions
     }
   });
 
-export const checkThreadPaymentStatus = functions.https.onCall(
-  async (data, context) => {
+export const checkThreadPaymentStatus = functions
+  .region('asia-northeast1')
+  .https.onCall(async (data, context) => {
     const result = await Promise.all([
       db.doc(`users/${data.customerId}`).get(),
       db.doc(`users/${data.sellerId}`).get()
@@ -55,8 +56,7 @@ export const checkThreadPaymentStatus = functions.https.onCall(
       customer: customer && customer.isCustomer,
       seller: seller && seller.isSeller
     };
-  }
-);
+  });
 
 export const createThread = functions
   .region('asia-northeast1')

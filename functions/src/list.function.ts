@@ -15,6 +15,6 @@
 //   return db.doc(`channels/${user.uid}`).set(channelMeta);
 // });
 
-// export const deleteChannel = functions.auth.user().onDelete((user) => {
+// export const deleteChannel = functions.region('asia-northeast1').auth.user().onDelete((user) => {
 //   return db.doc(`channels/${user.uid}`).delete();
 // });

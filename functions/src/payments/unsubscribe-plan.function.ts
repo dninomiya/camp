@@ -10,7 +10,7 @@ const PLAN_LABELS = {
   mentor: 'メンター'
 };
 
-export const unsubscribePlan = functions.https.onCall(
+export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
   async (
     data: {
       userId: string;

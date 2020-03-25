@@ -39,4 +39,4 @@ app.get('*', async (req: any, res: any) => {
   }
 });
 
-export const render = functions.https.onRequest(app);
+export const render = functions.region('asia-northeast1').https.onRequest(app);

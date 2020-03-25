@@ -48,6 +48,7 @@ export const deleteUser = functions
     timeoutSeconds: 540,
     memory: '2GB'
   })
+  .region('asia-northeast1')
   .https.onCall(async (data, context) => {
     const uid = data.uid;
 

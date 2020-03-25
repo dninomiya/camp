@@ -1,8 +1,9 @@
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
 
-export const deleteSubscription = functions.https.onRequest(
-  async (req: any, res: any) => {
+export const deleteSubscription = functions
+  .region('asia-northeast1')
+  .https.onRequest(async (req: any, res: any) => {
     const data = req.body.data.object;
 
     const payment = await db
@@ -24,5 +25,4 @@ export const deleteSubscription = functions.https.onRequest(
     }
 
     res.send(true);
-  }
-);
+  });
