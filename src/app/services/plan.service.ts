@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Plan } from '../interfaces/plan';
+import * as moment from 'moment';
 
 export const PLANS: Plan[] = [
   {
@@ -38,6 +39,7 @@ export const PLANS: Plan[] = [
 })
 export class PlanService {
   plans = PLANS;
+  isCampaign = moment().isBefore('2020-05-01');
 
   constructor() {}
 

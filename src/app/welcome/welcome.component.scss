@@ -726,9 +726,9 @@ button mat-icon {
   }
   &__check {
     position: absolute;
-    top: calc(50% - 20px);
+    top: calc(50% - 16px);
     right: -64px;
-    font-size: 40px;
+    font-size: 32px !important;
     color: #00c853;
     .aos-animate & {
       animation: checkIn 0.3s 2.6s both;

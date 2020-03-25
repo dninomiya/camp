@@ -33,6 +33,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     autoplay: true,
     allowTouchMove: false
   };
+  isCampaign = this.planService.isCampaign;
   isSwiperReady: boolean;
   asks = ASKS;
   planFeatures = PLAN_FEATURES;

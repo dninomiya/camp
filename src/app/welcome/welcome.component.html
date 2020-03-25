@@ -21,12 +21,12 @@
       <div class="hero__wrap">
         <div class="hero__body">
           <p class="hero__msg">
-            <span>Webサービス開発の</span>
-            <span>エキスパートを育てる</span>
+            <span>自分だけの</span>
+            <span>Webサービスを作る</span>
           </p>
           <p class="hero__sub">
             <span
-              >CAMPは現役エンジニアから最新の正しいWebサービス開発を学べるエキスパート養成キャンプです。即戦力のエンジニアや週末起業家に必要なスキルを身に付けることができます。</span
+              >現役エンジニアが最新技術を使ったWebサービス開発を教えます。週末起業したい人、エンジニアになりたい人が利用しています。</span
             >
           </p>
           <button
@@ -343,13 +343,20 @@
         <div class="plan" *ngFor="let plan of plans">
           <h3 class="plan__title">{{ plan.title }}</h3>
           <p class="plan__sub-title">{{ plan.subTitle }}</p>
-          <p class="plan__campaign">半額キャンペーン中（4/30まで）</p>
+          <p class="plan__campaign" *ngIf="isCampaign">
+            半額キャンペーン中（4/30まで）
+          </p>
           <p class="plan__price-label">月額料金</p>
           <p class="plan__price">
-            <small>¥</small><span>{{ plan.amount / 2 | number }}</span
+            <small>¥</small
+            ><span>{{
+              (isCampaign ? plan.amount / 2 : plan.amount) | number
+            }}</span
             ><small>/月</small>
           </p>
-          <p class="plan__fact-price">正規価格 {{ plan.amount | number }} 円</p>
+          <p *ngIf="isCampaign" class="plan__fact-price">
+            正規価格 {{ plan.amount | number }} 円
+          </p>
           <ul class="plan__points">
             <li *ngFor="let point of plan.points">{{ point }}</li>
           </ul>

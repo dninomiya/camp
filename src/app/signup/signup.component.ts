@@ -45,7 +45,7 @@ export class SignupComponent implements OnInit {
   isUpgrade: boolean;
   loading: boolean;
   canceled: boolean;
-  campaign = moment().isBefore('2020-05-01');
+  campaign = this.planService.isCampaign;
 
   constructor(
     private route: ActivatedRoute,
