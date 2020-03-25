@@ -1,8 +1,9 @@
 import * as functions from 'firebase-functions';
 import { db, sendNotification, charge } from './utils';
 
-export const createReply = functions.firestore
-  .document('threads/{threadId}/replies/{rid}')
+export const createReply = functions
+  .region('asia-northeast1')
+  .firestore.document('threads/{threadId}/replies/{rid}')
   .onCreate(async (snapshot, context) => {
     const data = snapshot.data();
 
@@ -10,14 +11,17 @@ export const createReply = functions.firestore
       throw new Error('data is broken');
     }
 
-    const targetId = data.authorId === data.thread.authorId ? data.thread.targetId : data.thread.authorId;
+    const targetId =
+      data.authorId === data.thread.authorId
+        ? data.thread.targetId
+        : data.thread.authorId;
     const target = await db.doc(`users/${targetId}`).get();
     const targetData = target.data();
 
     const item = {
       title: `「${data.thread.title}」に返信がありました`,
       path: `/forum/${data.thread.id}?status=${data.thread.status}`,
-      body: data.body,
+      body: data.body
     };
 
     if (targetData) {
@@ -37,24 +41,27 @@ export const createReply = functions.firestore
     }
   });
 
-export const checkThreadPaymentStatus = functions.https.onCall(async (data, context) => {
-  const result = await Promise.all([
-    db.doc(`users/${data.customerId}`).get(),
-    db.doc(`users/${data.sellerId}`).get(),
-  ]);
+export const checkThreadPaymentStatus = functions.https.onCall(
+  async (data, context) => {
+    const result = await Promise.all([
+      db.doc(`users/${data.customerId}`).get(),
+      db.doc(`users/${data.sellerId}`).get()
+    ]);
 
-  const customer = result[0].data();
-  const seller = result[1].data();
+    const customer = result[0].data();
+    const seller = result[1].data();
 
-  return {
-    customer: customer && customer.isCustomer,
-    seller: seller && seller.isSeller,
-  };
-});
+    return {
+      customer: customer && customer.isCustomer,
+      seller: seller && seller.isSeller
+    };
+  }
+);
 
-export const createThread = functions.firestore
-  .document('threads/{threadId}')
-  .onCreate(async (snapshot) => {
+export const createThread = functions
+  .region('asia-northeast1')
+  .firestore.document('threads/{threadId}')
+  .onCreate(async snapshot => {
     const thread = snapshot.data();
 
     if (!thread) {
@@ -66,7 +73,7 @@ export const createThread = functions.firestore
     const item = {
       title: `リクエスト「${thread.title}」がありました`,
       path: `/forum/${thread.id}?status=request`,
-      body: thread.body,
+      body: thread.body
     };
 
     if (targetData) {
@@ -82,13 +89,14 @@ export const createThread = functions.firestore
           mailSettings: targetData.mailSettings
         },
         dynamicTemplateData: item
-      })
+      });
     }
   });
 
-export const updateThread = functions.firestore
-  .document('threads/{threadId}')
-  .onUpdate(async (change) => {
+export const updateThread = functions
+  .region('asia-northeast1')
+  .firestore.document('threads/{threadId}')
+  .onUpdate(async change => {
     const before = change.before.data();
     const after = change.after.data();
 
@@ -109,7 +117,7 @@ export const updateThread = functions.firestore
       const item = {
         title: `「${thread.title}」が${action}しました`,
         path: `/forum/${thread.id}?status=${thread.status}`,
-        body: thread.body,
+        body: thread.body
       };
 
       if (targetData) {
@@ -128,9 +136,13 @@ export const updateThread = functions.firestore
         });
 
         if (after.status === 'open') {
-          const customer = (await db.doc(`users/${target.id}/private/payment`).get()).data();
+          const customer = (
+            await db.doc(`users/${target.id}/private/payment`).get()
+          ).data();
           const customerId = customer && customer.customerId;
-          const seller = (await db.doc(`users/${thread.targetId}/private/connect`).get()).data();
+          const seller = (
+            await db.doc(`users/${thread.targetId}/private/connect`).get()
+          ).data();
           const sellerId = seller && seller.stripeUserId;
 
           if (!seller) {

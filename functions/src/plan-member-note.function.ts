@@ -1,8 +1,9 @@
 import * as functions from 'firebase-functions';
 import { countUp, countDown } from './utils';
 
-export const createNote = functions.firestore
-  .document(
+export const createNote = functions
+  .region('asia-northeast1')
+  .firestore.document(
     `channels/{channelId}/plans/{planId}/members/{memberId}/notes/{noteId}`
   )
   .onCreate((snapshot, context) => {
@@ -12,8 +13,9 @@ export const createNote = functions.firestore
     );
   });
 
-export const deleteNote = functions.firestore
-  .document(
+export const deleteNote = functions
+  .region('asia-northeast1')
+  .firestore.document(
     `channels/{channelId}/plans/{planId}/members/{memberId}/notes/{noteId}`
   )
   .onDelete((snapshot, context) => {

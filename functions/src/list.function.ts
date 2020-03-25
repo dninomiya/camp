@@ -1,7 +1,7 @@
 // import * as functions from 'firebase-functions';
 // import { db } from './utils';
 
-// export const addLessonToList = functions.firestore
+// export const addLessonToList = functions.region('asia-northeast1').firestore
 //   .document('lists/{{listId}}/lessons/{{lessonId}}').onCreate((user) => {
 //   const channelMeta = {
 //     id: user.uid,
