@@ -17,11 +17,11 @@ export class AppComponent {
   constructor(
     private logUpdateService: LogUpdateService,
     private seoService: SeoService,
-    @Inject(DOCUMENT) private _document: HTMLDocument
+    @Inject(DOCUMENT) private rootDocument: HTMLDocument
   ) {
     if (!environment.production) {
       this.seoService.addNoIndex();
-      this._document
+      this.rootDocument
         .querySelector('[rel=icon')
         .setAttribute('href', 'favicon-dev.svg');
     }
