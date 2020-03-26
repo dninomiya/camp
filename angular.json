@@ -24,8 +24,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/favicon-dev.svg",
+              "src/favicon.svg",
               "src/assets",
               "src/manifest.json",
               "src/firebase-messaging-sw.js",
@@ -62,6 +61,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/favicon.svg",
+                  "with": "src/favicon.prod.svg"
                 }
               ],
               "optimization": true,

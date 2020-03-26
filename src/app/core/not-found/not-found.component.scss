@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 :host {
   display: block;
@@ -7,8 +7,7 @@
 }
 
 .wrap {
-  display: grid;
-  grid-template-columns: 1fr 400px;
+  display: flex;
   height: 100%;
   max-width: 1000px;
   margin: 0 auto;
@@ -16,6 +15,10 @@
   @include sp {
     grid-template-columns: 1fr;
   }
+}
+
+.body {
+  flex: 1;
 }
 
 .title {
@@ -34,7 +37,7 @@
   font-size: 18px;
   line-height: 64px;
   border-radius: 32px;
-  padding: 0 40px
+  padding: 0 40px;
 }
 
 .update-man {
@@ -43,6 +46,7 @@
 }
 
 .clip {
+  width: 400px;
   img {
     max-width: 100%;
   }
