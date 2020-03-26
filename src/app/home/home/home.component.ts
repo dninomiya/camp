@@ -20,12 +20,12 @@ import { SearchParameters } from 'angular-instantsearch/instantsearch/instantsea
 export class HomeComponent implements OnInit {
   algoliaConfig = {
     ...environment.algolia,
-    indexName: environment.algolia.indexName + '-latest'
+    indexName: environment.algolia.indexName
   };
 
   searchParameters: SearchParameters = {
     hitsPerPage: 20,
-    filters: 'public:true AND NOT deleted:true',
+    filters: 'public:true AND NOT deleted:true'
   };
 
   trendSearchParameters = {
@@ -34,7 +34,9 @@ export class HomeComponent implements OnInit {
   };
 
   causes$: Observable<LessonList[]> = this.listService.getLists(
-    environment.production ? 'ypPxvg7WBUPkYZDN7ao3VyLs9OL2' : 'rN116cfQyfRfs9CnQ1C4DZSpb8k1'
+    environment.production
+      ? 'ypPxvg7WBUPkYZDN7ao3VyLs9OL2'
+      : 'rN116cfQyfRfs9CnQ1C4DZSpb8k1'
   );
 
   hotCamps$ = this.channelService.getCamps(['KkyCChATj4PmkWYD2Ut3S1zH7SI3']);
@@ -68,9 +70,11 @@ export class HomeComponent implements OnInit {
       this.loadingService.endLoading();
       if (follows.length) {
         this.noFollow = false;
-        const ids = follows.map(id => {
-          return `authorId:${id}`;
-        }).join(' AND ');
+        const ids = follows
+          .map(id => {
+            return `authorId:${id}`;
+          })
+          .join(' AND ');
         this.searchParameters.filters = `(${ids}) AND NOT deleted:true`;
       } else {
         this.noFollow = true;

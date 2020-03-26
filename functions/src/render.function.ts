@@ -6,7 +6,7 @@ const useragent = require('express-useragent');
 
 const appUrl =
   functions.config().env.mode === 'prod'
-    ? 'tml-prod-74d27.firebaseapp.com'
+    ? 'to.camp'
     : 'dev-update.firebaseapp.com';
 
 const generateUrl = (req: any) => {
@@ -39,4 +39,4 @@ app.get('*', async (req: any, res: any) => {
   }
 });
 
-export const render = functions.region('asia-northeast1').https.onRequest(app);
+export const render = functions.https.onRequest(app);

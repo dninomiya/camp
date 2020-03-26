@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
+    "devBuild": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -12,8 +13,7 @@
     "deploy": "firebase deploy",
     "release": "firebase use prod && run-s build sw-copy deploy",
     "prestaging": "ng build",
-    "staging": "firebase use dev && run-s sw-copy deploy",
-    "devBuild": "ng build && firebase deploy",
+    "staging": "firebase use dev && run-s devBuild sw-copy deploy",
     "size": "ng build --prod --source-map && node_modules/.bin/source-map-explorer ./dist/workspace/main.*.js"
   },
   "private": true,
