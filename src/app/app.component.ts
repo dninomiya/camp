@@ -22,7 +22,7 @@ export class AppComponent {
     if (!environment.production) {
       this.seoService.addNoIndex();
       this.rootDocument
-        .querySelector('[rel=icon')
+        .querySelector('[rel=icon]')
         .setAttribute('href', 'favicon-dev.svg');
     }
   }
