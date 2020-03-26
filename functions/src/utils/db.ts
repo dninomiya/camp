@@ -8,10 +8,10 @@ export const db = admin.firestore();
 export const TimeStamp = admin.firestore.Timestamp;
 
 export const checkAdmin = async (uid: string): Promise<boolean> => {
-  const from = await db.doc(`users/${uid}`).get()
+  const from = await db.doc(`users/${uid}`).get();
   const userData = from.data();
   return userData && userData.admin;
-}
+};
 
 export const deleteAll = async (path: string): Promise<boolean> => {
   return firebaseTools.firestore.delete(path, {
@@ -20,4 +20,4 @@ export const deleteAll = async (path: string): Promise<boolean> => {
     yes: true,
     token: functions.config().fb.token
   });
-}
+};
