@@ -77,12 +77,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'receipts',
-    loadChildren: () =>
-      import('./receipt/receipt.module').then(m => m.ReceiptModule),
-    canLoad: [AuthGuard]
-  },
-  {
     path: 'about',
     loadChildren: () =>
       import('./welcome/welcome.module').then(m => m.WelcomeModule)
