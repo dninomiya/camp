@@ -68,8 +68,9 @@
         >
         <a
           mat-icon-button
-          href="/receipts/{{ settlement.contentId }}"
+          [href]="settlement.pdf"
           target="_blank"
+          matTooltip="請求書"
         >
           <mat-icon class="mat-18">receipt</mat-icon>
         </a>

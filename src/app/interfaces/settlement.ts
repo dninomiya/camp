@@ -1,5 +1,4 @@
 export interface Settlement {
-  readonly id: string;
   readonly createdAt: any;
   readonly title: string;
   readonly path: string;
@@ -8,4 +7,5 @@ export interface Settlement {
   readonly userId: string;
   readonly type: string;
   readonly contentId: string;
+  readonly pdf: string;
 }

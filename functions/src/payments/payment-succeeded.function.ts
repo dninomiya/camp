@@ -18,7 +18,8 @@ export const paymentSucceeded = functions
         title: data.lines.data[0].plan.nickname + 'プラン決済',
         amount: data.amount_paid,
         currentPeriodStart: data.period_start,
-        currentPeriodEnd: data.period_end
+        currentPeriodEnd: data.period_end,
+        pdf: data.invoice_pdf
       });
     }
 

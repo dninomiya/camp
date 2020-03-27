@@ -6,6 +6,7 @@ export const addSettlement = async (data: {
   amount: number;
   currentPeriodStart?: number;
   currentPeriodEnd?: number;
+  pdf: string;
 }) => {
   await db.doc(`users/${data.userId}`).update({
     currentPeriodStart: data.currentPeriodStart,
