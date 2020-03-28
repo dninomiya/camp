@@ -9,16 +9,13 @@ sgMail.setApiKey(API_KEY);
 export const sendEmail = (data: {
   to: string;
   templateId:
+    | 'unRegisterToAdmin'
+    | 'registerToAdmin'
     | 'register'
     | 'deleteAccount'
-    | 'request'
-    | 'open'
-    | 'reject'
-    | 'closed'
-    | 'reply'
-    | 'charged'
-    | 'unRegisterToAdmin'
-    | 'registerToAdmin';
+    | 'changePlan'
+    | 'upgradeToAdmin'
+    | 'downgradeToAdmin';
   dynamicTemplateData?: { [key: string]: any };
 }) => {
   return sgMail.send({

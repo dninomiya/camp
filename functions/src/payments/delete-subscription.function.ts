@@ -1,5 +1,6 @@
+import { config } from './../config';
 import * as functions from 'firebase-functions';
-import { db } from '../utils';
+import { db, sendEmail } from '../utils';
 
 export const deleteSubscription = functions
   .region('asia-northeast1')
@@ -13,6 +14,24 @@ export const deleteSubscription = functions
 
     if (payment.docs[0].ref.parent.parent) {
       const uid = payment.docs[0].ref.parent.parent.id;
+      const user: any = (await db.doc(`users/${uid}`).get()).data();
+
+      await sendEmail({
+        to: config.adminEmail,
+        templateId: 'downgradeToAdmin',
+        dynamicTemplateData: {
+          plan: 'free'
+        }
+      });
+
+      await sendEmail({
+        to: user.email,
+        templateId: 'changePlan',
+        dynamicTemplateData: {
+          plan: 'free'
+        }
+      });
+
       await db.doc(`users/${uid}`).update({
         plan: 'free',
         currentPeriodStart: null,

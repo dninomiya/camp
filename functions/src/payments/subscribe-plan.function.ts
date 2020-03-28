@@ -61,6 +61,14 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
       }
     });
 
+    await sendEmail({
+      to: user.email,
+      templateId: 'changePlan',
+      dynamicTemplateData: {
+        plan: PLAN_LABELS[data.planId]
+      }
+    });
+
     await db.doc(`users/${userId}/private/payment/`).update({
       subscriptionId: subscription.id,
       startedAt: new Date()
