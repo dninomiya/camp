@@ -1,6 +1,7 @@
 import { sendEmail } from './../utils/sendgrid';
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
+import { config } from '../config';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
@@ -34,7 +35,7 @@ export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
     const plan = user.plan as 'lite' | 'solo' | 'mentor';
 
     await sendEmail({
-      to: 'daichi.ninomiya@deer.co.jp',
+      to: config.adminEmail,
       templateId: 'unRegisterToAdmin',
       dynamicTemplateData: {
         email: user.email,

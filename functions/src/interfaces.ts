@@ -1,1 +1,8 @@
-export type MailTemplate = 'register' | 'deleteAccount' | 'request' | 'open' | 'reject' | 'closed' | 'reply' | 'charged';
+export type MailTemplate =
+  | 'unRegisterToAdmin'
+  | 'registerToAdmin'
+  | 'register'
+  | 'deleteAccount'
+  | 'changePlan'
+  | 'upgradeToAdmin'
+  | 'downgradeToAdmin';

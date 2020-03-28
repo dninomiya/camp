@@ -88,7 +88,7 @@ import { AdsenseModule } from 'ng2-adsense';
     ConnectVimeoComponent
   ],
   providers: [
-    { provide: FunctionsRegionToken, useValue: 'us-central1' },
+    { provide: FunctionsRegionToken, useValue: 'asia-northeast1' },
     DatePipe
   ],
   entryComponents: [
