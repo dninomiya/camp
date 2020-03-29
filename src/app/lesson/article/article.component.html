@@ -101,63 +101,18 @@
     </ng-container>
 
     <mat-card class="permission" *ngIf="(permission$ | async) === false">
-      <h1 class="permission__title">「{{ lesson.title }}」は有料です</h1>
-      <p class="permission__description">
-        ポスト、あるいはこのポストが含まれるコースを購入してください。
-      </p>
+      <h1 class="permission__title">
+        「{{ lesson.title }}」を閲覧するには有料プランへの登録が必要です。
+      </h1>
 
-      <div class="permission__items">
-        <div class="permission__item">
-          <figure
-            class="permission__icon"
-            [style.background-image]="
-              'url(' +
-              (lesson.thumbnailURL
-                ? lesson.thumbnailURL
-                : '/assets/images/plan-bg-1.png') +
-              ')'
-            "
-          >
-            <mat-icon inline class="mat-18">lock</mat-icon>
-          </figure>
-          <h2 class="permission__item-title">ポストを購入</h2>
-          <p class="permission__item-description">
-            購入したポストは無期限で見放題になります。
-          </p>
-          <button
-            mat-raised-button
-            (click)="chargeLesson(lesson)"
-            color="primary"
-            [disabled]="settlementStatus"
-          >
-            {{ lesson.amount | number }}円<small>税込</small>
-          </button>
-        </div>
-        <div
-          class="permission__item"
-          *ngIf="getParentCause$ | async as parentCause"
-        >
-          <figure
-            class="permission__icon"
-            [style.background-image]="'url(' + parentCause.coverURL + ')'"
-          >
-            <mat-icon inline class="mat-18">lock</mat-icon>
-          </figure>
-          <h2 class="permission__item-title" matLine>
-            {{ parentCause.title }}コースを購入
-          </h2>
-          <p class="permission__item-description">
-            コースに含まれているすべてのポストが見放題になります。
-          </p>
-          <button
-            [disabled]="settlementStatus"
-            mat-raised-button
-            color="primary"
-          >
-            {{ parentCause.amount | number }}円<small>税込</small>
-          </button>
-        </div>
-      </div>
+      <button
+        mat-flat-button
+        color="primary"
+        routerLink="/about"
+        fragment="plan"
+      >
+        プランを見る
+      </button>
     </mat-card>
   </div>
 

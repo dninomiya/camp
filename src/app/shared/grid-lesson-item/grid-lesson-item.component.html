@@ -25,12 +25,11 @@
       <h3 class="lesson__title" style="-webkit-box-orient: vertical;">
         {{ lesson.title }}
       </h3>
-      <p *ngIf="type !== 'simple'" class="lesson__sub">
-        {{ lesson.author.ownerName || lesson.author.title }} -
-        {{ lesson.createdAt | fromNow }}
-      </p>
-      <p *ngIf="type === 'simple'" class="lesson__sub">
-        {{ lesson.createdAt | fromNow }}
+      <p class="lesson__sub">
+        <span>
+          {{ lesson.createdAt | fromNow }}
+        </span>
+        <span *ngIf="lesson.free" class="lesson__free">無料</span>
       </p>
     </div>
   </div>

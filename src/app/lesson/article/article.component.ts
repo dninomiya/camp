@@ -154,7 +154,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
     shareReplay(1)
   );
 
-  permission$: Observable<boolean> = this.lessonService.checkPermission();
+  permission$: Observable<boolean> = this.route.queryParamMap.pipe(
+    switchMap(queryParamMapmap =>
+      this.lessonService.checkPermission(queryParamMapmap.get('v'))
+    )
+  );
 
   channel$: Observable<ChannelMeta> = this.lesson$.pipe(
     switchMap(lesson => {

@@ -1,5 +1,5 @@
-@import "mixins";
-@import "~@angular/material/theming";
+@import 'mixins';
+@import '~@angular/material/theming';
 
 .lesson {
   @include mat-elevation(2);
@@ -65,6 +65,8 @@
     font-size: 13px;
     color: rgba(black, 0.6);
     line-height: 1;
+    display: flex;
+    align-items: center;
   }
   &__meta {
     display: flex;
@@ -89,5 +91,12 @@
     border-radius: 50%;
     display: block;
     margin-right: 16px;
+  }
+  &__free {
+    font-size: 12px;
+    padding: 2px 12px;
+    border-radius: 4px;
+    border: 1px solid rgba(black, 0.12);
+    margin-left: 16px;
   }
 }

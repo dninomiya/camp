@@ -274,12 +274,12 @@ export class EditorComponent implements OnInit {
           duration: 2000
         }
       );
-      this.isComplete = true;
       this.listService.patchList({
         allLists: this.lists,
         activeListIds,
         lessonId: this.oldLesson ? this.oldLesson.id : lessonId
       });
+      this.isComplete = true;
       this.router.navigate(['/lesson'], {
         relativeTo: this.route,
         queryParams: {

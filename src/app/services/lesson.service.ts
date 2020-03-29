@@ -192,14 +192,13 @@ export class LessonService {
     return collable(urls);
   }
 
-  checkPermission(): Observable<boolean> {
-    return this.authService.authUser$.pipe(
-      map(user => {
-        if (user) {
-          return user.plan !== 'free';
-        } else {
-          return false;
-        }
+  checkPermission(lessonId: string): Observable<boolean> {
+    return combineLatest([
+      this.authService.authUser$,
+      this.db.doc<LessonMeta>(`lessons/${lessonId}`).valueChanges()
+    ]).pipe(
+      map(([user, lesson]) => {
+        return user.plan !== 'free' || lesson.free;
       })
     );
   }

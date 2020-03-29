@@ -20,29 +20,13 @@ import { SearchParameters } from 'angular-instantsearch/instantsearch/instantsea
 export class HomeComponent implements OnInit {
   algoliaConfig = {
     ...environment.algolia,
-    indexName: environment.algolia.indexName
+    indexName: environment.algolia.indexName + '-latest'
   };
 
-  searchParameters: SearchParameters = {
+  latestParams = {
     hitsPerPage: 20,
     filters: 'public:true AND NOT deleted:true'
   };
-
-  trendSearchParameters = {
-    hitsPerPage: 20,
-    filters: 'public:true AND NOT deleted:true AND NOT tags:mentor'
-  };
-
-  causes$: Observable<LessonList[]> = this.listService.getLists(
-    environment.production
-      ? 'ypPxvg7WBUPkYZDN7ao3VyLs9OL2'
-      : 'rN116cfQyfRfs9CnQ1C4DZSpb8k1'
-  );
-
-  hotCamps$ = this.channelService.getCamps(['KkyCChATj4PmkWYD2Ut3S1zH7SI3']);
-
-  noFollow = true;
-  isLoading = true;
 
   follows$: Observable<string[]> = this.authService.authUser$.pipe(
     switchMap(user => {
@@ -60,27 +44,8 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private channelService: ChannelService,
     private seoService: SeoService,
-    private loadingService: LoadingService,
-    private titleService: Title,
-    private listService: ListService
+    private titleService: Title
   ) {
-    this.loadingService.startLoading();
-    this.follows$.subscribe(follows => {
-      this.isLoading = false;
-      this.loadingService.endLoading();
-      if (follows.length) {
-        this.noFollow = false;
-        const ids = follows
-          .map(id => {
-            return `authorId:${id}`;
-          })
-          .join(' AND ');
-        this.searchParameters.filters = `(${ids}) AND NOT deleted:true`;
-      } else {
-        this.noFollow = true;
-      }
-    });
-
     this.seoService.setSchema({
       '@type': 'WebSite',
       logo: '/assets/images/logo.png',

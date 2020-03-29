@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LessonService } from 'src/app/services/lesson.service';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, tap, take, map, shareReplay } from 'rxjs/operators';
+import { switchMap, take, map, shareReplay } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
 import { LessonMeta } from 'src/app/interfaces/lesson';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,6 +16,8 @@ import { ListService } from 'src/app/services/list.service';
 import { Observable } from 'rxjs';
 import { FormArray } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+
+import * as algoliasearch from 'algoliasearch/lite';
 
 interface LessonListWithCheckStatus extends LessonList {
   indeterminate: boolean;
@@ -34,7 +36,6 @@ export class LessonsComponent implements OnInit {
     page: 0,
     filters: `(authorId:${this.authService.user.id}) AND NOT deleted:true`
   };
-
   causeOptions: {
     [key: string]: LessonListWithCheckStatus;
   } = {};
@@ -209,7 +210,7 @@ export class LessonsComponent implements OnInit {
             processing.dismiss();
 
             this.snackBar.open('一括編集が完了しました', null, {
-              duration: 20200
+              duration: 2000
             });
           });
         }
@@ -326,10 +327,5 @@ export class LessonsComponent implements OnInit {
         duration: 2000
       });
     });
-  }
-
-  buildLists(data) {
-    this.dataSource = [null];
-    return data;
   }
 }

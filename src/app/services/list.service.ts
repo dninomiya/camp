@@ -22,9 +22,7 @@ export class ListService {
       .valueChanges();
     const lists$ = this.db
       .collection<LessonList>('lists', ref => {
-        return ref
-          .where('authorId', '==', channelId)
-          .where('private', '==', false);
+        return ref.where('authorId', '==', channelId);
       })
       .valueChanges();
 
@@ -102,7 +100,7 @@ export class ListService {
   ): Promise<void[]> {
     return Promise.all(
       allLists
-        .filter(list => list.lessonIds.includes(lessonId))
+        .filter(list => list && list.lessonIds.includes(lessonId))
         .map(list => {
           const i = list.lessonIds.findIndex(id => id === lessonId);
           list.lessonIds.splice(i, 1);
