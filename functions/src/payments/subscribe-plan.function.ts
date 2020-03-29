@@ -45,6 +45,7 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
     await db.doc(`users/${userId}`).update({
       plan: data.planId,
       trialUsed: true,
+      isCaneclSubscription: false,
       currentPeriodStart: subscription.current_period_start,
       currentPeriodEnd: subscription.current_period_end
     });
