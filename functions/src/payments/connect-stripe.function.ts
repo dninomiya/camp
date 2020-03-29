@@ -35,24 +35,29 @@ const planTemplates = [
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
-const createTax = (stripe_account: string): Promise<{
-  id: string
+const createTax = (
+  stripe_account: string
+): Promise<{
+  id: string;
 }> => {
-  return stripe.taxRates.create({
-    display_name: '消費税',
-    jurisdiction: 'Japan',
-    percentage: 10,
-    inclusive: false,
-  }, {
-    stripe_account
-  });
-}
+  return stripe.taxRates.create(
+    {
+      display_name: '消費税',
+      jurisdiction: 'Japan',
+      percentage: 10,
+      inclusive: false
+    },
+    {
+      stripe_account
+    }
+  );
+};
 
 const createProduct = async (stripe_account: string): Promise<string> => {
   const result = await stripe.products.create(
     {
       name: '3ML',
-      type: 'service',
+      type: 'service'
     },
     {
       stripe_account
@@ -60,74 +65,81 @@ const createProduct = async (stripe_account: string): Promise<string> => {
   );
 
   return result.id;
-}
+};
 
 const createPlans = (channelId: string): Promise<any> => {
-  return Promise.all(planTemplates.map(async template => {
-    return db.doc(`channels/${channelId}/plans/${template.type}`).set(template);
-  }));
-}
+  return Promise.all(
+    planTemplates.map(async template => {
+      return db
+        .doc(`channels/${channelId}/plans/${template.type}`)
+        .set(template);
+    })
+  );
+};
 
 const setPayoutsSchedule = (accountId: string): Promise<any> => {
-  return stripe.accounts.update(
-    accountId,
-    {
-      settings: {
-        payouts: {
-          schedule: {
-            interval: 'monthly',
-            monthly_anchor: 31
-          }
+  return stripe.accounts.update(accountId, {
+    settings: {
+      payouts: {
+        schedule: {
+          interval: 'monthly',
+          monthly_anchor: 31
         }
       }
     }
-  );
-}
+  });
+};
 
-export const connectStripe = functions.https.onCall(async (data, context) => {
-  const result: any = await new Promise((resolve, reject) => {
-    request.post({
-      url: 'https://connect.stripe.com/oauth/token',
-      formData: {
-        client_secret: functions.config().stripe.key,
-        code: data.code,
-        grant_type: 'authorization_code',
-      }
-    }, (error, res, body) => {
-      ;
-      if (!error && res.statusCode === 200) {
-        resolve(JSON.parse(body));
-      } else {
-        reject(error);
-      }
+export const connectStripe = functions
+  .region('asia-northeast1')
+  .https.onCall(async (data, context) => {
+    const result: any = await new Promise((resolve, reject) => {
+      request.post(
+        {
+          url: 'https://connect.stripe.com/oauth/token',
+          formData: {
+            client_secret: functions.config().stripe.key,
+            code: data.code,
+            grant_type: 'authorization_code'
+          }
+        },
+        (error, res, body) => {
+          if (!error && res.statusCode === 200) {
+            resolve(JSON.parse(body));
+          } else {
+            reject(error);
+          }
+        }
+      );
+    }).catch(error => {
+      throw new Error(error);
     });
-  }).catch(error => {
-    throw new Error(error);
+
+    if (context.auth) {
+      const stripeUserId = result.stripe_user_id;
+      const productId = await createProduct(stripeUserId);
+
+      await setPayoutsSchedule(stripeUserId);
+
+      await db.doc(`users/${context.auth.uid}/private/connect`).set({
+        stripeUserId,
+        email: data.email,
+        taxId: await createTax(stripeUserId),
+        productId
+      });
+
+      await db.doc(`users/${context.auth.uid}`).update({
+        isSeller: true
+      });
+
+      return createPlans(context.auth.uid);
+    } else {
+      throw new Error('権限がありません');
+    }
   });
 
-  if (context.auth) {
-    const stripeUserId = result.stripe_user_id;
-    const productId =  await createProduct(stripeUserId);
-
-    await setPayoutsSchedule(stripeUserId);
-
-    await db.doc(`users/${context.auth.uid}/private/connect`).set({
-      stripeUserId,
-      email: data.email,
-      taxId: await createTax(stripeUserId),
-      productId,
-    });
-
-    await db.doc(`users/${context.auth.uid}`).update({
-      isSeller: true
-    });
-
-    return createPlans(context.auth.uid);
-  } else {
-    throw new Error('権限がありません');
-  }
-});
-
-export const getDashboardURL = functions.https.onCall(async (accountId, context) => {
-  return stripe.accounts.createLoginLink(accountId);
-});
+export const getDashboardURL = functions
+  .region('asia-northeast1')
+  .https.onCall(async (accountId, context) => {
+    return stripe.accounts.createLoginLink(accountId);
+  });

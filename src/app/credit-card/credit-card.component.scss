@@ -1,0 +1,18 @@
+.card {
+  &__number {
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 16px;
+    margin-right: 16px;
+    i {
+      margin-right: 16px;
+    }
+  }
+  &__button {
+    color: rgba(black, 0.6);
+  }
+}
+
+.create-card {
+  margin: 24px 0;
+}

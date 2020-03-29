@@ -17,13 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/workspace",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.svg",
               "src/assets",
               "src/manifest.json",
               "src/firebase-messaging-sw.js",
@@ -31,6 +32,8 @@
               "src/ads.txt"
             ],
             "styles": [
+              "node_modules/aos/dist/aos.css",
+              "node_modules/swiper/css/swiper.css",
               "node_modules/prismjs/themes/prism.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
@@ -58,6 +61,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/favicon.svg",
+                  "with": "src/favicon.prod.svg"
                 }
               ],
               "optimization": true,
@@ -74,6 +81,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "serviceWorker": true
@@ -148,5 +159,8 @@
       }
     }
   },
-  "defaultProject": "workspace"
+  "defaultProject": "workspace",
+  "cli": {
+    "analytics": "17b0b455-2411-4baa-859e-23e12003e038"
+  }
 }

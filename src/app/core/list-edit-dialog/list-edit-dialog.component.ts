@@ -13,18 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./list-edit-dialog.component.scss']
 })
 export class ListEditDialogComponent implements OnInit {
-
-  prices = [
-    100,
-    500,
-    1000,
-    1500,
-    5000,
-    10000,
-    25000,
-    50000,
-    100000,
-  ];
+  prices = [100, 500, 1000, 1500, 5000, 10000, 25000, 50000, 100000];
 
   imageOpts = {
     size: {
@@ -38,21 +27,10 @@ export class ListEditDialogComponent implements OnInit {
 
   form = this.fb.group({
     title: ['', Validators.required],
-    description: ['', [
-      Validators.maxLength(400),
-      Validators.required
-    ]],
-    private: [false],
-    amount: [{
-      value: '',
-      disabled: true
-    }],
-    premium: [false]
+    description: ['', [Validators.maxLength(400), Validators.required]]
   });
 
-  plans$ = this.planService.getPlansByChannelId(
-    this.authService.user.id
-  );
+  plans = this.planService.plans;
 
   getFile(file: string) {
     this.file = file;
@@ -66,19 +44,9 @@ export class ListEditDialogComponent implements OnInit {
     private authService: AuthService,
     private planService: PlanService,
     @Inject(MAT_DIALOG_DATA) public list?: LessonList
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.form.get('premium').valueChanges.subscribe(status => {
-      if (status) {
-        this.form.get('amount').enable();
-        this.form.get('amount').setValidators(Validators.required);
-      } else {
-        this.form.get('amount').disable();
-        this.form.get('amount').clearValidators();
-      }
-    });
     if (this.list) {
       this.form.patchValue(this.list);
     }
@@ -89,25 +57,31 @@ export class ListEditDialogComponent implements OnInit {
       return;
     }
     if (this.list) {
-      this.listService.updateList({
-        id: this.list.id,
-        data: this.form.value,
-        file: this.file
-      }).then(() => {
-        this.snackBar.open('コースを更新しました', null, {
-          duration: 2000
+      this.listService
+        .updateList({
+          id: this.list.id,
+          data: this.form.value,
+          file: this.file
+        })
+        .then(() => {
+          this.snackBar.open('コースを更新しました', null, {
+            duration: 2000
+          });
         });
-      });
     } else {
-      this.listService.createList({
-        ...this.form.value,
-        authorId: this.authService.user.id
-      }, this.file).then(() => {
-        this.snackBar.open('コースを作成しました', null, {
-          duration: 2000
+      this.listService
+        .createList(
+          {
+            ...this.form.value,
+            authorId: this.authService.user.id
+          },
+          this.file
+        )
+        .then(() => {
+          this.snackBar.open('コースを作成しました', null, {
+            duration: 2000
+          });
         });
-      });
     }
   }
-
 }

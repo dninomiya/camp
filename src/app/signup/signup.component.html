@@ -1,0 +1,85 @@
+<div class="container" *ngIf="plan$ | async as plan">
+  <div class="wrap" *ngIf="user$ | async as user">
+    <h1>{{ plan.title }}プランをはじめる</h1>
+
+    <div class="section">
+      <h2>料金</h2>
+      <ng-container *ngIf="campaign; else default">
+        <p>全プラン3ヶ月半額キャンペーン実施中！ 4/31まで！</p>
+        <p>
+          {{ plan.amount / 2 | number }}円（税込）/月
+          <span class="default-price"
+            >定価: {{ plan.amount | number }}円/月</span
+          >
+        </p>
+
+        <ul class="notice">
+          <li>3ヶ月以降は通常価格で決済がはじまります</li>
+        </ul>
+      </ng-container>
+      <ng-template #default> {{ plan.amount | number }}円/月 </ng-template>
+    </div>
+
+    <div class="section">
+      <h2>プラン内容</h2>
+
+      <ul>
+        <li *ngFor="let point of plan.points">
+          {{ point }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>決済方法</h2>
+      <app-credit-card></app-credit-card>
+    </div>
+
+    <div class="section">
+      <h2>登録</h2>
+      <ng-container *ngIf="payment$ | async as payment">
+        <ng-container *ngIf="plan.id !== user.plan; else disabled">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="
+              signUp(plan.id, payment.customerId, payment.subscriptionId)
+            "
+            [disabled]="!payment.customerId || loading"
+          >
+            {{ getSignUpLabel(plan.id) }}
+          </button>
+          <p class="trial" *ngIf="!user?.trialUsed; else noTrial">
+            7日のフリートライアル後に決済がスタートします。
+          </p>
+          <ng-template #noTrial>
+            <p class="trial">以前登録しているためトライアルはありません。</p>
+          </ng-template>
+        </ng-container>
+
+        <ng-template #disabled>
+          <p>
+            既に{{ plan.title }}プランに登録しています。（{{
+              user.currentPeriodStart * 1000 | date: 'yyyy年MM月dd日'
+            }}〜{{ user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd' }}）
+          </p>
+
+          <button
+            *ngIf="!canceled; else canceledArea"
+            mat-stroked-button
+            routerLink="/users/{{ user.id }}"
+          >
+            自動更新を止める
+          </button>
+          <ng-template #canceledArea>
+            <p>
+              {{
+                user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd'
+              }}に課金停止（フリープランに変更）予定
+            </p>
+          </ng-template>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+</div>

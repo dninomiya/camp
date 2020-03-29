@@ -4,11 +4,7 @@
       <router-outlet></router-outlet>
     </div>
 
-    <div
-      class="side"
-      *ngIf="channel$ | async as channel"
-      [class.show]="!loading"
-    >
+    <div class="side show" *ngIf="channel$ | async as channel">
       <app-cause-widget
         *ngIf="cause$ | async"
         [channel]="channel"

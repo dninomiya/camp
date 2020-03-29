@@ -1,50 +1,55 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, combineLatest } from 'rxjs';
 import { Plan } from '../interfaces/plan';
-import { AngularFireFunctions } from '@angular/fire/functions';
-import { User } from '../interfaces/user';
-import { switchMap, map, take } from 'rxjs/operators';
+import * as moment from 'moment';
+
+export const PLANS: Plan[] = [
+  {
+    id: 'lite',
+    title: 'ライト',
+    subTitle: '教材閲覧のみ',
+    amount: 12500,
+    points: ['有料教材の閲覧']
+  },
+  {
+    id: 'solo',
+    title: 'ソロ',
+    subTitle: 'ひとりで学びたい人',
+    amount: 30000,
+    points: ['有料教材の閲覧', '質問し放題']
+  },
+  {
+    id: 'mentor',
+    title: 'メンター',
+    subTitle: 'メンターと進めたい人',
+    amount: 85000,
+    points: [
+      '有料教材の閲覧',
+      '質問し放題',
+      'コードレビュー',
+      '進捗管理',
+      'サービス企画',
+      '開発顧問',
+      '就職支援'
+    ]
+  }
+];
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanService {
-  private sort = ['question', 'review', 'trouble', 'coaching'];
+  plans = PLANS;
+  isCampaign = moment().isBefore('2020-05-01');
 
-  constructor(
-    private db: AngularFirestore,
-    private fns: AngularFireFunctions
-  ) {}
+  constructor() {}
 
-  getPlansByChannelId(cid: string): Observable<Plan[]> {
-    return this.db
-      .collection<Plan>(`channels/${cid}/plans`)
-      .valueChanges()
-      .pipe(
-        map(plans => {
-          return this.sort
-            .map(type => plans.find(plan => plan.type === type))
-            .filter(plan => !!plan);
-        })
-      );
+  getPlan(planId: string): Plan {
+    return this.plans.find(plan => plan.id === planId);
   }
 
-  getPlan(userId: string, type: string): Observable<Plan> {
-    return this.db.doc<Plan>(`channels/${userId}/plans/${type}`).valueChanges();
-  }
-
-  createPlan(plan: Plan): Promise<void> {
-    const collable = this.fns.httpsCallable('createPlan');
-    return collable(plan).toPromise();
-  }
-
-  updatePlan(channelId: string, plan: Plan) {
-    return this.db.doc(`channels/${channelId}/plans/${plan.type}`).update(plan);
-  }
-
-  deletePlan(id: string) {
-    const collable = this.fns.httpsCallable('deletePlan');
-    return collable({ id }).toPromise();
+  isUpgrade(oldPlanId: string, newPlanId: string) {
+    const oldPlanIndex = this.plans.findIndex(plan => plan.id === oldPlanId);
+    const newPlanIndex = this.plans.findIndex(plan => plan.id === newPlanId);
+    return newPlanIndex - oldPlanIndex > 0;
   }
 }

@@ -54,8 +54,8 @@ export class PaymentService {
     customerId: string;
     planId: string;
     subscriptionId?: string;
+    trialUsed: boolean;
   }): Promise<void> {
-    console.log(data);
     const callable = this.fns.httpsCallable('subscribePlan');
     return callable(data).toPromise();
   }
@@ -164,43 +164,11 @@ export class PaymentService {
   }
 
   getSettlements(uid: string): Observable<Settlement[]> {
-    // let items;
-
     return this.db
       .collection<Settlement>(`users/${uid}/settlements`, ref => {
         return ref.orderBy('createdAt', 'desc');
       })
       .valueChanges();
-    //   switchMap(settlements => {
-    //     items = settlements;
-    //     const ids = settlements
-    //       .map(settlement => {
-    //         if (settlement.targetId) {
-    //           return settlement.targetId;
-    //         } else {
-    //           return null;
-    //         }
-    //       }).filter(item => !!item);
-
-    //     if (ids.length) {
-    //       return forkJoin(
-    //         ids.map(id => this.db.doc<ChannelMeta>(`channels/${id}`).valueChanges().pipe(take(1)))
-    //       );
-    //     } else {
-    //       return of([]);
-    //     }
-    //   }),
-    //   map(channels => {
-    //     return items.map(item => {
-    //       if (item.targetId) {
-    //         item.title = channels.find(channel => channel.id === item.targetId).title;
-    //       } else if (item.lesson) {
-    //         item.title = item.lesson.title;
-    //       }
-    //       return item;
-    //     });
-    //   })
-    // );
   }
 
   getReceipt(uid: string, id: string): Observable<Settlement> {
@@ -212,12 +180,5 @@ export class PaymentService {
   getDashboardURL(accountId: string) {
     const collable = this.fns.httpsCallable('getDashboardURL');
     return collable(accountId).toPromise();
-  }
-
-  createSubscription(customerId: string): Promise<void> {
-    const callable = this.fns.httpsCallable('createSubscription');
-    return callable({
-      customerId
-    }).toPromise();
   }
 }

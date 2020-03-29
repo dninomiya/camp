@@ -1,9 +1,10 @@
 <div class="mock-frame">
   <div class="mock">
-    <div class="mock__bg"></div>
+    <div class="mock__bg" [class.active]="mode"></div>
     <div class="mock__header">
       <div
         class="mock__search"
+        [class.init]="!initialized"
         [class.active]="mode === 'algolia'"
         [class.float]="isFloat"
         (click)="mode = 'algolia'; startAnimation()"
@@ -14,8 +15,10 @@
         </button>
       </div>
       <button
+        class="mock__login"
+        [class.init]="!initialized"
         mat-raised-button
-        color="primary"
+        color="accent"
         (click)="mode = 'firebase'; startAnimation()"
         [class.active]="mode === 'firebase'"
         [class.float]="isFloat"
@@ -24,49 +27,40 @@
       </button>
     </div>
     <div class="mock__body">
+      <iframe
+        class="youtube"
+        [class.init]="!initialized"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/F5sSI6P5uJo?start=104"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
       <mat-card
         class="stripe"
+        [class.init]="!initialized"
         [class.active]="mode === 'stripe'"
         [class.float]="isFloat"
       >
         <figure>
-          <img src="assets/images/logo.png" alt="" />
+          <img src="assets/images/welcome/shirt.png" alt="" />
         </figure>
-        <p>10,000円でスキルを購入しますか？</p>
-        <button
-          mat-button
-          mat-raised-button
-          color="primary"
-          (click)="mode = 'stripe'; startAnimation()"
-        >
-          <span>カードで購入</span>
-          <mat-icon>credit_card</mat-icon>
-        </button>
+        <div class="stripe__body">
+          <h3 class="stripe__title">CAMPロゴ入りTシャツ</h3>
+          <p class="stripe__description">非売品</p>
+          <button
+            mat-flat-button
+            color="accent"
+            (click)="mode = 'stripe'; startAnimation()"
+          >
+            <span>カートに追加</span>
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+        </div>
       </mat-card>
     </div>
     <div class="mock__footer"></div>
-  </div>
-
-  <div class="tool tool--algolia" [class.active]="mode === 'algolia'">
-    <img
-      class="tool__logo"
-      src="assets/images/welcome/algolia-logo.svg"
-      alt="algolia"
-      (click)="mode = 'algolia'; startAnimation()"
-    />
-    <div class="note note--algolia">
-      <h3 class="note__title">Algolia</h3>
-      <p class="note__description">
-        Algoliaを使うとタグ絞り込み、テキスト一致、ソート（並べ替え）などの高度な検索を実装することができます。
-      </p>
-      <button
-        mat-icon-button
-        class="note__close"
-        (click)="mode = null; stopAnimation()"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
   </div>
 
   <div class="tool tool--firebase" [class.active]="mode === 'firebase'">
@@ -120,6 +114,28 @@
       <h3 class="note__title">Stripe</h3>
       <p class="note__description">
         Stripeを使えばクレジットカードを使った決済システムを実装することができます。ショッピングサイトやユーザー同士の売買など幅広いシーンに対応できます。
+      </p>
+      <button
+        mat-icon-button
+        class="note__close"
+        (click)="mode = null; stopAnimation()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="tool tool--algolia" [class.active]="mode === 'algolia'">
+    <img
+      class="tool__logo"
+      src="assets/images/welcome/algolia-logo.svg"
+      alt="algolia"
+      (click)="mode = 'algolia'; startAnimation()"
+    />
+    <div class="note note--algolia">
+      <h3 class="note__title">Algolia</h3>
+      <p class="note__description">
+        Algoliaを使うとタグ絞り込み、テキスト一致、ソート（並べ替え）などの高度な検索を実装することができます。
       </p>
       <button
         mat-icon-button

@@ -11,9 +11,8 @@ const createChannel = (user: UserRecord) => {
     ownerName: user.displayName,
     coverURL: '',
     avatarURL: user.photoURL,
-    activeUser: 0,
-    maxUser: 5,
     createdAt: new Date(),
+    email: user.email,
     statistics: {
       followerCount: 0,
       lessonCount: 0,
@@ -22,15 +21,10 @@ const createChannel = (user: UserRecord) => {
       totalLikedCount: 0,
       reviewCount: 0
     },
-    email: user.email,
-    unreadThread: {
-      open: 0,
-      closed: 0,
-      request: 0
-    }
-  }
+    listOrder: []
+  };
   return db.doc(`channels/${user.uid}`).set(channelMeta);
-}
+};
 
 const createAccount = (user: UserRecord) => {
   return db.doc(`users/${user.uid}`).set({
@@ -39,22 +33,27 @@ const createAccount = (user: UserRecord) => {
     email: user.email,
     avatarURL: user.photoURL,
     createdAt: new Date(),
+    trialUsed: false,
+    plan: 'free',
     mailSettings: {
       purchase: true,
       reply: true
     }
   });
-}
+};
 
-export const createUser = functions.auth.user().onCreate(async (user) => {
-  await createAccount(user);
-  await createChannel(user);
-  if (user && user.email) {
-    return sendEmail({
-      to: user.email,
-      templateId: 'register'
-    });
-  } else {
-    return;
-  }
-});
+export const createUser = functions
+  .region('asia-northeast1')
+  .auth.user()
+  .onCreate(async user => {
+    await createAccount(user);
+    await createChannel(user);
+    if (user && user.email) {
+      return sendEmail({
+        to: user.email,
+        templateId: 'register'
+      });
+    } else {
+      return;
+    }
+  });

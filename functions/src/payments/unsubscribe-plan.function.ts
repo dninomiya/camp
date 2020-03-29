@@ -1,9 +1,17 @@
+import { sendEmail } from './../utils/sendgrid';
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
+import { config } from '../config';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
-export const unsubscribePlan = functions.https.onCall(
+const PLAN_LABELS = {
+  lite: 'ライト',
+  solo: 'ソロ',
+  mentor: 'メンター'
+};
+
+export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
   async (
     data: {
       userId: string;
@@ -23,15 +31,25 @@ export const unsubscribePlan = functions.https.onCall(
       return;
     }
 
-    await stripe.subscriptions.del(userPayment.subscriptionId);
+    const user = (await db.doc(`users/${data.userId}`).get()).data() as any;
+    const plan = user.plan as 'lite' | 'solo' | 'mentor';
 
-    await db.doc(`users/${data.userId}`).update({
-      plan: 'free'
+    await sendEmail({
+      to: config.adminEmail,
+      templateId: 'unRegisterToAdmin',
+      dynamicTemplateData: {
+        email: user.email,
+        name: user.name,
+        plan: PLAN_LABELS[plan]
+      }
     });
 
-    return db.doc(`users/${data.userId}/private/payment`).update({
-      subscriptionId: null,
-      planId: 'free'
+    await stripe.subscriptions.update(userPayment.subscriptionId, {
+      cancel_at_period_end: true
+    });
+
+    return db.doc(`users/${data.userId}`).update({
+      isCaneclSubscription: true
     });
   }
 );

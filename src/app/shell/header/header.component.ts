@@ -1,15 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UiService } from 'src/app/services/ui.service';
-import { tap, switchMap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Notification } from 'src/app/interfaces/notification';
 import { MatSidenav } from '@angular/material/sidenav';
 import { environment } from 'src/environments/environment';
-import { ChannelService } from 'src/app/services/channel.service';
-import { ChannelMeta } from 'src/app/interfaces/channel';
 
 @Component({
   selector: 'app-header',
@@ -58,14 +56,12 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private notificationService: NotificationService,
-    private uiService: UiService,
-    private channelService: ChannelService,
-  ) {
-  }
+    private uiService: UiService
+  ) {}
 
   login() {
     this.loginWaiting = true;
-    this.authService.login().catch(() => this.loginWaiting = false);
+    this.authService.login().catch(() => (this.loginWaiting = false));
   }
 
   logout() {
@@ -80,5 +76,5 @@ export class HeaderComponent implements OnInit {
     this.notificationService.clearNotifications(this.authService.afUser.uid);
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

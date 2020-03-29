@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { AuthService } from 'src/app/services/auth.service';
 import { Job } from 'src/app/interfaces/job';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 
 @Component({
@@ -18,7 +18,6 @@ import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
-
   avatarImage;
 
   constructor(
@@ -30,7 +29,7 @@ export class AboutComponent implements OnInit {
     private storageService: StorageService,
     private authService: AuthService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   get links() {
     return this.form.get('links') as FormArray;
@@ -50,33 +49,29 @@ export class AboutComponent implements OnInit {
     }
   };
   form = this.fb.group({
-    title: ['', [
-      Validators.required,
-      Validators.maxLength(this.maxLength.title)
-    ]],
-    description: ['', [
-      Validators.required,
-      Validators.maxLength(this.maxLength.description)
-    ]],
-    ownerName: ['', [
-      Validators.required,
-      Validators.maxLength(this.maxLength.ownerName)
-    ]],
-    activeUser: ['', [
-      Validators.required,
-      Validators.pattern(/^\d+$/)
-    ]],
-    maxUser: ['', [
-      Validators.required,
-      Validators.pattern(/^\d+$/),
-      Validators.min(1)
-    ]],
+    title: [
+      '',
+      [Validators.required, Validators.maxLength(this.maxLength.title)]
+    ],
+    description: [
+      '',
+      [Validators.required, Validators.maxLength(this.maxLength.description)]
+    ],
+    ownerName: [
+      '',
+      [Validators.required, Validators.maxLength(this.maxLength.ownerName)]
+    ],
+    activeUser: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    maxUser: [
+      '',
+      [Validators.required, Validators.pattern(/^\d+$/), Validators.min(1)]
+    ],
     links: this.fb.array([])
   });
 
   adsForm = this.fb.group({
     url: ['', Validators.required],
-    public: [false],
+    public: [false]
   });
   adsSrc: string;
   channel: ChannelMeta;
@@ -88,8 +83,8 @@ export class AboutComponent implements OnInit {
       this.channel = channel;
       this.form.patchValue(channel);
       this.adsOptions.path = `ads/${channel.id}`;
-      this.coverOptions.path = `channels/${channel.id}/cover`,
-      this.avatarImage = channel.avatarURL;
+      (this.coverOptions.path = `channels/${channel.id}/cover`),
+        (this.avatarImage = channel.avatarURL);
       if (channel.ads) {
         this.adsSrc = channel.ads.imageURL;
         this.adsForm.patchValue(channel.ads, {
@@ -123,13 +118,11 @@ export class AboutComponent implements OnInit {
     }
   };
 
-    imageChangedEvent: any = '';
-    croppedImage: any = '';
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
   ngOnInit() {
-    this.channelService.getJobs(
-      this.authService.user.id
-    ).subscribe(jobs => {
+    this.channelService.getJobs(this.authService.user.id).subscribe(jobs => {
       if (jobs && jobs.length) {
         jobs.forEach(job => this.addJob(job));
       } else {
@@ -140,10 +133,7 @@ export class AboutComponent implements OnInit {
 
   update(cid: string) {
     if (this.form.valid) {
-      this.channelService.updateChannel(
-        cid,
-        this.form.value
-      ).then(() => {
+      this.channelService.updateChannel(cid, this.form.value).then(() => {
         this.snackBar.open('更新しました', null, {
           duration: 2000
         });
@@ -170,15 +160,21 @@ export class AboutComponent implements OnInit {
     event.preventDefault();
   }
 
-  resizeImage(file: any, size: {
-    width: number;
-    height: number;
-  }): Promise<File> {
-    return this.ngxPicaService.resizeImage(file, size.width, size.height, {
-      aspectRatio: {
-        keepAspectRatio: true,
-      }
-    }).pipe(first()).toPromise();
+  resizeImage(
+    file: any,
+    size: {
+      width: number;
+      height: number;
+    }
+  ): Promise<File> {
+    return this.ngxPicaService
+      .resizeImage(file, size.width, size.height, {
+        aspectRatio: {
+          keepAspectRatio: true
+        }
+      })
+      .pipe(first())
+      .toPromise();
   }
 
   async upload(file, path: string): Promise<string> {
@@ -190,9 +186,13 @@ export class AboutComponent implements OnInit {
     return new Promise(resolve => {
       const reader: FileReader = new FileReader();
 
-      reader.addEventListener('load', (e: any) => {
-        resolve(e.target.result);
-      }, false);
+      reader.addEventListener(
+        'load',
+        (e: any) => {
+          resolve(e.target.result);
+        },
+        false
+      );
 
       reader.readAsDataURL(file);
     });
@@ -237,38 +237,41 @@ export class AboutComponent implements OnInit {
       return;
     }
 
-    const isOk = await this.checkSize(file, type)
-      .catch((error) => {
-        this.snackBar.open(error, null, {
-          duration: 2000
-        });
+    const isOk = await this.checkSize(file, type).catch(error => {
+      this.snackBar.open(error, null, {
+        duration: 2000
       });
+    });
 
     if (isOk) {
       const imageFile = await this.resizeImage(file, this.size[type]);
       const image = await this.getImageByFile(imageFile);
       this.src[type] = image;
       if (this.channel) {
-        const path = await this.upload(imageFile, `channels/${this.channel.id}/${type}`);
-        this.channelService.updateChannel(
-          this.channel.id,
-          {
+        const path = await this.upload(
+          imageFile,
+          `channels/${this.channel.id}/${type}`
+        );
+        this.channelService
+          .updateChannel(this.channel.id, {
             [`${type}URL`]: path
-          }
-        ).then(() => {
-          this.snackBar.open('イメージをアップロードしました', null, {
-            duration: 2000
+          })
+          .then(() => {
+            this.snackBar.open('イメージをアップロードしました', null, {
+              duration: 2000
+            });
           });
-        });
       }
     }
   }
 
   addLinkForm() {
-    this.links.push(this.fb.control('', [
-      Validators.required,
-      Validators.pattern('^https?://')
-    ]));
+    this.links.push(
+      this.fb.control('', [
+        Validators.required,
+        Validators.pattern('^https?://')
+      ])
+    );
   }
 
   removeLinkForm(i: number) {
@@ -288,51 +291,46 @@ export class AboutComponent implements OnInit {
 
   uploadAds(imageURL) {
     this.adsSrc = imageURL;
-    this.channelService.updateChannel(
-      this.authService.user.id,
-      {
-        ads: {
-          imageURL
-        }
+    this.channelService.updateChannel(this.authService.user.id, {
+      ads: {
+        imageURL
       }
-    );
+    });
   }
 
   uploadCover(imageURL) {
     this.coverSrc = imageURL;
-    this.channelService.updateChannel(
-      this.authService.user.id,
-      {
-        coverURL: imageURL
-      }
-    );
+    this.channelService.updateChannel(this.authService.user.id, {
+      coverURL: imageURL
+    });
   }
 
   updateAdsStatus() {
-    this.channelService.updateChannel(
-      this.authService.user.id,
-      {
+    this.channelService
+      .updateChannel(this.authService.user.id, {
         ads: {
           ...this.adsForm.value,
           imageURL: this.adsSrc
         }
-      }
-    ).then(() => {
-      this.adsForm.markAsPristine();
-      this.snackBar.open('広告ステータスを変更しました', null, {
-        duration: 2000
+      })
+      .then(() => {
+        this.adsForm.markAsPristine();
+        this.snackBar.open('広告ステータスを変更しました', null, {
+          duration: 2000
+        });
       });
-    });
   }
 
   addJob(job?: Job) {
-    this.jobForm.push(this.fb.group({
-      title: [job && job.title, Validators.required],
-      amount: [job && job.amount, Validators.required],
-      style: [job && job.style, Validators.required],
-      description: [job && job.description, Validators.required],
-      public: [job && job.public],
-    }));
+    this.jobForm.push(
+      this.fb.group({
+        title: [job && job.title, Validators.required],
+        amount: [job && job.amount, Validators.required],
+        style: [job && job.style, Validators.required],
+        description: [job && job.description, Validators.required],
+        public: [job && job.public]
+      })
+    );
   }
 
   removeJob(i: number) {
@@ -340,25 +338,29 @@ export class AboutComponent implements OnInit {
   }
 
   openImageDialog(file: File) {
-    this.dialog.open(ImageDialogComponent, {
-      data: file,
-      width: '400px',
-      autoFocus: false,
-      restoreFocus: false
-    }).afterClosed().subscribe(async (image) => {
-      this.avatarImage = image;
-      const path = await this.storageService.upload(`channels/${this.channel.id}/avatar`, image);
-      this.channelService.updateChannel(
-        this.channel.id,
-        {
-          ['avatarURL']: path
-        }
-      ).then(() => {
-        this.snackBar.open('イメージをアップロードしました', null, {
-          duration: 2000
-        });
+    this.dialog
+      .open(ImageDialogComponent, {
+        data: file,
+        width: '400px',
+        autoFocus: false,
+        restoreFocus: false
+      })
+      .afterClosed()
+      .subscribe(async image => {
+        this.avatarImage = image;
+        const path = await this.storageService.upload(
+          `channels/${this.channel.id}/avatar`,
+          image
+        );
+        this.channelService
+          .updateChannel(this.channel.id, {
+            ['avatarURL']: path
+          })
+          .then(() => {
+            this.snackBar.open('イメージをアップロードしました', null, {
+              duration: 2000
+            });
+          });
       });
-    });
   }
-
 }

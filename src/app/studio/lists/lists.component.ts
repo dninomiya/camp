@@ -19,7 +19,6 @@ import { ChannelService } from 'src/app/services/channel.service';
   styleUrls: ['./lists.component.scss']
 })
 export class ListsComponent implements OnInit {
-
   lists$ = this.authService.authUser$.pipe(
     switchMap(user => this.listService.getLists(user.id)),
     tap(lists => {
@@ -42,9 +41,11 @@ export class ListsComponent implements OnInit {
   lessonId$ = this.lessonIdSource.asObservable();
 
   lessons$ = combineLatest([
-    this.lessonId$.pipe(switchMap(id => {
-      return this.lessonService.getLessonsByListId(id);
-    })),
+    this.lessonId$.pipe(
+      switchMap(id => {
+        return this.lessonService.getLessonsByListId(id);
+      })
+    ),
     this.order$
   ]).pipe(
     map(([lessons, order]) => {
@@ -76,8 +77,7 @@ export class ListsComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getLessons(lid: string) {
     this.isLessonLoading = true;
@@ -120,40 +120,36 @@ export class ListsComponent implements OnInit {
   }
 
   openLessonDeleteDialog(lesson) {
-    this.snackBar.open('本当に削除しますか？', 'はい', {
-      duration: 4000
-    }).onAction().subscribe(() => {
-      this.lessonService.deleteLesson(lesson.id).then(() => {
-        this.snackBar.open('ポストを削除しました。', null, {
-          duration: 2000
+    this.snackBar
+      .open('本当に削除しますか？', 'はい', {
+        duration: 4000
+      })
+      .onAction()
+      .subscribe(() => {
+        this.lessonService.deleteLesson(lesson.id).then(() => {
+          this.snackBar.open('ポストを削除しました。', null, {
+            duration: 2000
+          });
         });
-      });
 
-      this.listService.removeLessonFromList(
-        this.lists,
-        lesson.id
-      );
-    });
+        this.listService.removeLessonFromList(this.lists, lesson.id);
+      });
   }
 
   removeLessonFromList(lessonId: string) {
-    this.listService.removeLessonFromList(
-      [this.activeList],
-      lessonId
-    ).then(() => {
-      this.snackBar.open('リストから削除しました', null, {
-        duration: 2000
+    this.listService
+      .removeLessonFromList([this.activeList], lessonId)
+      .then(() => {
+        this.snackBar.open('リストから削除しました', null, {
+          duration: 2000
+        });
       });
-    });
   }
 
   orderList(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.lists, event.previousIndex, event.currentIndex);
-    this.channelService.updateChannel(
-      this.authService.afUser.uid,
-      {
-        listOrder: this.lists.map(list => list.id)
-      }
-    );
+    this.channelService.updateChannel(this.authService.afUser.uid, {
+      listOrder: this.lists.map(list => list.id)
+    });
   }
 }

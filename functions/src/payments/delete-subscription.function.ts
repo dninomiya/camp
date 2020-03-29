@@ -1,28 +1,47 @@
+import { config } from './../config';
 import * as functions from 'firebase-functions';
-import { db } from '../utils';
+import { db, sendEmail } from '../utils';
 
-const stripe = require('stripe')(functions.config().stripe.key);
-const planId = functions.config().stripe.plan;
+export const deleteSubscription = functions
+  .region('asia-northeast1')
+  .https.onRequest(async (req: any, res: any) => {
+    const data = req.body.data.object;
 
-export const deleteSubscription = functions.https.onCall(async (data: {
-  customerId: string,
-}, context) => {
+    const payment = await db
+      .collectionGroup('private')
+      .where('customerId', '==', data.customer)
+      .get();
 
-  if (!context.auth) {
-    throw new Error('認証エラー');
-  }
+    if (payment.docs[0].ref.parent.parent) {
+      const uid = payment.docs[0].ref.parent.parent.id;
+      const user: any = (await db.doc(`users/${uid}`).get()).data();
 
-  const userId = context.auth.uid;
+      await sendEmail({
+        to: config.adminEmail,
+        templateId: 'downgradeToAdmin',
+        dynamicTemplateData: {
+          plan: 'free'
+        }
+      });
 
-  await db.doc(`users/${userId}`).update({
-    plan: 'free'
+      await sendEmail({
+        to: user.email,
+        templateId: 'changePlan',
+        dynamicTemplateData: {
+          plan: 'free'
+        }
+      });
+
+      await db.doc(`users/${uid}`).update({
+        plan: 'free',
+        currentPeriodStart: null,
+        currentPeriodEnd: null,
+        isCaneclSubscription: false
+      });
+      await db.doc(`users/${uid}/payment`).update({
+        subscriptionId: null
+      });
+    }
+
+    res.send(true);
   });
-
-  const subscription = (await db.doc(`users/${userId}/subscriptions/${planId}`).get()).data();
-
-  await db.doc(`users/${userId}/subscriptions/${planId}`).delete();
-
-  if (subscription) {
-    await stripe.subscriptions.del(subscription.subscriptionId);
-  }
-});

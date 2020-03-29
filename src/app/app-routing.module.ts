@@ -55,6 +55,9 @@ const routes: Routes = [
       },
       {
         path: 'setting',
+        data: {
+          hideNav: true
+        },
         loadChildren: () =>
           import('./setting/setting.module').then(m => m.SettingModule),
         canLoad: [AuthGuard]
@@ -74,15 +77,13 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'receipts',
-    loadChildren: () =>
-      import('./receipt/receipt.module').then(m => m.ReceiptModule),
-    canLoad: [AuthGuard]
-  },
-  {
-    path: 'welcome',
+    path: 'about',
     loadChildren: () =>
       import('./welcome/welcome.module').then(m => m.WelcomeModule)
+  },
+  {
+    path: 'isa',
+    loadChildren: () => import('./isa/isa.module').then(m => m.IsaModule)
   },
   {
     path: 'connect-stripe',

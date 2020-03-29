@@ -6,7 +6,6 @@ export interface LessonMeta {
   readonly createdAt: firestore.Timestamp;
   readonly viewCount: number;
   readonly channelId: string;
-  readonly likeCount: number;
   readonly traction?: LessonTraction;
   readonly deleted: boolean;
   readonly updatedAt: firestore.Timestamp;
@@ -16,8 +15,7 @@ export interface LessonMeta {
   title: string;
   videoId?: string;
   public: boolean;
-  premium: boolean;
-  amount?: number;
+  free: boolean;
   tags?: string[];
 }
 

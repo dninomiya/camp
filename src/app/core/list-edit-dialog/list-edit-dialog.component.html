@@ -1,31 +1,35 @@
-<h2 mat-dialog-title>コースを{{list ? '編集' : '作成'}}</h2>
+<h2 mat-dialog-title>コースを{{ list ? '編集' : '作成' }}</h2>
 
 <mat-dialog-content>
   <form [formGroup]="form">
     <mat-form-field>
       <mat-label>リスト名</mat-label>
-      <input type="text" autocomplete="off" matInput formControlName="title" />
+      <input
+        type="text"
+        autocomplete="off"
+        matInput
+        formControlName="title"
+        required
+      />
     </mat-form-field>
     <mat-form-field>
       <mat-label>概要</mat-label>
-      <textarea matInput formControlName="description"></textarea>
+      <textarea
+        matInput
+        formControlName="description"
+        matTextareaAutosize
+        required
+      ></textarea>
     </mat-form-field>
 
     <h3>カバー</h3>
     <div class="cover">
-      <app-input-image [oldSrc]="list?.coverURL" (file)="getFile($event)" [options]="imageOpts"></app-input-image>
+      <app-input-image
+        [oldSrc]="list?.coverURL"
+        (file)="getFile($event)"
+        [options]="imageOpts"
+      ></app-input-image>
     </div>
-
-    <mat-slide-toggle class="premium" formControlName="premium">プレミアム</mat-slide-toggle>
-
-    <mat-form-field>
-      <mat-label>価格</mat-label>
-      <mat-select formControlName="amount">
-        <mat-option *ngFor="let price of prices" [value]="price">{{price | number}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-slide-toggle formControlName="private">非公開</mat-slide-toggle>
   </form>
 </mat-dialog-content>
 
@@ -38,6 +42,6 @@
     [disabled]="form.invalid || form.pristine"
     (click)="update()"
   >
-    {{list ? '編集' : '作成'}}
+    {{ list ? '編集' : '作成' }}
   </button>
 </mat-dialog-actions>

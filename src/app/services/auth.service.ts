@@ -9,14 +9,14 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { User } from '../interfaces/user';
 import * as moment from 'moment';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
   afUser: AfUser;
   authUser$: Observable<User>;
   user: User;
@@ -44,6 +44,7 @@ export class AuthService {
         if (user && user.admin) {
           this.isAdmin = true;
         }
+        this.checkPlanStatus(user);
       }),
       shareReplay(1)
     );
@@ -80,6 +81,22 @@ export class AuthService {
 
   updateUser(data: any): Promise<void> {
     return this.db.doc(`users/${this.afUser.uid}`).update(data);
+  }
+
+  checkPlanStatus(user: User) {
+    if (!user || user.plan === 'free') {
+      return;
+    }
+
+    const from = moment.unix(user.currentPeriodEnd);
+    const to = moment();
+    const diff = from.diff(to, 'days');
+
+    if (diff + 2 < 0) {
+      this.updateUser({
+        plan: 'free'
+      });
+    }
   }
 
   async connectStripe(code: string, scrf: string): Promise<string> {
@@ -127,7 +144,7 @@ export class AuthService {
         throw new Error(`トークンの有効期限が切れました:${data.path}`);
       } else {
         const callable = this.fns.httpsCallable('connectVimeo');
-        await callable({code}).toPromise();
+        await callable({ code }).toPromise();
         return data.path;
       }
     } else {
@@ -141,10 +158,7 @@ export class AuthService {
     });
   }
 
-  async createSCRF(body: {
-    uid: string,
-    path: string
-  }): Promise<string> {
+  async createSCRF(body: { uid: string; path: string }): Promise<string> {
     const id = this.db.createId();
     await this.db.doc(`csrf/${id}`).set({
       ...body,
@@ -154,17 +168,20 @@ export class AuthService {
   }
 
   openLoginDialog() {
-    this.dialog.open(LoginDialogComponent, {
-      restoreFocus: false,
-      width: '400px'
-    }).afterClosed().subscribe(status => {
-      if (status) {
-        this.login().then(() => {
-          this.snackBar.open(`${environment.title}へようこそ！`, null, {
-            duration: 2000
+    this.dialog
+      .open(LoginDialogComponent, {
+        restoreFocus: false,
+        width: '400px'
+      })
+      .afterClosed()
+      .subscribe(status => {
+        if (status) {
+          this.login().then(() => {
+            this.snackBar.open(`${environment.title}へようこそ！`, null, {
+              duration: 2000
+            });
           });
-        });
-      }
-    });
+        }
+      });
   }
 }

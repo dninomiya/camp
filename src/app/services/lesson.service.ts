@@ -1,13 +1,12 @@
+import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LessonMeta, Lesson, LessonBody } from '../interfaces/lesson';
-import { Observable, combineLatest, of, forkJoin } from 'rxjs';
-import { switchMap, map, take, first } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import { switchMap, map, first } from 'rxjs/operators';
 import { ChannelMeta } from '../interfaces/channel';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { LessonList } from '../interfaces/lesson-list';
-import { Settlement } from '../interfaces/settlement';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
 import { firestore } from 'firebase/app';
 import { StorageService } from './storage.service';
@@ -19,17 +18,14 @@ export class LessonService {
   constructor(
     private db: AngularFirestore,
     private fns: AngularFireFunctions,
-    private afAuth: AngularFireAuth,
     private http: HttpClient,
-    private storageService: StorageService
-  ) { }
+    private storageService: StorageService,
+    private authService: AuthService
+  ) {}
 
   async createLesson(
     authorId: string,
-    lesson: Pick<
-    Lesson,
-    'title' | 'videoId' | 'public' | 'premium' | 'amount' | 'body'
-    >,
+    lesson: Pick<Lesson, 'title' | 'videoId' | 'public' | 'free' | 'body'>,
     thumbnail?: string
   ): Promise<string> {
     const id = this.db.createId();
@@ -44,14 +40,16 @@ export class LessonService {
       createdAt: firestore.Timestamp.now(),
       updatedAt: firestore.Timestamp.now(),
       viewCount: 0,
-      likeCount: 0,
       deleted: false,
       ...lesson
     };
 
     let thumbnailURL: string;
     if (thumbnail) {
-      thumbnailURL = await this.storageService.upload(`lessons/${id}/thumbnail`, thumbnail);
+      thumbnailURL = await this.storageService.upload(
+        `lessons/${id}/thumbnail`,
+        thumbnail
+      );
     }
     await this.db.doc(`lessons/${id}`).set({
       ...data,
@@ -59,39 +57,51 @@ export class LessonService {
     });
     await this.db.doc(`lessons/${id}/body/content`).set({
       body,
-      authorId,
+      authorId
     });
     return id;
   }
 
-  getLessonsByChannelId(cid: string, limit= 100): Observable<LessonMeta[]> {
+  getLessonsByChannelId(cid: string, limit = 100): Observable<LessonMeta[]> {
     let lessons: LessonMeta[] = [];
-    return this.db.collection<LessonMeta>('lessons', ref => {
-      return ref.where('channelId', '==', cid).where('deleted', '==', false).where('public', '==', true).limit(limit).orderBy('createdAt', 'desc');
-    }).valueChanges().pipe(
-      switchMap(items => {
-        lessons = items;
-        return this.db.doc<ChannelMeta>(`channels/${cid}`).valueChanges();
-      }),
-      map(channel => {
-        return lessons.map(lesson => {
-          return {
-            channelName: channel.title,
-            ...lesson
-          };
-        });
+    return this.db
+      .collection<LessonMeta>('lessons', ref => {
+        return ref
+          .where('channelId', '==', cid)
+          .where('deleted', '==', false)
+          .where('public', '==', true)
+          .limit(limit)
+          .orderBy('createdAt', 'desc');
       })
-    );
+      .valueChanges()
+      .pipe(
+        switchMap(items => {
+          lessons = items;
+          return this.db.doc<ChannelMeta>(`channels/${cid}`).valueChanges();
+        }),
+        map(channel => {
+          return lessons.map(lesson => {
+            return {
+              channelName: channel.title,
+              ...lesson
+            };
+          });
+        })
+      );
   }
 
   getLessonsByListId(lid: string): Observable<LessonMeta[]> {
-    return this.db.doc<LessonList>(`lists/${lid}`)
-      .valueChanges().pipe(
+    return this.db
+      .doc<LessonList>(`lists/${lid}`)
+      .valueChanges()
+      .pipe(
         switchMap(list => {
           if (list.lessonIds.length) {
-            return combineLatest(list.lessonIds.map(id => {
-              return this.db.doc<LessonMeta>(`lessons/${id}`).valueChanges();
-            }));
+            return combineLatest(
+              list.lessonIds.map(id => {
+                return this.db.doc<LessonMeta>(`lessons/${id}`).valueChanges();
+              })
+            );
           } else {
             return of([]);
           }
@@ -123,10 +133,12 @@ export class LessonService {
 
   async updateLesson(
     id: string,
-    data: Partial<Pick<
-      Lesson,
-      'title' | 'videoId' | 'public' | 'premium' | 'amount' | 'body' | 'thumbnailURL'
-    >>
+    data: Partial<
+      Pick<
+        Lesson,
+        'title' | 'videoId' | 'public' | 'free' | 'body' | 'thumbnailURL'
+      >
+    >
   ): Promise<void> {
     const body = data.body;
 
@@ -140,7 +152,7 @@ export class LessonService {
 
     return this.db.doc(`lessons/${id}`).update({
       ...data,
-      updatedAt: new Date(),
+      updatedAt: new Date()
     });
   }
 
@@ -161,7 +173,9 @@ export class LessonService {
   }
 
   isLiked(uid: string, lessonId: string): Observable<boolean> {
-    return this.db.doc(`channels/${uid}/likes/${lessonId}`).valueChanges()
+    return this.db
+      .doc(`channels/${uid}/likes/${lessonId}`)
+      .valueChanges()
       .pipe(map(lesson => !!lesson));
   }
 
@@ -178,70 +192,25 @@ export class LessonService {
     return collable(urls);
   }
 
-  checkPermission(lessonId: string, causeAuthorId?: string): Observable<boolean> {
-    let uid: string;
-
-    return this.afAuth.user.pipe(
-      switchMap(user => {
-        if (!user) {
-          return of(false);
-        }
-
-        uid = user.uid;
-        return this.db.doc(`users/${uid}/settlements/${lessonId}`)
-          .valueChanges().pipe(map(settlement => !!settlement));
-      }),
-      switchMap(inLesson => {
-        if (inLesson) {
-          return of(true);
-        } else if (uid) {
-          return this.db.collection<Settlement>(`users/${uid}/settlements`, ref => ref.where('type', '==', 'cause'))
-            .valueChanges();
-        } else {
-          return of(false);
-        }
-      }),
-      switchMap((settlements: Settlement[] | boolean) => {
-        if (settlements === true) {
-          return of(true);
-        }
-
-        if (!settlements || !settlements.length) {
-          return of(false);
-        }
-
-        return forkJoin(
-          settlements.map(settlement => {
-            return this.db.doc<LessonList>(`lists/${settlement.id}`)
-              .valueChanges().pipe(take(1));
-          })
-        );
-      }),
-      map((causes: LessonList[] | boolean) => {
-        if (causes === false || causes === true) {
-          return causes;
-        } else {
-
-          const inCause =  causes.find(cause => {
-            if (!cause) {
-              return false;
-            }
-            if (cause.authorId !== causeAuthorId) {
-              return false;
-            }
-            return cause.lessonIds.find(id => id === lessonId);
-          });
-          return !!inCause;
-        }
+  checkPermission(lessonId: string): Observable<boolean> {
+    return combineLatest([
+      this.authService.authUser$,
+      this.db.doc<LessonMeta>(`lessons/${lessonId}`).valueChanges()
+    ]).pipe(
+      map(([user, lesson]) => {
+        return user.plan !== 'free' || lesson.free;
       })
     );
   }
 
   getThumbnail(id: string): Promise<string> {
     const uri = `https://vimeo.com/api/oembed.json?url=https://vimeo.com/${id}`;
-    return this.http.jsonp(uri, 'callback').pipe(
-      map((res: any) => res.thumbnail_url),
-      first()
-    ).toPromise();
+    return this.http
+      .jsonp(uri, 'callback')
+      .pipe(
+        map((res: any) => res.thumbnail_url),
+        first()
+      )
+      .toPromise();
   }
 }

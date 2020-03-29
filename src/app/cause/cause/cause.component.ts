@@ -19,7 +19,7 @@ export class CauseComponent implements OnInit {
     private route: ActivatedRoute,
     private lessonService: LessonService,
     private listService: ListService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -28,5 +28,4 @@ export class CauseComponent implements OnInit {
       this.cause$ = this.listService.getList(listId);
     });
   }
-
 }

@@ -29,7 +29,6 @@ export interface ChannelMeta {
 }
 
 export interface ChannelStatistics {
-  totalLikeCount: number;
   totalLikedCount: number;
   publicLessonCount: number;
   followerCount: number;

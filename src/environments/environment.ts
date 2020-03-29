@@ -19,9 +19,9 @@ export const environment = {
     appId: '1:11098690567:web:50dbe85f0c81793b'
   },
   algolia: {
-    appId: 'LZ4B1TI1NW',
-    apiKey: 'e4a4e27ff57df999aae2dda4f3ad367d',
-    indexName: 'lessons-dev'
+    appId: 'JDCC4O77OA',
+    apiKey: '01e9b4a6c9c76f20959c97816a0b8e73',
+    indexName: 'lessons'
   },
   captchaKey: '6LdxgLIUAAAAAG7VOix4btA1S51f5kYqPugCNPeu',
   host: 'https://dev-update.firebaseapp.com'

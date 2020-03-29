@@ -1,16 +1,20 @@
 import { db } from './db';
 
-export const addSettlement = (data: {
-  id: string;
+export const addSettlement = async (data: {
   userId: string;
   title?: string;
-  path: string;
-  sellerEmail: string;
   amount: number;
+  currentPeriodStart?: number;
+  currentPeriodEnd?: number;
+  pdf: string;
 }) => {
-  return db.doc(`users/${data.userId}/settlements/${data.id}`).set({
-    id: data.id,
+  await db.doc(`users/${data.userId}`).update({
+    currentPeriodStart: data.currentPeriodStart,
+    currentPeriodEnd: data.currentPeriodEnd
+  });
+
+  return db.collection(`users/${data.userId}/settlements`).add({
     ...data,
     createdAt: new Date()
   });
-}
+};

@@ -88,3 +88,53 @@ img {
 .voices > div:first-child > * {
   margin-top: 0 !important;
 }
+
+.swiper-slide {
+  transition: 0.3s;
+  opacity: 0.38;
+  transform: scale(0.8);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: -20px 20px 30px -10px rgba(black, 0.8);
+  iframe {
+    display: block;
+  }
+}
+
+.swiper-slide-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.swiper-container {
+  position: relative;
+  padding: 80px 0;
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    width: 240px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+  }
+  &:before {
+    left: 0;
+    background: linear-gradient(
+      to right,
+      white,
+      rgba(white, 0.9) 60%,
+      rgba(white, 0)
+    );
+  }
+  &:after {
+    right: 0;
+    background: linear-gradient(
+      to left,
+      white,
+      rgba(white, 0.9) 60%,
+      rgba(white, 0)
+    );
+  }
+}

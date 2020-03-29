@@ -1,8 +1,22 @@
-import { Component, OnInit, Inject, forwardRef, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  forwardRef,
+  ViewChild,
+  ElementRef,
+  Output,
+  EventEmitter,
+  Input
+} from '@angular/core';
 import { NgAisInstantSearch, BaseWidget } from 'angular-instantsearch';
 import { connectRefinementList } from 'instantsearch.js/es/connectors';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatAutocomplete } from '@angular/material';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import {
+  MatAutocompleteSelectedEvent,
+  MatAutocomplete
+} from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { FormControl } from '@angular/forms';
 import { lang } from 'moment';
 
@@ -12,11 +26,12 @@ import { lang } from 'moment';
   styleUrls: ['./refinement-list.component.scss']
 })
 export class RefinementListComponent extends BaseWidget implements OnInit {
-
   @Output() result = new EventEmitter();
   @Input() old?;
-  @ViewChild('tagInput', {static: false}) tagInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+  @ViewChild('tagInput', { static: false }) tagInput: ElementRef<
+    HTMLInputElement
+  >;
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
   tags: {
     label: string;
@@ -31,7 +46,7 @@ export class RefinementListComponent extends BaseWidget implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   state: {
     items: any[];
-    searchForItems: any
+    searchForItems: any;
   };
   tagOptions = [];
 
@@ -49,7 +64,7 @@ export class RefinementListComponent extends BaseWidget implements OnInit {
     super.ngOnInit();
 
     if (this.old) {
-      this.tags = this.old.map(label => ({label}));
+      this.tags = this.old.map(label => ({ label }));
     }
   }
 
@@ -80,14 +95,14 @@ export class RefinementListComponent extends BaseWidget implements OnInit {
     const value = ($event.target as HTMLInputElement).value;
     if (this.lastValue !== value) {
       this.state.searchForItems(value);
-      this.tagOptions = this.state.items.filter(item => !this.isExsists(item.label));
+      this.tagOptions = this.state.items.filter(
+        item => !this.isExsists(item.label)
+      );
       this.lastValue = value;
     }
   }
 
-  remove(value: {
-    label: string;
-  }): void {
+  remove(value: { label: string }): void {
     const index = this.tags.findIndex(tag => tag.label === value.label);
 
     if (index >= 0) {
@@ -108,5 +123,4 @@ export class RefinementListComponent extends BaseWidget implements OnInit {
       this.result.emit(this.tags);
     }
   }
-
 }

@@ -1,18 +1,16 @@
-<div class="wrap" [class.home-loading]="isLoading">
-  <ais-instantsearch [config]="algoliaConfig" class="list">
-    <ais-configure [searchParameters]="trendSearchParameters"> </ais-configure>
-    <ais-hits>
-      <ng-template let-hits="hits" let-results="results">
-        <ng-container *ngIf="hits && hits.length">
-          <h2>新着レッスン</h2>
-          <div class="lesson-grid">
-            <app-grid-lesson-item
-              *ngFor="let hit of hits | attachmentUser | async"
-              [lesson]="hit"
-            ></app-grid-lesson-item>
-          </div>
-        </ng-container>
-      </ng-template>
-    </ais-hits>
-  </ais-instantsearch>
-</div>
+<ais-instantsearch [config]="algoliaConfig" class="list">
+  <ais-configure [searchParameters]="latestParams"> </ais-configure>
+  <ais-hits>
+    <ng-template let-hits="hits" let-results="results">
+      <ng-container *ngIf="hits && hits.length">
+        <h2>新着レッスン</h2>
+        <div class="lesson-grid">
+          <app-grid-lesson-item
+            *ngFor="let hit of hits | attachmentUser | async"
+            [lesson]="hit"
+          ></app-grid-lesson-item>
+        </div>
+      </ng-container>
+    </ng-template>
+  </ais-hits>
+</ais-instantsearch>

@@ -9,11 +9,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class StudioShellComponent implements OnInit {
   isLoading$ = this.loadingService.isLoading$;
 
-  constructor(
-    private loadingService: LoadingService
-  ) { }
+  constructor(private loadingService: LoadingService) {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

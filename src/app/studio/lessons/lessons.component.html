@@ -73,17 +73,16 @@
   </div>
 
   <ais-instantsearch [config]="algoliaConfig" class="list">
-
     <app-search-lesson-input></app-search-lesson-input>
 
     <ais-configure [searchParameters]="searchParameters"> </ais-configure>
-    <ais-hits [transformItems]="buildLists">
+    <ais-hits>
       <ng-template let-hits="hits" let-results="results">
         <table mat-table matSort [dataSource]="hits">
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
               <mat-checkbox
-                (change)="$event ? masterToggle() : null"
+                (change)="$event ? masterToggle(hits) : null"
                 [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()"
               >
@@ -108,7 +107,7 @@
               <mat-icon class="mat-18" inline *ngIf="!element.public"
                 >lock</mat-icon
               >
-              <mat-icon class="mat-18" inline *ngIf="element.premium"
+              <mat-icon class="mat-18" inline *ngIf="!element.free"
                 >monetization_on</mat-icon
               >
               <a [routerLink]="['/lesson']" [queryParams]="{ v: element.id }">{{

@@ -1,21 +1,21 @@
+import { PlanService } from 'src/app/services/plan.service';
+import { PlanID } from './../interfaces/plan';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'plan'
 })
 export class PlanPipe implements PipeTransform {
-  transform(plan: 'free' | 'lite' | 'isa' | 'standard', ...args: any[]): any {
-    switch (plan) {
+  constructor(private planService: PlanService) {}
+
+  transform(planId: PlanID): any {
+    switch (planId) {
       case 'free':
         return 'フリー';
       case 'isa':
         return 'ISA';
-      case 'lite':
-        return 'ライト';
-      case 'standard':
-        return 'スタンダード';
       default:
-        return 'フリー';
+        return this.planService.plans.find(plan => plan.id === planId).title;
     }
   }
 }

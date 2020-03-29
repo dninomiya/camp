@@ -1,3 +1,4 @@
+import { AuthGuard } from './../guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TermsComponent } from './terms/terms.component';
@@ -16,11 +17,6 @@ const routes: Routes = [
     component: RootComponent,
     children: [
       {
-        path: 'welcome',
-        loadChildren: () =>
-          import('../welcome/welcome.module').then(m => m.WelcomeModule)
-      },
-      {
         path: 'help',
         component: HelpComponent
       },
@@ -31,6 +27,13 @@ const routes: Routes = [
       {
         path: 'legal',
         component: LegalComponent
+      },
+      {
+        path: 'signup',
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('../signup/signup.module').then(m => m.SignupModule)
       },
       {
         path: 'guideline',

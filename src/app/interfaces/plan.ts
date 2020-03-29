@@ -1,12 +1,12 @@
 export interface Plan {
-  id?: string;
+  id: string;
+  subTitle: string;
+  title: string;
   amount: number;
-  description: string;
-  per: PlanPer;
-  type: PlanType;
-  memberCount?: number;
-  active: boolean;
+  points: string[];
 }
+
+export type PlanID = 'free' | 'lite' | 'solo' | 'mentor' | 'isa';
 
 export type PlanPer = 'time' | 'coaching' | 'month';
 export type PlanType = 'question' | 'review' | 'coaching' | 'trouble' | 'premium' | 'cause' | 'lesson';

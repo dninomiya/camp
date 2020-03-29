@@ -1,12 +1,16 @@
-import { ConfirmUnsubscribeDialogComponent } from './../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
-import { take } from 'rxjs/operators';
+import { PlanService } from 'src/app/services/plan.service';
+import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
+import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { of } from 'rxjs';
+import { take, switchMap } from 'rxjs/operators';
 import { User, UserPayment } from './../interfaces/user';
-import { CardDialogComponent } from './../shared/card-dialog/card-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import * as AOS from 'aos';
 import { PaymentService } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
+import { SwiperOptions } from 'swiper';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
@@ -15,136 +19,45 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
   styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit, AfterViewInit {
-  styles = [
-    {
-      image: 'remote',
-      title: '完全オンライン',
-      description:
-        '場所を選ばず参加いただけます。Slackで質問や情報交換を行います。'
-    },
-    {
-      image: 'document',
-      title: '動画教材',
-      description: '解説動画やテキスト教材を使って学習を進めます。'
-    },
-    {
-      image: 'review',
-      title: 'ソースレビュー',
-      description: 'メンターにソースレビューを依頼することができます。'
-    },
-    {
-      title: '進捗管理',
-      description: '毎日MTGを行い、進捗をしっかり管理します。'
-    },
-    {
-      title: 'ハンズオン',
-      description: '詰まったときは画面共有をして丁寧に教えます。'
-    },
-    {
-      title: 'テスト',
-      description: 'プロダクトが完成したら最終的に実務テストを行います。'
-    }
+  videos = [
+    'Dey97I72JtI',
+    'QCJ1THnyAec',
+    'MDyCX0d-NOE',
+    'F5sSI6P5uJo',
+    'nww-Y7HiaGE'
   ];
-  qas = [
-    {
-      q: 'どれくらいで自分のサービスができますか？',
-      a:
-        '初期スキルや学習時間によるので一概には言えませんが、3〜6ヶ月の方が多いです。'
-    },
-    {
-      q: '就職支援はありますか？',
-      a:
-        'CAMPから就職先を指定、紹介することはありません。自分が行きたいと思う企業へ応募してください。'
-    },
-    {
-      q: '返金保証はありますか？',
-      a:
-        '1週間の無料トライアル以降は1ヶ月ごとに前払いとなり、途中退会においても返金はできません。'
-    },
-    {
-      q: 'なぜ技術を制限しているのですか？',
-      a:
-        '最新の正しいスキルを教えるために、Googleが提供するAngularとFirebaseを使ったサービス開発に限定しています。'
-    },
-    {
-      q: '説明会、勉強会はありますか？',
-      a:
-        'メンターが不定期で<a href="https://www.youtube.com/channel/UCUPq5dKFGnOziaqYI-ejYcg?view_as=subscriber" target="_blank">YouTube Live</a>をやっているのでそちらにご参加いただくか、過去のアーカイブをご参照ください。'
-    }
-  ];
-  skills = [
-    {
-      image: 'angular',
-      title: 'フロントエンド / Angular',
-      description: '高品質なサービスのUIを実装します。'
-    },
-    {
-      image: 'firebase',
-      title: 'バックエンド / Firebase',
-      description:
-        'ログイン認証やデータベース設計、外部サービス連携を行います。'
-    },
-    {
-      image: 'stripe',
-      title: '決済 / Stripe',
-      description:
-        '課金システム最大手のStripeを使い、BtoCやCtoC課金システムの実装を行います。'
-    },
-    {
-      image: 'algolia',
-      title: '検索 / Algolia',
-      description:
-        'Algoliaを使って検索システムを開発します。タグ検索、絞り込みなどを行います。'
-    },
-    {
-      image: 'xd',
-      title: 'UI設計 / XD',
-      description: '使いやすいサービスのUIをデザイン、設計します。'
-    },
-    {
-      image: 'github',
-      title: 'Git開発 / GitHub',
-      description: 'GitHubを使ったレビュー駆動開発を行います（一部プランのみ）'
-    }
-  ];
-
-  plans = [
-    {
-      id: 'lite',
-      title: 'ライト',
-      subTitle: '自分のペースで学びたい方',
-      price: 10000,
-      points: ['有料教材の閲覧', '質問し放題']
-    },
-    {
-      id: 'standard',
-      title: 'スタンダード',
-      subTitle: '本気ガッツリ学びたい方',
-      price: 50000,
-      points: ['有料教材の閲覧', '質問し放題', 'コードレビュー', '進捗管理']
-    },
-    {
-      id: 'isa',
-      title: 'ISA',
-      subTitle: '学費の確保が難しい方',
-      price: 0,
-      points: [
-        '有料教材の閲覧',
-        '質問し放題',
-        'コードレビュー',
-        '毎日の進捗管理'
-      ]
-    }
-  ];
-
+  swiperConfig: SwiperOptions = {
+    slidesPerView: 3,
+    centeredSlides: true,
+    loop: true,
+    autoplay: true,
+    allowTouchMove: false
+  };
+  isCampaign = this.planService.isCampaign;
+  isSwiperReady: boolean;
+  asks = ASKS;
+  planFeatures = PLAN_FEATURES;
+  qas = QUESTIONS;
+  skills = SKILLS;
+  plans = this.planService.plans;
   user: User;
   payment: UserPayment;
+  player: YT.Player;
+  playerVars: YT.PlayerVars = {
+    controls: 0
+  };
+  user$ = this.authService.authUser$;
+  loading: boolean;
+  loginSnackBar: MatSnackBarRef<any>;
 
   constructor(
     private authService: AuthService,
     private paymentService: PaymentService,
+    private planService: PlanService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.authService.authUser$.subscribe(user => {
       this.user = user;
@@ -158,14 +71,33 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(tag);
+
+    this.authService.authUser$
+      .pipe(
+        switchMap(user => {
+          if (user) {
+            return this.paymentService.getUserPayment(user.id).pipe(take(1));
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .subscribe(payment => (this.payment = payment));
+  }
 
   ngAfterViewInit() {
     (window as any).twttr.widgets.load();
+    setTimeout(() => {
+      this.isSwiperReady = true;
+      AOS.init();
+    }, 1000);
   }
 
   scrollToElement($element): void {
-    console.log($element);
     $element.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
@@ -173,66 +105,47 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private upgrade(planId: string) {
-    this.dialog
-      .open(SharedConfirmDialogComponent, {
-        data: {
-          title: '本当にアップグレードしますか？',
-          description:
-            '１週間の無料トライアル後、自動的に引き落としが始まります。'
-        }
-      })
-      .afterClosed()
-      .subscribe(status => {
-        if (status) {
-          this.paymentService
-            .subscribePlan({
-              customerId: this.payment.customerId,
-              planId,
-              subscriptionId: this.payment.subscriptionId
-            })
-            .then(() => {
-              this.snackBar.open('アップグレードしました', null, {
-                duration: 2000
-              });
-            });
-        }
-      });
-  }
-
-  register(planId: string) {
-    if (!this.payment) {
+  start(planId: string) {
+    if (this.authService.user) {
+      this.router.navigateByUrl('/intl/signup?planId=' + planId);
+    } else {
       this.dialog
-        .open(CardDialogComponent)
+        .open(LoginDialogComponent)
         .afterClosed()
         .subscribe(status => {
           if (status) {
-            this.upgrade(planId);
+            this.loading = true;
+            this.loginSnackBar = this.snackBar.open(
+              'ログインしています',
+              null,
+              {
+                duration: 2000
+              }
+            );
+            this.authService
+              .login()
+              .then(() => {
+                this.user$.subscribe(user => {
+                  if (user) {
+                    this.loginSnackBar.dismiss();
+                    this.router.navigateByUrl('/intl/signup?planId=' + planId);
+                  } else {
+                    this.loginSnackBar.dismiss();
+                    this.loading = false;
+                  }
+                });
+              })
+              .catch(() => {
+                this.loginSnackBar.dismiss();
+                this.loading = false;
+              });
           }
         });
-    } else {
-      this.upgrade(planId);
     }
   }
 
-  unsubscribe(planId: string) {
-    this.dialog.open(ConfirmUnsubscribeDialogComponent, {
-      data: {
-        uid: this.user.id,
-        planId
-      }
-    });
+  savePlayer(player) {
+    this.player = player;
   }
-
-  login(planId: string) {
-    this.authService.login().then(result => {
-      this.paymentService
-        .getUserPayment(result.user.uid)
-        .pipe(take(1))
-        .subscribe(payment => {
-          this.payment = payment;
-          this.register(planId);
-        });
-    });
-  }
+  onStateChange(event) {}
 }

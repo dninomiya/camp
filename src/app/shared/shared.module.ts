@@ -45,11 +45,10 @@ import { VisibleDirective } from './visible.directive';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { AttachmentUserPipe } from './attachment-user.pipe';
 import { PlanPerLabelPipe } from './plan-per-label.pipe';
-import { PlanTitleLabelPipe } from './plan-title-label.pipe';
 import { LinkIconPipe } from './link-icon.pipe';
 import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
 import { RefinementListComponent } from './refinement-list/refinement-list.component';
-import { MatChipsModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
 import { FooterComponent } from './footer/footer.component';
 import { RatePipe } from './rate.pipe';
 import { PlanPipe } from './plan.pipe';
@@ -72,7 +71,6 @@ import { PlanPipe } from './plan.pipe';
     StarRatingComponent,
     AttachmentUserPipe,
     PlanPerLabelPipe,
-    PlanTitleLabelPipe,
     FooterComponent,
     LinkIconPipe,
     SearchKitComponent,
@@ -154,7 +152,6 @@ import { PlanPipe } from './plan.pipe';
     StarRatingComponent,
     AttachmentUserPipe,
     PlanPerLabelPipe,
-    PlanTitleLabelPipe,
     LinkIconPipe,
     SearchKitComponent,
     RefinementListComponent,

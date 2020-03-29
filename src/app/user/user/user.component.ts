@@ -1,100 +1,118 @@
+import { PlanService } from 'src/app/services/plan.service';
+import { tap } from 'rxjs/operators';
+import { PlanPipe } from './../../shared/plan.pipe';
+import { ConfirmUnsubscribeDialogComponent } from './../../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { SharedConfirmDialogComponent } from './../../core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { CardDialogComponent } from 'src/app/shared/card-dialog/card-dialog.component';
-import { map } from 'rxjs/operators';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PaymentService } from './../../services/payment.service';
 import { Observable } from 'rxjs';
-import { User, UserPayment } from 'src/app/interfaces/user';
+import { User } from 'src/app/interfaces/user';
 import { AuthService } from './../../services/auth.service';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
 
 import * as moment from 'moment';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
+  providers: [PlanPipe]
 })
 export class UserComponent implements OnInit {
-
-  user$: Observable<User> = this.userService.getUser(
-    this.authService.user.id
-  );
+  user$: Observable<User> = this.userService
+    .getUser(this.authService.user.id)
+    .pipe(tap(user => (this.canceled = user.isCaneclSubscription)));
 
   loading: boolean;
-
+  canceled: boolean;
   customerId: string;
+  dayCost = 16666;
+  maxCost = 3000000;
+  cancellationInProgress: boolean;
 
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private paymentService: PaymentService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private planService: PlanService,
+    private dialog: MatDialog,
+    private planPipe: PlanPipe
   ) {
-    this.paymentService.getUserPayment(
-      this.authService.user.id
-    ).subscribe(customer => this.customerId = customer && customer.customerId);
+    this.paymentService
+      .getUserPayment(this.authService.user.id)
+      .subscribe(
+        customer => (this.customerId = customer && customer.customerId)
+      );
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  getDays(start: number, end: number = Date.now()): number {
+    return moment(end).diff(moment(start), 'days');
   }
 
-  getDays(from: Date): number {
-    return moment().diff(moment(from), 'days');
+  getPlan(planId: string) {
+    return this.planService.getPlan(planId);
   }
 
-  getTotalPay(from: Date): number {
-    const monthConst = 500000;
-    const dayCost = monthConst / 30;
-    return Math.round(this.getDays(from) * dayCost);
+  getTotalPay(start: number, end: number): number {
+    return Math.min(this.getDays(start, end) * this.dayCost, this.maxCost);
   }
 
   getLimitDate(from: Date): Date {
-    return moment(from).add(4, 'years').toDate();
+    return moment(from)
+      .add(4, 'years')
+      .toDate();
   }
 
-  createSubscription() {
-    if (this.customerId) {
-      this.loading = true;
-      this.paymentService.createSubscription(
-        this.customerId
-      ).then(() => {
-        this.snackBar.open('会員登録しました', null, {
-          duration: 2000
-        });
-        this.loading = false;
-      });
-    } else {
-      this.dialog.open(
-        CardDialogComponent
-      );
-    }
+  getPayLimit(end: number) {
+    console.log(end);
+    return moment(end)
+      .add(5, 'years')
+      .toDate();
   }
 
-  cancellation() {
-    if (this.customerId) {
-      this.dialog.open(SharedConfirmDialogComponent, {
-        restoreFocus: false,
+  openUnsubscribeDialog(user: User) {
+    this.cancellationInProgress = true;
+    this.dialog
+      .open(SharedConfirmDialogComponent, {
         data: {
-          title: '本当に解約しますか？',
-          description: '解約するとCAMPから退会となります'
+          title: '自動更新を停止しますか？',
+          description:
+            '自動更新を停止すると' +
+            formatDate(
+              new Date(user.currentPeriodEnd * 1000),
+              'yyyy年MM月dd日',
+              'ja'
+            ) +
+            '以降フリープランになります。それまでは引き続き' +
+            this.planPipe.transform(user.plan) +
+            'プランをご利用いただけます。'
         }
-      }).afterClosed().subscribe(status => {
+      })
+      .afterClosed()
+      .subscribe(status => {
         if (status) {
-          this.loading = true;
-          this.paymentService.deleteSubscription(
-            this.customerId
-          ).then(() => {
-            this.snackBar.open('解約しました', null, {
-              duration: 2000
+          this.dialog
+            .open(ConfirmUnsubscribeDialogComponent, {
+              data: {
+                uid: user.id,
+                planId: user.plan
+              }
+            })
+            .afterClosed()
+            .subscribe(unsubStatus => {
+              if (!unsubStatus) {
+                this.cancellationInProgress = false;
+              }
             });
-            this.loading = false;
-          });
+        } else {
+          this.cancellationInProgress = false;
         }
       });
-    }
   }
-
 }

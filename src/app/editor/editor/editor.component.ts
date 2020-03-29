@@ -1,8 +1,24 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
-import { NgxPicaErrorInterface, NgxPicaService } from '@digitalascetic/ngx-pica';
+import {
+  NgxPicaErrorInterface,
+  NgxPicaService
+} from '@digitalascetic/ngx-pica';
 import { of, Observable, combineLatest } from 'rxjs';
-import { switchMap, tap, take, shareReplay, debounceTime, map, catchError } from 'rxjs/operators';
-import { FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
+import {
+  switchMap,
+  tap,
+  take,
+  shareReplay,
+  debounceTime,
+  map,
+  catchError
+} from 'rxjs/operators';
+import {
+  FormBuilder,
+  Validators,
+  FormControl,
+  AbstractControl
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
@@ -35,18 +51,9 @@ import { VimeoHelpDialogComponent } from '../vimeo-help-dialog/vimeo-help-dialog
 export class EditorComponent implements OnInit {
   @ViewChild('body', {
     static: false
-  }) simplemde: Simplemde;
-  prices: number[] = [
-    100,
-    500,
-    1000,
-    1500,
-    5000,
-    10000,
-    25000,
-    50000,
-    100000,
-  ];
+  })
+  simplemde: Simplemde;
+  prices: number[] = [100, 500, 1000, 1500, 5000, 10000, 25000, 50000, 100000];
 
   thumbnailOption = {
     path: '',
@@ -65,7 +72,7 @@ export class EditorComponent implements OnInit {
     switchMap(user => {
       return this.channelService.getListByChannelId(user.id);
     }),
-    tap(lists => this.lists = lists)
+    tap(lists => (this.lists = lists))
   );
   lists: LessonList[];
   isLoading: boolean;
@@ -89,24 +96,22 @@ export class EditorComponent implements OnInit {
         name: 'image',
         action: this.selectImage.bind(this),
         className: 'fa fa-picture-o',
-        title: '画像を挿入',
+        title: '画像を挿入'
       },
       '|',
       {
         name: 'Help',
         action: this.openHelpDialog.bind(this),
         className: 'fa fa-question-circle',
-        title: '使い方',
-      },
+        title: '使い方'
+      }
     ]
   };
 
-  plans$ = this.planService.getPlansByChannelId(
-    this.authService.user.id
-  );
+  plans = this.planService.plans;
 
   codemirrorOpts = {
-    lineNumbers: false,
+    lineNumbers: false
   };
 
   vimeoUser: VimeoUser;
@@ -119,16 +124,15 @@ export class EditorComponent implements OnInit {
     title: ['', Validators.required],
     body: ['', Validators.required],
     tags: [''],
-    videoId: ['', {
-      // asyncValidators: [this.validateVimeoId.bind(this)],
-      // updateOn: 'blur'
-    }],
+    videoId: [
+      '',
+      {
+        // asyncValidators: [this.validateVimeoId.bind(this)],
+        // updateOn: 'blur'
+      }
+    ],
     public: [true, Validators.required],
-    premium: [false],
-    amount: [{
-      value: '',
-      disabled: true
-    }],
+    free: [false]
   });
 
   listControl = new FormControl('');
@@ -147,13 +151,13 @@ export class EditorComponent implements OnInit {
     private lessonService: LessonService,
     private location: Location,
     private listService: ListService,
-    private vimeoService: VimeoService,
+    private vimeoService: VimeoService
   ) {
-    this.user$.pipe(
-      switchMap(user => this.vimeoService.getVimeoAccount(user.id))
-    ).subscribe(vimeoUser => {
-      this.vimeoUser = vimeoUser || null;
-    });
+    this.user$
+      .pipe(switchMap(user => this.vimeoService.getVimeoAccount(user.id)))
+      .subscribe(vimeoUser => {
+        this.vimeoUser = vimeoUser || null;
+      });
 
     this.route.queryParamMap.subscribe(params => {
       const tag = params.get('tag');
@@ -188,32 +192,24 @@ export class EditorComponent implements OnInit {
       shareReplay(1)
     );
 
-    combineLatest([
-      this.oldLesson$,
-      this.lists$
-    ]).subscribe(([oldLesson, lists]) => {
-      if (oldLesson && lists) {
-        this.listControl.patchValue(
-          lists
-            .filter(list => list.lessonIds.includes(oldLesson.id))
-            .map(list => list.id)
-        );
+    combineLatest([this.oldLesson$, this.lists$]).subscribe(
+      ([oldLesson, lists]) => {
+        if (oldLesson && lists) {
+          this.listControl.patchValue(
+            lists
+              .filter(list => list.lessonIds.includes(oldLesson.id))
+              .map(list => list.id)
+          );
+        }
       }
-    });
+    );
 
-    this.form.get('premium').valueChanges.subscribe(value => {
-      if (value) {
-        this.form.get('amount').enable();
-        this.form.get('amount').setValidators(Validators.required);
-      } else {
-        this.form.get('amount').disable();
-        this.form.get('amount').clearValidators();
-      }
-    });
-
-    this.form.get('body').valueChanges.pipe(debounceTime(500)).subscribe(res => {
-      (window as any).twttr.widgets.load();
-    });
+    this.form
+      .get('body')
+      .valueChanges.pipe(debounceTime(500))
+      .subscribe(res => {
+        (window as any).twttr.widgets.load();
+      });
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -227,14 +223,16 @@ export class EditorComponent implements OnInit {
   validateVimeoId(control: AbstractControl) {
     if (this.vimeoUser) {
       this.isValidWaiting = true;
-      return this.vimeoService.checkVimeoId({
-        id: control.value,
-        token: this.vimeoUser.token
-      }).pipe(
-        tap(() => this.isValidWaiting = false),
-        map(data => null),
-        catchError(() => of({ videoId: true }))
-      );
+      return this.vimeoService
+        .checkVimeoId({
+          id: control.value,
+          token: this.vimeoUser.token
+        })
+        .pipe(
+          tap(() => (this.isValidWaiting = false)),
+          map(data => null),
+          catchError(() => of({ videoId: true }))
+        );
     } else {
       return of(null);
     }
@@ -253,11 +251,10 @@ export class EditorComponent implements OnInit {
       const updated = updatedDiff(this.oldLesson, this.form.value);
       const newValue = {
         ...added,
-        ...updated,
+        ...updated
       };
 
-      action = this.lessonService.updateLesson(
-        this.oldLesson.id, {
+      action = this.lessonService.updateLesson(this.oldLesson.id, {
         body: this.form.value.body,
         ...newValue
       });
@@ -270,15 +267,19 @@ export class EditorComponent implements OnInit {
     }
 
     action.then((lessonId?: string) => {
-      this.snackBar.open(`ポストを${this.oldLesson ? '更新' : '作成'}しました`, null, {
-        duration: 2000
-      });
-      this.isComplete = true;
+      this.snackBar.open(
+        `ポストを${this.oldLesson ? '更新' : '作成'}しました`,
+        null,
+        {
+          duration: 2000
+        }
+      );
       this.listService.patchList({
         allLists: this.lists,
         activeListIds,
         lessonId: this.oldLesson ? this.oldLesson.id : lessonId
       });
+      this.isComplete = true;
       this.router.navigate(['/lesson'], {
         relativeTo: this.route,
         queryParams: {
@@ -297,21 +298,21 @@ export class EditorComponent implements OnInit {
   }
 
   deleteLesson() {
-    this.snackBar.open('本当に削除しますか？', 'はい', {
-      duration: 4000
-    }).onAction().subscribe(() => {
-      this.lessonService.deleteLesson(this.oldLesson.id).then(() => {
-        this.snackBar.open('ポストを削除しました。', null, {
-          duration: 2000
+    this.snackBar
+      .open('本当に削除しますか？', 'はい', {
+        duration: 4000
+      })
+      .onAction()
+      .subscribe(() => {
+        this.lessonService.deleteLesson(this.oldLesson.id).then(() => {
+          this.snackBar.open('ポストを削除しました。', null, {
+            duration: 2000
+          });
+          this.router.navigate(['/']);
         });
-        this.router.navigate(['/']);
-      });
 
-      this.listService.removeLessonFromList(
-        this.lists,
-        this.oldLesson.id
-      );
-    });
+        this.listService.removeLessonFromList(this.lists, this.oldLesson.id);
+      });
   }
 
   changeList() {
@@ -327,30 +328,41 @@ export class EditorComponent implements OnInit {
   upload(blob: Blob): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader: FileReader = new FileReader();
-      reader.addEventListener('load', (e: any) => {
-        const image = e.target.result;
-        this.storageService.upload(`lesson/${Date.now()}`, image).then((url: string) => {
-          resolve(url);
-        });
-      }, false);
+      reader.addEventListener(
+        'load',
+        (e: any) => {
+          const image = e.target.result;
+          this.storageService
+            .upload(`lesson/${Date.now()}`, image)
+            .then((url: string) => {
+              resolve(url);
+            });
+        },
+        false
+      );
       reader.readAsDataURL(blob);
     });
   }
 
   resizeFile(file: any): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.ngxPicaService.resizeImage(file, 2000, 1200, {
-        aspectRatio: {
-          keepAspectRatio: true,
-        },
-        alpha: true
-      }).subscribe((imageResized: File) => {
-        this.upload(imageResized).then(url => {
-          resolve(url);
-        });
-      }, (err: NgxPicaErrorInterface) => {
-        throw err.err;
-      });
+      this.ngxPicaService
+        .resizeImage(file, 2000, 1200, {
+          aspectRatio: {
+            keepAspectRatio: true
+          },
+          alpha: true
+        })
+        .subscribe(
+          (imageResized: File) => {
+            this.upload(imageResized).then(url => {
+              resolve(url);
+            });
+          },
+          (err: NgxPicaErrorInterface) => {
+            throw err.err;
+          }
+        );
     });
   }
 
@@ -359,9 +371,10 @@ export class EditorComponent implements OnInit {
     if (myField.selectionStart || myField.selectionStart === '0') {
       const startPos = myField.selectionStart;
       const endPos = myField.selectionEnd;
-      myField.value = myField.value.substring(0, startPos)
-        + tag
-        + myField.value.substring(endPos, myField.value.length);
+      myField.value =
+        myField.value.substring(0, startPos) +
+        tag +
+        myField.value.substring(endPos, myField.value.length);
     } else {
       myField.value += tag;
     }
@@ -407,35 +420,40 @@ export class EditorComponent implements OnInit {
 
   openHelpDialog() {
     this.dialog.open(EditorHelpComponent, {
-      width: '600px',
+      width: '600px'
     });
   }
 
   openVideoUploader() {
-    this.dialog.open(VimeoDialogComponent, {
-      width: '600px',
-      maxHeight: '80vh',
-      data: this.authService.user,
-      autoFocus: false,
-      restoreFocus: false
-    }).afterClosed().subscribe(videoId => {
-      if (videoId) {
-        this.form.get('videoId').setValue(videoId);
-      }
-    });
+    this.dialog
+      .open(VimeoDialogComponent, {
+        width: '600px',
+        maxHeight: '80vh',
+        data: this.authService.user,
+        autoFocus: false,
+        restoreFocus: false
+      })
+      .afterClosed()
+      .subscribe(videoId => {
+        if (videoId) {
+          this.form.get('videoId').setValue(videoId);
+        }
+      });
   }
 
   openNewListDialog(uid: string) {
-    this.dialog.open(ListEditDialogComponent, {
-      maxWidth: 600,
-      maxHeight: '80vh',
-    }).afterClosed().subscribe(status => {
-      if (status) {
-        this.snackBar.open('リストを追加しました', null, {
-          duration: 2000
-        });
-      }
-    });
+    this.dialog
+      .open(ListEditDialogComponent, {
+        maxWidth: 600
+      })
+      .afterClosed()
+      .subscribe(status => {
+        if (status) {
+          this.snackBar.open('リストを追加しました', null, {
+            duration: 2000
+          });
+        }
+      });
   }
 
   cancel() {
@@ -445,18 +463,15 @@ export class EditorComponent implements OnInit {
   openLessonGuide() {
     this.dialog.open(LessonGuideComponent, {
       width: '600px',
-      autoFocus: false,
+      autoFocus: false
     });
   }
 
   uploadThumbnail(image: string) {
     if (this.oldLesson) {
-      this.lessonService.updateLesson(
-        this.oldLesson.id,
-        {
-          thumbnailURL: image
-        }
-      );
+      this.lessonService.updateLesson(this.oldLesson.id, {
+        thumbnailURL: image
+      });
     }
   }
 
@@ -465,15 +480,18 @@ export class EditorComponent implements OnInit {
   }
 
   openTagEditor() {
-    this.dialog.open(TagEditorDialogComponent, {
-      restoreFocus: false,
-      width: '800px',
-      data: this.form.get('tags').value
-    }).afterClosed().subscribe(tags => {
-      if (tags) {
-        this.form.get('tags').patchValue(tags);
-      }
-    });
+    this.dialog
+      .open(TagEditorDialogComponent, {
+        restoreFocus: false,
+        width: '800px',
+        data: this.form.get('tags').value
+      })
+      .afterClosed()
+      .subscribe(tags => {
+        if (tags) {
+          this.form.get('tags').patchValue(tags);
+        }
+      });
   }
 
   openVimeoHelp() {

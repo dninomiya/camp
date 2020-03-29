@@ -1,15 +1,22 @@
+import { sendEmail } from './../utils/sendgrid';
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
-export const subscribePlan = functions.https.onCall(
+const PLAN_LABELS = {
+  lite: 'ライト',
+  solo: 'ソロ',
+  mentor: 'メンター'
+};
+
+export const subscribePlan = functions.region('asia-northeast1').https.onCall(
   async (
     data: {
       customerId: string;
-      planId: string;
-      channelId: string;
+      planId: 'lite' | 'solo' | 'mentor';
       subscriptionId?: string;
+      trialUsed: boolean;
     },
     context
   ) => {
@@ -22,6 +29,7 @@ export const subscribePlan = functions.https.onCall(
     let subscription;
 
     if (data.subscriptionId) {
+      console.log('プラン変更: ' + data.subscriptionId);
       subscription = await stripe.subscriptions.update(data.subscriptionId, {
         plan: planId
       });
@@ -29,17 +37,40 @@ export const subscribePlan = functions.https.onCall(
       subscription = await stripe.subscriptions.create({
         customer: data.customerId,
         default_tax_rates: [functions.config().stripe.tax],
-        trial_period_days: 7,
+        trial_period_days: data.trialUsed ? 0 : 7,
         items: [{ plan: planId }]
       });
     }
 
     await db.doc(`users/${userId}`).update({
-      plan: data.planId
+      plan: data.planId,
+      trialUsed: true,
+      isCaneclSubscription: false,
+      currentPeriodStart: subscription.current_period_start,
+      currentPeriodEnd: subscription.current_period_end
+    });
+
+    const user = (await db.doc(`users/${userId}`).get()).data() as any;
+
+    await sendEmail({
+      to: 'daichi.ninomiya@deer.co.jp',
+      templateId: 'registerToAdmin',
+      dynamicTemplateData: {
+        email: user.email,
+        name: user.name,
+        plan: PLAN_LABELS[data.planId]
+      }
+    });
+
+    await sendEmail({
+      to: user.email,
+      templateId: 'changePlan',
+      dynamicTemplateData: {
+        plan: PLAN_LABELS[data.planId]
+      }
     });
 
     await db.doc(`users/${userId}/private/payment/`).update({
-      planId,
       subscriptionId: subscription.id,
       startedAt: new Date()
     });

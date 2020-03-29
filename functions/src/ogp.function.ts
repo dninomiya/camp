@@ -4,12 +4,14 @@ const ogs = require('open-graph-scraper');
 
 const fetchOGP = (url: string) => {
   return new Promise(resolve => {
-    ogs({url})
+    ogs({ url })
       .then((result: any) => resolve(result))
-      .catch(() => resolve(null))
+      .catch(() => resolve(null));
   });
-}
+};
 
-export const getOGP = functions.https.onCall((urls: string[]) => {
-  return Promise.all(urls.map(url => fetchOGP(url)));
-})
+export const getOGP = functions
+  .region('asia-northeast1')
+  .https.onCall((urls: string[]) => {
+    return Promise.all(urls.map(url => fetchOGP(url)));
+  });
