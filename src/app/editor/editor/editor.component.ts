@@ -460,8 +460,7 @@ export class EditorComponent implements OnInit {
   openNewListDialog(uid: string) {
     this.dialog
       .open(ListEditDialogComponent, {
-        maxWidth: 600,
-        maxHeight: '80vh'
+        maxWidth: 600
       })
       .afterClosed()
       .subscribe(status => {

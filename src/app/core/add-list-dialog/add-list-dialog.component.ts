@@ -10,20 +10,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./add-list-dialog.component.scss']
 })
 export class AddListDialogComponent implements OnInit {
-
   lists$ = this.listService.getLists(this.data.channelId);
 
   constructor(
     private listService: ListService,
     private snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) private data: {
-      lessonId: string,
-      channelId: string
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      lessonId: string;
+      channelId: string;
     }
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   selectItem(event) {
     const list = event.option.value as LessonList;
@@ -31,28 +30,31 @@ export class AddListDialogComponent implements OnInit {
 
     if (event.option.selected) {
       ids.push(this.data.lessonId);
-      this.listService.updateList({
-        id: list.id,
-        data: {
-          lessonIds: ids
-        }
-      }).then(() => {
-        this.snackBar.open(`${list.title} に追加しました`, null, {
-          duration: 2000
+      this.listService
+        .updateList({
+          id: list.id,
+          data: {
+            lessonIds: ids
+          }
+        })
+        .then(() => {
+          this.snackBar.open(`${list.title} に追加しました`, null, {
+            duration: 2000
+          });
         });
-      });
     } else {
-      this.listService.updateList({
-        id: list.id,
-        data: {
-          lessonIds: ids.filter(id => id !== this.data.lessonId)
-        }
-      }).then(() => {
-        this.snackBar.open(`${list.title} から削除しました`, null, {
-          duration: 2000
+      this.listService
+        .updateList({
+          id: list.id,
+          data: {
+            lessonIds: ids.filter(id => id !== this.data.lessonId)
+          }
+        })
+        .then(() => {
+          this.snackBar.open(`${list.title} から削除しました`, null, {
+            duration: 2000
+          });
         });
-      });
     }
   }
-
 }

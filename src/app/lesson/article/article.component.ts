@@ -156,38 +156,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     shareReplay(1)
   );
 
-  permission$: Observable<boolean> = this.lesson$.pipe(
-    map(lesson => {
-      return lesson && lesson.premium;
-    }),
-    switchMap((premium: boolean) => {
-      if (premium) {
-        return this.isOwner$;
-      } else {
-        return of(true);
-      }
-    }),
-    switchMap(permission => {
-      if (permission) {
-        return of(true);
-      } else {
-        return this.cause$;
-      }
-    }),
-    switchMap((cause: boolean | LessonList) => {
-      if (cause === true) {
-        return of(true);
-      } else if (cause) {
-        return this.lessonService.checkPermission(
-          this.lessonId,
-          cause.authorId
-        );
-      } else {
-        return this.lessonService.checkPermission(this.lessonId);
-      }
-    }),
-    shareReplay(1)
-  );
+  permission$: Observable<boolean> = this.lessonService.checkPermission();
 
   channel$: Observable<ChannelMeta> = this.lesson$.pipe(
     switchMap(lesson => {

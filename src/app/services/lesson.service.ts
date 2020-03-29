@@ -1,13 +1,12 @@
+import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LessonMeta, Lesson, LessonBody } from '../interfaces/lesson';
-import { Observable, combineLatest, of, forkJoin } from 'rxjs';
-import { switchMap, map, take, first } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import { switchMap, map, first } from 'rxjs/operators';
 import { ChannelMeta } from '../interfaces/channel';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { LessonList } from '../interfaces/lesson-list';
-import { Settlement } from '../interfaces/settlement';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
 import { firestore } from 'firebase/app';
 import { StorageService } from './storage.service';
@@ -19,9 +18,9 @@ export class LessonService {
   constructor(
     private db: AngularFirestore,
     private fns: AngularFireFunctions,
-    private afAuth: AngularFireAuth,
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private authService: AuthService
   ) {}
 
   async createLesson(
@@ -203,63 +202,13 @@ export class LessonService {
     return collable(urls);
   }
 
-  checkPermission(
-    lessonId: string,
-    causeAuthorId?: string
-  ): Observable<boolean> {
-    let uid: string;
-
-    return this.afAuth.user.pipe(
-      switchMap(user => {
-        if (!user) {
-          return of(false);
-        }
-
-        uid = user.uid;
-        return this.db
-          .doc(`users/${uid}/settlements/${lessonId}`)
-          .valueChanges()
-          .pipe(map(settlement => !!settlement));
-      }),
-      switchMap(inLesson => {
-        if (inLesson) {
-          return of(true);
-        } else if (uid) {
-          return this.db
-            .collection<Settlement>(`users/${uid}/settlements`, ref =>
-              ref.where('type', '==', 'cause')
-            )
-            .valueChanges();
+  checkPermission(): Observable<boolean> {
+    return this.authService.authUser$.pipe(
+      map(user => {
+        if (user) {
+          return user.plan !== 'free';
         } else {
-          return of(false);
-        }
-      }),
-      switchMap((settlements: Settlement[] | boolean) => {
-        if (settlements === true) {
-          return of(true);
-        }
-
-        if (!settlements || !settlements.length) {
-          return of(false);
-        }
-
-        // TODO: 別の購入ロジックを構築
-        return of(true);
-      }),
-      map((causes: LessonList[] | boolean) => {
-        if (causes === false || causes === true) {
-          return causes;
-        } else {
-          const inCause = causes.find(cause => {
-            if (!cause) {
-              return false;
-            }
-            if (cause.authorId !== causeAuthorId) {
-              return false;
-            }
-            return cause.lessonIds.find(id => id === lessonId);
-          });
-          return !!inCause;
+          return false;
         }
       })
     );

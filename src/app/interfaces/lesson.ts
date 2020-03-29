@@ -16,7 +16,7 @@ export interface LessonMeta {
   title: string;
   videoId?: string;
   public: boolean;
-  premium: boolean;
+  free: boolean;
   amount?: number;
   tags?: string[];
 }
