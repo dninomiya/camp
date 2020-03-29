@@ -132,13 +132,7 @@ export class EditorComponent implements OnInit {
       }
     ],
     public: [true, Validators.required],
-    premium: [false],
-    amount: [
-      {
-        value: '',
-        disabled: true
-      }
-    ]
+    free: [false]
   });
 
   listControl = new FormControl('');
@@ -209,16 +203,6 @@ export class EditorComponent implements OnInit {
         }
       }
     );
-
-    this.form.get('premium').valueChanges.subscribe(value => {
-      if (value) {
-        this.form.get('amount').enable();
-        this.form.get('amount').setValidators(Validators.required);
-      } else {
-        this.form.get('amount').disable();
-        this.form.get('amount').clearValidators();
-      }
-    });
 
     this.form
       .get('body')

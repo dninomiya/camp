@@ -4,10 +4,7 @@ export interface LessonList {
   readonly createdAt: Date;
   title: string;
   lessonIds: string[];
-  private?: boolean;
   description: string;
-  premium?: boolean;
-  amount?: number;
   coverURL?: string;
   firstLessonId?: string;
 }

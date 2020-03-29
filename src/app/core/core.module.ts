@@ -20,7 +20,6 @@ import { DatePipe } from '@angular/common';
 import { markedOptionsFactory } from './markedOptionsFactory';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { CardDialogComponent } from '../shared/card-dialog/card-dialog.component';
-import { AddListDialogComponent } from './add-list-dialog/add-list-dialog.component';
 import { ShellModule } from '../shell/shell.module';
 import { ConnectStripeComponent } from './connect-stripe/connect-stripe.component';
 import { ConfirmUnsubscribeDialogComponent } from './confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
@@ -40,7 +39,6 @@ import { AdsenseModule } from 'ng2-adsense';
   declarations: [
     NotFoundComponent,
     CardDialogComponent,
-    AddListDialogComponent,
     ConnectStripeComponent,
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
@@ -94,7 +92,6 @@ import { AdsenseModule } from 'ng2-adsense';
   entryComponents: [
     CardDialogComponent,
     ListEditDialogComponent,
-    AddListDialogComponent,
     ConfirmUnsubscribeDialogComponent,
     SharedConfirmDialogComponent,
     MailDialogComponent,

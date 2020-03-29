@@ -73,7 +73,6 @@
   </div>
 
   <ais-instantsearch [config]="algoliaConfig" class="list">
-
     <app-search-lesson-input></app-search-lesson-input>
 
     <ais-configure [searchParameters]="searchParameters"> </ais-configure>
@@ -108,7 +107,7 @@
               <mat-icon class="mat-18" inline *ngIf="!element.public"
                 >lock</mat-icon
               >
-              <mat-icon class="mat-18" inline *ngIf="element.premium"
+              <mat-icon class="mat-18" inline *ngIf="!element.free"
                 >monetization_on</mat-icon
               >
               <a [routerLink]="['/lesson']" [queryParams]="{ v: element.id }">{{

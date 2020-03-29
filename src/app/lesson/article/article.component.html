@@ -1,4 +1,7 @@
-<ng-container *ngIf="lesson$ | async as lesson" [class.loading-lesson]="loading$ | async">
+<ng-container
+  *ngIf="lesson$ | async as lesson"
+  [class.loading-lesson]="loading$ | async"
+>
   <div class="lesson" *ngIf="!lesson.deleted; else delete">
     <ng-container *ngIf="permission$ | async as permission">
       <app-vimeo
@@ -16,30 +19,6 @@
       <h1 class="title">{{ lesson.title }}</h1>
       <div class="video-footer">
         <div class="actions">
-          <!-- <button
-          [disabled]="isOwner$ | async"
-          class="actions__item actions__item--accent"
-          color="accent"
-          mat-button
-          matTooltip="いいね"
-          *ngIf="isLiked$ | async; else unlikeStatus"
-          (click)="unlike(lesson.id)"
-        >
-          <mat-icon class="mat-18">thumb_up</mat-icon>
-          <span>{{ lesson.likeCount + likeBuff }}</span>
-        </button> -->
-          <!-- <ng-template #unlikeStatus>
-          <button
-            [disabled]="isOwner$ | async"
-            class="actions__item"
-            mat-button
-            matTooltip="いいね"
-            (click)="like(lesson.id)"
-          >
-            <mat-icon class="mat-18">thumb_up</mat-icon>
-            <span>{{ lesson.likeCount + likeBuff }}</span>
-          </button>
-        </ng-template> -->
           <a
             href="https://twitter.com/intent/tweet?url={{ lessonURL }}&text={{
               lesson.title
@@ -87,7 +66,7 @@
               channel.ownerName || channel.title
             }}</a>
             <p class="channel__date">
-              {{ lesson.updatedAt?.toDate() | date: "yyyy/MM/dd" }} に更新
+              {{ lesson.updatedAt?.toDate() | date: 'yyyy/MM/dd' }} に更新
             </p>
           </div>
         </div>

@@ -27,8 +27,10 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>タグ</mat-label>
-        <input type="text" matInput formControlName="tags" readonly>
-        <mat-icon (click)="openTagEditor()" class="mat-18" matSuffix>edit</mat-icon>
+        <input type="text" matInput formControlName="tags" readonly />
+        <mat-icon (click)="openTagEditor()" class="mat-18" matSuffix
+          >edit</mat-icon
+        >
       </mat-form-field>
       <mat-form-field *ngIf="(lists$ | async)?.length">
         <mat-label>コース</mat-label>
@@ -109,23 +111,7 @@
         <p class="uploader__step">{{ step }}%完了</p>
       </div>
       <div class="actions">
-        <mat-form-field class="price">
-          <mat-label>金額</mat-label>
-          <mat-select #priceInput formControlName="amount" required>
-            <mat-option *ngFor="let price of prices" [value]="price">{{
-              price | number
-            }}</mat-option>
-          </mat-select>
-          <span matSuffix>円</span>
-          <mat-hint *ngIf="priceInput.value"
-            >{{
-              priceInput.value * 0.85 | number
-            }}円の利益（手数料15%）</mat-hint
-          >
-          <mat-hint *ngIf="!priceInput.value">手数料15%が引かれます</mat-hint>
-        </mat-form-field>
-
-        <mat-slide-toggle formControlName="premium">有料</mat-slide-toggle>
+        <mat-slide-toggle formControlName="free">無料</mat-slide-toggle>
         <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
 
         <button

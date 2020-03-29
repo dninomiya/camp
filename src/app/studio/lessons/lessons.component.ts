@@ -195,7 +195,7 @@ export class LessonsComponent implements OnInit {
         data: lessonIds.length
       })
       .afterClosed()
-      .subscribe((data: { premium: boolean; amount: number }) => {
+      .subscribe((data: { free: boolean }) => {
         if (data) {
           const processing = this.snackBar.open('一括編集を開始します', null, {
             duration: 2000

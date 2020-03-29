@@ -3,7 +3,14 @@ import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute } from '@angular/router';
 import { Lesson } from 'src/app/interfaces/lesson';
 import { Observable, combineLatest, of } from 'rxjs';
-import { switchMap, tap, take, shareReplay, map, catchError } from 'rxjs/operators';
+import {
+  switchMap,
+  tap,
+  take,
+  shareReplay,
+  map,
+  catchError
+} from 'rxjs/operators';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { LessonService } from 'src/app/services/lesson.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,7 +25,6 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./lesson.component.scss']
 })
 export class LessonComponent implements OnInit, OnDestroy {
-
   loading = true;
   cause$: Observable<LessonList> = this.route.queryParamMap.pipe(
     switchMap(params => {
@@ -35,7 +41,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     tap(() => {
       this.loadingService.startLoading();
     }),
-    switchMap((params) => {
+    switchMap(params => {
       const lid = params.get('v');
       if (lid) {
         return this.lessonService.getLesson(lid).pipe(take(1));
@@ -85,10 +91,9 @@ export class LessonComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private listService: ListService,
     private loadingService: LoadingService
-  ) {
-  }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
-  ngOnDestroy() { }
+  ngOnDestroy() {}
 }

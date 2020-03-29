@@ -3,6 +3,12 @@ h2 {
   font-weight: normal;
 }
 
+h3 {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.54);
+  font-weight: normal;
+}
+
 mat-form-field {
   width: 100%;
   textarea {
@@ -10,18 +16,8 @@ mat-form-field {
   }
 }
 
-h3 {
-  font-size: 11px;
-  color: rgba(0, 0, 0, 0.54);
-  font-weight: normal;
-}
-
 .cover {
   padding-bottom: 50%;
   position: relative;
   margin-bottom: 24px;
-}
-
-.free {
-  margin-bottom: 16px;
 }

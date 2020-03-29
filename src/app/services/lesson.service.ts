@@ -25,10 +25,7 @@ export class LessonService {
 
   async createLesson(
     authorId: string,
-    lesson: Pick<
-      Lesson,
-      'title' | 'videoId' | 'public' | 'premium' | 'amount' | 'body'
-    >,
+    lesson: Pick<Lesson, 'title' | 'videoId' | 'public' | 'free' | 'body'>,
     thumbnail?: string
   ): Promise<string> {
     const id = this.db.createId();
@@ -43,7 +40,6 @@ export class LessonService {
       createdAt: firestore.Timestamp.now(),
       updatedAt: firestore.Timestamp.now(),
       viewCount: 0,
-      likeCount: 0,
       deleted: false,
       ...lesson
     };
@@ -140,13 +136,7 @@ export class LessonService {
     data: Partial<
       Pick<
         Lesson,
-        | 'title'
-        | 'videoId'
-        | 'public'
-        | 'premium'
-        | 'amount'
-        | 'body'
-        | 'thumbnailURL'
+        'title' | 'videoId' | 'public' | 'free' | 'body' | 'thumbnailURL'
       >
     >
   ): Promise<void> {

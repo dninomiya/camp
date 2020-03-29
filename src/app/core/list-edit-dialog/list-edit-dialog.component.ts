@@ -27,15 +27,7 @@ export class ListEditDialogComponent implements OnInit {
 
   form = this.fb.group({
     title: ['', Validators.required],
-    description: ['', [Validators.maxLength(400), Validators.required]],
-    private: [false],
-    amount: [
-      {
-        value: '',
-        disabled: true
-      }
-    ],
-    free: [false]
+    description: ['', [Validators.maxLength(400), Validators.required]]
   });
 
   plans = this.planService.plans;
@@ -55,15 +47,6 @@ export class ListEditDialogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.form.get('free').valueChanges.subscribe(status => {
-      if (status) {
-        this.form.get('amount').enable();
-        this.form.get('amount').setValidators(Validators.required);
-      } else {
-        this.form.get('amount').disable();
-        this.form.get('amount').clearValidators();
-      }
-    });
     if (this.list) {
       this.form.patchValue(this.list);
     }

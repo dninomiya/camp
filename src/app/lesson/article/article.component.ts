@@ -16,11 +16,9 @@ import { LessonService } from 'src/app/services/lesson.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/interfaces/user';
 import { MatDialog } from '@angular/material/dialog';
-import { AddListDialogComponent } from 'src/app/core/add-list-dialog/add-list-dialog.component';
 import { ListService } from 'src/app/services/list.service';
 import { LessonList } from 'src/app/interfaces/lesson-list';
 import { PaymentService } from 'src/app/services/payment.service';
-import { SharedConfirmDialogComponent } from 'src/app/core/shared-confirm-dialog/shared-confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SeoService } from 'src/app/services/seo.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -391,65 +389,5 @@ export class ArticleComponent implements OnInit, OnDestroy {
     if (this.subs) {
       this.subs.unsubscribe();
     }
-  }
-
-  openListDialog(lessonId: string, channelId: string) {
-    if (this.uid) {
-      this.dialog.open(AddListDialogComponent, {
-        width: '400px',
-        autoFocus: false,
-        restoreFocus: false,
-        data: {
-          lessonId,
-          channelId
-        }
-      });
-    } else {
-      this.authService.openLoginDialog();
-    }
-  }
-
-  chargeLesson(lesson: Lesson) {
-    return this.dialog
-      .open(SharedConfirmDialogComponent, {
-        data: {
-          title: `「${lesson.title}」ポストを購入しますか？`,
-          description: `返金、返品はできません。`
-        }
-      })
-      .afterClosed()
-      .subscribe(status => {
-        if (status) {
-          const snackBar = this.snackBar.open('ポストを購入しています');
-          this.settlementStatus = true;
-          this.paymentService
-            .createCharge({
-              item: {
-                id: lesson.id,
-                path: this.router.url,
-                title: lesson.title,
-                body: lesson.body,
-                amount: lesson.amount,
-                type: 'lesson'
-              },
-              sellerUid: lesson.authorId,
-              customerUid: this.authService.user.id
-            })
-            .then(() => {
-              this.snackBar.open('ポストを購入しました', null, {
-                duration: 2000
-              });
-            })
-            .catch(() => {
-              this.snackBar.open('購入できませんでした', null, {
-                duration: 2000
-              });
-            })
-            .finally(() => {
-              snackBar.dismiss();
-              this.settlementStatus = false;
-            });
-        }
-      });
   }
 }
