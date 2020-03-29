@@ -17,8 +17,6 @@ import { Observable } from 'rxjs';
 import { FormArray } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
-import * as algoliasearch from 'algoliasearch/lite';
-
 interface LessonListWithCheckStatus extends LessonList {
   indeterminate: boolean;
   status: boolean;
@@ -31,10 +29,11 @@ interface LessonListWithCheckStatus extends LessonList {
 })
 export class LessonsComponent implements OnInit {
   algoliaConfig = environment.algolia;
+
   searchParameters = {
     hitsPerPage: 10,
     page: 0,
-    filters: `(authorId:${this.authService.user.id}) AND NOT deleted:true`
+    filters: `NOT deleted:true`
   };
   causeOptions: {
     [key: string]: LessonListWithCheckStatus;
@@ -58,7 +57,6 @@ export class LessonsComponent implements OnInit {
     'viewCount',
     'action'
   ];
-  dataSource: LessonMeta[];
   selection = new SelectionModel<LessonMeta>(true, []);
   channel$ = this.authService.authUser$.pipe(
     switchMap(user => this.channelService.getChannel(user.id))
@@ -103,18 +101,18 @@ export class LessonsComponent implements OnInit {
 
   ngOnInit() {}
 
-  isAllSelected() {
-    if (this.dataSource) {
+  isAllSelected(source) {
+    if (source) {
       const numSelected = this.selection.selected.length;
-      const numRows = this.dataSource.length;
+      const numRows = source.length;
       return numSelected === numRows;
     }
   }
 
-  masterToggle() {
-    this.isAllSelected()
+  masterToggle(source) {
+    this.isAllSelected(source)
       ? this.selection.clear()
-      : this.dataSource.forEach(row => this.selection.select(row));
+      : source.forEach(row => this.selection.select(row));
   }
 
   changePager(event) {

@@ -13,6 +13,14 @@ const createChannel = (user: UserRecord) => {
     avatarURL: user.photoURL,
     createdAt: new Date(),
     email: user.email,
+    statistics: {
+      followerCount: 0,
+      lessonCount: 0,
+      publicLessonCount: 0,
+      totalLikeCount: 0,
+      totalLikedCount: 0,
+      reviewCount: 0
+    },
     listOrder: []
   };
   return db.doc(`channels/${user.uid}`).set(channelMeta);

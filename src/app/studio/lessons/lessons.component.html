@@ -82,7 +82,7 @@
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
               <mat-checkbox
-                (change)="$event ? masterToggle() : null"
+                (change)="$event ? masterToggle(hits) : null"
                 [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()"
               >
