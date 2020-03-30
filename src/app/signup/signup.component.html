@@ -5,7 +5,9 @@
     <div class="section">
       <h2>料金</h2>
       <ng-container *ngIf="campaign; else default">
-        <p>全プラン3ヶ月半額キャンペーン実施中！ 4/31まで！</p>
+        <p>
+          半額キャンペーン実施中！4月31日までに入会すると全プラン3ヶ月半額になります！
+        </p>
         <p>
           {{ plan.amount / 2 | number }}円（税込）/月
           <span class="default-price"
