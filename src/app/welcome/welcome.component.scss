@@ -199,6 +199,9 @@ h2 {
   &__campaign {
     margin-top: 24px;
     color: #3f51b5;
+    span {
+      display: block;
+    }
   }
   &__price {
     font-size: 40px;
