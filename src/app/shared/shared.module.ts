@@ -44,7 +44,6 @@ import { CommentComponent } from './comment/comment.component';
 import { VisibleDirective } from './visible.directive';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { AttachmentUserPipe } from './attachment-user.pipe';
-import { PlanPerLabelPipe } from './plan-per-label.pipe';
 import { LinkIconPipe } from './link-icon.pipe';
 import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
 import { RefinementListComponent } from './refinement-list/refinement-list.component';
@@ -70,7 +69,6 @@ import { PlanPipe } from './plan.pipe';
     VisibleDirective,
     StarRatingComponent,
     AttachmentUserPipe,
-    PlanPerLabelPipe,
     FooterComponent,
     LinkIconPipe,
     SearchKitComponent,
@@ -151,7 +149,6 @@ import { PlanPipe } from './plan.pipe';
     VisibleDirective,
     StarRatingComponent,
     AttachmentUserPipe,
-    PlanPerLabelPipe,
     LinkIconPipe,
     SearchKitComponent,
     RefinementListComponent,

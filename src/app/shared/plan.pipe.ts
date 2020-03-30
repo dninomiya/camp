@@ -12,6 +12,8 @@ export class PlanPipe implements PipeTransform {
     switch (planId) {
       case 'free':
         return 'フリー';
+      case 'admin':
+        return '管理人';
       case 'isa':
         return 'ISA';
       default:
