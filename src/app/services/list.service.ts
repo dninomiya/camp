@@ -1,3 +1,4 @@
+import { LessonMeta } from 'src/app/interfaces/lesson';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LessonList } from '../interfaces/lesson-list';
@@ -147,7 +148,7 @@ export class ListService {
     return this.db.doc(`lists/${id}`).delete();
   }
 
-  getPremiumCauseWithLesson(lesson: Lesson): Observable<LessonList> {
+  getParentCauseWithLesson(lesson: LessonMeta): Observable<LessonList> {
     return this.db
       .collection('lists', ref => {
         return ref

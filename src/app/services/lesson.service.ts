@@ -113,6 +113,10 @@ export class LessonService {
     return this.db.doc<LessonMeta>(`lessons/${id}`).valueChanges();
   }
 
+  getLessonBody(id: string): Observable<LessonBody> {
+    return this.db.doc<LessonBody>(`lessons/${id}/body/content`).valueChanges();
+  }
+
   getLesson(id: string): Observable<Lesson> {
     return combineLatest([
       this.db.doc<LessonMeta>(`lessons/${id}`).valueChanges(),
@@ -198,7 +202,7 @@ export class LessonService {
       this.db.doc<LessonMeta>(`lessons/${lessonId}`).valueChanges()
     ]).pipe(
       map(([user, lesson]) => {
-        return user.plan !== 'free' || lesson.free;
+        return !!(lesson.free || (user && user.plan !== 'free'));
       })
     );
   }

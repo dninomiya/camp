@@ -9,111 +9,92 @@
         class="video"
         [id]="lesson.videoId"
       ></app-vimeo>
-      <figure
-        class="lesson__cover"
-        *ngIf="!lesson.videoId && permission && lesson.thumbnailURL"
-        [style.background-image]="
-          'url(' + lesson.thumbnailURL + ')' | safe: 'style'
-        "
-      ></figure>
-      <h1 class="title">{{ lesson.title }}</h1>
-      <div class="video-footer">
-        <div class="actions">
-          <a
-            href="https://twitter.com/intent/tweet?url={{ lessonURL }}&text={{
-              lesson.title
-            }}%0a&hashtags={{ title }}"
-            target="_blank"
-            class="actions__item"
-            mat-button
-          >
-            <mat-icon class="mat-18">share</mat-icon>
-            <span>共有</span>
-          </a>
-          <a
-            *ngIf="!(isOwner$ | async)"
-            href="https://docs.google.com/forms/d/e/1FAIpQLSd-V5Whsflq2ZSfOdFOOzxMLySC9FlNoAVUUZXmNtamxhYeGA/viewform?usp=pp_url&entry.1634212803={{
-              host
-            }}/lesson?v={{ lesson.id }}"
-            target="_blank"
-            rel="noopener"
-            class="actions__item"
-            mat-button
-          >
-            <mat-icon class="mat-18">flag</mat-icon>
-            <span>報告</span>
-          </a>
-          <button
-            class="actions__item"
-            *ngIf="!isMobile && (isOwner$ | async)"
-            mat-button
-            [routerLink]="['/edit']"
-            [queryParams]="{ v: lesson.id }"
-          >
-            <mat-icon class="mat-18">edit</mat-icon>
-            <span>編集</span>
-          </button>
+    </ng-container>
+    <figure
+      class="lesson__cover"
+      *ngIf="!lesson.videoId && lesson.thumbnailURL"
+      [style.background-image]="
+        'url(' + lesson.thumbnailURL + ')' | safe: 'style'
+      "
+    ></figure>
+    <h1 class="title">{{ lesson.title }}</h1>
+    <div class="video-footer">
+      <div class="actions">
+        <a
+          href="https://twitter.com/intent/tweet?url={{ lessonURL }}&text={{
+            lesson.title
+          }}%0a&hashtags={{ title }}"
+          target="_blank"
+          class="actions__item"
+          mat-button
+        >
+          <mat-icon class="mat-18">share</mat-icon>
+          <span>共有</span>
+        </a>
+        <a
+          *ngIf="!(isOwner$ | async)"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSd-V5Whsflq2ZSfOdFOOzxMLySC9FlNoAVUUZXmNtamxhYeGA/viewform?usp=pp_url&entry.1634212803={{
+            host
+          }}/lesson?v={{ lesson.id }}"
+          target="_blank"
+          rel="noopener"
+          class="actions__item"
+          mat-button
+        >
+          <mat-icon class="mat-18">flag</mat-icon>
+          <span>報告</span>
+        </a>
+        <button
+          class="actions__item"
+          *ngIf="!isMobile && (isOwner$ | async)"
+          mat-button
+          [routerLink]="['/edit']"
+          [queryParams]="{ v: lesson.id }"
+        >
+          <mat-icon class="mat-18">edit</mat-icon>
+          <span>編集</span>
+        </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="channel-box" *ngIf="channel$ | async as channel">
+      <div class="channel">
+        <a class="channel__avatar" [routerLink]="['/channel', channel.id]">
+          <img [src]="channel.avatarURL" alt="" />
+        </a>
+        <div class="channel__body">
+          <a class="channel__title" [routerLink]="['/channel', channel.id]">{{
+            channel.ownerName || channel.title
+          }}</a>
+          <p class="channel__date">
+            {{ lesson.updatedAt?.toDate() | date: 'yyyy/MM/dd' }} に更新
+          </p>
         </div>
       </div>
-      <mat-divider></mat-divider>
-      <div class="channel-box" *ngIf="channel$ | async as channel">
-        <div class="channel">
-          <a class="channel__avatar" [routerLink]="['/channel', channel.id]">
-            <img [src]="channel.avatarURL" alt="" />
-          </a>
-          <div class="channel__body">
-            <a class="channel__title" [routerLink]="['/channel', channel.id]">{{
-              channel.ownerName || channel.title
-            }}</a>
-            <p class="channel__date">
-              {{ lesson.updatedAt?.toDate() | date: 'yyyy/MM/dd' }} に更新
-            </p>
-          </div>
-        </div>
-        <!-- <div class="channel-actions">
-        <div>
-          <button
-            class="weak"
-            *ngIf="isFollow$ | async; else noFollow"
-            (click)="unfollow(channel.id)"
-            mat-flat-button
-            [disabled]="isOwner$ | async"
-          >
-            フォロー中 {{ (channel.statistics.followerCount || 0) + followerBuff }}
-          </button>
-          <ng-template #noFollow>
-            <button
-              (click)="follow(channel.id)"
-              mat-flat-button
-              [disabled]="isOwner$ | async"
-              color="primary"
-            >
-              フォロー {{ (channel.statistics.followerCount || 0) + followerBuff }}
-            </button>
-          </ng-template>
-        </div>
-      </div> -->
-      </div>
+    </div>
 
+    <ng-container *ngIf="permission$ | async as permission; else noPermission">
       <article class="article" *ngIf="permission$ | async">
         <markdown [data]="lesson.body"></markdown>
       </article>
     </ng-container>
 
-    <mat-card class="permission" *ngIf="(permission$ | async) === false">
-      <h1 class="permission__title">
-        「{{ lesson.title }}」を閲覧するには有料プランへの登録が必要です。
-      </h1>
+    <ng-template #noPermission>
+      <div class="permission">
+        <h1 class="permission__title">
+          「{{ lesson.title }}」を閲覧するには有料プランへの登録が必要です。
+        </h1>
 
-      <button
-        mat-flat-button
-        color="primary"
-        routerLink="/about"
-        fragment="plan"
-      >
-        プランを見る
-      </button>
-    </mat-card>
+        <button
+          mat-flat-button
+          color="primary"
+          routerLink="/about"
+          fragment="plan"
+        >
+          プランを見る
+        </button>
+      </div>
+    </ng-template>
   </div>
 
   <ng-template #delete>

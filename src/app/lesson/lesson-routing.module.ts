@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { LessonComponent } from './lesson/lesson.component';
 import { ArticleComponent } from './article/article.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -21,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LessonRoutingModule { }
+export class LessonRoutingModule {}

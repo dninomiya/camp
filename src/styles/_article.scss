@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 .article,
 .editor-preview {
@@ -193,7 +193,7 @@
     }
     .lang {
       text-shadow: none;
-      font-family: "roboto";
+      font-family: 'roboto';
       font-size: 13px;
       color: rgba(black, 0.6);
       box-sizing: border-box;

@@ -15,13 +15,6 @@
         [isOwner]="isOwner$ | async"
         [channel]="channel"
       ></app-user-card>
-      <!-- <div *ngIf="channel.ads && channel.ads.public">
-        <mat-card class="ads">
-          <a [href]="channel.ads.url" target="_blank" matCardImage>
-            <img [src]="channel.ads.imageURL | safe: 'url'" alt="" />
-          </a>
-        </mat-card>
-      </div> -->
     </div>
   </div>
 </ng-container>
