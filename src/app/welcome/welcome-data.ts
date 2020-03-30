@@ -19,8 +19,7 @@ export const PLAN_FEATURES = [
   {
     image: null,
     title: '有料教材の閲覧',
-    description:
-      '今後追加される教材を含め、契約中はすべての動画が見放題です。'
+    description: '今後追加される教材を含め、契約中はすべての動画が見放題です。'
   },
   {
     image: null,
@@ -80,7 +79,8 @@ export const QUESTIONS = [
   },
   {
     q: '誰でも参加できますか？',
-    a: '自分個人のPCと快適なネット環境があれば誰でもご参加いただけます。'
+    a:
+      '自分個人のPCと快適なネット環境があれば誰でもご参加いただけます。ISAプランは面談が必要です。'
   }
 ];
 
