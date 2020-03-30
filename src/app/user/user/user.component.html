@@ -22,7 +22,7 @@
       </section>
 
       <section>
-        <ng-container *ngIf="user.plan !== 'free'">
+        <ng-container *ngIf="user.plan && user.plan !== 'free'">
           <h2>プラン更新停止</h2>
           <p class="note" *ngIf="!canceled">
             更新停止すると{{

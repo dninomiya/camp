@@ -202,7 +202,7 @@ export class LessonService {
       this.db.doc<LessonMeta>(`lessons/${lessonId}`).valueChanges()
     ]).pipe(
       map(([user, lesson]) => {
-        return !!(lesson.free || (user && user.plan !== 'free'));
+        return !!(lesson.free || (user && user.plan && user.plan !== 'free'));
       })
     );
   }

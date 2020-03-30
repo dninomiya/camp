@@ -9,6 +9,10 @@ export class PlanPipe implements PipeTransform {
   constructor(private planService: PlanService) {}
 
   transform(planId: PlanID): any {
+    if (!planId) {
+      return 'フリー';
+    }
+
     switch (planId) {
       case 'free':
         return 'フリー';
