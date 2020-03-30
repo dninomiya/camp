@@ -12,8 +12,10 @@
   max-width: 1000px;
   margin: 0 auto;
   align-items: center;
+  padding: 24px;
   @include sp {
-    grid-template-columns: 1fr;
+    text-align: center;
+    display: block;
   }
 }
 
@@ -47,6 +49,10 @@
 
 .clip {
   width: 400px;
+  @include sp {
+    width: 100%;
+    margin-top: 24px;
+  }
   img {
     max-width: 100%;
   }
