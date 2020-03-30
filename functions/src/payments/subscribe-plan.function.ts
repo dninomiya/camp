@@ -1,6 +1,7 @@
 import { sendEmail } from './../utils/sendgrid';
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
+import moment = require('moment');
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
@@ -34,12 +35,19 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
         plan: planId
       });
     } else {
-      subscription = await stripe.subscriptions.create({
-        customer: data.customerId,
-        default_tax_rates: [functions.config().stripe.tax],
-        trial_period_days: data.trialUsed ? 0 : 7,
-        items: [{ plan: planId }]
-      });
+      const ukey = moment().format('YYYY-MM-DD-HH') + '-' + userId;
+      console.log(ukey);
+      subscription = await stripe.subscriptions.create(
+        {
+          customer: data.customerId,
+          default_tax_rates: [functions.config().stripe.tax],
+          trial_period_days: data.trialUsed ? 0 : 7,
+          items: [{ plan: planId }]
+        },
+        {
+          idempotency_key: ukey
+        }
+      );
     }
 
     await db.doc(`users/${userId}`).update({

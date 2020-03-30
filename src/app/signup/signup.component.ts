@@ -85,7 +85,7 @@ export class SignupComponent implements OnInit {
             duration: 2000
           }
         );
-        this.router.navigate(['/users', this.user.id]);
+        this.router.navigate(['/mypage']);
       });
   }
 

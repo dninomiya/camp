@@ -30,7 +30,7 @@ const routes: Routes = [
           import('./cause/cause.module').then(m => m.CauseModule)
       },
       {
-        path: 'users',
+        path: 'mypage',
         loadChildren: () =>
           import('./user/user.module').then(m => m.UserModule),
         canLoad: [AuthGuard]

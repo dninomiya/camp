@@ -35,18 +35,10 @@
     <mat-icon class="bottom-nav-item__icon">search</mat-icon>
     <span class="bottom-nav-item__label">検索</span>
   </div>
-  <ng-container *ngIf="user$ | async">
-    <div
-      class="bottom-nav-item"
-      [routerLink]="['/forum']"
-      [queryParams]="{ status: 'request' }"
-    >
-      <mat-icon class="bottom-nav-item__icon">question_answer</mat-icon>
-      <span class="bottom-nav-item__label">メッセージ</span>
-    </div>
-    <div class="bottom-nav-item" routerLink="/notifications">
-      <mat-icon class="bottom-nav-item__icon">notifications</mat-icon>
-      <span class="bottom-nav-item__label">通知</span>
+  <ng-container *ngIf="user$ | async as user">
+    <div class="bottom-nav-item" [routerLink]="['/mypage']">
+      <mat-icon class="bottom-nav-item__icon">account_circle</mat-icon>
+      <span class="bottom-nav-item__label">マイページ</span>
     </div>
   </ng-container>
 </div>
