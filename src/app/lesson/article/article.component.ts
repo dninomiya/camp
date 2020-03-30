@@ -1,7 +1,8 @@
+import { LessonBody } from './../../interfaces/lesson';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Lesson } from 'src/app/interfaces/lesson';
+import { Lesson, LessonMeta } from 'src/app/interfaces/lesson';
 import { Observable, combineLatest, Subscription, of, merge } from 'rxjs';
 import {
   switchMap,
@@ -51,98 +52,68 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }),
     shareReplay(1)
   );
-  lesson$: Observable<Lesson> = this.route.queryParamMap.pipe(
+  lessonMeta$: Observable<LessonMeta> = this.route.queryParamMap.pipe(
     tap(params => {
-      this.loadingService.startLoading();
       this.lessonId = params.get('v');
     }),
     switchMap(params => {
       const lid = params.get('v');
       if (lid) {
-        return this.lessonService.getLesson(lid).pipe(take(1));
+        return this.lessonService.getLessonMeta(params.get('v'));
       } else {
         return of(null);
       }
     }),
-    catchError(error => {
-      console.error(error);
-      return of(null);
-    }),
-    switchMap(lesson => {
-      if (!lesson) {
+    tap(meta => {
+      if (!meta) {
         this.router.navigate(['not-found']);
         return of(null);
       }
+    })
+  );
 
-      this.countUpView(lesson.id);
-
-      const matchUrls = lesson.body.match(/^http.*$/gm);
-
-      const urlMap = matchUrls
-        ? {
-            externalUrls: matchUrls.filter(url => {
-              return !url.match(/stackblitz\.com/);
-            }),
-            stackblitz: matchUrls.filter(url => {
-              return url.match(/stackblitz\.com/);
-            })
-          }
-        : {};
-
-      if (urlMap.stackblitz) {
-        this.generateStackBlitz(lesson, urlMap.stackblitz);
-      }
-
-      if (urlMap.externalUrls) {
-        return merge(
-          of(lesson),
-          this.lessonService.getOGPs(urlMap.externalUrls).pipe(
-            map(ogps => {
-              urlMap.externalUrls.forEach((url, i) => {
-                if (ogps[i]) {
-                  const reg = new RegExp(
-                    `^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`,
-                    'gm'
-                  );
-                  lesson.body = lesson.body.replace(
-                    reg,
-                    this.getOgpHTML(ogps[i])
-                  );
-                }
-              });
-              return lesson;
-            })
-          )
-        );
-      } else {
-        return of(lesson);
-      }
-    }),
-    tap(() => {
-      this.loadingService.endLoading();
-      const fragment = this.route.snapshot.fragment;
-      const target = document.querySelector('#' + fragment);
-      if (fragment && target) {
-        setTimeout(() => {
-          document.querySelector('#' + fragment).scrollIntoView();
-          window.scrollBy(0, -70);
-        }, 100);
-      }
-    }),
+  permission$: Observable<boolean> = this.route.queryParamMap.pipe(
+    switchMap(queryParamMapmap =>
+      this.lessonService.checkPermission(queryParamMapmap.get('v'))
+    ),
     shareReplay(1)
   );
 
-  getParentCause$ = this.lesson$.pipe(
-    switchMap(lesson => this.listService.getPremiumCauseWithLesson(lesson))
+  lessonBody$: Observable<LessonBody> = this.permission$.pipe(
+    switchMap(permission => {
+      if (permission) {
+        return this.getBody();
+      } else {
+        return of({
+          body: ''
+        });
+      }
+    })
+  );
+
+  getParentCause$ = this.lessonMeta$.pipe(
+    switchMap(lesson => this.listService.getParentCauseWithLesson(lesson))
   );
 
   user$: Observable<User> = this.authService.authUser$.pipe(
     tap(user => (this.uid = user && user.id))
   );
 
+  lesson$: Observable<Lesson> = combineLatest([
+    this.lessonMeta$,
+    this.lessonBody$
+  ]).pipe(
+    map(([meta, body]) => {
+      return {
+        ...meta,
+        ...body
+      };
+    })
+  );
+
   isOwner$: Observable<boolean> = combineLatest([
     this.user$.pipe(),
-    this.lesson$.pipe()
+    this.lessonMeta$.pipe()
   ]).pipe(
     map(([user, lesson]) => {
       if (user) {
@@ -154,13 +125,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     shareReplay(1)
   );
 
-  permission$: Observable<boolean> = this.route.queryParamMap.pipe(
-    switchMap(queryParamMapmap =>
-      this.lessonService.checkPermission(queryParamMapmap.get('v'))
-    )
-  );
-
-  channel$: Observable<ChannelMeta> = this.lesson$.pipe(
+  channel$: Observable<ChannelMeta> = this.lessonMeta$.pipe(
     switchMap(lesson => {
       if (lesson) {
         return this.channelService.getChannel(lesson.channelId).pipe(take(1));
@@ -171,37 +136,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
     tap(channel => (this.channel = channel)),
     shareReplay(1)
   );
-  followerBuff = 0;
-  likeBuff = 0;
-
-  isFollow$: Observable<boolean> = combineLatest([
-    this.user$,
-    this.channel$
-  ]).pipe(
-    switchMap(([user, channel]) => {
-      if (user) {
-        return this.channelService.isFollow(user.id, channel.id);
-      } else {
-        return of(null);
-      }
-    })
-  );
-
-  isLiked$: Observable<boolean> = combineLatest([
-    this.user$,
-    this.lesson$
-  ]).pipe(
-    switchMap(([user, lesson]) => {
-      if (user) {
-        return this.lessonService.isLiked(user.id, lesson.id);
-      } else {
-        return of(null);
-      }
-    })
-  );
 
   viewTimer;
-
   subs: Subscription;
 
   constructor(
@@ -209,10 +145,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private lessonService: LessonService,
     private authService: AuthService,
-    private dialog: MatDialog,
     private listService: ListService,
-    private paymentService: PaymentService,
-    private snackBar: MatSnackBar,
     private seoService: SeoService,
     private router: Router,
     private uiService: UiService,
@@ -271,7 +204,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
       title: lesson.title,
       image,
       type: 'article',
-      description: lesson.body.replace(/# -/gm, '').substring(0, 100),
+      description: lesson.body
+        ? lesson.body.replace(/# -/gm, '').substring(0, 100)
+        : '',
       size: lesson.tags.includes('mentor') ? 'summary' : 'summary_large_image'
     });
   }
@@ -329,7 +264,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    combineLatest([this.permission$, this.lesson$]).subscribe(
+    combineLatest([this.permission$, this.lessonMeta$]).subscribe(
       ([permission]) => {
         if (permission) {
           setTimeout(() => {
@@ -337,6 +272,83 @@ export class ArticleComponent implements OnInit, OnDestroy {
           }, 500);
         }
       }
+    );
+  }
+
+  private getBody(): Observable<LessonBody> {
+    return this.route.queryParamMap.pipe(
+      tap(() => this.loadingService.startLoading()),
+      switchMap(params => {
+        const lid = params.get('v');
+        if (lid) {
+          return this.lessonService.getLessonBody(lid).pipe(take(1));
+        } else {
+          return of(null);
+        }
+      }),
+      catchError(error => {
+        console.error(error);
+        return of(null);
+      }),
+      switchMap(lesson => {
+        if (!lesson) {
+          return of(null);
+        }
+        this.countUpView(lesson.id);
+
+        const matchUrls = lesson.body.match(/^http.*$/gm);
+        const urlMap = matchUrls
+          ? {
+              externalUrls: matchUrls.filter(url => {
+                return !url.match(/stackblitz\.com/);
+              }),
+              stackblitz: matchUrls.filter(url => {
+                return url.match(/stackblitz\.com/);
+              })
+            }
+          : {};
+
+        if (urlMap.stackblitz) {
+          this.generateStackBlitz(lesson, urlMap.stackblitz);
+        }
+
+        if (urlMap.externalUrls) {
+          return merge(
+            of(lesson),
+            this.lessonService.getOGPs(urlMap.externalUrls).pipe(
+              map(ogps => {
+                urlMap.externalUrls.forEach((url, i) => {
+                  if (ogps[i]) {
+                    const reg = new RegExp(
+                      `^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`,
+                      'gm'
+                    );
+                    lesson.body = lesson.body.replace(
+                      reg,
+                      this.getOgpHTML(ogps[i])
+                    );
+                  }
+                });
+                return lesson;
+              })
+            )
+          );
+        } else {
+          return of(lesson);
+        }
+      }),
+      tap(() => {
+        this.loadingService.endLoading();
+        const fragment = this.route.snapshot.fragment;
+        const target = document.querySelector('#' + fragment);
+        if (fragment && target) {
+          setTimeout(() => {
+            document.querySelector('#' + fragment).scrollIntoView();
+            window.scrollBy(0, -70);
+          }, 100);
+        }
+      }),
+      shareReplay(1)
     );
   }
 
@@ -356,36 +368,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.viewTimer = setTimeout(() => {
       this.lessonService.countUpView(lid);
     }, 10000);
-  }
-
-  like(id: string) {
-    if (this.uid) {
-      this.likeBuff++;
-      this.lessonService.like(this.uid, id);
-    } else {
-      this.authService.openLoginDialog();
-    }
-  }
-
-  unlike(id: string) {
-    this.likeBuff--;
-    this.lessonService.unlike(this.uid, id);
-  }
-
-  follow(cid: string) {
-    if (this.uid) {
-      this.followerBuff++;
-      this.channelService.follow(cid, this.uid);
-    } else {
-      this.authService.openLoginDialog();
-    }
-  }
-
-  unfollow(cid: string) {
-    if (this.uid) {
-      this.followerBuff--;
-      this.channelService.unfollow(cid, this.uid);
-    }
   }
 
   ngOnDestroy() {
