@@ -137,7 +137,7 @@
     left: 0;
     &.active {
       transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg)
-        translate(100px, 160px);
+        translate3d(0, 160px, 150px);
     }
   }
   &--angular {
@@ -147,7 +147,8 @@
     top: 0;
     left: 0;
     &.active {
-      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(320px);
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(320px)
+        translateZ(150px);
     }
   }
   &--algolia {
@@ -157,8 +158,8 @@
     top: 0;
     left: 0;
     &.active {
-      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(160px)
-        translateX(30px);
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg)
+        translate3d(30px, 150px, 160px);
     }
     img {
       width: 100px;
@@ -171,10 +172,10 @@
     top: 0;
     left: 0;
     &.active {
-      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(140px)
-        translateX(40px);
-      width: 100px;
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg)
+        translate3d(-30px, 140px, 150px);
     }
+    width: 120px;
   }
   &__logo {
     filter: drop-shadow(6.4px 6.2px 4px rgba(0, 0, 0, 0.3));
@@ -222,7 +223,7 @@
   }
   &--stripe {
     top: -70px;
-    left: -45px;
+    left: -32px;
     width: 320px;
     padding: 40px 40px 40px 180px;
   }
