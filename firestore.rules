@@ -74,7 +74,7 @@ service cloud.firestore {
       allow create: if isSignIn();
       allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
       match /body/content {
-        allow read: if !(isUndefined(get(/databases/$(database)/documents/users/$(request.auth.uid)).data, 'plan')) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.plan != 'free' || get(/databases/$(database)/documents/lessons/$(lessonId)).data.free == 'true';
+        allow read: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.free == true || (request.auth != null && !(isUndefined(get(/databases/$(database)/documents/users/$(request.auth.uid)).data, 'plan')) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.plan != 'free');
         allow create: if isSignIn();
         allow update: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.authorId == request.auth.uid;
       }
