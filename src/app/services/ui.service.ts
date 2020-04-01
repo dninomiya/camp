@@ -1,4 +1,4 @@
-import { Subject, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
