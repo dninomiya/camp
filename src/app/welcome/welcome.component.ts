@@ -23,7 +23,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     'Dey97I72JtI',
     'QCJ1THnyAec',
     'MDyCX0d-NOE',
-    'W2PbDRtpszE',
+    'P1dPxsu-kyI',
     'nww-Y7HiaGE'
   ];
   swiperConfig: SwiperOptions = {
