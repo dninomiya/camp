@@ -12,7 +12,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class ConfirmUnsubscribeDialogComponent implements OnInit {
   isLoading: boolean;
   form = this.fb.group({
-    type: ['', Validators.required],
+    types: ['', Validators.required],
     detail: ['']
   });
 

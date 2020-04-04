@@ -5,6 +5,33 @@ import { config } from '../config';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
+const REASONS = [
+  {
+    type: 'goal',
+    label: '目標達成した'
+  },
+  {
+    type: 'quality',
+    label: 'クオリティが低い'
+  },
+  {
+    type: 'volume',
+    label: 'コンテンツが少ない'
+  },
+  {
+    type: 'cost',
+    label: '料金が高い'
+  },
+  {
+    type: 'reply',
+    label: '返信、反応がない、遅い'
+  },
+  {
+    type: 'other',
+    label: 'その他'
+  }
+];
+
 const PLAN_LABELS = {
   lite: 'ライト',
   solo: 'ソロ',
@@ -16,7 +43,10 @@ export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
     data: {
       userId: string;
       planId: string;
-      reason?: object;
+      reason: {
+        types: string[];
+        detail: string;
+      };
     },
     context
   ) => {
@@ -34,13 +64,29 @@ export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
     const user = (await db.doc(`users/${data.userId}`).get()).data() as any;
     const plan = user.plan as 'lite' | 'solo' | 'mentor';
 
+    const reasons = data.reason.types
+      .map((type: string) => {
+        const item = REASONS.find(reason => reason.type === type);
+        if (item) {
+          return item.label;
+        } else {
+          return null;
+        }
+      })
+      .filter(label => !!label)
+      .join(' / ');
+
+    await db.collection(`unsubscribeReasons`).add(data);
+
     await sendEmail({
       to: config.adminEmail,
       templateId: 'unRegisterToAdmin',
       dynamicTemplateData: {
         email: user.email,
         name: user.name,
-        plan: PLAN_LABELS[plan]
+        plan: PLAN_LABELS[plan],
+        reasons,
+        reasonDetail: data.reason.detail || 'なし'
       }
     });
 
