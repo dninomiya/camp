@@ -5,7 +5,7 @@
     <mat-dialog-content>
       <mat-form-field>
         <mat-label>理由</mat-label>
-        <mat-select formControlName="type" multiple required>
+        <mat-select formControlName="types" multiple required>
           <mat-option
             [value]="reasonsType.value"
             *ngFor="let reasonsType of reasonsTypes"
