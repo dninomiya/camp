@@ -6,5 +6,6 @@ export interface LessonList {
   lessonIds: string[];
   description: string;
   coverURL?: string;
+  iconURL?: string;
   firstLessonId?: string;
 }

@@ -10,30 +10,44 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-list-edit-dialog',
   templateUrl: './list-edit-dialog.component.html',
-  styleUrls: ['./list-edit-dialog.component.scss']
+  styleUrls: ['./list-edit-dialog.component.scss'],
 })
 export class ListEditDialogComponent implements OnInit {
   prices = [100, 500, 1000, 1500, 5000, 10000, 25000, 50000, 100000];
 
-  imageOpts = {
+  coverImageOpts = {
     size: {
       width: 1920,
       height: 1080,
-      limitMb: 2
-    }
+      limitMb: 2,
+    },
   };
 
-  file: string;
+  iconImageOpts = {
+    size: {
+      width: 80,
+      height: 80,
+      limitMb: 1,
+    },
+  };
+
+  coverImage: string;
+  iconImage: string;
 
   form = this.fb.group({
     title: ['', Validators.required],
-    description: ['', [Validators.maxLength(400), Validators.required]]
+    description: ['', [Validators.maxLength(400), Validators.required]],
   });
 
   plans = this.planService.plans;
 
-  getFile(file: string) {
-    this.file = file;
+  getCoverFile(file: string) {
+    this.coverImage = file;
+    this.form.markAsDirty();
+  }
+
+  getIconFile(file: string) {
+    this.iconImage = file;
     this.form.markAsDirty();
   }
 
@@ -61,11 +75,12 @@ export class ListEditDialogComponent implements OnInit {
         .updateList({
           id: this.list.id,
           data: this.form.value,
-          file: this.file
+          coverImage: this.coverImage,
+          iconImage: this.iconImage,
         })
         .then(() => {
           this.snackBar.open('コースを更新しました', null, {
-            duration: 2000
+            duration: 2000,
           });
         });
     } else {
@@ -73,13 +88,13 @@ export class ListEditDialogComponent implements OnInit {
         .createList(
           {
             ...this.form.value,
-            authorId: this.authService.user.id
+            authorId: this.authService.user.id,
           },
           this.file
         )
         .then(() => {
           this.snackBar.open('コースを作成しました', null, {
-            duration: 2000
+            duration: 2000,
           });
         });
     }

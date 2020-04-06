@@ -6,6 +6,7 @@
     routerLinkActive="active"
     [routerLink]="['/cause', cause.id]"
   >
+    <img *ngIf="cause.iconURL" [src]="cause.iconURL" alt="" matListIcon />
     <span mat-line>{{ cause.title }}</span>
   </a>
 </mat-nav-list>
