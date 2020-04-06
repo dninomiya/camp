@@ -28,8 +28,21 @@
           class="actions__item"
           mat-button
         >
-          <mat-icon class="mat-18">share</mat-icon>
-          <span>共有</span>
+          <mat-icon class="mat-18">flag</mat-icon>
+          <span>報告</span>
+        </a>
+        <a
+          href="https://to-camp.slack.com/archives/C0116JHDY2H"
+          target="_blank"
+          class="actions__item"
+          mat-button
+          [matTooltip]="
+            (permission$ | async) ? null : '有料プランへの加入が必要です'
+          "
+          [disabled]="!(permission$ | async)"
+        >
+          <mat-icon class="mat-18">question_answer</mat-icon>
+          <span>質問</span>
         </a>
         <a
           *ngIf="!(isOwner$ | async)"
