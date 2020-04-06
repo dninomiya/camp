@@ -269,7 +269,7 @@ export class AboutComponent implements OnInit {
     this.links.push(
       this.fb.control('', [
         Validators.required,
-        Validators.pattern('^https?://'),
+        Validators.pattern('^https?://.*'),
       ])
     );
   }
