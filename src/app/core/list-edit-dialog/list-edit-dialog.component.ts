@@ -90,7 +90,8 @@ export class ListEditDialogComponent implements OnInit {
             ...this.form.value,
             authorId: this.authService.user.id,
           },
-          this.file
+          this.coverImage,
+          this.iconImage
         )
         .then(() => {
           this.snackBar.open('コースを作成しました', null, {
