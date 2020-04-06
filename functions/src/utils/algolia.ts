@@ -13,7 +13,7 @@ const addRecords = (item: any) => {
       return {
         ...item,
         objectID: item.id + '-' + i,
-        body
+        body,
       };
     });
 

@@ -7,27 +7,26 @@ import { map, switchMap, take } from 'rxjs/operators';
 import { Job, Jobs } from '../interfaces/job';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChannelService {
-
-  constructor(
-    private db: AngularFirestore
-  ) { }
+  constructor(private db: AngularFirestore) {}
 
   getChannel(id: string): Observable<ChannelMeta> {
     return this.db.doc<ChannelMeta>(`channels/${id}`).valueChanges();
   }
 
   getListByChannelId(cid: string): Observable<LessonList[]> {
-    return this.db.collection<LessonList>('lists', ref => {
-      return ref.where('authorId', '==', cid);
-    }).valueChanges();
+    return this.db
+      .collection<LessonList>('lists', (ref) => {
+        return ref.where('authorId', '==', cid);
+      })
+      .valueChanges();
   }
 
   follow(cid: string, uid: string) {
     this.db.doc(`channels/${cid}/followers/${uid}`).set({
-      uid
+      uid,
     });
   }
 
@@ -36,27 +35,28 @@ export class ChannelService {
   }
 
   isFollow(uid: string, channelId: string): Observable<boolean> {
-    return this.db.doc(`channels/${channelId}/followers/${uid}`)
-      .valueChanges().pipe(
-        map(res => !!res)
-      );
+    return this.db
+      .doc(`channels/${channelId}/followers/${uid}`)
+      .valueChanges()
+      .pipe(map((res) => !!res));
   }
 
-  updateChannel(
-    id: string,
-    value: Partial<ChannelMeta>
-  ): Promise<void> {
+  updateChannel(id: string, value: Partial<ChannelMeta>): Promise<void> {
     return this.db.doc(`channels/${id}`).set(value, {
-      merge: true
+      merge: true,
     });
   }
 
   getFollows(cid: string): Observable<ChannelMeta[]> {
-    return this.db.collection<Follower>(`channels/${cid}/followers`)
-      .valueChanges().pipe(
+    return this.db
+      .collection<Follower>(`channels/${cid}/followers`)
+      .valueChanges()
+      .pipe(
         switchMap((items: Follower[]) => {
           if (items.length) {
-            return combineLatest(items.map(item => this.getChannel(item.uid)));
+            return combineLatest(
+              items.map((item) => this.getChannel(item.uid))
+            );
           } else {
             return of([]);
           }
@@ -65,14 +65,16 @@ export class ChannelService {
   }
 
   updateJobs(channelId: string, items: Job[]): Promise<void> {
-    return this.db.doc(`channels/${channelId}/jobs/data`).set({items});
+    return this.db.doc(`channels/${channelId}/jobs/data`).set({ items });
   }
 
   getJobs(channelId): Observable<Job[]> {
-    return this.db.doc<Jobs>(`channels/${channelId}/jobs/data`)
-      .valueChanges().pipe(
+    return this.db
+      .doc<Jobs>(`channels/${channelId}/jobs/data`)
+      .valueChanges()
+      .pipe(
         take(1),
-        map(result => {
+        map((result) => {
           if (result) {
             return result.items;
           } else {
@@ -84,7 +86,9 @@ export class ChannelService {
 
   getCamps(ids: string[]): Observable<ChannelMeta[]> {
     return forkJoin(
-      ids.map(id => this.db.doc<ChannelMeta>(`channels/${id}`).valueChanges().pipe(take(1)))
+      ids.map((id) =>
+        this.db.doc<ChannelMeta>(`channels/${id}`).valueChanges().pipe(take(1))
+      )
     );
   }
 }
