@@ -10,30 +10,18 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   algoliaConfig = {
     ...environment.algolia,
-    indexName: environment.algolia.indexName + '-latest'
+    indexName: environment.algolia.indexName + '-latest',
   };
 
   latestParams = {
     hitsPerPage: 20,
-    filters: 'public:true AND NOT deleted:true'
+    filters: 'public:true AND NOT deleted:true',
   };
-
-  follows$: Observable<string[]> = this.authService.authUser$.pipe(
-    switchMap(user => {
-      if (user) {
-        return this.channelService.getFollows(user.id);
-      } else {
-        return of([]);
-      }
-    }),
-    map(channels => channels.map(channel => channel.id)),
-    shareReplay(1)
-  );
 
   constructor(
     private authService: AuthService,
@@ -49,8 +37,8 @@ export class HomeComponent implements OnInit {
       potentialAction: {
         '@type': 'SearchAction',
         target: '/search?q={search_term_string}',
-        'query-input': 'required name=search_term_string'
-      }
+        'query-input': 'required name=search_term_string',
+      },
     });
   }
 
