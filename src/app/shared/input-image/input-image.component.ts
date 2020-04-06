@@ -69,6 +69,7 @@ export class InputImageComponent implements OnInit {
         aspectRatio: {
           keepAspectRatio: true,
         },
+        alpha: true,
       })
       .pipe(first())
       .toPromise();
