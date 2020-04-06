@@ -7,10 +7,9 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-input-image',
   templateUrl: './input-image.component.html',
-  styleUrls: ['./input-image.component.scss']
+  styleUrls: ['./input-image.component.scss'],
 })
 export class InputImageComponent implements OnInit {
-
   @Output() uploaded = new EventEmitter<string>();
   @Output() file = new EventEmitter<any>();
   @Input() oldSrc?: string;
@@ -31,7 +30,7 @@ export class InputImageComponent implements OnInit {
     private snackBar: MatSnackBar,
     private ngxPicaService: NgxPicaService,
     private storageService: StorageService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.src = this.oldSrc;
@@ -58,34 +57,45 @@ export class InputImageComponent implements OnInit {
     this.isOver = false;
   }
 
-  resizeImage(file: any, size: {
-    width: number;
-    height: number;
-  }): Promise<File> {
-    return this.ngxPicaService.resizeImage(file, size.width, size.height, {
-      aspectRatio: {
-        keepAspectRatio: true,
-      }
-    }).pipe(first()).toPromise();
+  resizeImage(
+    file: any,
+    size: {
+      width: number;
+      height: number;
+    }
+  ): Promise<File> {
+    return this.ngxPicaService
+      .resizeImage(file, size.width, size.height, {
+        aspectRatio: {
+          keepAspectRatio: true,
+        },
+        alpha: true,
+      })
+      .pipe(first())
+      .toPromise();
   }
 
   async upload(file, path: string) {
     const image = await this.getImageByFile(file);
-    this.storageService.upload(path, image).then(downloadURL => {
+    this.storageService.upload(path, image).then((downloadURL) => {
       this.uploaded.emit(downloadURL);
       this.snackBar.open('イメージをアップロードしました', null, {
-        duration: 2000
+        duration: 2000,
       });
     });
   }
 
   private getImageByFile(file): Promise<any> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const reader: FileReader = new FileReader();
 
-      reader.addEventListener('load', (e: any) => {
-        resolve(e.target.result);
-      }, false);
+      reader.addEventListener(
+        'load',
+        (e: any) => {
+          resolve(e.target.result);
+        },
+        false
+      );
 
       reader.readAsDataURL(file);
     });
@@ -118,25 +128,28 @@ export class InputImageComponent implements OnInit {
       return;
     }
     if (file.size / 1000000 > this.options.size.limitMb) {
-      this.snackBar.open(`サイズが${this.options.size.limitMb}MBを超えています`, null, {
-        duration: 2000
-      });
+      this.snackBar.open(
+        `サイズが${this.options.size.limitMb}MBを超えています`,
+        null,
+        {
+          duration: 2000,
+        }
+      );
       return;
     }
 
     if (!file.type.match(/png|jpg|jpeg/)) {
       this.snackBar.open('ファイルタイプが不正です', null, {
-        duration: 2000
+        duration: 2000,
       });
       return;
     }
 
-    const isOk = await this.checkSize(file)
-      .catch((error) => {
-        this.snackBar.open(error, null, {
-          duration: 2000
-        });
+    const isOk = await this.checkSize(file).catch((error) => {
+      this.snackBar.open(error, null, {
+        duration: 2000,
       });
+    });
 
     if (isOk) {
       const imageFile = await this.resizeImage(file, this.options.size);
@@ -150,5 +163,4 @@ export class InputImageComponent implements OnInit {
       }
     }
   }
-
 }

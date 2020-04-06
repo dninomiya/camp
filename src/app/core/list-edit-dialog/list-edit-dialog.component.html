@@ -26,8 +26,17 @@
     <div class="cover">
       <app-input-image
         [oldSrc]="list?.coverURL"
-        (file)="getFile($event)"
-        [options]="imageOpts"
+        (file)="getCoverFile($event)"
+        [options]="coverImageOpts"
+      ></app-input-image>
+    </div>
+
+    <h3>アイコン</h3>
+    <div class="icon">
+      <app-input-image
+        [oldSrc]="list?.iconURL"
+        (file)="getIconFile($event)"
+        [options]="iconImageOpts"
       ></app-input-image>
     </div>
   </form>

@@ -17,6 +17,18 @@
   <div class="profile">
     <p class="profile__name">{{ channel.title }}</p>
     <p class="profile__description">{{ channel.description }}</p>
+
+    <div class="profile__links">
+      <a
+        [href]="link"
+        target="_blank"
+        class="profile__link"
+        *ngFor="let link of channel.links"
+      >
+        <i [class]="link | linkIcon"></i>
+      </a>
+    </div>
+
     <div class="camp">
       <button mat-raised-button color="primary" routerLink="/about">
         CAMPについて

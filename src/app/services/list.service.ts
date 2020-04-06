@@ -9,7 +9,7 @@ import { Lesson } from '../interfaces/lesson';
 import { ChannelMeta } from '../interfaces/channel';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ListService {
   constructor(
@@ -22,7 +22,7 @@ export class ListService {
       .doc<ChannelMeta>(`channels/${channelId}`)
       .valueChanges();
     const lists$ = this.db
-      .collection<LessonList>('lists', ref => {
+      .collection<LessonList>('lists', (ref) => {
         return ref.where('authorId', '==', channelId);
       })
       .valueChanges();
@@ -31,8 +31,8 @@ export class ListService {
       map(([channel, lists]) => {
         if (channel.listOrder) {
           return channel.listOrder
-            .map(id => lists.find(list => list.id === id))
-            .filter(cause => !!cause);
+            .map((id) => lists.find((list) => list.id === id))
+            .filter((cause) => !!cause);
         } else {
           return lists;
         }
@@ -51,18 +51,29 @@ export class ListService {
       private: boolean;
       description: string;
     },
-    file?: string
+    coverImage?: string,
+    iconImage?: string
   ): Promise<void> {
     const id = this.db.createId();
     const data: LessonList = {
       id,
       lessonIds: [],
       ...params,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
-    if (file) {
-      data.coverURL = await this.storageService.upload(`causes/${id}`, file);
+    if (coverImage) {
+      data.coverURL = await this.storageService.upload(
+        `causes/${id}`,
+        coverImage
+      );
+    }
+
+    if (iconImage) {
+      data.iconURL = await this.storageService.upload(
+        `causeIcons/${id}`,
+        iconImage
+      );
     }
 
     await this.db.doc(`lists/${id}`).set(data);
@@ -79,12 +90,19 @@ export class ListService {
   async updateList(params: {
     id: string;
     data: Partial<Omit<LessonList, 'id' | 'createdAt' | 'createdAt'>>;
-    file?: string;
+    coverImage?: string;
+    iconImage?: string;
   }): Promise<void> {
-    if (params.file) {
+    if (params.coverImage) {
       params.data.coverURL = await this.storageService.upload(
         `causes/${params.id}`,
-        params.file
+        params.coverImage
+      );
+    }
+    if (params.iconImage) {
+      params.data.iconURL = await this.storageService.upload(
+        `causeIcons/${params.id}`,
+        params.iconImage
       );
     }
 
@@ -101,9 +119,9 @@ export class ListService {
   ): Promise<void[]> {
     return Promise.all(
       allLists
-        .filter(list => list && list.lessonIds.includes(lessonId))
-        .map(list => {
-          const i = list.lessonIds.findIndex(id => id === lessonId);
+        .filter((list) => list && list.lessonIds.includes(lessonId))
+        .map((list) => {
+          const i = list.lessonIds.findIndex((id) => id === lessonId);
           list.lessonIds.splice(i, 1);
           return this.db.doc(`lists/${list.id}`).update(list);
         })
@@ -117,20 +135,20 @@ export class ListService {
   }): Promise<void[]> {
     const { allLists, activeListIds, lessonId } = params;
     return Promise.all(
-      allLists.map(list => {
+      allLists.map((list) => {
         if (activeListIds.includes(list.id)) {
           if (!list.lessonIds.includes(lessonId)) {
             list.lessonIds.push(lessonId);
           }
         } else {
           if (list.lessonIds.includes(lessonId)) {
-            const i = list.lessonIds.findIndex(id => id === lessonId);
+            const i = list.lessonIds.findIndex((id) => id === lessonId);
             list.lessonIds.splice(i, 1);
           }
         }
         return this.db.doc(`lists/${list.id}`).update({
           ...list,
-          firstLessonId: list.lessonIds[0] || null
+          firstLessonId: list.lessonIds[0] || null,
         });
       })
     );
@@ -150,7 +168,7 @@ export class ListService {
 
   getParentCauseWithLesson(lesson: LessonMeta): Observable<LessonList> {
     return this.db
-      .collection('lists', ref => {
+      .collection('lists', (ref) => {
         return ref
           .where('premium', '==', true)
           .where('authorId', '==', lesson.authorId)
