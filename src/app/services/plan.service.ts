@@ -8,14 +8,14 @@ export const PLANS: Plan[] = [
     title: 'ライト',
     subTitle: '教材閲覧のみ',
     amount: 12500,
-    points: ['有料教材の閲覧']
+    points: ['有料教材の閲覧', '教材に関する質問'],
   },
   {
     id: 'solo',
     title: 'ソロ',
     subTitle: 'ひとりで学びたい人',
     amount: 30000,
-    points: ['有料教材の閲覧', '質問し放題']
+    points: ['有料教材の閲覧', '無制限な質問'],
   },
   {
     id: 'mentor',
@@ -24,18 +24,18 @@ export const PLANS: Plan[] = [
     amount: 85000,
     points: [
       '有料教材の閲覧',
-      '質問し放題',
+      '無制限な質問',
       'コードレビュー',
       '進捗管理',
       'サービス企画',
       '開発顧問',
-      '就職支援'
-    ]
-  }
+      '就職支援',
+    ],
+  },
 ];
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlanService {
   plans = PLANS;
@@ -44,12 +44,12 @@ export class PlanService {
   constructor() {}
 
   getPlan(planId: string): Plan {
-    return this.plans.find(plan => plan.id === planId);
+    return this.plans.find((plan) => plan.id === planId);
   }
 
   isUpgrade(oldPlanId: string, newPlanId: string) {
-    const oldPlanIndex = this.plans.findIndex(plan => plan.id === oldPlanId);
-    const newPlanIndex = this.plans.findIndex(plan => plan.id === newPlanId);
+    const oldPlanIndex = this.plans.findIndex((plan) => plan.id === oldPlanId);
+    const newPlanIndex = this.plans.findIndex((plan) => plan.id === newPlanId);
     return newPlanIndex - oldPlanIndex > 0;
   }
 }

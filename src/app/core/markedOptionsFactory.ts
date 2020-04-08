@@ -6,7 +6,7 @@ const codeLabel = {
   js: 'JavaScript',
   html: 'HTML',
   css: 'CSS',
-  bash: 'ターミナル'
+  bash: 'ターミナル',
 };
 
 const entityMap = {
@@ -14,17 +14,19 @@ const entityMap = {
   '<': '&lt;',
   '>': '&gt;',
   '"': '&quot;',
-  '\'': '&#39;',
-  '/': '&#x2F;'
+  // tslint:disable-next-line: quotemark
+  "'": '&#39;',
+  '/': '&#x2F;',
 };
 
 export function markedOptionsFactory(): MarkedOptions {
   const renderer = new MarkedRenderer();
   renderer.paragraph = (text) => {
-    const newText = text.replace(/\n/g, '<br>');
+    let newText = text.replace(/\n/g, '<br>\n');
     if (newText.startsWith('<figure') && newText.endsWith('</figure>')) {
       return newText;
     } else {
+      newText = newText.replace(/(\d\d:\d\d)/gm, '<a class="seek">$1</a>');
       return '<p>' + newText + '</p>';
     }
   };
@@ -76,19 +78,29 @@ export function markedOptionsFactory(): MarkedOptions {
       return text;
     }
 
-    text = text.replace(/[&<>"'\/]/g, key => entityMap[key]);
+    text = text.replace(/[&<>"'\/]/g, (key) => entityMap[key]);
 
     if (info) {
-      return `<div class="info info--${info[0]}">${marked(text, { renderer })}</div>`;
+      return `<div class="info info--${info[0]}">${marked(text, {
+        renderer,
+      })}</div>`;
     } else if (dod) {
-      const dodLabel = dod[0] === 'do' ? 'Do' : 'Don\'t';
-      return `<pre class="language-${lang} ${dod[0]}">` +
-        `<span class="lang">${dodLabel}</span><code class="language-${lang}">` + text + '</code></pre>';
+      const dodLabel = dod[0] === 'do' ? 'Do' : "Don't";
+      return (
+        `<pre class="language-${lang} ${dod[0]}">` +
+        `<span class="lang">${dodLabel}</span><code class="language-${lang}">` +
+        text +
+        '</code></pre>'
+      );
     } else if (lang) {
       if (/editorconfig|gitignore/.test(lang)) {
         lang = 'bash';
       }
-      return `<pre class="language-${lang}"><span class="lang">${label}</span><code class="language-${lang}">` + text + '</code></pre>';
+      return (
+        `<pre class="language-${lang}"><span class="lang">${label}</span><code class="language-${lang}">` +
+        text +
+        '</code></pre>'
+      );
     } else {
       return `<pre class="no-lang"><code>` + text + '</code></pre>';
     }

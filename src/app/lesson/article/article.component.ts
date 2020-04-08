@@ -10,26 +10,24 @@ import {
   take,
   shareReplay,
   map,
-  catchError
+  catchError,
 } from 'rxjs/operators';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { LessonService } from 'src/app/services/lesson.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/interfaces/user';
-import { MatDialog } from '@angular/material/dialog';
 import { ListService } from 'src/app/services/list.service';
 import { LessonList } from 'src/app/interfaces/lesson-list';
-import { PaymentService } from 'src/app/services/payment.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SeoService } from 'src/app/services/seo.service';
 import { UiService } from 'src/app/services/ui.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { environment } from 'src/environments/environment';
+import Player from '@vimeo/player';
 
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.scss']
+  styleUrls: ['./article.component.scss'],
 })
 export class ArticleComponent implements OnInit, OnDestroy {
   host = environment.host;
@@ -41,8 +39,16 @@ export class ArticleComponent implements OnInit, OnDestroy {
   channel: ChannelMeta;
   title = environment.title;
   isMobile = this.uiService.isMobile;
+  lessonId$: Observable<string> = this.route.queryParamMap.pipe(
+    map((params) => {
+      this.lessonId = params.get('v');
+      return this.lessonId;
+    }),
+    shareReplay(1)
+  );
+
   cause$: Observable<LessonList> = this.route.queryParamMap.pipe(
-    switchMap(params => {
+    switchMap((params) => {
       const causeId = params.get('cause');
       if (causeId) {
         return this.listService.getList(causeId);
@@ -52,68 +58,68 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }),
     shareReplay(1)
   );
-  lessonMeta$: Observable<LessonMeta> = this.route.queryParamMap.pipe(
-    tap(params => {
-      this.lessonId = params.get('v');
-    }),
-    switchMap(params => {
-      const lid = params.get('v');
-      if (lid) {
-        return this.lessonService.getLessonMeta(params.get('v'));
+  lessonMeta$: Observable<LessonMeta> = this.lessonId$.pipe(
+    switchMap((id) => {
+      if (id) {
+        return this.lessonService.getLessonMeta(id).pipe(take(1));
       } else {
         return of(null);
       }
     }),
-    tap(meta => {
+    tap((meta) => {
       if (!meta) {
         this.router.navigate(['not-found']);
         return of(null);
       }
-    })
+    }),
+    shareReplay(1)
   );
 
-  permission$: Observable<boolean> = this.route.queryParamMap.pipe(
-    switchMap(queryParamMapmap =>
-      this.lessonService.checkPermission(queryParamMapmap.get('v'))
-    ),
+  permission$: Observable<boolean> = this.lessonId$.pipe(
+    switchMap((id) => this.lessonService.checkPermission(id)),
     shareReplay(1)
   );
 
   lessonBody$: Observable<LessonBody> = this.permission$.pipe(
-    switchMap(permission => {
+    switchMap((permission) => {
       if (permission) {
         return this.getBody();
       } else {
         return of({
-          body: ''
+          body: '',
         });
       }
-    })
-  );
-
-  getParentCause$ = this.lessonMeta$.pipe(
-    switchMap(lesson => this.listService.getParentCauseWithLesson(lesson))
+    }),
+    shareReplay(1)
   );
 
   user$: Observable<User> = this.authService.authUser$.pipe(
-    tap(user => (this.uid = user && user.id))
+    tap((user) => (this.uid = user && user.id))
   );
+
+  player: Player;
 
   lesson$: Observable<Lesson> = combineLatest([
     this.lessonMeta$,
-    this.lessonBody$
+    this.lessonBody$,
   ]).pipe(
     map(([meta, body]) => {
       return {
         ...meta,
-        ...body
+        ...body,
       };
-    })
+    }),
+    tap(() => {
+      setTimeout(() => {
+        this.setSeek();
+      }, 2000);
+    }),
+    shareReplay(1)
   );
 
   isOwner$: Observable<boolean> = combineLatest([
-    this.user$.pipe(),
-    this.lessonMeta$.pipe()
+    this.user$,
+    this.lessonMeta$,
   ]).pipe(
     map(([user, lesson]) => {
       if (user) {
@@ -126,14 +132,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
   );
 
   channel$: Observable<ChannelMeta> = this.lessonMeta$.pipe(
-    switchMap(lesson => {
+    switchMap((lesson) => {
       if (lesson) {
         return this.channelService.getChannel(lesson.channelId).pipe(take(1));
       } else {
         return of(null);
       }
     }),
-    tap(channel => (this.channel = channel)),
+    tap((channel) => (this.channel = channel)),
     shareReplay(1)
   );
 
@@ -151,7 +157,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     private uiService: UiService,
     private loadingService: LoadingService
   ) {
-    this.lesson$.subscribe(lesson => {
+    this.lesson$.subscribe((lesson) => {
       if (lesson) {
         this.setMeta(lesson);
       }
@@ -172,7 +178,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       '@type': 'Article',
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': '/'
+        '@id': '/',
       },
       headline: lesson.title,
       image: [image],
@@ -182,18 +188,18 @@ export class ArticleComponent implements OnInit, OnDestroy {
         : '',
       author: {
         '@type': 'Person',
-        name: channel.title
+        name: channel.title,
       },
       publisher: {
         '@type': 'Organization',
         name: 'Google',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://google.com/logo.jpg'
-        }
+          url: 'https://google.com/logo.jpg',
+        },
       },
       description: 'A most wonderful article',
-      articleBody: lesson.body
+      articleBody: lesson.body,
     });
   }
 
@@ -207,11 +213,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
       description: lesson.body
         ? lesson.body.replace(/# -/gm, '').substring(0, 100)
         : '',
-      size: lesson.tags.includes('mentor') ? 'summary' : 'summary_large_image'
+      size: lesson.tags.includes('mentor') ? 'summary' : 'summary_large_image',
     });
   }
 
-  generateStackBlitz(lesson: Lesson, urls: string[]) {
+  generateStackBlitz(lesson: LessonBody, urls: string[]) {
     urls.forEach((url, i) => {
       const reg = new RegExp(
         `^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`,
@@ -275,66 +281,78 @@ export class ArticleComponent implements OnInit, OnDestroy {
     );
   }
 
+  private setSeek() {
+    const seeks = document.querySelectorAll('.seek');
+    this.player = new Player(document.getElementById('vimeo'));
+    if (seeks) {
+      seeks.forEach((seek) => {
+        seek.addEventListener('click', () => {
+          const [min, sec] = seek.textContent.split(':');
+          this.player.setCurrentTime(+min * 60 + +sec);
+        });
+      });
+    }
+  }
+
   private getBody(): Observable<LessonBody> {
-    return this.route.queryParamMap.pipe(
+    return this.lessonId$.pipe(
       tap(() => this.loadingService.startLoading()),
-      switchMap(params => {
-        const lid = params.get('v');
-        if (lid) {
-          return this.lessonService.getLessonBody(lid).pipe(take(1));
+      switchMap((id) => {
+        if (id) {
+          return this.lessonService.getLessonBody(id);
         } else {
           return of(null);
         }
       }),
-      catchError(error => {
+      catchError((error) => {
         console.error(error);
         return of(null);
       }),
-      switchMap(lesson => {
-        if (!lesson) {
+      switchMap((lessonBody: LessonBody) => {
+        if (!lessonBody) {
           return of(null);
         }
-        this.countUpView(lesson.id);
+        this.countUpView(this.lessonId);
 
-        const matchUrls = lesson.body.match(/^http.*$/gm);
+        const matchUrls = lessonBody.body.match(/^http.*$/gm);
         const urlMap = matchUrls
           ? {
-              externalUrls: matchUrls.filter(url => {
+              externalUrls: matchUrls.filter((url) => {
                 return !url.match(/stackblitz\.com/);
               }),
-              stackblitz: matchUrls.filter(url => {
+              stackblitz: matchUrls.filter((url) => {
                 return url.match(/stackblitz\.com/);
-              })
+              }),
             }
           : {};
 
         if (urlMap.stackblitz) {
-          this.generateStackBlitz(lesson, urlMap.stackblitz);
+          this.generateStackBlitz(lessonBody, urlMap.stackblitz);
         }
 
         if (urlMap.externalUrls) {
           return merge(
-            of(lesson),
+            of(lessonBody),
             this.lessonService.getOGPs(urlMap.externalUrls).pipe(
-              map(ogps => {
+              map((ogps) => {
                 urlMap.externalUrls.forEach((url, i) => {
                   if (ogps[i]) {
                     const reg = new RegExp(
                       `^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`,
                       'gm'
                     );
-                    lesson.body = lesson.body.replace(
+                    lessonBody.body = lessonBody.body.replace(
                       reg,
                       this.getOgpHTML(ogps[i])
                     );
                   }
                 });
-                return lesson;
+                return lessonBody;
               })
             )
           );
         } else {
-          return of(lesson);
+          return of(lessonBody);
         }
       }),
       tap(() => {
@@ -345,15 +363,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             document.querySelector('#' + fragment).scrollIntoView();
             window.scrollBy(0, -70);
-          }, 100);
+          }, 1000);
         }
       }),
       shareReplay(1)
     );
-  }
-
-  onLoadMarkdown() {
-    (window as any).twttr.widgets.load();
   }
 
   /**

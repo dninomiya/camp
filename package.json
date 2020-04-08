@@ -83,6 +83,7 @@
     "@types/node": "^12.11.1",
     "@types/swiper": "^5.2.1",
     "@types/tus-js-client": "^1.7.0",
+    "@types/vimeo__player": "^2.9.0",
     "codelyzer": "^5.1.2",
     "concat": "^1.0.3",
     "jasmine-core": "~3.4.0",
