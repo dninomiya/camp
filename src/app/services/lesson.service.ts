@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LessonMeta, Lesson, LessonBody } from '../interfaces/lesson';
 import { Observable, combineLatest, of } from 'rxjs';
-import { switchMap, map, first } from 'rxjs/operators';
+import { switchMap, map, first, take } from 'rxjs/operators';
 import { ChannelMeta } from '../interfaces/channel';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { LessonList } from '../interfaces/lesson-list';
@@ -12,7 +12,7 @@ import { firestore } from 'firebase/app';
 import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LessonService {
   constructor(
@@ -41,7 +41,7 @@ export class LessonService {
       updatedAt: firestore.Timestamp.now(),
       viewCount: 0,
       deleted: false,
-      ...lesson
+      ...lesson,
     };
 
     let thumbnailURL: string;
@@ -53,11 +53,11 @@ export class LessonService {
     }
     await this.db.doc(`lessons/${id}`).set({
       ...data,
-      thumbnailURL: thumbnailURL || null
+      thumbnailURL: thumbnailURL || null,
     });
     await this.db.doc(`lessons/${id}/body/content`).set({
       body,
-      authorId
+      authorId,
     });
     return id;
   }
@@ -65,7 +65,7 @@ export class LessonService {
   getLessonsByChannelId(cid: string, limit = 100): Observable<LessonMeta[]> {
     let lessons: LessonMeta[] = [];
     return this.db
-      .collection<LessonMeta>('lessons', ref => {
+      .collection<LessonMeta>('lessons', (ref) => {
         return ref
           .where('channelId', '==', cid)
           .where('deleted', '==', false)
@@ -75,15 +75,15 @@ export class LessonService {
       })
       .valueChanges()
       .pipe(
-        switchMap(items => {
+        switchMap((items) => {
           lessons = items;
           return this.db.doc<ChannelMeta>(`channels/${cid}`).valueChanges();
         }),
-        map(channel => {
-          return lessons.map(lesson => {
+        map((channel) => {
+          return lessons.map((lesson) => {
             return {
               channelName: channel.title,
-              ...lesson
+              ...lesson,
             };
           });
         })
@@ -95,10 +95,10 @@ export class LessonService {
       .doc<LessonList>(`lists/${lid}`)
       .valueChanges()
       .pipe(
-        switchMap(list => {
+        switchMap((list) => {
           if (list.lessonIds.length) {
             return combineLatest(
-              list.lessonIds.map(id => {
+              list.lessonIds.map((id) => {
                 return this.db.doc<LessonMeta>(`lessons/${id}`).valueChanges();
               })
             );
@@ -120,13 +120,13 @@ export class LessonService {
   getLesson(id: string): Observable<Lesson> {
     return combineLatest([
       this.db.doc<LessonMeta>(`lessons/${id}`).valueChanges(),
-      this.db.doc<LessonBody>(`lessons/${id}/body/content`).valueChanges()
+      this.db.doc<LessonBody>(`lessons/${id}/body/content`).valueChanges(),
     ]).pipe(
       map(([meta, content]) => {
         if (meta && content) {
           return {
             ...meta,
-            ...content
+            ...content,
           };
         } else {
           return null;
@@ -150,25 +150,25 @@ export class LessonService {
 
     if (body) {
       await this.db.doc(`lessons/${id}/body/content`).update({
-        body
+        body,
       });
     }
 
     return this.db.doc(`lessons/${id}`).update({
       ...data,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     });
   }
 
   deleteLesson(id: string): Promise<void> {
     return this.db.doc(`lessons/${id}`).update({
-      deleted: true
+      deleted: true,
     });
   }
 
   like(uid: string, id: string): Promise<void> {
     return this.db.doc(`channels/${uid}/likes/${id}`).set({
-      id
+      id,
     });
   }
 
@@ -180,14 +180,14 @@ export class LessonService {
     return this.db
       .doc(`channels/${uid}/likes/${lessonId}`)
       .valueChanges()
-      .pipe(map(lesson => !!lesson));
+      .pipe(map((lesson) => !!lesson));
   }
 
   async countUpView(lessonId: string): Promise<void> {
     const callable = this.fns.httpsCallable('countUp');
     return callable({
       path: `lessons/${lessonId}`,
-      key: 'viewCount'
+      key: 'viewCount',
     }).toPromise();
   }
 
@@ -199,7 +199,10 @@ export class LessonService {
   checkPermission(lessonId: string): Observable<boolean> {
     return combineLatest([
       this.authService.authUser$,
-      this.db.doc<LessonMeta>(`lessons/${lessonId}`).valueChanges()
+      this.db
+        .doc<LessonMeta>(`lessons/${lessonId}`)
+        .valueChanges()
+        .pipe(take(1)),
     ]).pipe(
       map(([user, lesson]) => {
         return !!(lesson.free || (user && user.plan && user.plan !== 'free'));

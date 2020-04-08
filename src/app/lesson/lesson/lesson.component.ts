@@ -14,12 +14,15 @@ import { LessonList } from 'src/app/interfaces/lesson-list';
 @Component({
   selector: 'app-lesson',
   templateUrl: './lesson.component.html',
-  styleUrls: ['./lesson.component.scss']
+  styleUrls: ['./lesson.component.scss'],
 })
 export class LessonComponent implements OnInit {
   loading = true;
+  lessonId$: Observable<string> = this.route.queryParamMap.pipe(
+    map((params) => params.get('v'))
+  );
   cause$: Observable<LessonList> = this.route.queryParamMap.pipe(
-    switchMap(params => {
+    switchMap((params) => {
       const causeId = params.get('cause');
       if (causeId) {
         return this.listService.getList(causeId);
@@ -29,16 +32,15 @@ export class LessonComponent implements OnInit {
     }),
     shareReplay(1)
   );
-  lessonMeta$: Observable<LessonMeta> = this.route.queryParamMap.pipe(
-    switchMap(params => {
-      const lid = params.get('v');
-      if (lid) {
-        return this.lessonService.getLessonMeta(lid).pipe(take(1));
+  lessonMeta$: Observable<LessonMeta> = this.lessonId$.pipe(
+    switchMap((id) => {
+      if (id) {
+        return this.lessonService.getLessonMeta(id).pipe(take(1));
       } else {
         return of(null);
       }
     }),
-    catchError(error => {
+    catchError((error) => {
       console.error(error);
       return of(null);
     }),
@@ -48,8 +50,8 @@ export class LessonComponent implements OnInit {
   user$: Observable<User> = this.authService.authUser$;
 
   isOwner$: Observable<boolean> = combineLatest([
-    this.user$.pipe(),
-    this.lessonMeta$.pipe()
+    this.user$,
+    this.lessonMeta$,
   ]).pipe(
     map(([user, lesson]) => {
       if (user) {
@@ -62,7 +64,7 @@ export class LessonComponent implements OnInit {
   );
 
   channel$: Observable<ChannelMeta> = this.lessonMeta$.pipe(
-    switchMap(lesson => {
+    switchMap((lesson) => {
       if (lesson) {
         return this.channelService.getChannel(lesson.channelId).pipe(take(1));
       } else {
