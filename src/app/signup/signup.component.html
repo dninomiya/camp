@@ -66,13 +66,13 @@
             }}〜{{ user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd' }}）
           </p>
 
-          <button
+          <a
             *ngIf="!canceled; else canceledArea"
             mat-stroked-button
             routerLink="/mypage"
           >
             自動更新を止める
-          </button>
+          </a>
           <ng-template #canceledArea>
             <p>
               {{

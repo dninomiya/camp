@@ -57,7 +57,7 @@
           <mat-icon class="mat-18">flag</mat-icon>
           <span>報告</span>
         </a>
-        <button
+        <a
           class="actions__item"
           *ngIf="!isMobile && (isOwner$ | async)"
           mat-button
@@ -66,7 +66,7 @@
         >
           <mat-icon class="mat-18">edit</mat-icon>
           <span>編集</span>
-        </button>
+        </a>
       </div>
     </div>
     <mat-divider></mat-divider>
@@ -96,14 +96,9 @@
           「{{ lesson.title }}」を閲覧するには有料プランへの登録が必要です。
         </h1>
 
-        <button
-          mat-flat-button
-          color="primary"
-          routerLink="/about"
-          fragment="plan"
-        >
+        <a mat-flat-button color="primary" routerLink="/about" fragment="plan">
           プランを見る
-        </button>
+        </a>
       </div>
     </ng-template>
   </div>

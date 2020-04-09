@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import {
   NgxPicaErrorInterface,
-  NgxPicaService
+  NgxPicaService,
 } from '@digitalascetic/ngx-pica';
 import { of, Observable, combineLatest } from 'rxjs';
 import {
@@ -11,13 +11,13 @@ import {
   shareReplay,
   debounceTime,
   map,
-  catchError
+  catchError,
 } from 'rxjs/operators';
 import {
   FormBuilder,
   Validators,
   FormControl,
-  AbstractControl
+  AbstractControl,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -46,11 +46,11 @@ import { VimeoHelpDialogComponent } from '../vimeo-help-dialog/vimeo-help-dialog
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+  styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit {
   @ViewChild('body', {
-    static: false
+    static: false,
   })
   simplemde: Simplemde;
   prices: number[] = [100, 500, 1000, 1500, 5000, 10000, 25000, 50000, 100000];
@@ -60,8 +60,8 @@ export class EditorComponent implements OnInit {
     size: {
       width: 1800,
       height: 1075.2,
-      limitMb: 3
-    }
+      limitMb: 3,
+    },
   };
 
   algoliaConfig = environment.algolia;
@@ -69,10 +69,10 @@ export class EditorComponent implements OnInit {
   uploadStep$ = this.vimeoService.uploadStep$;
   user$ = this.authService.authUser$.pipe(shareReplay(1));
   lists$: Observable<LessonList[]> = this.user$.pipe(
-    switchMap(user => {
+    switchMap((user) => {
       return this.channelService.getListByChannelId(user.id);
     }),
-    tap(lists => (this.lists = lists))
+    tap((lists) => (this.lists = lists))
   );
   lists: LessonList[];
   isLoading: boolean;
@@ -96,22 +96,22 @@ export class EditorComponent implements OnInit {
         name: 'image',
         action: this.selectImage.bind(this),
         className: 'fa fa-picture-o',
-        title: '画像を挿入'
+        title: '画像を挿入',
       },
       '|',
       {
         name: 'Help',
         action: this.openHelpDialog.bind(this),
         className: 'fa fa-question-circle',
-        title: '使い方'
-      }
-    ]
+        title: '使い方',
+      },
+    ],
   };
 
   plans = this.planService.plans;
 
   codemirrorOpts = {
-    lineNumbers: false
+    lineNumbers: false,
   };
 
   vimeoUser: VimeoUser;
@@ -129,10 +129,10 @@ export class EditorComponent implements OnInit {
       {
         // asyncValidators: [this.validateVimeoId.bind(this)],
         // updateOn: 'blur'
-      }
+      },
     ],
     public: [true, Validators.required],
-    free: [false]
+    free: [false],
   });
 
   listControl = new FormControl('');
@@ -154,16 +154,16 @@ export class EditorComponent implements OnInit {
     private vimeoService: VimeoService
   ) {
     this.user$
-      .pipe(switchMap(user => this.vimeoService.getVimeoAccount(user.id)))
-      .subscribe(vimeoUser => {
+      .pipe(switchMap((user) => this.vimeoService.getVimeoAccount(user.id)))
+      .subscribe((vimeoUser) => {
         this.vimeoUser = vimeoUser || null;
       });
 
-    this.route.queryParamMap.subscribe(params => {
+    this.route.queryParamMap.subscribe((params) => {
       const tag = params.get('tag');
       if (tag === 'mentor') {
         this.form.patchValue({
-          tags: ['mentor']
+          tags: ['mentor'],
         });
       }
     });
@@ -172,7 +172,7 @@ export class EditorComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.oldLesson$ = this.route.queryParams.pipe(
-      switchMap(params => {
+      switchMap((params) => {
         if (params.v) {
           return this.lessonService.getLesson(params.v).pipe(take(1));
         } else {
@@ -197,8 +197,8 @@ export class EditorComponent implements OnInit {
         if (oldLesson && lists) {
           this.listControl.patchValue(
             lists
-              .filter(list => list.lessonIds.includes(oldLesson.id))
-              .map(list => list.id)
+              .filter((list) => list.lessonIds.includes(oldLesson.id))
+              .map((list) => list.id)
           );
         }
       }
@@ -207,7 +207,7 @@ export class EditorComponent implements OnInit {
     this.form
       .get('body')
       .valueChanges.pipe(debounceTime(500))
-      .subscribe(res => {
+      .subscribe((res) => {
         (window as any).twttr.widgets.load();
       });
   }
@@ -226,11 +226,11 @@ export class EditorComponent implements OnInit {
       return this.vimeoService
         .checkVimeoId({
           id: control.value,
-          token: this.vimeoUser.token
+          token: this.vimeoUser.token,
         })
         .pipe(
           tap(() => (this.isValidWaiting = false)),
-          map(data => null),
+          map((data) => null),
           catchError(() => of({ videoId: true }))
         );
     } else {
@@ -251,12 +251,12 @@ export class EditorComponent implements OnInit {
       const updated = updatedDiff(this.oldLesson, this.form.value);
       const newValue = {
         ...added,
-        ...updated
+        ...updated,
       };
 
       action = this.lessonService.updateLesson(this.oldLesson.id, {
         body: this.form.value.body,
-        ...newValue
+        ...newValue,
       });
     } else {
       action = this.lessonService.createLesson(
@@ -271,20 +271,20 @@ export class EditorComponent implements OnInit {
         `ポストを${this.oldLesson ? '更新' : '作成'}しました`,
         null,
         {
-          duration: 2000
+          duration: 2000,
         }
       );
       this.listService.patchList({
         allLists: this.lists,
         activeListIds,
-        lessonId: this.oldLesson ? this.oldLesson.id : lessonId
+        lessonId: this.oldLesson ? this.oldLesson.id : lessonId,
       });
       this.isComplete = true;
       this.router.navigate(['/lesson'], {
         relativeTo: this.route,
         queryParams: {
-          v: this.oldLesson ? this.oldLesson.id : lessonId
-        }
+          v: this.oldLesson ? this.oldLesson.id : lessonId,
+        },
       });
     });
   }
@@ -300,13 +300,13 @@ export class EditorComponent implements OnInit {
   deleteLesson() {
     this.snackBar
       .open('本当に削除しますか？', 'はい', {
-        duration: 4000
+        duration: 4000,
       })
       .onAction()
       .subscribe(() => {
         this.lessonService.deleteLesson(this.oldLesson.id).then(() => {
           this.snackBar.open('ポストを削除しました。', null, {
-            duration: 2000
+            duration: 2000,
           });
           this.router.navigate(['/']);
         });
@@ -349,13 +349,13 @@ export class EditorComponent implements OnInit {
       this.ngxPicaService
         .resizeImage(file, 2000, 1200, {
           aspectRatio: {
-            keepAspectRatio: true
+            keepAspectRatio: true,
           },
-          alpha: true
+          alpha: true,
         })
         .subscribe(
           (imageResized: File) => {
-            this.upload(imageResized).then(url => {
+            this.upload(imageResized).then((url) => {
               resolve(url);
             });
           },
@@ -420,7 +420,7 @@ export class EditorComponent implements OnInit {
 
   openHelpDialog() {
     this.dialog.open(EditorHelpComponent, {
-      width: '600px'
+      width: '600px',
     });
   }
 
@@ -431,10 +431,10 @@ export class EditorComponent implements OnInit {
         maxHeight: '80vh',
         data: this.authService.user,
         autoFocus: false,
-        restoreFocus: false
+        restoreFocus: false,
       })
       .afterClosed()
-      .subscribe(videoId => {
+      .subscribe((videoId) => {
         if (videoId) {
           this.form.get('videoId').setValue(videoId);
         }
@@ -444,13 +444,13 @@ export class EditorComponent implements OnInit {
   openNewListDialog(uid: string) {
     this.dialog
       .open(ListEditDialogComponent, {
-        maxWidth: 600
+        maxWidth: 600,
       })
       .afterClosed()
-      .subscribe(status => {
+      .subscribe((status) => {
         if (status) {
           this.snackBar.open('リストを追加しました', null, {
-            duration: 2000
+            duration: 2000,
           });
         }
       });
@@ -463,14 +463,14 @@ export class EditorComponent implements OnInit {
   openLessonGuide() {
     this.dialog.open(LessonGuideComponent, {
       width: '600px',
-      autoFocus: false
+      autoFocus: false,
     });
   }
 
   uploadThumbnail(image: string) {
     if (this.oldLesson) {
       this.lessonService.updateLesson(this.oldLesson.id, {
-        thumbnailURL: image
+        thumbnailURL: image,
       });
     }
   }
@@ -484,10 +484,10 @@ export class EditorComponent implements OnInit {
       .open(TagEditorDialogComponent, {
         restoreFocus: false,
         width: '800px',
-        data: this.form.get('tags').value
+        data: this.form.get('tags').value,
       })
       .afterClosed()
-      .subscribe(tags => {
+      .subscribe((tags) => {
         if (tags) {
           this.form.get('tags').patchValue(tags);
         }

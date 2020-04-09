@@ -6,9 +6,9 @@
       <section>
         <h2>プラン</h2>
         <p class="current-plan">{{ user.plan | plan }}プラン</p>
-        <button mat-stroked-button routerLink="/about" fragment="plan">
+        <a mat-stroked-button routerLink="/about" fragment="plan">
           プラン変更
-        </button>
+        </a>
 
         <h3>プラン内容</h3>
         <ul *ngIf="getPlan(user.plan); else free">

@@ -27,18 +27,18 @@
 </mat-sidenav-container>
 
 <div *ngIf="isMobile && !noBottomNav" class="bottom-nav">
-  <div class="bottom-nav-item" routerLink="/">
+  <a class="bottom-nav-item" routerLink="/">
     <mat-icon class="bottom-nav-item__icon">home</mat-icon>
     <span class="bottom-nav-item__label">ホーム</span>
-  </div>
-  <div class="bottom-nav-item" routerLink="/search">
+  </a>
+  <a class="bottom-nav-item" routerLink="/search">
     <mat-icon class="bottom-nav-item__icon">search</mat-icon>
     <span class="bottom-nav-item__label">検索</span>
-  </div>
+  </a>
   <ng-container *ngIf="user$ | async as user">
-    <div class="bottom-nav-item" [routerLink]="['/mypage']">
+    <a class="bottom-nav-item" [routerLink]="['/mypage']">
       <mat-icon class="bottom-nav-item__icon">account_circle</mat-icon>
       <span class="bottom-nav-item__label">マイページ</span>
-    </div>
+    </a>
   </ng-container>
 </div>

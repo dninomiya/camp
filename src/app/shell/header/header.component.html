@@ -45,35 +45,35 @@
           "
         ></button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/mypage">
+          <a mat-menu-item routerLink="/mypage">
             <mat-icon>account_box</mat-icon>
             <span>マイページ</span>
-          </button>
-          <button *ngIf="isStudio" mat-menu-item routerLink="/">
+          </a>
+          <a *ngIf="isStudio" mat-menu-item routerLink="/">
             <mat-icon>compare_arrows</mat-icon>
             <span>{{ title }}</span>
-          </button>
-          <button
+          </a>
+          <a
             *ngIf="!isStudio && !isMobile && user.admin"
             mat-menu-item
             routerLink="/studio/{{ user.id }}"
           >
             <mat-icon>compare_arrows</mat-icon>
             <span>チャンネル管理</span>
-          </button>
+          </a>
           <button mat-menu-item (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>
             <span>ログアウト</span>
           </button>
           <mat-divider></mat-divider>
-          <button mat-menu-item routerLink="/setting">
+          <a mat-menu-item routerLink="/setting">
             <mat-icon>settings</mat-icon>
             <span>設定</span>
-          </button>
-          <button mat-menu-item routerLink="/intl/help">
+          </a>
+          <a mat-menu-item routerLink="/intl/help">
             <mat-icon>help</mat-icon>
             <span>ヘルプ</span>
-          </button>
+          </a>
           <a
             href="https://forms.gle/D4cpNkyfq87xbL3H9"
             target="_blank"
