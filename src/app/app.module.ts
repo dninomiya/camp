@@ -14,17 +14,17 @@ import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeJa);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     NgAisModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
-  providers: [LogUpdateService, {provide: LOCALE_ID, useValue: 'ja-JP'}],
-  bootstrap: [AppComponent]
+  providers: [LogUpdateService, { provide: LOCALE_ID, useValue: 'ja-JP' }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
