@@ -30,7 +30,6 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { ListEditDialogComponent } from './list-edit-dialog/list-edit-dialog.component';
 import { TagEditorDialogComponent } from './tag-editor-dialog/tag-editor-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
-import { AdsenseModule } from 'ng2-adsense';
 
 @NgModule({
   declarations: [
@@ -57,10 +56,6 @@ import { AdsenseModule } from 'ng2-adsense';
     HttpClientModule,
     NgAisModule,
     RecaptchaModule,
-    AdsenseModule.forRoot({
-      adClient: 'ca-pub-7168539043345662',
-      adSlot: 3916268861,
-    }),
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {
