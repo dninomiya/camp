@@ -10,10 +10,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { NgxStripeModule } from 'ngx-stripe';
 
-import {
-  AngularFireFunctionsModule,
-  FunctionsRegionToken
-} from '@angular/fire/functions';
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 import { AppRoutingModule } from '../app-routing.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DatePipe } from '@angular/common';
@@ -46,7 +43,7 @@ import { AdsenseModule } from 'ng2-adsense';
     ConnectVimeoComponent,
     LoginDialogComponent,
     ListEditDialogComponent,
-    TagEditorDialogComponent
+    TagEditorDialogComponent,
   ],
   imports: [
     SharedModule,
@@ -62,17 +59,17 @@ import { AdsenseModule } from 'ng2-adsense';
     RecaptchaModule,
     AdsenseModule.forRoot({
       adClient: 'ca-pub-7168539043345662',
-      adSlot: 3916268861
+      adSlot: 3916268861,
     }),
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {
         provide: MarkedOptions,
-        useFactory: markedOptionsFactory
-      }
+        useFactory: markedOptionsFactory,
+      },
     }),
     NgxStripeModule.forRoot(environment.stripe.publicKey),
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
   ],
   exports: [
     MarkdownModule,
@@ -83,12 +80,9 @@ import { AdsenseModule } from 'ng2-adsense';
     ConnectStripeComponent,
     NgxJsonLdModule,
     ShellModule,
-    ConnectVimeoComponent
+    ConnectVimeoComponent,
   ],
-  providers: [
-    { provide: FunctionsRegionToken, useValue: 'asia-northeast1' },
-    DatePipe
-  ],
+  providers: [{ provide: REGION, useValue: 'asia-northeast1' }, DatePipe],
   entryComponents: [
     CardDialogComponent,
     ListEditDialogComponent,
@@ -96,7 +90,7 @@ import { AdsenseModule } from 'ng2-adsense';
     SharedConfirmDialogComponent,
     MailDialogComponent,
     LoginDialogComponent,
-    TagEditorDialogComponent
-  ]
+    TagEditorDialogComponent,
+  ],
 })
 export class CoreModule {}
