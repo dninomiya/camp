@@ -143,14 +143,14 @@
               </button>
 
               <mat-menu #menuRef="matMenu">
-                <button
+                <a
                   mat-menu-item
                   [routerLink]="['/edit']"
                   [queryParams]="{ v: element.id }"
                 >
                   <mat-icon class="mat-18">edit</mat-icon>
                   <span>編集</span>
-                </button>
+                </a>
                 <button mat-menu-item (click)="deleteLesson(element)">
                   <mat-icon class="mat-18">delete</mat-icon>
                   <span>削除</span>

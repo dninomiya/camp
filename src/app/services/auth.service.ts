@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   afUser: AfUser;
@@ -39,7 +39,7 @@ export class AuthService {
           return of(null);
         }
       }),
-      tap(user => {
+      tap((user) => {
         this.user = user;
         if (user && user.admin) {
           this.isAdmin = true;
@@ -52,24 +52,24 @@ export class AuthService {
 
   async login(): Promise<auth.UserCredential> {
     if (this.afUser) {
-      await this.afAuth.auth.signOut();
+      await this.afAuth.signOut();
     }
     const authProvider = new auth.GoogleAuthProvider();
     authProvider.setCustomParameters({
-      prompt: 'select_account'
+      prompt: 'select_account',
     });
-    return this.afAuth.auth.signInWithPopup(authProvider);
+    return this.afAuth.signInWithPopup(authProvider);
   }
 
   logout() {
-    this.afAuth.auth.signOut().then(() => this.router.navigate(['/']));
+    this.afAuth.signOut().then(() => this.router.navigate(['/']));
   }
 
   async deleteAccount(user: AfUser): Promise<void> {
     const deleteFn = this.fns.httpsCallable('deleteUser');
     return deleteFn({
       uid: user.uid,
-      email: user.email
+      email: user.email,
     }).toPromise();
   }
 
@@ -94,7 +94,7 @@ export class AuthService {
 
     if (diff + 2 < 0) {
       this.updateUser({
-        plan: 'free'
+        plan: 'free',
       });
     }
   }
@@ -118,7 +118,7 @@ export class AuthService {
         const callable = this.fns.httpsCallable('connectStripe');
         await callable({
           code,
-          email: this.user.email
+          email: this.user.email,
         }).toPromise();
         return data.path;
       }
@@ -154,7 +154,7 @@ export class AuthService {
 
   setFCMToken(fcmToken: string): Promise<void> {
     return this.db.doc(`users/${this.user.id}`).update({
-      fcmToken
+      fcmToken,
     });
   }
 
@@ -162,7 +162,7 @@ export class AuthService {
     const id = this.db.createId();
     await this.db.doc(`csrf/${id}`).set({
       ...body,
-      createdAt: new Date()
+      createdAt: new Date(),
     });
     return id;
   }
@@ -171,14 +171,14 @@ export class AuthService {
     this.dialog
       .open(LoginDialogComponent, {
         restoreFocus: false,
-        width: '400px'
+        width: '400px',
       })
       .afterClosed()
-      .subscribe(status => {
+      .subscribe((status) => {
         if (status) {
           this.login().then(() => {
             this.snackBar.open(`${environment.title}へようこそ！`, null, {
-              duration: 2000
+              duration: 2000,
             });
           });
         }

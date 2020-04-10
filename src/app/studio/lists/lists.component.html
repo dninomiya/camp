@@ -6,14 +6,21 @@
         <mat-icon class="mat-18">add</mat-icon>
       </button>
     </div>
-    <mat-list dense cdkDropList (cdkDropListDropped)="orderList($event)" *ngIf="lists$ | async">
+    <mat-list
+      dense
+      cdkDropList
+      (cdkDropListDropped)="orderList($event)"
+      *ngIf="lists$ | async"
+    >
       <mat-list-item
         (click)="getLessons(list.id)"
         *ngFor="let list of lists"
         [class.active]="list.id === activeList.id"
         cdkDrag
       >
-        <mat-icon matListIcon class="handle" cdkDragHandle>drag_handle</mat-icon>
+        <mat-icon matListIcon class="handle" cdkDragHandle
+          >drag_handle</mat-icon
+        >
         <span matLine>
           {{ list.title }}
         </span>
@@ -40,9 +47,9 @@
   <div>
     <div class="toolbar">
       <h2><mat-icon>class</mat-icon>レッスン</h2>
-      <button mat-icon-button routerLink="/new">
+      <a mat-icon-button routerLink="/new">
         <mat-icon class="mat-18">add</mat-icon>
-      </button>
+      </a>
     </div>
     <div
       *ngIf="lessons$ | async as lessons"
@@ -59,7 +66,11 @@
               {{ lesson.public | privacyIcon }}
             </mat-icon>
             <span matLine class="lesson__title">
-              <a [routerLink]="['/lesson']" [queryParams]="{ v: lesson.id }" *ngIf="!lesson.deleted; else deleted">
+              <a
+                [routerLink]="['/lesson']"
+                [queryParams]="{ v: lesson.id }"
+                *ngIf="!lesson.deleted; else deleted"
+              >
                 {{ lesson.title }}
               </a>
               <ng-template #deleted>
@@ -70,7 +81,7 @@
               <mat-icon class="mat-18">more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button
+              <a
                 mat-menu-item
                 [routerLink]="['/edit']"
                 [queryParams]="{ v: lesson.id }"
@@ -78,12 +89,16 @@
               >
                 <mat-icon class="mat-18">edit</mat-icon>
                 <span>編集</span>
-              </button>
+              </a>
               <button mat-menu-item (click)="removeLessonFromList(lesson.id)">
                 <mat-icon class="mat-18">remove</mat-icon>
                 <span>リストから削除</span>
               </button>
-              <button mat-menu-item (click)="openLessonDeleteDialog(lesson)" *ngIf="!lesson.deleted">
+              <button
+                mat-menu-item
+                (click)="openLessonDeleteDialog(lesson)"
+                *ngIf="!lesson.deleted"
+              >
                 <mat-icon class="mat-18">delete</mat-icon>
                 <span>削除</span>
               </button>

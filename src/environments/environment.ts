@@ -7,7 +7,7 @@ export const environment = {
   title: 'CAMP',
   stripe: {
     publicKey: 'pk_test_lKq5jlH5mdbAxDeBfB4f0sn400ZYUYdpvH',
-    clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ'
+    clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ',
   },
   firebase: {
     apiKey: 'AIzaSyD4MlPYXXp9_bjLsGmgzGlRYTSrKUTCqzY',
@@ -16,15 +16,16 @@ export const environment = {
     projectId: 'dev-update',
     storageBucket: 'dev-update.appspot.com',
     messagingSenderId: '11098690567',
-    appId: '1:11098690567:web:50dbe85f0c81793b'
+    appId: '1:11098690567:web:50dbe85f0c81793b',
+    measurementId: 'G-KZGHYXETCB',
   },
   algolia: {
     appId: 'JDCC4O77OA',
     apiKey: '01e9b4a6c9c76f20959c97816a0b8e73',
-    indexName: 'lessons'
+    indexName: 'lessons',
   },
   captchaKey: '6LdxgLIUAAAAAG7VOix4btA1S51f5kYqPugCNPeu',
-  host: 'https://dev-update.firebaseapp.com'
+  host: 'https://dev-update.firebaseapp.com',
 };
 
 /*
