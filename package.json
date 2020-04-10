@@ -42,7 +42,6 @@
     "bcrypt": "^4.0.0",
     "core-js": "^3.2.1",
     "deep-object-diff": "^1.1.0",
-    "exif-js": "^2.3.0",
     "exifr": "^4.3.5",
     "firebase": "^6.6.0",
     "hammerjs": "^2.0.8",
