@@ -4,6 +4,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -55,6 +56,7 @@ import { NgAisModule } from 'angular-instantsearch';
     AngularFireMessagingModule,
     HttpClientModule,
     NgAisModule,
+    AngularFireAnalyticsModule,
     RecaptchaModule,
     MarkdownModule.forRoot({
       loader: HttpClient,
