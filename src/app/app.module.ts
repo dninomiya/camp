@@ -24,7 +24,11 @@ registerLocaleData(localeJa);
       enabled: environment.production,
     }),
   ],
-  providers: [LogUpdateService, { provide: LOCALE_ID, useValue: 'ja-JP' }],
+  providers: [
+    LogUpdateService,
+    { provide: LOCALE_ID, useValue: 'ja-JP' },
+    { provide: 'googleTagManagerId', useValue: 'GTM-TVXJ56C' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
