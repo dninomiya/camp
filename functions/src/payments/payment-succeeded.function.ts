@@ -13,13 +13,20 @@ export const paymentSucceeded = functions
       .get();
 
     if (payment.docs[0].ref.parent.parent && data.amount_paid > 0) {
+      const userId = payment.docs[0].ref.parent.parent.id;
+
       await addSettlement({
-        userId: payment.docs[0].ref.parent.parent.id,
+        userId,
         title: data.lines.data[0].plan.nickname + 'プラン決済',
         amount: data.amount_paid,
         currentPeriodStart: data.period_start,
         currentPeriodEnd: data.period_end,
-        pdf: data.invoice_pdf
+        pdf: data.invoice_pdf,
+      });
+
+      await db.doc(`users/${userId}`).update({
+        currentPeriodStart: data.period_start,
+        currentPeriodEnd: data.period_end,
       });
     }
 
