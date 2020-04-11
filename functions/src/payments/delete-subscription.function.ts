@@ -1,10 +1,11 @@
-import { config } from './../config';
 import * as functions from 'firebase-functions';
+import { config } from './../config';
 import { db, sendEmail } from '../utils';
 
 export const deleteSubscription = functions
   .region('asia-northeast1')
   .https.onRequest(async (req: any, res: any) => {
+    console.log(req.body.data.object);
     const data = req.body.data.object;
 
     const payment = await db
@@ -20,28 +21,27 @@ export const deleteSubscription = functions
         to: config.adminEmail,
         templateId: 'downgradeToAdmin',
         dynamicTemplateData: {
-          plan: 'free'
-        }
+          plan: 'free',
+        },
       });
 
       await sendEmail({
         to: user.email,
         templateId: 'changePlan',
         dynamicTemplateData: {
-          plan: 'free'
-        }
+          plan: 'free',
+        },
       });
 
       await db.doc(`users/${uid}`).update({
         plan: 'free',
         currentPeriodStart: null,
         currentPeriodEnd: null,
-        isCaneclSubscription: false
+        isCaneclSubscription: false,
       });
       await db.doc(`users/${uid}/payment`).update({
-        subscriptionId: null
+        subscriptionId: null,
       });
     }
-
-    res.send(true);
+    res.status(200).send(true);
   });
