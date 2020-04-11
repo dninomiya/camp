@@ -30,5 +30,5 @@ export const paymentSucceeded = functions
       });
     }
 
-    res.send(true);
+    res.status(200).send(true);
   });
