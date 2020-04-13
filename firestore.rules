@@ -5,6 +5,10 @@ service cloud.firestore {
       return request.auth.uid != null;
     }
 
+    function isAdmin() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true
+    }
+
     function isOwner(id) {
       return request.auth.uid == id;
     }
@@ -22,7 +26,7 @@ service cloud.firestore {
     }
 
     match /users/{uid} {
-      allow read: if isOwner(uid);
+      allow read: if isOwner(uid) || isAdmin();
       allow write: if safeId();
       match /{document=**} {
         allow read, write: if isOwner(uid);

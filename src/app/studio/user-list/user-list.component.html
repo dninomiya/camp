@@ -1,64 +1,95 @@
 <div class="container">
-  <ais-instantsearch [config]="algoliaConfig" class="list">
-    <app-search-lesson-input></app-search-lesson-input>
+  <div class="toolbar">
+    <mat-form-field>
+      <mat-label>プラン</mat-label>
+      <mat-select [formControl]="plan">
+        <mat-option>すべて</mat-option>
+        <mat-option [value]="'free'">フリー</mat-option>
+        <mat-option [value]="'customer'">カスタマー</mat-option>
+        <mat-option *ngFor="let plan of plans" [value]="plan.id">{{
+          plan.title
+        }}</mat-option>
+        <mat-option [value]="'isa'">ISA</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="counts">
+      <span *ngFor="let count of counts"
+        >{{ count.label }}: {{ count.count }}
+        <ng-container *ngIf="count.trial">({{ count.trial }})</ng-container>
+      </span>
+    </div>
+  </div>
+  <table
+    *ngIf="dataSource.data.length"
+    mat-table
+    matSort
+    [dataSource]="dataSource"
+    class="mat-elevation-z2"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>名前</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.name }}
+      </td>
+    </ng-container>
 
-    <ais-configure [searchParameters]="searchParameters"> </ais-configure>
-    <ais-hits [transformItems]="buildLists">
-      <ng-template let-hits="hits" let-results="results">
-        <table mat-table matSort [dataSource]="hits">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>名前</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.name }} - {{ element.email }}
-            </td>
-          </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>メール</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.email }}
+      </td>
+    </ng-container>
 
-          <ng-container matColumnDef="plan">
-            <th mat-header-cell *matHeaderCellDef>プラン</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.plan | plan }}
-            </td>
-          </ng-container>
+    <ng-container matColumnDef="plan">
+      <th mat-header-cell *matHeaderCellDef>プラン</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.plan | plan }}
+        <span *ngIf="element.isTrial">（トライアル）</span>
+        <span *ngIf="element.isCaneclSubscription">（キャンセル予定）</span>
+      </td>
+    </ng-container>
 
-          <ng-container matColumnDef="createdAt">
-            <th mat-header-cell *matHeaderCellDef>日付</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.createdAt | date: 'yyyy年MM月dd日' }}
-            </td>
-          </ng-container>
+    <ng-container matColumnDef="currentPeriodStart">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        開始
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button>
+          {{ element.currentPeriodStart * 1000 | date: 'yyyy年MM月dd日' }}
+        </button>
+      </td>
+    </ng-container>
 
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button [matMenuTriggerFor]="menuRef">
-                <mat-icon class="mat-18">more_vert</mat-icon>
-              </button>
+    <ng-container matColumnDef="currentPeriodEnd">
+      <th mat-header-cell *matHeaderCellDef>終了</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button>
+          {{
+            element.currentPeriodEnd
+              ? (element.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd日')
+              : '-'
+          }}
+        </button>
+      </td>
+    </ng-container>
 
-              <mat-menu #menuRef="matMenu">
-                <button mat-menu-item>
-                  <mat-icon class="mat-18">edit</mat-icon>
-                  <span>コメント</span>
-                </button>
-              </mat-menu>
-            </td>
-          </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>管理</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [matMenuTriggerFor]="menuRef">
+          <mat-icon class="mat-18">more_vert</mat-icon>
+        </button>
 
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns; sticky: true"
-          ></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+        <mat-menu #menuRef="matMenu" xPosition="before">
+          <button mat-menu-item>
+            <mat-icon class="mat-18">edit</mat-icon>
+            <span>コメント</span>
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
 
-        <!-- <mat-paginator
-          *ngIf="channel$ | async as channel"
-          [length]="channel.statistics.lessonCount"
-          [pageSize]="searchParameters.hitsPerPage"
-          [pageSizeOptions]="[10, 30, 50]"
-          showFirstLastButtons
-          (page)="changePager($event)"
-        ></mat-paginator> -->
-      </ng-template>
-    </ais-hits>
-  </ais-instantsearch>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 </div>

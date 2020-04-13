@@ -8,7 +8,7 @@ const stripe = require('stripe')(functions.config().stripe.key);
 const PLAN_LABELS = {
   lite: 'ライト',
   solo: 'ソロ',
-  mentor: 'メンター'
+  mentor: 'メンター',
 };
 
 export const subscribePlan = functions.region('asia-northeast1').https.onCall(
@@ -32,7 +32,7 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
     if (data.subscriptionId) {
       console.log('プラン変更: ' + data.subscriptionId);
       subscription = await stripe.subscriptions.update(data.subscriptionId, {
-        plan: planId
+        plan: planId,
       });
     } else {
       const ukey = moment().format('YYYY-MM-DD-HH') + '-' + userId;
@@ -42,10 +42,10 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
           customer: data.customerId,
           default_tax_rates: [functions.config().stripe.tax],
           trial_period_days: data.trialUsed ? 0 : 7,
-          items: [{ plan: planId }]
+          items: [{ plan: planId }],
         },
         {
-          idempotency_key: ukey
+          idempotency_key: ukey,
         }
       );
     }
@@ -53,9 +53,10 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
     await db.doc(`users/${userId}`).update({
       plan: data.planId,
       trialUsed: true,
+      isTrial: !data.trialUsed,
       isCaneclSubscription: false,
       currentPeriodStart: subscription.current_period_start,
-      currentPeriodEnd: subscription.current_period_end
+      currentPeriodEnd: subscription.current_period_end,
     });
 
     const user = (await db.doc(`users/${userId}`).get()).data() as any;
@@ -66,21 +67,21 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
       dynamicTemplateData: {
         email: user.email,
         name: user.name,
-        plan: PLAN_LABELS[data.planId]
-      }
+        plan: PLAN_LABELS[data.planId],
+      },
     });
 
     await sendEmail({
       to: user.email,
       templateId: 'changePlan',
       dynamicTemplateData: {
-        plan: PLAN_LABELS[data.planId]
-      }
+        plan: PLAN_LABELS[data.planId],
+      },
     });
 
     await db.doc(`users/${userId}/private/payment/`).update({
       subscriptionId: subscription.id,
-      startedAt: new Date()
+      startedAt: new Date(),
     });
   }
 );

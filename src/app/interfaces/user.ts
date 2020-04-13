@@ -7,19 +7,16 @@ export interface User {
   readonly email: string;
   readonly avatarURL: string;
   readonly createdAt: firestore.Timestamp;
-  readonly isCustomer: boolean;
-  readonly isSeller: boolean;
   readonly admin: boolean;
   readonly plan: PlanID;
-  readonly endAt: firestore.Timestamp;
-  readonly payLimitDate?: firestore.Timestamp;
   readonly trialUsed: boolean;
   readonly currentPeriodStart?: number;
   readonly currentPeriodEnd?: number;
   readonly isCaneclSubscription?: boolean;
+  readonly isTrial?: boolean;
   readonly isa?: {
     start: number;
-    end: number;
+    end?: number;
   };
 
   mailSettings: {

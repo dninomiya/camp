@@ -29,6 +29,7 @@ export const paymentSucceeded = functions
       });
 
       await db.doc(`users/${userId}`).update({
+        isTrial: false,
         currentPeriodStart: period.start,
         currentPeriodEnd: period.end,
       });

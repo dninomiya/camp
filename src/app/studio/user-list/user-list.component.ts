@@ -1,85 +1,83 @@
+import { firestore } from 'firebase/app';
+import { combineLatest } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { User } from './../../interfaces/user';
+import { Plan } from './../../interfaces/plan';
+import { PlanService } from './../../services/plan.service';
 import { UserService } from 'src/app/services/user.service';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { switchMap, tap, take, map, shareReplay } from 'rxjs/operators';
-import { LessonMeta } from 'src/app/interfaces/lesson';
-import { AuthService } from 'src/app/services/auth.service';
-import { ChannelService } from 'src/app/services/channel.service';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { LessonList } from 'src/app/interfaces/lesson-list';
-import { ListService } from 'src/app/services/list.service';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  algoliaConfig = {
-    ...environment.algolia,
-    indexName: 'users'
-  };
-  searchParameters = {
-    hitsPerPage: 10,
-    page: 0,
-    filters: `(authorId:${this.authService.user.id}) AND NOT deleted:true`
-  };
-  causes$: Observable<LessonList[]> = this.route.parent.params.pipe(
-    switchMap(({ id }) => {
-      return this.listService.getLists(id).pipe(take(1));
-    }),
-    shareReplay(1)
-  );
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+  plan = new FormControl('customer');
   users$ = this.userService.getUsers();
-  displayedColumns: string[] = ['name', 'plan', 'createdAt', 'action'];
-  dataSource: LessonMeta[];
+  displayedColumns: string[] = [
+    'name',
+    'email',
+    'plan',
+    'currentPeriodStart',
+    'currentPeriodEnd',
+    'action',
+  ];
+  plans: Plan[] = this.planService.plans;
+  dataSource: MatTableDataSource<User> = new MatTableDataSource();
+  counts: { label: string; count: number; trial?: number }[] = [];
 
   constructor(
-    private route: ActivatedRoute,
     private userService: UserService,
-    private authService: AuthService,
-    private channelService: ChannelService,
-    private paginator: MatPaginatorIntl,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private listService: ListService
-  ) {
-    this.paginator.itemsPerPageLabel = '1 ページあたりの行数';
-    this.paginator.nextPageLabel = '次のページへ';
-    this.paginator.previousPageLabel = '次のページへ';
-    this.paginator.lastPageLabel = '最後のページへ';
-    this.paginator.firstPageLabel = '先頭のページへ';
-    this.paginator.getRangeLabel = (
-      page: number,
-      pageSize: number,
-      length: number
-    ) => {
-      if (length === 0 || pageSize === 0) {
-        return `0 of ${length}`;
+    private planService: PlanService
+  ) {}
+
+  ngOnInit() {
+    this.users$.subscribe((users) => {
+      this.counts = [];
+      this.counts.push({
+        label: 'すべて',
+        count: users.length,
+      });
+      let customer = 0;
+      this.plans.concat().forEach((plan) => {
+        const hits = users.filter((user) => user.plan === plan.id);
+        const count = hits ? hits.length : 0;
+        this.counts.push({
+          label: plan.title,
+          count: hits?.length,
+          trial: hits?.filter((hit) => hit.isTrial).length,
+        });
+        customer += count;
+      });
+      this.counts.push({
+        label: 'ISA',
+        count: users.filter((user) => user.plan === 'isa')?.length,
+      });
+      this.counts.push({
+        label: 'カスタマー',
+        count: customer,
+      });
+    });
+
+    combineLatest([this.users$, this.plan.valueChanges]).subscribe(
+      ([users, plan]) => {
+        const rows = users.filter((user) => {
+          if (plan === 'customer') {
+            return user.plan && !user.plan.match(/free|admin/);
+          }
+          return plan ? (user.plan || 'free') === plan : true;
+        });
+        this.dataSource.data = rows;
+        setTimeout(() => {
+          this.dataSource.sort = this.sort;
+        }, 1000);
       }
-      length = Math.max(length, 0);
-      const startIndex = page * pageSize;
-      const endIndex =
-        startIndex < length
-          ? Math.min(startIndex + pageSize, length)
-          : startIndex + pageSize;
-      return `${startIndex + 1}～${endIndex} / 合計 ${length}`;
-    };
-  }
-
-  ngOnInit() {}
-
-  changePager(event) {
-    this.searchParameters.page = event.pageIndex;
-    this.searchParameters.hitsPerPage = event.pageSize;
-  }
-
-  buildLists(data) {
-    this.dataSource = [null];
-    return data;
+    );
+    this.plan.patchValue('customer');
   }
 }

@@ -20,6 +20,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { SearchLessonInputComponent } from './search-lesson-input/search-lesson-input.component';
 import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { UserListComponent } from './user-list/user-list.component';
   imports: [
     SharedModule,
     StudioRoutingModule,
+    MatSortModule,
     MatSidenavModule,
     NgxPicaModule,
     ShellModule,
@@ -45,13 +47,13 @@ import { UserListComponent } from './user-list/user-list.component';
     MatDialogModule,
     DragDropModule,
     NgAisModule,
-    ImageCropperModule
+    ImageCropperModule,
   ],
   entryComponents: [
     ListDeleteDialogComponent,
     ConfirmDisconnectStripeDialogComponent,
     MultipleLessonEditDialogComponent,
-    ImageDialogComponent
-  ]
+    ImageDialogComponent,
+  ],
 })
-export class StudioModule { }
+export class StudioModule {}
