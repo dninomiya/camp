@@ -25,16 +25,12 @@ export const createPlatformCustomer = functions
       );
       const customer = await stripe.customers.create({
         ...data,
-        coupon: coupon && coupon.valid ? coupon.id : null
-      });
-
-      await db.doc(`users/${context.auth.uid}`).update({
-        isCustomer: true
+        coupon: coupon && coupon.valid ? coupon.id : null,
       });
 
       return db.doc(`users/${context.auth.uid}/private/payment`).set(
         {
-          customerId: customer.id
+          customerId: customer.id,
         },
         { merge: true }
       );

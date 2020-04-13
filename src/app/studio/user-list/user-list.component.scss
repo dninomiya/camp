@@ -1,0 +1,17 @@
+.toolbar {
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.counts {
+  span {
+    margin-left: 16px;
+  }
+}
+
+table {
+  width: 100%;
+  margin-bottom: 24px;
+}
