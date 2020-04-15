@@ -27,7 +27,6 @@ import { SafePipeModule } from 'safe-pipe';
 import { DaysPipe } from './days.pipe';
 import { FromNowPipe } from './pipes/from-now.pipe';
 import { AutofocusDirective } from './autofocus.directive';
-import { CardFormComponent } from '../setting/card-form/card-form.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { GridLessonItemComponent } from './grid-lesson-item/grid-lesson-item.component';
 import { RouterModule } from '@angular/router';
@@ -57,7 +56,6 @@ import { PlanPipe } from './plan.pipe';
     FromNowPipe,
     DaysPipe,
     AutofocusDirective,
-    CardFormComponent,
     GridLessonItemComponent,
     WideLessonItemComponent,
     VimeoComponent,
@@ -74,7 +72,7 @@ import { PlanPipe } from './plan.pipe';
     SearchKitComponent,
     RefinementListComponent,
     RatePipe,
-    PlanPipe
+    PlanPipe,
   ],
   imports: [
     CommonModule,
@@ -96,7 +94,7 @@ import { PlanPipe } from './plan.pipe';
     HttpClientModule,
     MatMenuModule,
     HttpClientJsonpModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   exports: [
     CommonModule,
@@ -132,7 +130,6 @@ import { PlanPipe } from './plan.pipe';
     FromNowPipe,
     DaysPipe,
     AutofocusDirective,
-    CardFormComponent,
     ClipboardModule,
     GridLessonItemComponent,
     WideLessonItemComponent,
@@ -153,7 +150,7 @@ import { PlanPipe } from './plan.pipe';
     SearchKitComponent,
     RefinementListComponent,
     RatePipe,
-    PlanPipe
-  ]
+    PlanPipe,
+  ],
 })
 export class SharedModule {}
