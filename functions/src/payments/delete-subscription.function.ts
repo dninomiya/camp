@@ -17,6 +17,17 @@ export const deleteSubscription = functions
       const uid = payment.docs[0].ref.parent.parent.id;
       const user: any = (await db.doc(`users/${uid}`).get()).data();
 
+      await db.doc(`users/${uid}`).update({
+        plan: 'free',
+        currentPeriodStart: null,
+        currentPeriodEnd: null,
+        isCaneclSubscription: false,
+      });
+
+      await db.doc(`users/${uid}/payment`).update({
+        subscriptionId: null,
+      });
+
       await sendEmail({
         to: config.adminEmail,
         templateId: 'downgradeToAdmin',
@@ -31,16 +42,6 @@ export const deleteSubscription = functions
         dynamicTemplateData: {
           plan: 'free',
         },
-      });
-
-      await db.doc(`users/${uid}`).update({
-        plan: 'free',
-        currentPeriodStart: null,
-        currentPeriodEnd: null,
-        isCaneclSubscription: false,
-      });
-      await db.doc(`users/${uid}/payment`).update({
-        subscriptionId: null,
       });
     }
     res.status(200).send(true);
