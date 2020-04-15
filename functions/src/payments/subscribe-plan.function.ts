@@ -81,7 +81,6 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
 
     await db.doc(`users/${userId}/private/payment/`).update({
       subscriptionId: subscription.id,
-      startedAt: new Date(),
     });
   }
 );
