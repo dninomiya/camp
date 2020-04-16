@@ -5,8 +5,8 @@ import { db, sendEmail } from '../utils';
 export const deleteSubscription = functions
   .region('asia-northeast1')
   .https.onRequest(async (req: any, res: any) => {
-    console.log(req.body.data.object);
     const data = req.body.data.object;
+    console.log(data);
 
     const payment = await db
       .collectionGroup('private')

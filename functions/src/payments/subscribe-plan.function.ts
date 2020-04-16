@@ -21,6 +21,7 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
     },
     context
   ) => {
+    console.log(data);
     if (!context.auth) {
       throw new Error('認証エラー');
     }

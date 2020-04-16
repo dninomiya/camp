@@ -17,20 +17,11 @@ export class PaymentService {
     private fns: AngularFireFunctions
   ) {}
 
-  setCard(uid: string, card: any): Promise<void> {
-    const { address_zip, exp_month, exp_year, last4, brand, id } = card;
-    return this.db.doc(`users/${uid}/private/payment`).set(
-      {
-        card: { address_zip, exp_month, exp_year, last4, brand, id },
-      },
-      { merge: true }
-    );
-  }
-
   createCustomer(params: {
     source: string;
     email: string;
     description: string;
+    card: any;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('createPlatformCustomer');
     return callable(params).toPromise();
@@ -40,6 +31,7 @@ export class PaymentService {
     customerId: string;
     source: string;
     description: string;
+    card: any;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('updatePlatformCustomer');
     return callable(params).toPromise();
