@@ -62,6 +62,10 @@ export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
       return;
     }
 
+    await stripe.subscriptions.update(userPayment.subscriptionId, {
+      cancel_at_period_end: true,
+    });
+
     const user = (await db.doc(`users/${data.userId}`).get()).data() as any;
     const plan = user.plan as 'lite' | 'solo' | 'mentor';
 
@@ -89,10 +93,6 @@ export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
         reasons,
         reasonDetail: data.reason.detail || 'なし',
       },
-    });
-
-    await stripe.subscriptions.update(userPayment.subscriptionId, {
-      cancel_at_period_end: true,
     });
 
     return db.doc(`users/${data.userId}`).update({
