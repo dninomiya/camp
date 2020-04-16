@@ -58,7 +58,7 @@ export class PaymentService {
     reason: any;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('unsubscribePlan');
-    await callable(body);
+    return callable(body).toPromise();
   }
 
   getUserPayment(uid: string): Observable<UserPayment> {
