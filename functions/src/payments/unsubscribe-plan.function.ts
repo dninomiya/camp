@@ -8,34 +8,34 @@ const stripe = require('stripe')(functions.config().stripe.key);
 const REASONS = [
   {
     type: 'goal',
-    label: '目標達成した'
+    label: '目標達成した',
   },
   {
     type: 'quality',
-    label: 'クオリティが低い'
+    label: 'クオリティが低い',
   },
   {
     type: 'volume',
-    label: 'コンテンツが少ない'
+    label: 'コンテンツが少ない',
   },
   {
     type: 'cost',
-    label: '料金が高い'
+    label: '料金が高い',
   },
   {
     type: 'reply',
-    label: '返信、反応がない、遅い'
+    label: '返信、反応がない、遅い',
   },
   {
     type: 'other',
-    label: 'その他'
-  }
+    label: 'その他',
+  },
 ];
 
 const PLAN_LABELS = {
   lite: 'ライト',
   solo: 'ソロ',
-  mentor: 'メンター'
+  mentor: 'メンター',
 };
 
 export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
@@ -50,6 +50,7 @@ export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
     },
     context
   ) => {
+    console.log(data);
     if (!context.auth) {
       throw new Error('認証エラー');
     }
@@ -61,19 +62,23 @@ export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
       return;
     }
 
+    await stripe.subscriptions.update(userPayment.subscriptionId, {
+      cancel_at_period_end: true,
+    });
+
     const user = (await db.doc(`users/${data.userId}`).get()).data() as any;
     const plan = user.plan as 'lite' | 'solo' | 'mentor';
 
     const reasons = data.reason.types
       .map((type: string) => {
-        const item = REASONS.find(reason => reason.type === type);
+        const item = REASONS.find((reason) => reason.type === type);
         if (item) {
           return item.label;
         } else {
           return null;
         }
       })
-      .filter(label => !!label)
+      .filter((label) => !!label)
       .join(' / ');
 
     await db.collection(`unsubscribeReasons`).add(data);
@@ -86,16 +91,12 @@ export const unsubscribePlan = functions.region('asia-northeast1').https.onCall(
         name: user.name,
         plan: PLAN_LABELS[plan],
         reasons,
-        reasonDetail: data.reason.detail || 'なし'
-      }
-    });
-
-    await stripe.subscriptions.update(userPayment.subscriptionId, {
-      cancel_at_period_end: true
+        reasonDetail: data.reason.detail || 'なし',
+      },
     });
 
     return db.doc(`users/${data.userId}`).update({
-      isCaneclSubscription: true
+      isCaneclSubscription: true,
     });
   }
 );

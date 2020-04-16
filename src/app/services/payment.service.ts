@@ -9,7 +9,7 @@ import { Settlement } from '../interfaces/settlement';
 import { ChannelMeta } from '../interfaces/channel';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PaymentService {
   constructor(
@@ -17,20 +17,11 @@ export class PaymentService {
     private fns: AngularFireFunctions
   ) {}
 
-  setCard(uid: string, card: any): Promise<void> {
-    const { address_zip, exp_month, exp_year, last4, brand, id } = card;
-    return this.db.doc(`users/${uid}/private/payment`).set(
-      {
-        card: { address_zip, exp_month, exp_year, last4, brand, id }
-      },
-      { merge: true }
-    );
-  }
-
   createCustomer(params: {
     source: string;
     email: string;
     description: string;
+    card: any;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('createPlatformCustomer');
     return callable(params).toPromise();
@@ -40,6 +31,7 @@ export class PaymentService {
     customerId: string;
     source: string;
     description: string;
+    card: any;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('updatePlatformCustomer');
     return callable(params).toPromise();
@@ -58,11 +50,6 @@ export class PaymentService {
   }): Promise<void> {
     const callable = this.fns.httpsCallable('subscribePlan');
     return callable(data).toPromise();
-  }
-
-  deleteSubscription(customerId: string) {
-    const callable = this.fns.httpsCallable('deleteSubscription');
-    return callable({ customerId }).toPromise();
   }
 
   async unsubscribePlan(body: {
@@ -85,7 +72,7 @@ export class PaymentService {
       .doc<UserConnect>(`users/${uid}/private/connect`)
       .valueChanges()
       .pipe(
-        map(connect => {
+        map((connect) => {
           if (connect) {
             return connect.stripeUserId;
           } else {
@@ -107,7 +94,7 @@ export class PaymentService {
     const callable = this.fns.httpsCallable('checkThreadPaymentStatus');
     return callable({
       customerId,
-      sellerId
+      sellerId,
     });
   }
 
@@ -116,7 +103,7 @@ export class PaymentService {
       .doc<UserConnect>(`users/${uid}/private/connect`)
       .valueChanges()
       .pipe(
-        map(connect => {
+        map((connect) => {
           if (connect) {
             return connect.stripeUserId;
           } else {
@@ -158,14 +145,14 @@ export class PaymentService {
       .doc<UserSubscription>(`users/${uid}/settlements/${contentId}`)
       .valueChanges()
       .pipe(
-        map(purchased => !!purchased),
+        map((purchased) => !!purchased),
         take(1)
       );
   }
 
   getSettlements(uid: string): Observable<Settlement[]> {
     return this.db
-      .collection<Settlement>(`users/${uid}/settlements`, ref => {
+      .collection<Settlement>(`users/${uid}/settlements`, (ref) => {
         return ref.orderBy('createdAt', 'desc');
       })
       .valueChanges();

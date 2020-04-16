@@ -5,8 +5,8 @@ import { db, sendEmail } from '../utils';
 export const deleteSubscription = functions
   .region('asia-northeast1')
   .https.onRequest(async (req: any, res: any) => {
-    console.log(req.body.data.object);
     const data = req.body.data.object;
+    console.log(data);
 
     const payment = await db
       .collectionGroup('private')
@@ -16,6 +16,17 @@ export const deleteSubscription = functions
     if (payment.docs[0].ref.parent.parent) {
       const uid = payment.docs[0].ref.parent.parent.id;
       const user: any = (await db.doc(`users/${uid}`).get()).data();
+
+      await db.doc(`users/${uid}`).update({
+        plan: 'free',
+        currentPeriodStart: null,
+        currentPeriodEnd: null,
+        isCaneclSubscription: false,
+      });
+
+      await db.doc(`users/${uid}/payment`).update({
+        subscriptionId: null,
+      });
 
       await sendEmail({
         to: config.adminEmail,
@@ -31,16 +42,6 @@ export const deleteSubscription = functions
         dynamicTemplateData: {
           plan: 'free',
         },
-      });
-
-      await db.doc(`users/${uid}`).update({
-        plan: 'free',
-        currentPeriodStart: null,
-        currentPeriodEnd: null,
-        isCaneclSubscription: false,
-      });
-      await db.doc(`users/${uid}/payment`).update({
-        subscriptionId: null,
       });
     }
     res.status(200).send(true);
