@@ -7,40 +7,40 @@ import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-confirm-unsubscribe-dialog',
   templateUrl: './confirm-unsubscribe-dialog.component.html',
-  styleUrls: ['./confirm-unsubscribe-dialog.component.scss']
+  styleUrls: ['./confirm-unsubscribe-dialog.component.scss'],
 })
 export class ConfirmUnsubscribeDialogComponent implements OnInit {
   isLoading: boolean;
   form = this.fb.group({
     types: ['', Validators.required],
-    detail: ['']
+    detail: [''],
   });
 
   reasonsTypes = [
     {
       value: 'goal',
-      label: '目標達成した'
+      label: '目標達成した',
     },
     {
       value: 'quality',
-      label: 'クオリティが低い'
+      label: 'クオリティが低い',
     },
     {
       value: 'volume',
-      label: 'コンテンツが少ない'
+      label: 'コンテンツが少ない',
     },
     {
       value: 'cost',
-      label: '料金が高い'
+      label: '料金が高い',
     },
     {
       value: 'reply',
-      label: '返信、反応がない、遅い'
+      label: '返信、反応がない、遅い',
     },
     {
       value: 'other',
-      label: 'その他'
-    }
+      label: 'その他',
+    },
   ];
 
   constructor(
@@ -62,11 +62,11 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
     const body = {
       userId: this.data.uid,
       planId: this.data.planId,
-      reason: this.form.value
+      reason: this.form.value,
     };
     this.paymentService.unsubscribePlan(body).then(() => {
       this.snackBar.open('解約しました', null, {
-        duration: 2000
+        duration: 2000,
       });
       this.dialogRef.close(true);
     });
