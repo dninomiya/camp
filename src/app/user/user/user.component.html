@@ -29,14 +29,22 @@
               user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd日'
             }}にフリープランになります
           </p>
-          <button
-            *ngIf="!canceled; else canceledArea"
-            (click)="openUnsubscribeDialog(user)"
-            mat-stroked-button
-            [disabled]="cancellationInProgress"
-          >
-            更新停止
-          </button>
+          <ng-container *ngIf="!canceled; else canceledArea">
+            <button
+              (click)="openUnsubscribeDialog(user)"
+              mat-stroked-button
+              [disabled]="cancellationInProgress"
+            >
+              更新停止
+            </button>
+            <p>
+              退会が成功すると退会完了メールが届きます。届かない場合<a
+                href="mailto:daichi.ninomiya@deer.co.jp"
+                target="_blank"
+                >お問い合わせ</a
+              >ください。
+            </p>
+          </ng-container>
 
           <ng-template #canceledArea>
             <p>
