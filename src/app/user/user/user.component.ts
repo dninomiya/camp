@@ -18,12 +18,12 @@ import * as moment from 'moment';
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
-  providers: [PlanPipe]
+  providers: [PlanPipe],
 })
 export class UserComponent implements OnInit {
   user$: Observable<User> = this.userService
     .getUser(this.authService.user.id)
-    .pipe(tap(user => (this.canceled = user.isCaneclSubscription)));
+    .pipe(tap((user) => (this.canceled = user.isCaneclSubscription)));
 
   loading: boolean;
   canceled: boolean;
@@ -43,7 +43,7 @@ export class UserComponent implements OnInit {
     this.paymentService
       .getUserPayment(this.authService.user.id)
       .subscribe(
-        customer => (this.customerId = customer && customer.customerId)
+        (customer) => (this.customerId = customer && customer.customerId)
       );
   }
 
@@ -62,16 +62,12 @@ export class UserComponent implements OnInit {
   }
 
   getLimitDate(from: Date): Date {
-    return moment(from)
-      .add(4, 'years')
-      .toDate();
+    return moment(from).add(4, 'years').toDate();
   }
 
   getPayLimit(end: number) {
     console.log(end);
-    return moment(end)
-      .add(5, 'years')
-      .toDate();
+    return moment(end).add(5, 'years').toDate();
   }
 
   openUnsubscribeDialog(user: User) {
@@ -89,21 +85,21 @@ export class UserComponent implements OnInit {
             ) +
             '以降フリープランになります。それまでは引き続き' +
             this.planPipe.transform(user.plan) +
-            'プランをご利用いただけます。'
-        }
+            'プランをご利用いただけます。',
+        },
       })
       .afterClosed()
-      .subscribe(status => {
+      .subscribe((status) => {
         if (status) {
           this.dialog
             .open(ConfirmUnsubscribeDialogComponent, {
               data: {
                 uid: user.id,
-                planId: user.plan
-              }
+                planId: user.plan,
+              },
             })
             .afterClosed()
-            .subscribe(unsubStatus => {
+            .subscribe((unsubStatus) => {
               if (!unsubStatus) {
                 this.cancellationInProgress = false;
               }
