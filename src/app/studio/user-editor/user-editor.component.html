@@ -1,0 +1,60 @@
+<h1 matDialogTitle>{{ user.name }} - {{ user.email }}</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>プラン</mat-label>
+      <mat-select formControlName="plan">
+        <mat-option value="free">フリー</mat-option>
+        <mat-option *ngFor="let plan of plans" [value]="plan.id">
+          {{ plan.title }}
+        </mat-option>
+        <mat-option value="isa">ISA</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>トライアル中</mat-label>
+      <mat-select formControlName="isTrial">
+        <mat-option [value]="true">true</mat-option>
+        <mat-option [value]="false">false</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>トライアル使用済み</mat-label>
+      <mat-select formControlName="trialUsed">
+        <mat-option [value]="true">true</mat-option>
+        <mat-option [value]="false">false</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>有料期間スタート</mat-label>
+      <input type="text" formControlName="currentPeriodStart" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>有料期間終了</mat-label>
+      <input type="text" formControlName="currentPeriodEnd" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>キャンセル予定</mat-label>
+      <mat-select formControlName="isCaneclSubscription">
+        <mat-option [value]="true">true</mat-option>
+        <mat-option [value]="false">false</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div formGroupName="isa">
+      <mat-form-field>
+        <mat-label>ISAスタート</mat-label>
+        <input type="text" formControlName="start" matInput />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>ISA終了</mat-label>
+        <input type="text" formControlName="end" matInput />
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button mat-button>保存</button>
+</mat-dialog-actions>

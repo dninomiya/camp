@@ -81,9 +81,9 @@
         </button>
 
         <mat-menu #menuRef="matMenu" xPosition="before">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="openEditor(element)">
             <mat-icon class="mat-18">edit</mat-icon>
-            <span>コメント</span>
+            <span>編集</span>
           </button>
         </mat-menu>
       </td>
