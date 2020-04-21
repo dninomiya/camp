@@ -57,7 +57,7 @@ export function markedOptionsFactory(): MarkedOptions {
   };
   renderer.image = (href: string, title: string, text: string) => {
     const caption = title ? `<figcaption>${title}</figcaption>` : '';
-    return `<figure><img src="${href}">${caption}</figure>`;
+    return `<figure><a href="${href}" target="_blank"><img src="${href}"></a>${caption}</figure>`;
   };
   renderer.code = (t: string, l: string) => {
     let lang = l;
