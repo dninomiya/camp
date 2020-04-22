@@ -32,14 +32,14 @@
         type="text"
         formControlName="currentPeriodStart"
         matInput
-        [matDatepicker]="startPicker"
+        [matDatepicker]="currentPeriodStartPicker"
         autocomplete="off"
       />
       <mat-datepicker-toggle
         matSuffix
-        [for]="startPicker"
+        [for]="currentPeriodStartPicker"
       ></mat-datepicker-toggle>
-      <mat-datepicker #startPicker></mat-datepicker>
+      <mat-datepicker #currentPeriodStartPicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
       <mat-label>有料期間終了</mat-label>
@@ -47,14 +47,14 @@
         type="text"
         formControlName="currentPeriodEnd"
         matInput
-        [matDatepicker]="endPicker"
+        [matDatepicker]="currentPeriodEndPicker"
         autocomplete="off"
       />
       <mat-datepicker-toggle
         matSuffix
-        [for]="endPicker"
+        [for]="currentPeriodEndPicker"
       ></mat-datepicker-toggle>
-      <mat-datepicker #endPicker></mat-datepicker>
+      <mat-datepicker #currentPeriodEndPicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
       <mat-label>キャンセル予定</mat-label>
@@ -66,11 +66,33 @@
     <div formGroupName="isa">
       <mat-form-field>
         <mat-label>ISAスタート</mat-label>
-        <input type="text" formControlName="start" matInput />
+        <input
+          type="text"
+          autocomplete="off"
+          formControlName="start"
+          matInput
+          [matDatepicker]="startPicker"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
         <mat-label>ISA終了</mat-label>
-        <input type="text" formControlName="end" matInput />
+        <input
+          type="text"
+          formControlName="end"
+          matInput
+          autocomplete="off"
+          [matDatepicker]="endPicker"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
     </div>
   </form>

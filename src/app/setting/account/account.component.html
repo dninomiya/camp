@@ -68,33 +68,29 @@
         </ng-template>
       </ng-container>
     </section>
-
-    <div class="section">
-      <h2>退会</h2>
-
-      <ul>
-        <li>退会すると利用データが完全に削除され、復元できません。</li>
-        <li>退会するとすべての定期購入が停止します。</li>
-      </ul>
-
-      <mat-form-field class="input">
-        <mat-label>ユーザー名を入力</mat-label>
-        <input
-          type="text"
-          matInput
-          [formControl]="uidInput"
-          required
-          autocomplete="off"
-        />
-        <mat-hint>{{ user.name }}</mat-hint>
-      </mat-form-field>
-      <button
-        mat-button
-        [disabled]="uidInput.invalid"
-        (click)="deleteAccount()"
-      >
-        退会
-      </button>
-    </div>
   </ng-container>
+
+  <div class="section">
+    <h2>退会</h2>
+
+    <ul>
+      <li>退会すると利用データが完全に削除され、復元できません。</li>
+      <li>退会するとすべての定期購入が停止します。</li>
+    </ul>
+
+    <mat-form-field class="input">
+      <mat-label>ユーザー名を入力</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="uidInput"
+        required
+        autocomplete="off"
+      />
+      <mat-hint>{{ user.name }}</mat-hint>
+    </mat-form-field>
+    <button mat-button [disabled]="uidInput.invalid" (click)="deleteAccount()">
+      退会
+    </button>
+  </div>
 </ng-container>
