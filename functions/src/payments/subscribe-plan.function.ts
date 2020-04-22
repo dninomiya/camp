@@ -1,3 +1,4 @@
+import { toTimeStamp } from './../utils/db';
 import { sendEmail } from './../utils/sendgrid';
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
@@ -56,8 +57,8 @@ export const subscribePlan = functions.region('asia-northeast1').https.onCall(
       trialUsed: true,
       isTrial: !data.trialUsed,
       isCaneclSubscription: false,
-      currentPeriodStart: subscription.current_period_start,
-      currentPeriodEnd: subscription.current_period_end,
+      currentPeriodStart: toTimeStamp(subscription.current_period_start),
+      currentPeriodEnd: toTimeStamp(subscription.current_period_end),
     });
 
     const user = (await db.doc(`users/${userId}`).get()).data() as any;

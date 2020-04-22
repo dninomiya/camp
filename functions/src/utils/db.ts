@@ -18,6 +18,10 @@ export const deleteAll = async (path: string): Promise<boolean> => {
     project: process.env.GCLOUD_PROJECT,
     recursive: true,
     yes: true,
-    token: functions.config().fb.token
+    token: functions.config().fb.token,
   });
+};
+
+export const toTimeStamp = (sec: number) => {
+  return TimeStamp.fromMillis(sec * 1000);
 };

@@ -23,6 +23,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { MatSortModule } from '@angular/material/sort';
 import { UserEditorComponent } from './user-editor/user-editor.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     DragDropModule,
     NgAisModule,
     ImageCropperModule,
+    MatNativeDateModule,
   ],
   entryComponents: [
     ListDeleteDialogComponent,

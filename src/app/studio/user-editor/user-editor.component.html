@@ -28,11 +28,33 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>有料期間スタート</mat-label>
-      <input type="text" formControlName="currentPeriodStart" matInput />
+      <input
+        type="text"
+        formControlName="currentPeriodStart"
+        matInput
+        [matDatepicker]="startPicker"
+        autocomplete="off"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="startPicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
       <mat-label>有料期間終了</mat-label>
-      <input type="text" formControlName="currentPeriodEnd" matInput />
+      <input
+        type="text"
+        formControlName="currentPeriodEnd"
+        matInput
+        [matDatepicker]="endPicker"
+        autocomplete="off"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="endPicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
       <mat-label>キャンセル予定</mat-label>
@@ -56,5 +78,12 @@
 
 <mat-dialog-actions>
   <button mat-button matDialogClose>キャンセル</button>
-  <button mat-button>保存</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="updateUser()"
+    [disabled]="form.invalid || form.pristine"
+  >
+    保存
+  </button>
 </mat-dialog-actions>

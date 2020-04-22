@@ -10,13 +10,13 @@ export interface User {
   readonly admin: boolean;
   readonly plan: PlanID;
   readonly trialUsed: boolean;
-  readonly currentPeriodStart?: number;
-  readonly currentPeriodEnd?: number;
+  readonly currentPeriodStart?: firestore.Timestamp;
+  readonly currentPeriodEnd?: firestore.Timestamp;
   readonly isCaneclSubscription?: boolean;
   readonly isTrial?: boolean;
   readonly isa?: {
-    start: number;
-    end?: number;
+    start: firestore.Timestamp;
+    end?: firestore.Timestamp;
   };
 
   mailSettings: {

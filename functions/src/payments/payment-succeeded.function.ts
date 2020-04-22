@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import { addSettlement } from './../utils/add-settlements';
-import { db } from './../utils/db';
+import { db, toTimeStamp } from './../utils/db';
 
 export const paymentSucceeded = functions
   .region('asia-northeast1')
@@ -23,15 +23,15 @@ export const paymentSucceeded = functions
         userId,
         title: data.lines.data[0].plan.nickname + 'プラン決済',
         amount: data.amount_paid,
-        currentPeriodStart: period.start,
-        currentPeriodEnd: period.end,
+        currentPeriodStart: toTimeStamp(period.start),
+        currentPeriodEnd: toTimeStamp(period.end),
         pdf: data.invoice_pdf,
       });
 
       await db.doc(`users/${userId}`).update({
         isTrial: false,
-        currentPeriodStart: period.start,
-        currentPeriodEnd: period.end,
+        currentPeriodStart: toTimeStamp(period.start),
+        currentPeriodEnd: toTimeStamp(period.end),
       });
     }
 

@@ -29,7 +29,7 @@ service cloud.firestore {
       allow read: if isOwner(uid) || isAdmin();
       allow write: if safeId();
       match /{document=**} {
-        allow read, write: if isOwner(uid);
+        allow read, write: if isOwner(uid) || isAdmin();
       }
     }
 

@@ -20,7 +20,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class UserListComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  plan = new FormControl('customer');
+  plan = new FormControl('plan');
   users$ = this.userService.getUsers();
   displayedColumns: string[] = [
     'name',
@@ -94,7 +94,9 @@ export class UserListComponent implements OnInit {
       .afterClosed()
       .subscribe((status) => {
         if (status) {
-          this.snackBar.open('作成しました', null);
+          this.snackBar.open('更新しました', null, {
+            duration: 2000,
+          });
         }
       });
   }

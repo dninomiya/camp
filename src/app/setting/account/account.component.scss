@@ -2,11 +2,23 @@ p {
   margin-bottom: 16px;
 }
 
-.mail-form {
-  &__item {
-    padding: 8px 0;
+a {
+  color: #1976d2;
+}
+
+.plan {
+  a {
+    margin-left: 16px;
+    font-size: 12px;
   }
-  button {
-    margin-top: 24px;
-  }
+}
+
+.period {
+  color: rgba(black, 0.6);
+}
+
+h2 {
+  font-weight: 500;
+  font-size: 16px;
+  margin: 48px 0 24px;
 }

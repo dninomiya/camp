@@ -1,7 +1,9 @@
+import { firestore } from 'firebase/app';
+import { User } from './../../interfaces/user';
+import { UserService } from './../../services/user.service';
 import { PlanService } from 'src/app/services/plan.service';
-import { User } from 'src/app/interfaces/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
@@ -14,24 +16,62 @@ export class UserEditorComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
     plan: ['', Validators.required],
-    isTrial: ['', Validators.required],
-    trialUsed: ['', Validators.required],
-    currentPeriodStart: ['', Validators.required],
-    currentPeriodEnd: ['', Validators.required],
-    isCaneclSubscription: ['', Validators.required],
+    isTrial: [''],
+    trialUsed: [''],
+    currentPeriodStart: [''],
+    currentPeriodEnd: [''],
+    isCaneclSubscription: [''],
     isa: this.fb.group({
-      start: ['', Validators.required],
-      end: ['', Validators.required],
+      start: [''],
+      end: [''],
     }),
   });
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public user: User,
     private fb: FormBuilder,
-    private planService: PlanService
+    private planService: PlanService,
+    private userService: UserService,
+    private dialog: MatDialogRef<UserEditorComponent>
   ) {}
 
   ngOnInit(): void {
-    this.form.patchValue(this.user);
+    this.form.patchValue({
+      ...this.user,
+      currentPeriodStart: this.user.currentPeriodStart?.toDate(),
+      currentPeriodEnd: this.user.currentPeriodEnd?.toDate(),
+      isa: {
+        start: this.user.isa?.start?.toDate(),
+        end: this.user.isa?.end?.toDate(),
+      },
+    });
+  }
+
+  updateUser() {
+    const {
+      plan,
+      isTrial,
+      trialUsed,
+      currentPeriodStart,
+      currentPeriodEnd,
+      isCaneclSubscription,
+      isa,
+    } = this.form.value;
+    this.userService
+      .updateUser(this.user.id, {
+        plan,
+        isTrial,
+        trialUsed,
+        isCaneclSubscription,
+        isa: {
+          start: isa.start ? firestore.Timestamp.fromDate(isa.start) : null,
+          end: isa.end ? firestore.Timestamp.fromDate(isa.end) : null,
+        },
+        currentPeriodStart: firestore.Timestamp.fromDate(currentPeriodStart),
+        currentPeriodEnd: firestore.Timestamp.fromDate(currentPeriodEnd),
+      })
+      .then(() => {
+        this.dialog.close(true);
+      });
   }
 }
