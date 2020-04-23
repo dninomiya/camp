@@ -17,7 +17,6 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
-import * as moment from 'functions/node_modules/moment/moment';
 
 @Component({
   selector: 'app-account',
