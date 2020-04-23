@@ -24,7 +24,7 @@ export const deleteSubscription = functions
         isCaneclSubscription: false,
       });
 
-      await db.doc(`users/${uid}/payment`).update({
+      await db.doc(`users/${uid}/private/payment`).update({
         subscriptionId: null,
       });
 

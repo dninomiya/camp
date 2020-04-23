@@ -21,6 +21,9 @@ import { SearchLessonInputComponent } from './search-lesson-input/search-lesson-
 import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { MatSortModule } from '@angular/material/sort';
+import { UserEditorComponent } from './user-editor/user-editor.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ import { MatSortModule } from '@angular/material/sort';
     SearchLessonInputComponent,
     ImageDialogComponent,
     UserListComponent,
+    UserEditorComponent,
   ],
   imports: [
     SharedModule,
@@ -42,12 +46,14 @@ import { MatSortModule } from '@angular/material/sort';
     MatSidenavModule,
     NgxPicaModule,
     ShellModule,
+    MatDatepickerModule,
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,
     DragDropModule,
     NgAisModule,
     ImageCropperModule,
+    MatNativeDateModule,
   ],
   entryComponents: [
     ListDeleteDialogComponent,

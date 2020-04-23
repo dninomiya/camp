@@ -64,11 +64,20 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
       planId: this.data.planId,
       reason: this.form.value,
     };
-    this.paymentService.unsubscribePlan(body).then(() => {
-      this.snackBar.open('解約しました', null, {
-        duration: 2000,
+    this.paymentService
+      .unsubscribePlan(body)
+      .then(() => {
+        this.snackBar.open('解約しました', null, {
+          duration: 2000,
+        });
+      })
+      .catch(() => {
+        this.snackBar.open('失敗しました。管理者にお問い合わせください', null, {
+          duration: 2000,
+        });
+      })
+      .finally(() => {
+        this.dialogRef.close(true);
       });
-      this.dialogRef.close(true);
-    });
   }
 }

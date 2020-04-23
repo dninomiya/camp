@@ -1,7 +1,10 @@
+import { User } from 'src/app/interfaces/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserEditorComponent } from './../user-editor/user-editor.component';
+import { MatDialog } from '@angular/material/dialog';
 import { firestore } from 'firebase/app';
 import { combineLatest } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { User } from './../../interfaces/user';
 import { Plan } from './../../interfaces/plan';
 import { PlanService } from './../../services/plan.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,7 +20,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class UserListComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  plan = new FormControl('customer');
+  plan = new FormControl('plan');
   users$ = this.userService.getUsers();
   displayedColumns: string[] = [
     'name',
@@ -33,7 +36,9 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private planService: PlanService
+    private planService: PlanService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -79,5 +84,20 @@ export class UserListComponent implements OnInit {
       }
     );
     this.plan.patchValue('customer');
+  }
+
+  openEditor(user: User) {
+    this.dialog
+      .open(UserEditorComponent, {
+        data: user,
+      })
+      .afterClosed()
+      .subscribe((status) => {
+        if (status) {
+          this.snackBar.open('更新しました', null, {
+            duration: 2000,
+          });
+        }
+      });
   }
 }

@@ -1,8 +1,77 @@
 <ng-container *ngIf="user$ | async as user">
   <h1>アカウント</h1>
 
+  <ng-container *ngIf="user.plan !== 'isa'">
+    <section>
+      <h2>プラン</h2>
+      <p class="plan">
+        {{ user.plan | plan }}プラン
+        <a routerLink="/about" fragment="plan">
+          プラン変更
+        </a>
+      </p>
+
+      <p class="period">
+        <small *ngIf="user.plan && user.plan !== 'free'">
+          <ng-container *ngIf="user.plan !== 'isa'">
+            {{ user.currentPeriodStart?.toDate() | date: 'yyyy年MM月dd' }} -
+            {{ user.currentPeriodEnd?.toDate() | date: 'yyyy年MM月dd' }}
+          </ng-container>
+          <ng-container *ngIf="user.plan === 'isa'">
+            {{ user.isa?.start?.toDate() | date: 'yyyy年MM月dd' }} -
+            {{ user.isa?.end?.toDate() | date: 'yyyy年MM月dd' }}
+          </ng-container>
+        </small>
+      </p>
+
+      <ul *ngIf="getPlan(user.plan); else free">
+        <li *ngFor="let point of getPlan(user.plan).points">
+          {{ point }}
+        </li>
+      </ul>
+      <ng-template #free>
+        <p>無料ドキュメントの閲覧</p>
+      </ng-template>
+
+      <ng-container *ngIf="user.plan && user.plan !== 'free'">
+        <h2>プラン自動更新停止</h2>
+        <ul *ngIf="!user.isCaneclSubscription">
+          <li>
+            更新停止すると{{
+              user.currentPeriodEnd.toDate() | date: 'yyyy年MM月dd日'
+            }}にフリープランになります。
+          </li>
+          <li>
+            退会が成功すると退会完了メールが届きます。届かない場合<a
+              href="mailto:daichi.ninomiya@deer.co.jp"
+              target="_blank"
+              >お問い合わせ</a
+            >ください。
+          </li>
+        </ul>
+        <ng-container *ngIf="!user.isCaneclSubscription; else canceledArea">
+          <button
+            (click)="openUnsubscribeDialog(user)"
+            mat-stroked-button
+            [disabled]="cancellationInProgress"
+          >
+            更新停止
+          </button>
+        </ng-container>
+
+        <ng-template #canceledArea>
+          <p>
+            {{
+              user.currentPeriodEnd.toDate() | date: 'yyyy年MM月dd'
+            }}に課金停止（フリープランに変更）予定
+          </p>
+        </ng-template>
+      </ng-container>
+    </section>
+  </ng-container>
+
   <div class="section">
-    <h3>退会</h3>
+    <h2>退会</h2>
 
     <ul>
       <li>退会すると利用データが完全に削除され、復元できません。</li>

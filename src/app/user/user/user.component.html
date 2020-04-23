@@ -1,70 +1,27 @@
 <div class="container">
   <mat-card *ngIf="user$ | async as user">
-    <h1>{{ user.name }}</h1>
-
-    <ng-container *ngIf="user.plan !== 'isa'">
-      <section>
-        <h2>プラン</h2>
-        <p class="current-plan">{{ user.plan | plan }}プラン</p>
-        <a mat-stroked-button routerLink="/about" fragment="plan">
-          プラン変更
-        </a>
-
-        <h3>プラン内容</h3>
-        <ul *ngIf="getPlan(user.plan); else free">
-          <li *ngFor="let point of getPlan(user.plan).points">
-            {{ point }}
-          </li>
-        </ul>
-        <ng-template #free>
-          <p>なし</p>
-        </ng-template>
-      </section>
-
-      <section>
-        <ng-container *ngIf="user.plan && user.plan !== 'free'">
-          <h2>プラン更新停止</h2>
-          <p class="note" *ngIf="!canceled">
-            更新停止すると{{
-              user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd日'
-            }}にフリープランになります
-          </p>
-          <ng-container *ngIf="!canceled; else canceledArea">
-            <button
-              (click)="openUnsubscribeDialog(user)"
-              mat-stroked-button
-              [disabled]="cancellationInProgress"
-            >
-              更新停止
-            </button>
-            <p>
-              退会が成功すると退会完了メールが届きます。届かない場合<a
-                href="mailto:daichi.ninomiya@deer.co.jp"
-                target="_blank"
-                >お問い合わせ</a
-              >ください。
-            </p>
-          </ng-container>
-
-          <ng-template #canceledArea>
-            <p>
-              {{
-                user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd'
-              }}に課金停止（フリープランに変更）予定
-            </p>
-          </ng-template>
-        </ng-container>
-      </section>
-    </ng-container>
+    <div class="user">
+      <img class="user__avatar" [src]="user.avatarURL" alt="" />
+      <div class="user__body">
+        <h1 class="user__name">{{ user.name }}</h1>
+        <p class="user__plan">
+          <span>{{ user.plan | plan }}プラン</span>
+        </p>
+      </div>
+    </div>
 
     <section *ngIf="user.plan === 'isa'">
       <h2>ISA</h2>
       <dl>
         <dt>開始日</dt>
-        <dd>{{ user.isa?.start | date: 'yyyy年MM月dd日' }}</dd>
+        <dd>{{ user.isa?.start?.toDate() | date: 'yyyy年MM月dd日' }}</dd>
         <dt>終了日</dt>
         <dd>
-          {{ user.isa?.end ? (user.isa?.end | date: 'yyyy年MM月dd日') : '-' }}
+          {{
+            user.isa?.end
+              ? (user.isa?.end?.toDate() | date: 'yyyy年MM月dd日')
+              : '-'
+          }}
         </dd>
         <dt>在籍日数</dt>
         <dd>{{ getDays(user.isa?.start, user.isa?.end) | number }}日</dd>

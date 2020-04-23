@@ -1,0 +1,111 @@
+<h1 matDialogTitle>{{ user.name }} - {{ user.email }}</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>プラン</mat-label>
+      <mat-select formControlName="plan">
+        <mat-option value="free">フリー</mat-option>
+        <mat-option *ngFor="let plan of plans" [value]="plan.id">
+          {{ plan.title }}
+        </mat-option>
+        <mat-option value="isa">ISA</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>トライアル中</mat-label>
+      <mat-select formControlName="isTrial">
+        <mat-option [value]="true">true</mat-option>
+        <mat-option [value]="false">false</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>トライアル使用済み</mat-label>
+      <mat-select formControlName="trialUsed">
+        <mat-option [value]="true">true</mat-option>
+        <mat-option [value]="false">false</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>有料期間スタート</mat-label>
+      <input
+        type="text"
+        formControlName="currentPeriodStart"
+        matInput
+        [matDatepicker]="currentPeriodStartPicker"
+        autocomplete="off"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="currentPeriodStartPicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #currentPeriodStartPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>有料期間終了</mat-label>
+      <input
+        type="text"
+        formControlName="currentPeriodEnd"
+        matInput
+        [matDatepicker]="currentPeriodEndPicker"
+        autocomplete="off"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="currentPeriodEndPicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #currentPeriodEndPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>キャンセル予定</mat-label>
+      <mat-select formControlName="isCaneclSubscription">
+        <mat-option [value]="true">true</mat-option>
+        <mat-option [value]="false">false</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div formGroupName="isa">
+      <mat-form-field>
+        <mat-label>ISAスタート</mat-label>
+        <input
+          type="text"
+          autocomplete="off"
+          formControlName="start"
+          matInput
+          [matDatepicker]="startPicker"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>ISA終了</mat-label>
+        <input
+          type="text"
+          formControlName="end"
+          matInput
+          autocomplete="off"
+          [matDatepicker]="endPicker"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="updateUser()"
+    [disabled]="form.invalid || form.pristine"
+  >
+    保存
+  </button>
+</mat-dialog-actions>

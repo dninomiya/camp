@@ -1,33 +1,6 @@
 <ng-container *ngIf="user$ | async as user">
   <h1>請求とお支払い</h1>
 
-  <h2>プラン</h2>
-
-  <ng-container *ngIf="payment$ | async as payment; else free">
-    <mat-form-field>
-      <mat-label>プラン変更</mat-label>
-      <mat-select [formControl]="planSelect">
-        <mat-option value="free" [disabled]="'free' === user.plan"
-          >フリー{{
-            'free' === user.plan ? '（現在のプラン）' : ''
-          }}</mat-option
-        >
-        <mat-option
-          *ngFor="let plan of plans"
-          [value]="plan.id"
-          [disabled]="plan.id === user.plan"
-        >
-          {{ plan.title
-          }}{{ plan.id === user.plan ? '（現在のプラン）' : '' }}</mat-option
-        >
-      </mat-select>
-    </mat-form-field>
-  </ng-container>
-
-  <ng-template #free>
-    <p>{{ user.plan | plan }}</p>
-  </ng-template>
-
   <h2>クレジットカード</h2>
 
   <p class="info">

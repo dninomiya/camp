@@ -3,6 +3,34 @@
   padding: 24px 0;
 }
 
+.user {
+  display: flex;
+  align-items: center;
+  &__avatar {
+    margin-right: 16px;
+  }
+  &__body {
+    flex: 1;
+  }
+  &__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+  &__name {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  &__plan {
+    color: rgba(black, 0.6);
+    small {
+      margin-left: 8px;
+    }
+  }
+}
+
 .join-standard {
   margin: 40px 0;
   &__cost {
@@ -28,8 +56,4 @@ dl {
 
 section {
   padding: 24px 0;
-}
-
-.current-plan {
-  margin-bottom: 16px;
 }
