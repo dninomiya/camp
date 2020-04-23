@@ -21,17 +21,6 @@
     <div class="video-footer">
       <div class="actions">
         <a
-          href="https://twitter.com/intent/tweet?url={{ lessonURL }}&text={{
-            lesson.title
-          }}%0a&hashtags={{ title }}"
-          target="_blank"
-          class="actions__item"
-          mat-button
-        >
-          <mat-icon class="mat-18">flag</mat-icon>
-          <span>報告</span>
-        </a>
-        <a
           href="https://to-camp.slack.com/archives/C0116JHDY2H"
           target="_blank"
           class="actions__item"
@@ -45,12 +34,8 @@
           <span>質問</span>
         </a>
         <a
-          *ngIf="!(isOwner$ | async)"
-          href="https://docs.google.com/forms/d/e/1FAIpQLSd-V5Whsflq2ZSfOdFOOzxMLySC9FlNoAVUUZXmNtamxhYeGA/viewform?usp=pp_url&entry.1634212803={{
-            host
-          }}/lesson?v={{ lesson.id }}"
+          href="https://to-camp.slack.com/archives/C0116JHDY2H"
           target="_blank"
-          rel="noopener"
           class="actions__item"
           mat-button
         >
