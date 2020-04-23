@@ -19,9 +19,9 @@ const createChannel = (user: UserRecord) => {
       publicLessonCount: 0,
       totalLikeCount: 0,
       totalLikedCount: 0,
-      reviewCount: 0
+      reviewCount: 0,
     },
-    listOrder: []
+    listOrder: [],
   };
   return db.doc(`channels/${user.uid}`).set(channelMeta);
 };
@@ -37,21 +37,24 @@ const createAccount = (user: UserRecord) => {
     plan: 'free',
     mailSettings: {
       purchase: true,
-      reply: true
-    }
+      reply: true,
+    },
   });
 };
 
 export const createUser = functions
   .region('asia-northeast1')
   .auth.user()
-  .onCreate(async user => {
+  .onCreate(async (user) => {
     await createAccount(user);
     await createChannel(user);
     if (user && user.email) {
       return sendEmail({
         to: user.email,
-        templateId: 'register'
+        templateId: 'register',
+        dynamicTemplateData: {
+          name: user.displayName,
+        },
       });
     } else {
       return;
