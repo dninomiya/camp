@@ -24,12 +24,16 @@ export class LessonService {
     private authService: AuthService
   ) {}
 
-  private sendSlack(text: string): Promise<any> {
+  private sendSlack(lesson: LessonMeta, isCreate: boolean): Promise<any> {
+    const lessonURL = environment.host + '/lessons?v=' + lesson.id;
+
     return this.http
       .post(
         'https://hooks.slack.com/services/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',
         {
-          text,
+          text:
+            `${lesson.title}を${isCreate ? '追加' : '更新'}しました。\n` +
+            lessonURL,
           channel: 'bot',
         },
         {
@@ -79,13 +83,13 @@ export class LessonService {
       authorId,
     });
 
-    await this.sendSlack(
-      `test` +
-        'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq\n' +
-        environment.host +
-        '/lessons?v=' +
-        data.id
-    );
+    // await this.sendSlack(
+    //   `test` +
+    //     'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq\n' +
+    //     environment.host +
+    //     '/lessons?v=' +
+    //     data.id
+    // );
 
     return id;
   }
@@ -182,13 +186,13 @@ export class LessonService {
       });
     }
 
-    await this.sendSlack(
-      `test` +
-        'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq\n' +
-        environment.host +
-        '/lessons?v=' +
-        id
-    );
+    // await this.sendSlack(
+    //   `test` +
+    //     'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq\n' +
+    //     environment.host +
+    //     '/lessons?v=' +
+    //     id
+    // );
 
     return this.db.doc(`lessons/${id}`).update({
       ...data,
