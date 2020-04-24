@@ -67,8 +67,12 @@ export class UserEditorComponent implements OnInit {
           start: isa.start ? firestore.Timestamp.fromDate(isa.start) : null,
           end: isa.end ? firestore.Timestamp.fromDate(isa.end) : null,
         },
-        currentPeriodStart: firestore.Timestamp.fromDate(currentPeriodStart),
-        currentPeriodEnd: firestore.Timestamp.fromDate(currentPeriodEnd),
+        currentPeriodStart: currentPeriodStart
+          ? firestore.Timestamp.fromDate(currentPeriodStart)
+          : null,
+        currentPeriodEnd: currentPeriodEnd
+          ? firestore.Timestamp.fromDate(currentPeriodEnd)
+          : null,
       })
       .then(() => {
         this.dialog.close(true);
