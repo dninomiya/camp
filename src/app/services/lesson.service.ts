@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -7,7 +8,7 @@ import { switchMap, map, first, take } from 'rxjs/operators';
 import { ChannelMeta } from '../interfaces/channel';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { LessonList } from '../interfaces/lesson-list';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firestore } from 'firebase/app';
 import { StorageService } from './storage.service';
 
@@ -22,6 +23,28 @@ export class LessonService {
     private storageService: StorageService,
     private authService: AuthService
   ) {}
+
+  private sendSlack(lesson: LessonMeta, isCreate: boolean): Promise<any> {
+    const lessonURL = environment.host + '/lessons?v=' + lesson.id;
+
+    return this.http
+      .post(
+        'https://hooks.slack.com/services/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',
+        {
+          text:
+            `${lesson.title}を${isCreate ? '追加' : '更新'}しました。\n` +
+            lessonURL,
+          channel: 'bot',
+        },
+        {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded',
+          }),
+        }
+      )
+      .toPromise()
+      .catch((error) => console.log(error));
+  }
 
   async createLesson(
     authorId: string,
@@ -59,6 +82,15 @@ export class LessonService {
       body,
       authorId,
     });
+
+    // await this.sendSlack(
+    //   `test` +
+    //     'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq\n' +
+    //     environment.host +
+    //     '/lessons?v=' +
+    //     data.id
+    // );
+
     return id;
   }
 
@@ -153,6 +185,14 @@ export class LessonService {
         body,
       });
     }
+
+    // await this.sendSlack(
+    //   `test` +
+    //     'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq\n' +
+    //     environment.host +
+    //     '/lessons?v=' +
+    //     id
+    // );
 
     return this.db.doc(`lessons/${id}`).update({
       ...data,

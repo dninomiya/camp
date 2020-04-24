@@ -13,7 +13,9 @@ export const deleteSubscription = functions
       .where('customerId', '==', data.customer)
       .get();
 
-    if (payment.docs[0].ref.parent.parent) {
+    console.log(payment);
+
+    if (payment.docs[0] && payment.docs[0].ref.parent.parent) {
       const uid = payment.docs[0].ref.parent.parent.id;
       const user: any = (await db.doc(`users/${uid}`).get()).data();
 
@@ -44,5 +46,6 @@ export const deleteSubscription = functions
         },
       });
     }
+
     res.status(200).send(true);
   });
