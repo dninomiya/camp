@@ -13,11 +13,17 @@
 
       <p class="period">
         <small *ngIf="user.plan && user.plan !== 'free'">
-          <ng-container *ngIf="user.plan !== 'isa'">
+          <ng-container
+            *ngIf="
+              user.plan !== 'isa' &&
+              user.currentPeriodStart &&
+              user.currentPeriodEnd
+            "
+          >
             {{ user.currentPeriodStart?.toDate() | date: 'yyyy年MM月dd' }} -
             {{ user.currentPeriodEnd?.toDate() | date: 'yyyy年MM月dd' }}
           </ng-container>
-          <ng-container *ngIf="user.plan === 'isa'">
+          <ng-container *ngIf="user.plan === 'isa' && user.isa">
             {{ user.isa?.start?.toDate() | date: 'yyyy年MM月dd' }} -
             {{ user.isa?.end?.toDate() | date: 'yyyy年MM月dd' }}
           </ng-container>
