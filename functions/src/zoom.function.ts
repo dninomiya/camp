@@ -12,6 +12,7 @@ export const onRecordMeetingFromZoom = functions
     if (data.topic === 'CAMP MTG') {
       const message = [
         'MTGアーカイブです。1日で削除されます。外部公開は禁止です。',
+        `PW: ${data.password}`,
         data.share_url,
       ].join('\n');
 
