@@ -62,8 +62,8 @@
         <ng-template #disabled>
           <p>
             既に{{ plan.title }}プランに登録しています。（{{
-              user.currentPeriodStart * 1000 | date: 'yyyy年MM月dd日'
-            }}〜{{ user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd' }}）
+              user.currentPeriodStart?.toDate() | date: 'yyyy年MM月dd日'
+            }}〜{{ user.currentPeriodEnd?.toDate() | date: 'yyyy年MM月dd' }}）
           </p>
 
           <a
@@ -76,7 +76,7 @@
           <ng-template #canceledArea>
             <p>
               {{
-                user.currentPeriodEnd * 1000 | date: 'yyyy年MM月dd'
+                user.currentPeriodEnd?.toDate() | date: 'yyyy年MM月dd'
               }}に課金停止（フリープランに変更）予定
             </p>
           </ng-template>
