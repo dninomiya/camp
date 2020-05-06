@@ -223,7 +223,10 @@ export class LessonService {
       .pipe(map((lesson) => !!lesson));
   }
 
-  async countUpView(lessonId: string): Promise<void> {
+  countUpView(lessonId: string): Promise<void> {
+    if (!lessonId) {
+      return;
+    }
     const callable = this.fns.httpsCallable('countUp');
     return callable({
       path: `lessons/${lessonId}`,
