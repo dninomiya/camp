@@ -26,7 +26,10 @@ export function markedOptionsFactory(): MarkedOptions {
     if (newText.startsWith('<figure') && newText.endsWith('</figure>')) {
       return newText;
     } else {
-      newText = newText.replace(/(\d\d:\d\d)/gm, '<a class="seek">$1</a>');
+      newText = newText.replace(
+        /((\d\d:)?\d\d:\d\d)/gm,
+        '<a class="seek">$1</a>'
+      );
       return '<p>' + newText + '</p>';
     }
   };
@@ -85,7 +88,7 @@ export function markedOptionsFactory(): MarkedOptions {
         renderer,
       })}</div>`;
     } else if (dod) {
-      const dodLabel = dod[0] === 'do' ? 'Do' : "Don't";
+      const dodLabel = dod[0] === 'do' ? 'Do' : `Don't`;
       return (
         `<pre class="language-${lang} ${dod[0]}">` +
         `<span class="lang">${dodLabel}</span><code class="language-${lang}">` +
