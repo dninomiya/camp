@@ -1,3 +1,5 @@
+import { TaskComponent } from './../task/task.component';
+import { MatDialog } from '@angular/material/dialog';
 import { firestore } from 'firebase/app';
 import * as moment from 'moment';
 
@@ -17,10 +19,43 @@ export class UserComponent implements OnInit {
   dayCost = 16666;
   maxCost = 3000000;
 
+  tasks = [
+    {
+      label: 'Slack参加',
+      id: 'slack',
+    },
+    {
+      label: 'GitHub参加',
+      id: 'github',
+    },
+    {
+      label: '企画MTG',
+      id: 'meeting',
+    },
+    {
+      label: 'チュートリアル',
+      id: 'tutorial',
+    },
+    {
+      label: 'プロダクト開発',
+      id: 'develop',
+    },
+    {
+      label: 'プロダクトリリース',
+      id: 'release',
+    },
+  ];
+
   constructor(
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ) {}
+
+  isDone(tasks: string[], taskId: string): boolean {
+    if (!tasks) return false;
+    return !!tasks.find((id) => id === taskId);
+  }
 
   ngOnInit() {}
 
@@ -37,5 +72,12 @@ export class UserComponent implements OnInit {
 
   getPayLimit(end: firestore.Timestamp) {
     return moment(end.toDate()).add(5, 'years').toDate();
+  }
+
+  openTaskDialog(task: object) {
+    this.dialog.open(TaskComponent, {
+      data: task,
+      autoFocus: false,
+    });
   }
 }

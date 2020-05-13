@@ -11,10 +11,11 @@ import { first } from 'rxjs/operators';
 })
 export class InputImageComponent implements OnInit {
   @Output() uploaded = new EventEmitter<string>();
-  @Output() file = new EventEmitter<any>();
+  @Output() file = new EventEmitter<string>();
+
   @Input() oldSrc?: string;
   @Input() options: {
-    path: string;
+    path?: string;
     label?: boolean;
     size: {
       width: number;

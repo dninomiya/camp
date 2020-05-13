@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="grid" *ngIf="products$ | async as products; else blank">
+    <mat-card *ngFor="let product of products">
+      <mat-card-header>
+        <div
+          mat-card-avatar
+          class="avatar"
+          [style.background-image]="'url(' + product.author?.avatarURL + ')'"
+        ></div>
+        <mat-card-title>{{ product.title }}</mat-card-title>
+        <mat-card-subtitle>{{ product.author?.name }}</mat-card-subtitle>
+      </mat-card-header>
+      <img [src]="product.thumbnailURL" alt="" mat-card-image />
+      <p>{{ product.description }}</p>
+      <ul>
+        <li *ngIf="product.github">
+          <a [href]="product.github" target="_blank">GitHub</a>
+        </li>
+        <li *ngIf="product.url">
+          <a [href]="product.url" target="_blank">{{ product.url }}</a>
+        </li>
+        <li *ngFor="let link of product.links">
+          <a [href]="link.url" target="_blank">{{ link.title }}</a>
+        </li>
+      </ul>
+      <p *ngIf="product.start">
+        開始:
+        {{ product.start.toDate() | date: 'yyyy年MM月dd日' }}
+      </p>
+      <p *ngIf="product.end">
+        終了:
+        {{ product.end.toDate() | date: 'yyyy年MM月dd日' }}
+      </p>
+    </mat-card>
+  </div>
+
+  <ng-template #blank>
+    <p>プロダクトはありません</p>
+  </ng-template>
+</div>

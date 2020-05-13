@@ -6,6 +6,7 @@
 .user {
   display: flex;
   align-items: center;
+  margin-bottom: 24px;
   &__avatar {
     margin-right: 16px;
   }
@@ -56,4 +57,8 @@ dl {
 
 section {
   padding: 24px 0;
+}
+
+.actions {
+  margin-bottom: 24px;
 }

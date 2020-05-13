@@ -1,0 +1,73 @@
+<h1 matDialogTitle>{{ task.label }}</h1>
+
+<mat-dialog-content>
+  <ng-container [ngSwitch]="task.id">
+    <ng-container *ngSwitchCase="'slack'">
+      <p>
+        <a
+          href="https://join.slack.com/t/to-camp/shared_invite/zt-dlbmb14m-Ftv8Nupf1MdPYuyNnMkGcg"
+          target="_blank"
+          >Slack</a
+        >に参加して<a
+          href="https://to-camp.slack.com/archives/CR5HCS3M3"
+          target="_blank"
+          >#general</a
+        >で自己紹介をしてください。
+      </p>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'github'">
+      <p>
+        <a href="https://github.com/" target="_blank">GitHubアカウント</a
+        >を作成して、Slackで<a
+          href="https://to-camp.slack.com/archives/DR7CYBX2B"
+          target="_blank"
+          >メンター</a
+        >にIDを共有してください。
+      </p>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'meeting'">
+      <p>
+        プロダクト案を考えた上で<a
+          href="https://calendly.com/daichi-ninomiya/camp-first-mtg"
+          target="_blank"
+          >企画MTGを予約</a
+        >してください。MTGまでの間はトレーニングを順次進めてください。
+      </p>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'tutorial'">
+      <p>
+        <a href="https://to.camp/cause/h593RfPIXvL5SXaxLkGI" target="_blank"
+          >チュートリアル</a
+        >を完了させてください。
+      </p>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'develop'">
+      <p>
+        プロダクト開発をはじめてください。<a
+          href="https://to.camp/lesson?v=fBTqHPE1BIwHb8BAgD1Q&cause=h593RfPIXvL5SXaxLkGI"
+          target="_blank"
+          >教材</a
+        >を参考に、Slack連携やGitHubを使ったチーム開発を学んでください。
+      </p>
+      <p>
+        プロダクトを<a routerLink="/edit-product" matDialogClose>CAMPに登録</a
+        >してください。
+      </p>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'release'">
+      <p>プロダクトを正式リリースさせてください。</p>
+    </ng-container>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button (click)="done()" matDialogClose mat-raised-button color="primary">
+    完了
+  </button>
+</mat-dialog-actions>

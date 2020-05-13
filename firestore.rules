@@ -47,6 +47,11 @@ service cloud.firestore {
       allow read, delete: if request.auth.uid == resource.data.uid;
     }
 
+    match /products/{doc} {
+      allow read: if request.auth.uid != null;
+      allow write: if request.auth.uid == doc;
+    }
+
     match /channels/{channelId} {
       allow read: if true;
       allow update: if safeKey('id') && isOwner(channelId) && isOwner(resource.data.authorId);

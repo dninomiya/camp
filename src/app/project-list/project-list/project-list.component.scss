@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  margin: 24px 0;
+}
+
+img {
+  max-width: none;
+  max-height: none;
+}
+
+.avatar {
+  background: center/cover;
+}
