@@ -287,8 +287,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
     if (seeks) {
       seeks.forEach((seek) => {
         seek.addEventListener('click', () => {
-          const [min, sec] = seek.textContent.split(':');
-          this.player.setCurrentTime(+min * 60 + +sec);
+          const [hour, min, sec] = seek.textContent.split(':');
+          if (sec) {
+            this.player.setCurrentTime(+hour * 3600 + +min * 60 + +sec);
+          } else {
+            this.player.setCurrentTime(+hour * 60 + +min);
+          }
         });
       });
     }
