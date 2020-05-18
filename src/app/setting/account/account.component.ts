@@ -38,6 +38,20 @@ export class AccountComponent implements OnInit {
     purchase: [false],
   });
 
+  profileForm = this.fb.group({
+    name: ['', [Validators.required, Validators.maxLength(80)]],
+  });
+
+  avatarOptions = {
+    path: `users/${this.authService.user.id}`,
+    label: 'プロフィール画像',
+    size: {
+      width: 80,
+      height: 80,
+      crop: true,
+    },
+  };
+
   constructor(
     private authService: AuthService,
     private snackBar: MatSnackBar,
@@ -49,6 +63,10 @@ export class AccountComponent implements OnInit {
     private planPipe: PlanPipe
   ) {
     this.user$.subscribe((user) => {
+      console.log(user.name);
+      this.profileForm.setValue({
+        name: user.name,
+      });
       if (user && user.mailSettings) {
         this.mailForm.patchValue(user.mailSettings);
       }
@@ -77,6 +95,16 @@ export class AccountComponent implements OnInit {
       });
     });
     this.router.navigateByUrl('/');
+  }
+
+  updateProfile() {
+    this.userService
+      .updateUser(this.authService.user.id, {
+        name: this.profileForm.value.name,
+      })
+      .then(() => {
+        this.snackBar.open('プロフィールを更新しました');
+      });
   }
 
   udpateMailSettings(uid: string) {
@@ -130,5 +158,11 @@ export class AccountComponent implements OnInit {
           this.cancellationInProgress = false;
         }
       });
+  }
+
+  updateAvatar(avatarURL: string) {
+    this.userService.updateUser(this.authService.user.id, {
+      avatarURL,
+    });
   }
 }

@@ -13,3 +13,12 @@ img {
 .avatar {
   background: center/cover;
 }
+
+.product {
+  &__days {
+    font-size: 12px;
+    color: rgba(black, 0.6);
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+}

@@ -22,3 +22,12 @@ h2 {
   font-size: 16px;
   margin: 48px 0 24px;
 }
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 16px;
+}

@@ -25,6 +25,8 @@ export const createPlatformCustomer = functions
       },
       context
     ) => {
+      console.log(data);
+
       if (!context.auth) {
         throw new functions.https.HttpsError(
           'permission-denied',

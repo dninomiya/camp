@@ -1,3 +1,4 @@
+import { Product } from './../interfaces/product';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from './../services/product.service';
 import { AuthService } from './../services/auth.service';
@@ -36,6 +37,7 @@ export class ProjectEditorComponent implements OnInit {
       width: 800,
       height: 400,
     },
+    crop: true,
   };
 
   get links(): FormArray {
@@ -78,6 +80,7 @@ export class ProjectEditorComponent implements OnInit {
       github: value.github,
       url: value.url,
       twitter: value.twitter,
+      authorId: this.authService.user.id,
       status: value.status,
       links: value.links,
     };

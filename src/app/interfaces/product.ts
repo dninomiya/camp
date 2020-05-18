@@ -1,3 +1,4 @@
+import { User } from './user';
 import { firestore } from 'firebase/app';
 export interface Product {
   id: string;
@@ -11,13 +12,13 @@ export interface Product {
   thumbnailURL?: string;
   twitter?: string;
   status: 'progress' | 'complete';
-  author: {
-    id: string;
-    name: string;
-    avatarURL: string;
-  };
+  authorId: string;
   links?: {
     title: string;
     url: string;
   }[];
+}
+
+export interface ProductWithAuthor extends Product {
+  author: User;
 }

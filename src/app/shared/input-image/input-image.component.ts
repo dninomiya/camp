@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxPicaService } from '@digitalascetic/ngx-pica';
 import { StorageService } from 'src/app/services/storage.service';
 import { first } from 'rxjs/operators';
+import * as Jimp from 'jimp';
 
 @Component({
   selector: 'app-input-image',
@@ -17,6 +18,7 @@ export class InputImageComponent implements OnInit {
   @Input() options: {
     path?: string;
     label?: boolean;
+    crop?: boolean;
     size: {
       width: number;
       height: number;
@@ -59,7 +61,7 @@ export class InputImageComponent implements OnInit {
   }
 
   resizeImage(
-    file: any,
+    file: File,
     size: {
       width: number;
       height: number;
@@ -76,9 +78,34 @@ export class InputImageComponent implements OnInit {
       .toPromise();
   }
 
-  async upload(file, path: string) {
-    const image = await this.getImageByFile(file);
-    this.storageService.upload(path, image).then((downloadURL) => {
+  crop(
+    file: File,
+    size: {
+      width: number;
+      height: number;
+    }
+  ): Promise<string> {
+    return new Promise((resolve) => {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        Jimp.read(fileReader.result as string).then((result) => {
+          result
+            .cover(size.width, size.height)
+            .getBase64Async(Jimp.MIME_PNG)
+            .then((base64) => {
+              resolve(base64);
+            });
+        });
+        console.log(fileReader.result);
+      };
+
+      fileReader.readAsArrayBuffer(file);
+    });
+  }
+
+  async upload(base64Image: string, path: string) {
+    this.storageService.upload(path, base64Image).then((downloadURL) => {
       this.uploaded.emit(downloadURL);
       this.snackBar.open('イメージをアップロードしました', null, {
         duration: 2000,
@@ -86,7 +113,7 @@ export class InputImageComponent implements OnInit {
     });
   }
 
-  private getImageByFile(file): Promise<any> {
+  private getImageByFile(file: File): Promise<string> {
     return new Promise((resolve) => {
       const reader: FileReader = new FileReader();
 
@@ -124,7 +151,7 @@ export class InputImageComponent implements OnInit {
     });
   }
 
-  async getFile(file) {
+  async getFile(file: File) {
     if (!file) {
       return;
     }
@@ -153,14 +180,20 @@ export class InputImageComponent implements OnInit {
     });
 
     if (isOk) {
-      const imageFile = await this.resizeImage(file, this.options.size);
-      const image = await this.getImageByFile(imageFile);
+      let base64Image: string;
 
-      this.src = image;
-      if (this.options.path) {
-        this.upload(imageFile, this.options.path);
+      if (this.options.crop) {
+        base64Image = await this.crop(file, this.options.size);
       } else {
-        this.file.emit(image);
+        const imageFile = await this.resizeImage(file, this.options.size);
+        base64Image = await this.getImageByFile(imageFile);
+      }
+
+      this.src = base64Image;
+      if (this.options.path) {
+        this.upload(base64Image, this.options.path);
+      } else {
+        this.file.emit(base64Image);
       }
     }
   }

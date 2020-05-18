@@ -1,5 +1,5 @@
 import { firestore } from 'firebase/app';
-import { Product } from './../../interfaces/product';
+import { Product, ProductWithAuthor } from './../../interfaces/product';
 import { of, Observable } from 'rxjs';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./project-list.component.scss'],
 })
 export class ProjectListComponent implements OnInit {
-  products$ = this.productService.getAllProducts();
+  products$: Observable<
+    ProductWithAuthor[]
+  > = this.productService.getAllProducts();
 
   constructor(private productService: ProductService) {}
 
