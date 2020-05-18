@@ -54,7 +54,7 @@
   </div>
 
   <ng-template #blank>
-    <p *ngIf="!loading">プロダクトはありません</p>
+    <p class="blank" *ngIf="!loading">プロダクトはありません</p>
     <mat-spinner class="loading" [diameter]="40" *ngIf="loading"></mat-spinner>
   </ng-template>
 </div>

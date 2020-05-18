@@ -1,7 +1,6 @@
 import { tap } from 'rxjs/operators';
-import { firestore } from 'firebase/app';
-import { Product, ProductWithAuthor } from './../../interfaces/product';
-import { of, Observable } from 'rxjs';
+import { ProductWithAuthor } from './../../interfaces/product';
+import { Observable } from 'rxjs';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 

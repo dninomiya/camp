@@ -2,7 +2,7 @@ import { User } from './../interfaces/user';
 import { switchMap, map, filter } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { Product, ProductWithAuthor } from './../interfaces/product';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
@@ -21,24 +21,33 @@ export class ProductService {
       .collection<Product>('products')
       .valueChanges()
       .pipe(map((projects) => projects.filter((project) => project.public)));
+
     const authors$: Observable<User[]> = projects$.pipe(
-      switchMap((products) =>
-        combineLatest(
-          products.map((product) =>
-            this.db.doc<User>(`users/${product.authorId}`).valueChanges()
-          )
-        )
-      )
+      switchMap((products) => {
+        if (products?.length) {
+          combineLatest(
+            products.map((product) =>
+              this.db.doc<User>(`users/${product.authorId}`).valueChanges()
+            )
+          );
+        } else {
+          return of([]);
+        }
+      })
     );
 
     return combineLatest([projects$, authors$]).pipe(
       map(([projects, users]) => {
-        return projects.map((project, index) => {
-          return {
-            ...project,
-            author: users[index],
-          };
-        });
+        if (projects?.length) {
+          return projects.map((project, index) => {
+            return {
+              ...project,
+              author: users[index],
+            };
+          });
+        } else {
+          return null;
+        }
       })
     );
   }
