@@ -1,3 +1,4 @@
+import { tap } from 'rxjs/operators';
 import { firestore } from 'firebase/app';
 import { Product, ProductWithAuthor } from './../../interfaces/product';
 import { of, Observable } from 'rxjs';
@@ -12,7 +13,11 @@ import { Component, OnInit } from '@angular/core';
 export class ProjectListComponent implements OnInit {
   products$: Observable<
     ProductWithAuthor[]
-  > = this.productService.getAllProducts();
+  > = this.productService
+    .getAllProducts()
+    .pipe(tap((_) => (this.loading = false)));
+
+  loading = true;
 
   constructor(private productService: ProductService) {}
 

@@ -8,7 +8,15 @@
           [style.background-image]="'url(' + product.author?.avatarURL + ')'"
         ></div>
         <mat-card-title>{{ product.title }}</mat-card-title>
-        <mat-card-subtitle>{{ product.author?.name }}</mat-card-subtitle>
+        <mat-card-subtitle>
+          <span>{{ product.author?.name }}</span>
+          <a
+            class="twitter"
+            [href]="product.twitter"
+            *ngIf="product.twitter"
+            target="_blank"
+            ><i class="fab fa-twitter"></i></a
+        ></mat-card-subtitle>
       </mat-card-header>
       <img [src]="product.thumbnailURL" alt="" mat-card-image />
       <p>{{ product.description }}</p>
@@ -46,6 +54,7 @@
   </div>
 
   <ng-template #blank>
-    <p>プロダクトはありません</p>
+    <p *ngIf="!loading">プロダクトはありません</p>
+    <mat-spinner class="loading" [diameter]="40" *ngIf="loading"></mat-spinner>
   </ng-template>
 </div>

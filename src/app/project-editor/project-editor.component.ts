@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Product } from './../interfaces/product';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from './../services/product.service';
@@ -22,10 +23,13 @@ export class ProjectEditorComponent implements OnInit {
     description: ['', [Validators.required]],
     github: [
       '',
-      [Validators.required, Validators.pattern('^https://github.com.*')],
+      [Validators.required, Validators.pattern('^https://github.com/.*')],
     ],
     url: ['', [Validators.required, Validators.pattern('^https?://.*')]],
-    twitter: ['', [Validators.required, Validators.pattern('^https?://.*')]],
+    twitter: [
+      '',
+      [Validators.required, Validators.pattern('^https://twitter.com/.*')],
+    ],
     status: ['progress', [Validators.required]],
     links: this.fb.array([]),
   });
@@ -48,7 +52,8 @@ export class ProjectEditorComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private productService: ProductService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.productService
       .getProduct(this.authService.user.id)
@@ -88,7 +93,8 @@ export class ProjectEditorComponent implements OnInit {
     this.productService
       .saveProduct(this.authService.user.id, data, this.image)
       .then(() => {
-        this.snackBar.open('プロジェクトを登録しました');
+        this.snackBar.open('プロジェクトを保存しました');
+        this.router.navigateByUrl('/projects');
       });
   }
 

@@ -1,5 +1,5 @@
 import { User } from './../interfaces/user';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, filter } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable, combineLatest } from 'rxjs';
@@ -19,7 +19,8 @@ export class ProductService {
   getAllProducts(): Observable<ProductWithAuthor[]> {
     const projects$: Observable<Product[]> = this.db
       .collection<Product>('products')
-      .valueChanges();
+      .valueChanges()
+      .pipe(map((projects) => projects.filter((project) => project.public)));
     const authors$: Observable<User[]> = projects$.pipe(
       switchMap((products) =>
         combineLatest(
