@@ -34,7 +34,9 @@ export const deleteSubscription = functions
         to: config.adminEmail,
         templateId: 'downgradeToAdmin',
         dynamicTemplateData: {
-          plan: 'free',
+          name: user.name,
+          oldPlan: user.plan,
+          newPlan: 'フリー',
         },
       });
 
@@ -42,7 +44,7 @@ export const deleteSubscription = functions
         to: user.email,
         templateId: 'changePlan',
         dynamicTemplateData: {
-          plan: 'free',
+          plan: 'フリー',
         },
       });
     }
