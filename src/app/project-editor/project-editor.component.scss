@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  padding: 24px 0;
+}
+
+mat-form-field {
+  margin-bottom: 24px;
+  display: block;
+}
+
+h2 {
+  font-weight: 500;
+  margin: 24px 0 16px;
+  font-size: 16px;
+}
+
+.links {
+  margin-bottom: 40px;
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+.link-item {
+  border: 1px solid rgba(black, 0.12);
+  padding: 16px 16px 0;
+  margin: 16px 0;
+  mat-form-field {
+    margin: 0;
+  }
+}
+
+.image {
+  margin-bottom: 24px;
+  &__title {
+    font-weight: 500;
+    font-size: 16px;
+    margin: 0 0 16px;
+  }
+  &__frame {
+    width: 400px;
+    height: 200px;
+    position: relative;
+  }
+}

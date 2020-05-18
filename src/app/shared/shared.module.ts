@@ -1,3 +1,4 @@
+import { NgxPicaModule } from '@digitalascetic/ngx-pica';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -95,6 +96,7 @@ import { PlanPipe } from './plan.pipe';
     MatMenuModule,
     HttpClientJsonpModule,
     MatAutocompleteModule,
+    NgxPicaModule,
   ],
   exports: [
     CommonModule,

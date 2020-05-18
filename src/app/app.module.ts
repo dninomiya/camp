@@ -10,6 +10,8 @@ import { environment } from '../environments/environment';
 import { LogUpdateService } from './services/log-update.service';
 import localeJa from '@angular/common/locales/ja';
 import { registerLocaleData } from '@angular/common';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 registerLocaleData(localeJa);
 
@@ -27,7 +29,9 @@ registerLocaleData(localeJa);
   providers: [
     LogUpdateService,
     { provide: LOCALE_ID, useValue: 'ja-JP' },
+    { provide: MAT_DATE_LOCALE, useValue: 'ja-JP' },
     { provide: 'googleTagManagerId', useValue: 'GTM-TVXJ56C' },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000 } },
   ],
   bootstrap: [AppComponent],
 })

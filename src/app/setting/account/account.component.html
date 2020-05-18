@@ -2,6 +2,37 @@
   <h1>アカウント</h1>
 
   <ng-container *ngIf="user.plan !== 'isa'">
+    <section class="profile-form">
+      <h2>プラン</h2>
+
+      <div class="avatar">
+        <app-input-image
+          (uploaded)="updateAvatar($event)"
+          [options]="avatarOptions"
+          [oldSrc]="user.avatarURL"
+        ></app-input-image>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+        <mat-form-field>
+          <mat-label>ユーザー名</mat-label>
+          <input
+            type="text"
+            formControlName="name"
+            matInput
+            required
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="profileForm.pristine || profileForm.invalid"
+        >
+          更新
+        </button>
+      </form>
+    </section>
     <section>
       <h2>プラン</h2>
       <p class="plan">
@@ -44,7 +75,7 @@
         <ul *ngIf="!user.isCaneclSubscription">
           <li>
             更新停止すると{{
-              user.currentPeriodEnd.toDate() | date: 'yyyy年MM月dd日'
+              user.currentPeriodEnd?.toDate() | date: 'yyyy年MM月dd日'
             }}にフリープランになります。
           </li>
           <li>

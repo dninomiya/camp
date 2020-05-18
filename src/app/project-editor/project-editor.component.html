@@ -1,0 +1,133 @@
+<div class="container">
+  <h1>プロダクト管理</h1>
+  <mat-card>
+    <div class="image">
+      <h2 class="image__title">サムネイル</h2>
+      <div class="image__frame">
+        <app-input-image
+          (file)="getFile($event)"
+          [oldSrc]="oldSrc"
+          [options]="imageOptions"
+        ></app-input-image>
+      </div>
+    </div>
+    <img [src]="image" alt="" />
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field>
+        <mat-label>タイトル</mat-label>
+        <input
+          formControlName="title"
+          type="text"
+          matInput
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>概要</mat-label>
+        <textarea
+          formControlName="description"
+          matInput
+          matTextareaAutosize
+          required
+        ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>GitHub</mat-label>
+        <input
+          formControlName="github"
+          type="url"
+          matInput
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>開発開始</mat-label>
+        <input
+          matInput
+          readonly
+          formControlName="start"
+          [matDatepicker]="startPicker"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="startPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>開発終了</mat-label>
+        <input
+          matInput
+          readonly
+          formControlName="end"
+          [matDatepicker]="endPicker"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="endPicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>公開URL</mat-label>
+        <input
+          formControlName="url"
+          type="url"
+          matInput
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Twitter</mat-label>
+        <input
+          type="url"
+          placeholder="https://twitter.com/xxxx"
+          matInput
+          formControlName="twitter"
+          autocomplete="off"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>進行状況</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="progress">進行中</mat-option>
+          <mat-option value="complete">完成</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
+      <h2>リンク</h2>
+      <p>noteやqiitaアカウント、プロダクトの技術解説ページなど</p>
+      <button mat-button (click)="addLink()">
+        <span>追加</span>
+        <mat-icon>add</mat-icon>
+      </button>
+      <div formArrayName="links" class="links">
+        <div
+          class="link-item"
+          [formGroupName]="i"
+          *ngFor="let link of links.controls; index as i"
+        >
+          <mat-form-field>
+            <mat-label>タイトル</mat-label>
+            <input type="text" matInput autocomplete="off" required />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>リンク</mat-label>
+            <input type="url" matInput autocomplete="off" required />
+          </mat-form-field>
+        </div>
+      </div>
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="form.invalid || form.pristine"
+      >
+        保存
+      </button>
+    </form>
+  </mat-card>
+</div>

@@ -14,6 +14,7 @@ export interface User {
   readonly currentPeriodEnd?: firestore.Timestamp;
   readonly isCaneclSubscription?: boolean;
   readonly isTrial?: boolean;
+  readonly tasks?: string[];
   readonly isa?: {
     start: firestore.Timestamp;
     end?: firestore.Timestamp;

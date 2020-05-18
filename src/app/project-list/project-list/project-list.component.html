@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="grid" *ngIf="products$ | async as products; else blank">
+    <mat-card *ngFor="let product of products" class="product">
+      <mat-card-header>
+        <div
+          mat-card-avatar
+          class="avatar"
+          [style.background-image]="'url(' + product.author?.avatarURL + ')'"
+        ></div>
+        <mat-card-title>{{ product.title }}</mat-card-title>
+        <mat-card-subtitle>
+          <span>{{ product.author?.name }}</span>
+          <a
+            class="twitter"
+            [href]="product.twitter"
+            *ngIf="product.twitter"
+            target="_blank"
+            ><i class="fab fa-twitter"></i></a
+        ></mat-card-subtitle>
+      </mat-card-header>
+      <img [src]="product.thumbnailURL" alt="" mat-card-image />
+      <p>{{ product.description }}</p>
+      <ul>
+        <li *ngFor="let link of product.links">
+          <a [href]="link.url" target="_blank">{{ link.title }}</a>
+        </li>
+      </ul>
+      <p class="product__days">
+        <span *ngIf="product.start">
+          {{ product.start.toDate() | date: 'yyyy年MM月dd日' }} 〜
+        </span>
+        <span *ngIf="product.end">
+          {{ product.end.toDate() | date: 'yyyy年MM月dd日' }}
+        </span>
+        <span *ngIf="product.status === 'progress'">開発中</span>
+      </p>
+      <mat-card-actions>
+        <a
+          [href]="product.url"
+          target="_blank"
+          mat-raised-button
+          color="primary"
+          >サイトを見る</a
+        >
+        <a
+          *ngIf="product.github"
+          mat-button
+          [href]="product.github"
+          target="_blank"
+          >GitHub</a
+        >
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <ng-template #blank>
+    <p *ngIf="!loading">プロダクトはありません</p>
+    <mat-spinner class="loading" [diameter]="40" *ngIf="loading"></mat-spinner>
+  </ng-template>
+</div>

@@ -1,0 +1,8 @@
+a {
+  color: #3f51b5;
+  margin: 0 4px;
+  &:after {
+    content: 'open_in_new';
+    font-family: 'Material Icons';
+  }
+}

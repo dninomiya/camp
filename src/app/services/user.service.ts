@@ -1,3 +1,4 @@
+import { firestore } from 'firebase/app';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { Observable } from 'rxjs';
@@ -39,5 +40,11 @@ export class UserService {
       status: true,
     });
     return id;
+  }
+
+  completeTask(uid: string, taskId: string): Promise<void> {
+    return this.db.doc(`users/${uid}`).update({
+      tasks: firestore.FieldValue.arrayUnion(taskId),
+    });
   }
 }

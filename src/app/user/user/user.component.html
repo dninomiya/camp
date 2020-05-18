@@ -10,6 +10,26 @@
       </div>
     </div>
 
+    <div class="actions">
+      <button routerLink="/edit-product" mat-stroked-button>
+        プロダクト管理
+      </button>
+    </div>
+
+    <mat-divider inset></mat-divider>
+
+    <mat-nav-list>
+      <mat-list-item
+        (click)="openTaskDialog(task)"
+        *ngFor="let task of tasks; index as i"
+      >
+        <span matLine> {{ i + 1 }}. {{ task.label }} </span>
+        <mat-icon *ngIf="isDone(user.tasks, task.id)" color="primary"
+          >done</mat-icon
+        >
+      </mat-list-item>
+    </mat-nav-list>
+
     <section *ngIf="user.plan === 'isa'">
       <h2>ISA</h2>
       <dl>

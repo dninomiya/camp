@@ -31,6 +31,7 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { ListEditDialogComponent } from './list-edit-dialog/list-edit-dialog.component';
 import { TagEditorDialogComponent } from './tag-editor-dialog/tag-editor-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { NgAisModule } from 'angular-instantsearch';
     NgxJsonLdModule,
     ShellModule,
     ConnectVimeoComponent,
+    MatMomentDateModule,
   ],
   providers: [{ provide: REGION, useValue: 'asia-northeast1' }, DatePipe],
   entryComponents: [
