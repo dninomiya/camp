@@ -2,7 +2,7 @@
   <h1>プロダクト管理</h1>
   <mat-card>
     <div class="image">
-      <h2 class="image__title">サムネイル</h2>
+      <h2 class="image__title">サムネイル<sup>*</sup></h2>
       <div class="image__wrap">
         <div class="image__frame">
           <app-input-image
@@ -31,6 +31,7 @@
           matInput
           matTextareaAutosize
           required
+          placeholder="どんなサービスか簡潔に説明してください"
         ></textarea>
       </mat-form-field>
       <mat-form-field>
@@ -125,7 +126,7 @@
       <button
         mat-flat-button
         color="primary"
-        [disabled]="form.invalid || form.pristine"
+        [disabled]="form.invalid || form.pristine || imageInvalid"
       >
         保存
       </button>

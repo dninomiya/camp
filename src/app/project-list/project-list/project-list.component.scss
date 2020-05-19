@@ -36,3 +36,12 @@ img {
   text-align: center;
   margin: 24px 0;
 }
+
+.product {
+  display: flex;
+  flex-flow: column;
+  &__description {
+    flex: 1;
+    margin-bottom: 16px;
+  }
+}
