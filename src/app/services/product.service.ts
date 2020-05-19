@@ -1,7 +1,6 @@
 import { User } from './../interfaces/user';
-import { switchMap, map, filter } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { StorageService } from './storage.service';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Product, ProductWithAuthor } from './../interfaces/product';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -20,12 +19,20 @@ export class ProductService {
     const projects$: Observable<Product[]> = this.db
       .collection<Product>('products')
       .valueChanges()
-      .pipe(map((projects) => projects.filter((project) => project.public)));
+      .pipe(
+        map((projects) => {
+          if (projects?.length) {
+            return projects.filter((project) => project.public);
+          } else {
+            return [];
+          }
+        })
+      );
 
     const authors$: Observable<User[]> = projects$.pipe(
       switchMap((products) => {
-        if (products?.length) {
-          combineLatest(
+        if (products && products.length) {
+          return combineLatest(
             products.map((product) =>
               this.db.doc<User>(`users/${product.authorId}`).valueChanges()
             )

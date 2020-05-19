@@ -1,17 +1,18 @@
-<div class="container">
+<div class="container" *ngIf="!loading">
   <h1>プロダクト管理</h1>
   <mat-card>
     <div class="image">
       <h2 class="image__title">サムネイル</h2>
-      <div class="image__frame">
-        <app-input-image
-          (file)="getFile($event)"
-          [oldSrc]="oldSrc"
-          [options]="imageOptions"
-        ></app-input-image>
+      <div class="image__wrap">
+        <div class="image__frame">
+          <app-input-image
+            (file)="getFile($event)"
+            [oldSrc]="oldSrc"
+            [options]="imageOptions"
+          ></app-input-image>
+        </div>
       </div>
     </div>
-    <img [src]="image" alt="" />
     <form [formGroup]="form" (ngSubmit)="submit()">
       <mat-form-field>
         <mat-label>タイトル</mat-label>
@@ -49,6 +50,7 @@
           readonly
           formControlName="start"
           [matDatepicker]="startPicker"
+          required
         />
         <mat-datepicker-toggle
           matSuffix
@@ -88,7 +90,6 @@
           matInput
           formControlName="twitter"
           autocomplete="off"
-          required
         />
       </mat-form-field>
       <mat-form-field>
