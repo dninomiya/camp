@@ -18,9 +18,13 @@
             ><i class="fab fa-twitter"></i></a
         ></mat-card-subtitle>
       </mat-card-header>
-      <img [src]="product.thumbnailURL" alt="" mat-card-image />
-      <p>{{ product.description }}</p>
-      <ul>
+      <img
+        [src]="product.thumbnailURL || 'assets/images/product-dummy.png'"
+        alt=""
+        mat-card-image
+      />
+      <p class="product__description">{{ product.description }}</p>
+      <ul *ngIf="product.links && product.links.length">
         <li *ngFor="let link of product.links">
           <a [href]="link.url" target="_blank">{{ link.title }}</a>
         </li>

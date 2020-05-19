@@ -76,6 +76,10 @@ export class ProjectEditorComponent implements OnInit {
     return firestore.Timestamp.fromDate(date.toDate());
   }
 
+  get imageInvalid(): boolean {
+    return !(this.image || this.oldSrc);
+  }
+
   submit() {
     const value = this.form.value;
     const data = {
