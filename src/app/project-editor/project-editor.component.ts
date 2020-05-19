@@ -26,21 +26,20 @@ export class ProjectEditorComponent implements OnInit {
       [Validators.required, Validators.pattern('^https://github.com/.*')],
     ],
     url: ['', [Validators.required, Validators.pattern('^https?://.*')]],
-    twitter: [
-      '',
-      [Validators.required, Validators.pattern('^https://twitter.com/.*')],
-    ],
+    twitter: ['', [Validators.pattern('^https://twitter.com/.*')]],
     status: ['progress', [Validators.required]],
     links: this.fb.array([]),
   });
 
   image: string;
+  loading: boolean;
   oldSrc: string;
   imageOptions = {
     size: {
       width: 800,
       height: 400,
     },
+    label: true,
     crop: true,
   };
 
@@ -55,6 +54,7 @@ export class ProjectEditorComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router
   ) {
+    this.loading = true;
     this.productService
       .getProduct(this.authService.user.id)
       .subscribe((product) => {
@@ -64,7 +64,9 @@ export class ProjectEditorComponent implements OnInit {
             start: product.start && moment(product.start.toDate()),
             end: product.end && moment(product.end.toDate()),
           });
+          this.oldSrc = product.thumbnailURL;
         }
+        this.loading = false;
       });
   }
 
@@ -109,5 +111,6 @@ export class ProjectEditorComponent implements OnInit {
 
   getFile(image: string) {
     this.image = image;
+    this.form.markAsDirty();
   }
 }
