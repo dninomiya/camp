@@ -1,14 +1,16 @@
 <div class="container">
   <div class="grid" *ngIf="products$ | async as products; else blank">
     <mat-card *ngFor="let product of products" class="product">
-      <mat-card-header>
+      <mat-card-header class="product__header">
         <div
           mat-card-avatar
           class="avatar"
           [style.background-image]="'url(' + product.author?.avatarURL + ')'"
         ></div>
-        <mat-card-title>{{ product.title }}</mat-card-title>
-        <mat-card-subtitle>
+        <mat-card-title class="product__title">{{
+          product.title
+        }}</mat-card-title>
+        <mat-card-subtitle class="product__author">
           <span>{{ product.author?.name }}</span>
           <a
             class="twitter"
@@ -23,8 +25,11 @@
         alt=""
         mat-card-image
       />
-      <p class="product__description">{{ product.description }}</p>
-      <ul *ngIf="product.links && product.links.length">
+      <div class="product__description">
+        <p>{{ product.description }}</p>
+      </div>
+      {{ product.links | json }}
+      <ul *ngIf="product.links?.length">
         <li *ngFor="let link of product.links">
           <a [href]="link.url" target="_blank">{{ link.title }}</a>
         </li>
