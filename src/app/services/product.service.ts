@@ -1,5 +1,5 @@
 import { User } from './../interfaces/user';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, take } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { Product, ProductWithAuthor } from './../interfaces/product';
@@ -26,7 +26,8 @@ export class ProductService {
           } else {
             return [];
           }
-        })
+        }),
+        take(1)
       );
 
     const authors$: Observable<User[]> = projects$.pipe(
@@ -40,7 +41,8 @@ export class ProductService {
         } else {
           return of([]);
         }
-      })
+      }),
+      take(1)
     );
 
     return combineLatest([projects$, authors$]).pipe(

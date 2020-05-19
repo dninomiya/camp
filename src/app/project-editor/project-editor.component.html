@@ -103,7 +103,7 @@
       <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
       <h2>リンク</h2>
       <p>noteやqiitaアカウント、プロダクトの技術解説ページなど</p>
-      <button mat-button (click)="addLink()">
+      <button type="button" mat-button (click)="addLink()">
         <span>追加</span>
         <mat-icon>add</mat-icon>
       </button>
@@ -115,12 +115,27 @@
         >
           <mat-form-field>
             <mat-label>タイトル</mat-label>
-            <input type="text" matInput autocomplete="off" required />
+            <input
+              type="text"
+              matInput
+              formControlName="title"
+              autocomplete="off"
+              required
+            />
           </mat-form-field>
           <mat-form-field>
             <mat-label>リンク</mat-label>
-            <input type="url" matInput autocomplete="off" required />
+            <input
+              type="url"
+              matInput
+              formControlName="url"
+              autocomplete="off"
+              required
+            />
           </mat-form-field>
+          <button mat-icon-button (click)="links.removeAt(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
       </div>
       <button
