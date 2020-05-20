@@ -28,7 +28,6 @@
       <div class="product__description">
         <p>{{ product.description }}</p>
       </div>
-      {{ product.links | json }}
       <ul *ngIf="product.links?.length">
         <li *ngFor="let link of product.links">
           <a [href]="link.url" target="_blank">{{ link.title }}</a>
