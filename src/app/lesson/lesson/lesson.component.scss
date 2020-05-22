@@ -1,5 +1,5 @@
-@import "mixins";
-@import "~@angular/material/theming";
+@import 'mixins';
+@import '~@angular/material/theming';
 
 :host {
   display: block;
@@ -10,7 +10,7 @@
 }
 
 .wrap {
-  max-width: 1200px;
+  max-width: 1600px;
   display: grid;
   gap: 24px;
   grid-template-columns: 1fr 320px;
