@@ -67,7 +67,7 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
     this.paymentService
       .unsubscribePlan(body)
       .then(() => {
-        this.snackBar.open('解約しました', null, {
+        this.snackBar.open('停止しました', null, {
           duration: 2000,
         });
       })
