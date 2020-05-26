@@ -47,4 +47,26 @@ export class UserService {
       tasks: firestore.FieldValue.arrayUnion(taskId),
     });
   }
+
+  getSkillStatus(uid: string): Observable<object> {
+    return this.db.doc<object>(`users/${uid}/skills/status`).valueChanges();
+  }
+
+  completeSkill(uid: string, skillId: string): Promise<void> {
+    return this.db.doc(`users/${uid}/skills/status`).set(
+      {
+        [skillId]: true,
+      },
+      { merge: true }
+    );
+  }
+
+  uncompleteSkill(uid: string, skillId: string): Promise<void> {
+    return this.db.doc(`users/${uid}/skills/status`).set(
+      {
+        [skillId]: firestore.FieldValue.delete(),
+      },
+      { merge: true }
+    );
+  }
 }

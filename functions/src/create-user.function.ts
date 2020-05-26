@@ -22,6 +22,7 @@ const createChannel = (user: UserRecord) => {
       reviewCount: 0,
     },
     listOrder: [],
+    complete: [],
   };
   return db.doc(`channels/${user.uid}`).set(channelMeta);
 };

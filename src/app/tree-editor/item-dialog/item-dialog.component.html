@@ -1,0 +1,79 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h1 matDialogTitle>アイテム編集</h1>
+
+  <mat-dialog-content>
+    <div class="icon">
+      <app-input-image
+        (file)="image = $event"
+        [options]="options"
+        [oldSrc]="item?.iconURL"
+      ></app-input-image>
+    </div>
+    <mat-form-field>
+      <mat-label>タイトル</mat-label>
+      <input
+        type="text"
+        matInput
+        #itemInput
+        formControlName="title"
+        required
+        autocomplete="off"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>lessonId</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="lessonId"
+        required
+        autocomplete="off"
+      />
+    </mat-form-field>
+
+    <h3>リソース</h3>
+    <button mat-icon-button type="button" (click)="addResource()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div formArrayName="resources">
+      <ng-container *ngFor="let ctrl of resourceControls.controls; index as i">
+        <div [formGroupName]="i">
+          <mat-form-field>
+            <mat-label>タイトル</mat-label>
+            <input
+              autocomplete="off"
+              formControlName="title"
+              type="text"
+              matInput
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>URL</mat-label>
+            <input
+              autocomplete="off"
+              formControlName="url"
+              type="text"
+              matInput
+              required
+            />
+          </mat-form-field>
+        </div>
+        <button mat-icon-button (click)="removeResource(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </ng-container>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button type="button" matDialogClose>キャンセル</button>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="form.invalid || form.pristine || (!item && !image)"
+    >
+      保存
+    </button>
+  </mat-dialog-actions>
+</form>

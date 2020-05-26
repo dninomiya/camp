@@ -1,0 +1,27 @@
+<h1 matDialogTitle>入力</h1>
+
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>タイトル</mat-label>
+    <input
+      type="text"
+      [formControl]="ctrl"
+      matInput
+      autocomplete="off"
+      required
+      (keydown.meta.Enter)="submit(ctrl.value)"
+    />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>キャンセル</button>
+  <button
+    mat-raised-button
+    [disabled]="ctrl.invalid || ctrl.pristine"
+    color="primary"
+    [matDialogClose]="ctrl.value"
+  >
+    保存
+  </button>
+</mat-dialog-actions>

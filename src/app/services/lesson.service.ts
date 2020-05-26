@@ -24,28 +24,6 @@ export class LessonService {
     private authService: AuthService
   ) {}
 
-  private sendSlack(lesson: LessonMeta, isCreate: boolean): Promise<any> {
-    const lessonURL = environment.host + '/lessons?v=' + lesson.id;
-
-    return this.http
-      .post(
-        'https://hooks.slack.com/services/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',
-        {
-          text:
-            `${lesson.title}を${isCreate ? '追加' : '更新'}しました。\n` +
-            lessonURL,
-          channel: 'bot',
-        },
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }),
-        }
-      )
-      .toPromise()
-      .catch((error) => console.log(error));
-  }
-
   async createLesson(
     authorId: string,
     lesson: Pick<Lesson, 'title' | 'videoId' | 'public' | 'free' | 'body'>,
@@ -245,7 +223,7 @@ export class LessonService {
         .pipe(take(1)),
     ]).pipe(
       map(([user, lesson]) => {
-        return !!(lesson.free || (user && user.plan && user.plan !== 'free'));
+        return lesson.free || (user?.plan && user.plan !== 'free');
       })
     );
   }

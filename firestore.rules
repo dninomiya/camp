@@ -33,6 +33,16 @@ service cloud.firestore {
       }
     }
 
+    match /sections/{uid} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /core/section {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     match /threads/{threadId} {
       allow create: if request.auth.uid != null;
       allow update: if (request.auth.uid == resource.data.authorId || request.auth.uid == resource.data.targetId) && safeKey('id') && safeKey('targetId') && safeKey('authorId');

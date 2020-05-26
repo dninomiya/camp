@@ -48,6 +48,17 @@ const routes: Routes = [
         canLoad: [AuthGuard],
       },
       {
+        path: 'tree-edit',
+        loadChildren: () =>
+          import('./tree-editor/tree-editor.module').then(
+            (m) => m.TreeEditorModule
+          ),
+        canLoad: [AuthGuard],
+        data: {
+          hideNav: true,
+        },
+      },
+      {
         path: 'new',
         canLoad: [AuthGuard],
         data: {
@@ -99,6 +110,13 @@ const routes: Routes = [
           import('./home/home.module').then((m) => m.HomeModule),
       },
     ],
+  },
+  {
+    path: 'tree',
+    data: {
+      hideNav: true,
+    },
+    loadChildren: () => import('./tree/tree.module').then((m) => m.TreeModule),
   },
   {
     path: 'about',

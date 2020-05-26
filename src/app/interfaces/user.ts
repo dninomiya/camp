@@ -19,6 +19,7 @@ export interface User {
     start: firestore.Timestamp;
     end?: firestore.Timestamp;
   };
+  complete?: string[];
 
   mailSettings: {
     forum: boolean;
