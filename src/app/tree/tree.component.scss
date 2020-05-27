@@ -107,7 +107,10 @@ mat-card {
 .doc {
   width: 400px;
   max-width: 100%;
-  padding-bottom: 80px;
+  box-sizing: border-box;
+  &__body {
+    padding-bottom: 80px;
+  }
   &__close {
     display: none;
     @include sp {
@@ -121,15 +124,9 @@ mat-card {
 
 .loading {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  @include sp {
-    top: 0;
-    left: 0;
-    width: 100%;
-    transform: none;
-  }
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .video {
@@ -226,4 +223,22 @@ mat-card {
   font-weight: bold;
   font-size: 14px;
   margin: 24px 24px 0;
+}
+
+.permission {
+  text-align: center;
+  &__cover {
+    background: #a8c42d center bottom/200px
+      url('/assets/images/tree/premium.png') no-repeat;
+    margin-bottom: 24px;
+    height: 200px;
+  }
+  &__title {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  p {
+    margin-bottom: 24px;
+  }
 }

@@ -329,17 +329,12 @@ h2 {
 }
 
 .voices {
-  column-count: 3;
-  column-gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
   @include sp {
-    column-count: 1;
-  }
-  > * {
-    width: 100%;
-    break-inside: avoid-column;
-    > * {
-      margin: 0 0 16px;
-    }
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
