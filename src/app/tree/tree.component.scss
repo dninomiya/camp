@@ -33,31 +33,55 @@ mat-card {
   }
 }
 
-h3 {
+.group-title {
   font-weight: 500;
   padding-bottom: 8px;
   border-bottom: 1px dashed rgba(black, 0.12);
-  margin-bottom: 16px;
+  margin: 40px 0 16px;
 }
 
 .item {
   text-align: center;
   transition: 0.3s;
-  filter: grayscale(100%);
-  opacity: 0.6;
-  &.active {
+  position: relative;
+  &.active &__icon {
     filter: grayscale(0);
     opacity: 1;
+  }
+  &:hover {
+    z-index: 10;
+  }
+  &:hover &__body {
+    display: block;
+  }
+  &__body-title {
+    font-weight: 500;
+    margin: 0 0 16px;
+    font-size: 14px;
+    line-height: 1;
+  }
+  &__body {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    background: #fff;
+    top: 80%;
+    left: 0;
+    padding: 24px;
+    width: 320px;
+    text-align-last: left;
   }
   &__icon {
     width: 64px;
     height: 64px;
     max-height: none;
     margin-bottom: 12px;
+    filter: grayscale(100%);
     border: 2px solid rgba(black, 0.6);
     display: block;
     box-sizing: border-box;
     border-radius: 16px;
+    opacity: 0.38;
   }
   &__title {
     font-size: 10px;
@@ -132,6 +156,7 @@ h3 {
   position: fixed;
   bottom: 16px;
   right: 16px;
+  z-index: 20;
   &--yet {
     filter: grayscale(100%);
     opacity: 0.38;
@@ -152,6 +177,9 @@ h3 {
 .resources {
   padding: 24px;
   margin: 0;
+  &--no-padding {
+    padding: 0;
+  }
   a {
     color: #00bcd4;
     &:before {

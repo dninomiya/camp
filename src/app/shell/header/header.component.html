@@ -79,7 +79,11 @@
             <mat-icon>compare_arrows</mat-icon>
             <span>チャンネル管理</span>
           </a>
-          <a *ngIf="user.admin" mat-menu-item routerLink="/tree-edit">
+          <a
+            *ngIf="user.admin && !isMobile"
+            mat-menu-item
+            routerLink="/tree-edit"
+          >
             <mat-icon>account_tree</mat-icon>
             <span>ツリー管理</span>
           </a>

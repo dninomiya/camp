@@ -2,19 +2,14 @@
   <mat-sidenav
     class="doc"
     #docDrawer
-    mode="over"
-    [position]="uiService.isMobile ? 'start' : 'end'"
+    position="end"
     [autoFocus]="false"
     (closed)="onCloseDoc()"
   >
     <button class="doc__close" mat-icon-button (click)="docDrawer.close()">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <div
-      *ngIf="doc$ | async as doc; else loading"
-      @fadeIn
-      [@.disabled]="!uiService.isMobile"
-    >
+    <div *ngIf="doc$ | async as doc; else loading">
       <ng-container *ngIf="doc.lesson">
         <div class="video">
           <iframe
@@ -108,18 +103,40 @@
           <div class="group">
             <div *ngFor="let groupId of section.groupIds">
               <ng-container *ngIf="section.group[groupId] as group">
-                <h3>{{ group.title }}</h3>
+                <h3 class="group-title" *ngIf="section.groupIds.length !== 1">
+                  {{ group.title }}
+                </h3>
                 <div class="items">
                   <ng-container *ngFor="let itemId of group.itemIds">
-                    <a
+                    <div
                       *ngIf="group.item[itemId] as item"
                       class="item"
-                      (click)="openDoc(item)"
                       [class.active]="completeMap[item.id]"
                     >
-                      <img [src]="item.iconURL" alt="" class="item__icon" />
+                      <a (click)="openDoc(item)">
+                        <img [src]="item.iconURL" alt="" class="item__icon" />
+                      </a>
                       <h4 class="item__title">{{ item.title }}</h4>
-                    </a>
+                      <div
+                        class="item__body mat-elevation-z2"
+                        *ngIf="!uiService.isMobile"
+                      >
+                        <h3 class="item__body-title">{{ item.title }}</h3>
+                        <ul
+                          *ngIf="item.resources?.length"
+                          class="resources resources--no-padding"
+                        >
+                          <li *ngFor="let resource of item.resources">
+                            <a
+                              [href]="resource.url"
+                              target="_blank"
+                              target="_blank"
+                              >{{ resource.title }}</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </ng-container>
                 </div>
               </ng-container>
@@ -130,3 +147,7 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<!-- <button mat-fab class="done" *ngIf="!isLoading">
+  <mat-icon>done</mat-icon>
+</button> -->
