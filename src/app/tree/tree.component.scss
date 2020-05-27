@@ -213,6 +213,7 @@ mat-card {
     @include icon(null, global);
     @include icon('developer.mozilla', mozilla);
     @include icon('github');
+    @include icon('algolia');
     @include icon('stackblitz');
     @include icon('firebase');
     @include icon('qiita');
