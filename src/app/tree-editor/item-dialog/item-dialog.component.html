@@ -2,42 +2,51 @@
   <h1 matDialogTitle>アイテム編集</h1>
 
   <mat-dialog-content>
-    <div class="icon">
-      <app-input-image
-        (file)="image = $event"
-        [options]="options"
-        [oldSrc]="item?.iconURL"
-      ></app-input-image>
+    <div class="head">
+      <div class="icon">
+        <app-input-image
+          (file)="image = $event; form.markAsDirty()"
+          [options]="options"
+          [oldSrc]="item?.iconURL"
+        ></app-input-image>
+      </div>
+      <div class="head__body">
+        <mat-form-field>
+          <mat-label>タイトル</mat-label>
+          <input
+            type="text"
+            matInput
+            #itemInput
+            formControlName="title"
+            required
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>lessonId</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="lessonId"
+            required
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </div>
     </div>
-    <mat-form-field>
-      <mat-label>タイトル</mat-label>
-      <input
-        type="text"
-        matInput
-        #itemInput
-        formControlName="title"
-        required
-        autocomplete="off"
-      />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>lessonId</mat-label>
-      <input
-        type="text"
-        matInput
-        formControlName="lessonId"
-        required
-        autocomplete="off"
-      />
-    </mat-form-field>
 
     <h3>リソース</h3>
-    <button mat-icon-button type="button" (click)="addResource()">
-      <mat-icon>add</mat-icon>
-    </button>
-    <div formArrayName="resources">
+    <div
+      formArrayName="resources"
+      cdkDropList
+      (cdkDropListDropped)="sortResources($event)"
+      class="resources"
+    >
       <ng-container *ngFor="let ctrl of resourceControls.controls; index as i">
-        <div [formGroupName]="i">
+        <div [formGroupName]="i" cdkDrag class="resource">
+          <button mat-icon-button>
+            <mat-icon>drag_handle</mat-icon>
+          </button>
           <mat-form-field>
             <mat-label>タイトル</mat-label>
             <input
@@ -58,12 +67,15 @@
               required
             />
           </mat-form-field>
+          <button mat-icon-button (click)="removeResource(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
-        <button mat-icon-button (click)="removeResource(i)">
-          <mat-icon>delete</mat-icon>
-        </button>
       </ng-container>
     </div>
+    <button mat-icon-button type="button" (click)="addResource()">
+      <mat-icon>add</mat-icon>
+    </button>
   </mat-dialog-content>
 
   <mat-dialog-actions>

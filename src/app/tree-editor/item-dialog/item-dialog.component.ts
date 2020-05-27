@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ImageOption } from './../../shared/input-image/input-image.component';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-item-dialog',
@@ -57,6 +58,7 @@ export class ItemDialogComponent implements OnInit {
 
   removeResource(i: number) {
     this.resourceControls.removeAt(i);
+    this.form.markAsDirty();
   }
 
   submit() {
@@ -64,5 +66,20 @@ export class ItemDialogComponent implements OnInit {
       data: this.form.value,
       image: this.image,
     });
+  }
+
+  sortResources(event: CdkDragDrop<any[]>) {
+    moveItemInArray(
+      this.resourceControls.value,
+      event.previousIndex,
+      event.currentIndex
+    );
+    moveItemInArray(
+      this.resourceControls.controls,
+      event.previousIndex,
+      event.currentIndex
+    );
+    console.log(this.resourceControls.value);
+    this.form.markAsDirty();
   }
 }

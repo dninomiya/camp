@@ -112,7 +112,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'tree',
+    path: 'atomic',
     data: {
       hideNav: true,
     },

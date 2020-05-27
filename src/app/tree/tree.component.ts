@@ -39,6 +39,11 @@ export class TreeComponent implements OnInit {
   private treeItemSource = new ReplaySubject<TreeItem>();
   private treeItem$: Observable<TreeItem> = this.treeItemSource.asObservable();
 
+  active: {
+    sectionId?: string;
+    groupId?: string;
+    itemId?: string;
+  } = {};
   isLoading = true;
   user$: Observable<User> = this.authService.authUser$.pipe(
     tap((user) => {
@@ -97,6 +102,7 @@ export class TreeComponent implements OnInit {
               if (group.item[id]) {
                 this.openDoc(group.item[id]);
                 status = true;
+                this.setActiveIds(section.id, group.id, id);
                 return true;
               }
             });
@@ -127,6 +133,14 @@ export class TreeComponent implements OnInit {
         id: item.id,
       },
     });
+  }
+
+  setActiveIds(sectionId: string, groupId: string, itemId: string) {
+    this.active = {
+      sectionId,
+      groupId,
+      itemId,
+    };
   }
 
   onCloseDoc() {

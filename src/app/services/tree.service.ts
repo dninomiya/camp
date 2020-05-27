@@ -154,4 +154,23 @@ export class TreeService {
       [key]: firestore.FieldValue.arrayUnion(itemId),
     });
   }
+
+  updateSectionOrder(sectionIds: string[]) {
+    this.db.doc(`core/section`).update({
+      sectionIds,
+    });
+  }
+
+  updateGroupOrder(sectionId: string, groupIds: string[]) {
+    this.db.doc(`sections/${sectionId}`).update({
+      groupIds,
+    });
+  }
+
+  updateItemOrder(sectionId: string, groupId: string, itemIds: string[]) {
+    const key = `group.${groupId}.itemIds`;
+    this.db.doc(`sections/${sectionId}`).update({
+      [key]: itemIds,
+    });
+  }
 }

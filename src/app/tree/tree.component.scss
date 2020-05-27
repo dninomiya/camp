@@ -9,6 +9,9 @@ mat-toolbar {
 mat-card {
   margin: 24px;
   padding: 40px;
+  &:last-child {
+    margin-bottom: 160px;
+  }
 }
 
 .spacer {
@@ -163,6 +166,14 @@ mat-card {
   }
 }
 
+.edit {
+  position: fixed;
+  bottom: 88px;
+  right: 16px;
+  z-index: 20;
+  background: #666;
+}
+
 .avatar {
   background: center/cover;
 }
@@ -181,7 +192,10 @@ mat-card {
     padding: 0;
   }
   a {
-    color: #00bcd4;
+    color: #1976d2;
+    &:hover {
+      text-decoration: underline;
+    }
     &:before {
       content: '';
       width: 1em;
@@ -195,9 +209,21 @@ mat-card {
     &:after {
       content: 'open_in_new';
       font-family: 'Material Icons';
+      padding-left: 2px;
+      display: inline-block;
     }
+    @include icon(null, global);
     @include icon('developer.mozilla', mozilla);
     @include icon('github');
     @include icon('stackblitz');
+    @include icon('firebase');
+    @include icon('qiita');
+    @include icon('codepen');
   }
+}
+
+.doc-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 24px 24px 0;
 }

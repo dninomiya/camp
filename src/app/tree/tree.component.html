@@ -26,6 +26,8 @@
           ></iframe>
         </div>
 
+        <h1 class="doc-title">{{ doc.title }}</h1>
+
         <article class="article">
           <markdown [data]="doc.lesson?.body"></markdown>
         </article>
@@ -38,6 +40,16 @@
           <a [href]="resource.url" target="_blank">{{ resource.title }}</a>
         </li>
       </ul>
+
+      <button
+        mat-fab
+        class="edit"
+        [routerLink]="['/tree-edit']"
+        [queryParams]="active"
+        *ngIf="(user$ | async)?.admin"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
 
       <button
         mat-fab
@@ -63,7 +75,7 @@
     <mat-toolbar>
       <a class="logo" routerLink="/">
         <img src="/assets/images/logo.png" alt="CAMP" />
-        <span class="logo__small">Skills</span>
+        <span class="logo__small">ATOMIC</span>
       </a>
       <span class="spacer"></span>
       <button
@@ -113,7 +125,12 @@
                       class="item"
                       [class.active]="completeMap[item.id]"
                     >
-                      <a (click)="openDoc(item)">
+                      <a
+                        (click)="
+                          openDoc(item);
+                          setActiveIds(section.id, groupId, itemId)
+                        "
+                      >
                         <img [src]="item.iconURL" alt="" class="item__icon" />
                       </a>
                       <h4 class="item__title">{{ item.title }}</h4>
@@ -147,7 +164,3 @@
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<!-- <button mat-fab class="done" *ngIf="!isLoading">
-  <mat-icon>done</mat-icon>
-</button> -->

@@ -1,3 +1,5 @@
+import { combineLatest } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ItemDialogComponent } from './item-dialog/item-dialog.component';
 import { InputDialogComponent } from './input-dialog/input-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,21 +18,45 @@ export class TreeEditorComponent implements OnInit {
   sections: TreeSection[];
   activeSection: TreeSection;
   activeGroup: TreeGroup;
+  private allSections$ = this.treeService.getAllSections();
 
-  constructor(private treeService: TreeService, private dialog: MatDialog) {
-    this.treeService.getAllSections().subscribe((sections) => {
-      this.sections = sections;
-      if (this.activeSection) {
+  constructor(
+    private treeService: TreeService,
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    combineLatest([this.route.queryParamMap, this.allSections$]).subscribe(
+      ([map, sections]) => {
+        this.sections = sections;
+        if (this.activeSection) {
+          this.activeSection = this.sections.find(
+            (sec) => sec?.id === this.activeSection.id
+          );
+        }
+        if (this.activeGroup) {
+          this.activeGroup = this.sections.find(
+            (sec) => sec?.id === this.activeSection.id
+          )?.group[this.activeGroup.id];
+        }
+
+        const sectionId = map.get('sectionId');
         this.activeSection = this.sections.find(
-          (sec) => sec?.id === this.activeSection.id
+          (section) => section.id === sectionId
         );
+
+        const groupId = map.get('groupId');
+        if (groupId) {
+          this.activeGroup = this.activeSection.group[groupId];
+          console.log(this.activeGroup);
+        }
+
+        const itemId = map.get('itemId');
+        if (itemId && this.activeGroup) {
+          this.openItemDialog(this.activeGroup.item[itemId]);
+        }
       }
-      if (this.activeGroup) {
-        this.activeGroup = this.sections.find(
-          (sec) => sec?.id === this.activeSection.id
-        )?.group[this.activeGroup.id];
-      }
-    });
+    );
   }
 
   ngOnInit(): void {}
@@ -82,6 +108,23 @@ export class TreeEditorComponent implements OnInit {
 
   sortSection(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.sections, event.previousIndex, event.currentIndex);
+    this.treeService.updateSectionOrder(
+      this.sections.map((section) => section.id)
+    );
+  }
+
+  sortGroup(event: CdkDragDrop<string[]>, ids: string[]) {
+    moveItemInArray(ids, event.previousIndex, event.currentIndex);
+    this.treeService.updateGroupOrder(this.activeSection.id, ids);
+  }
+
+  sortItem(event: CdkDragDrop<string[]>, ids: string[]) {
+    moveItemInArray(ids, event.previousIndex, event.currentIndex);
+    this.treeService.updateItemOrder(
+      this.activeSection.id,
+      this.activeGroup.id,
+      ids
+    );
   }
 
   deleteGroup() {
@@ -140,9 +183,17 @@ export class TreeEditorComponent implements OnInit {
       .open(ItemDialogComponent, {
         data: oldItem,
         width: '800px',
+        autoFocus: true,
       })
       .afterClosed()
       .subscribe((result) => {
+        this.router.navigate([], {
+          queryParams: {
+            itemId: null,
+          },
+          queryParamsHandling: 'merge',
+        });
+
         if (!result) return;
 
         if (oldItem) {
