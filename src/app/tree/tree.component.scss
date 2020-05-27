@@ -185,6 +185,9 @@ mat-card {
   &--no-padding {
     padding: 0;
   }
+  li + li {
+    margin-top: 8px;
+  }
   a {
     color: #1976d2;
     &:hover {
@@ -206,9 +209,16 @@ mat-card {
       padding-left: 2px;
       display: inline-block;
     }
+    &[href^='http']:before {
+      background-image: url(/assets/images/tree/global.png);
+    }
+
     @include icon(null, global);
     @include icon('developer.mozilla', mozilla);
     @include icon('github');
+    @include icon('algolia');
+    @include icon('stripe');
+    @include icon('sendgrid');
     @include icon('stackblitz');
     @include icon('firebase');
     @include icon('qiita');

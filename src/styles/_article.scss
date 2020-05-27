@@ -300,6 +300,25 @@
   }
 }
 
-.doc .article * {
-  font-size: 14px;
+.doc .article {
+  * {
+    font-size: 14px;
+  }
+  h2,
+  h3,
+  h4,
+  h5 {
+    a {
+      display: none !important;
+    }
+  }
+  h3 {
+    margin-top: 32px;
+  }
+  code {
+    font-size: 12px;
+  }
+  .info * {
+    font-size: 12px;
+  }
 }
