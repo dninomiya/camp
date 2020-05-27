@@ -1,0 +1,31 @@
+.icon {
+  width: 80px;
+  height: 80px;
+  position: relative;
+}
+
+mat-form-field {
+  display: block;
+}
+
+.resources {
+  border: 1px solid rgba(black, 0.12);
+}
+
+.resource {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr auto;
+  gap: 16px;
+  padding: 16px;
+  & + & {
+    border-top: 1px solid rgba(black, 0.12);
+  }
+}
+
+.head {
+  display: flex;
+  &__body {
+    padding-left: 16px;
+    flex: 1;
+  }
+}

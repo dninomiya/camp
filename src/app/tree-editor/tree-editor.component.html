@@ -1,0 +1,142 @@
+<mat-card *ngIf="sections" class="wrap">
+  <div>
+    <mat-nav-list cdkDropList (cdkDropListDropped)="sortSection($event)">
+      <h2 matSubheader class="list-heading">
+        <span>セクション</span>
+        <button mat-icon-button (click)="openTitleDialog('section')">
+          <mat-icon>add</mat-icon>
+        </button>
+      </h2>
+      <mat-divider inset></mat-divider>
+      <ng-container *ngFor="let section of sections; last as last">
+        <mat-list-item
+          [class.active]="activeSection?.id === section?.id"
+          (click)="activeSection = section"
+          routerLink="./"
+          [queryParams]="{ sectionId: section.id }"
+          queryParamsHandling="merge"
+          cdkDrag
+          *ngIf="section"
+        >
+          <mat-icon matListIcon cdkDragHandle>drag_handle</mat-icon>
+          <span matLine>{{ section?.title }}</span>
+          <button mat-icon-button [matMenuTriggerFor]="sectionMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #sectionMenu>
+            <button
+              mat-menu-item
+              (click)="openTitleDialog('section', section.title)"
+            >
+              <mat-icon>edit</mat-icon>
+              <span>編集</span>
+            </button>
+            <button mat-menu-item (click)="deleteSection()">
+              <mat-icon>delete</mat-icon>
+              <span>削除</span>
+            </button>
+          </mat-menu>
+        </mat-list-item>
+        <mat-divider inset *ngIf="!last"></mat-divider>
+      </ng-container>
+    </mat-nav-list>
+  </div>
+  <div>
+    <mat-nav-list
+      cdkDropList
+      (cdkDropListDropped)="sortGroup($event, activeSection?.groupIds)"
+    >
+      <h2 matSubheader class="list-heading">
+        <span>グループ</span>
+        <button
+          [disabled]="!activeSection"
+          mat-icon-button
+          (click)="openTitleDialog('group')"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </h2>
+      <mat-divider inset></mat-divider>
+      <ng-container
+        *ngFor="let groupId of activeSection?.groupIds; last as last"
+      >
+        <mat-list-item
+          cdkDrag
+          *ngIf="activeSection.group[groupId] as group"
+          routerLink="./"
+          [queryParams]="{ groupId: groupId }"
+          queryParamsHandling="merge"
+          [class.active]="activeGroup?.id === group.id"
+        >
+          <mat-icon matListIcon cdkDragHandle>drag_handle</mat-icon>
+          <span matLine>{{ group.title }}</span>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu>
+            <button
+              mat-menu-item
+              (click)="openTitleDialog('group', group.title)"
+            >
+              <mat-icon>edit</mat-icon>
+              <span>編集</span>
+            </button>
+            <button mat-menu-item (click)="deleteGroup()">
+              <mat-icon>delete</mat-icon>
+              <span>削除</span>
+            </button>
+          </mat-menu>
+        </mat-list-item>
+        <mat-divider inset *ngIf="!last"></mat-divider>
+      </ng-container>
+    </mat-nav-list>
+  </div>
+  <div>
+    <mat-nav-list
+      cdkDropList
+      (cdkDropListDropped)="sortItem($event, activeGroup?.itemIds)"
+    >
+      <h2 matSubheader class="list-heading">
+        <span>アイテム</span>
+        <button
+          [disabled]="!activeGroup"
+          mat-icon-button
+          (click)="openItemDialog()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </h2>
+      <mat-divider inset></mat-divider>
+      <ng-container *ngFor="let itemId of activeGroup?.itemIds; last as last">
+        <mat-list-item
+          routerLink="./"
+          [queryParams]="{ itemId: itemId }"
+          queryParamsHandling="merge"
+          cdkDrag
+          *ngIf="activeGroup.item[itemId] as item"
+        >
+          <mat-icon matListIcon cdkDragHandle>drag_handle</mat-icon>
+          <span matLine>{{ item.title }}</span>
+          <button
+            mat-icon-button
+            (click)="$event.stopPropagation()"
+            [matMenuTriggerFor]="itemMenu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #itemMenu>
+            <button mat-menu-item (click)="openItemDialog(item)">
+              <mat-icon>edit</mat-icon>
+              <span>編集</span>
+            </button>
+            <button mat-menu-item (click)="deleteItem(itemId)">
+              <mat-icon>delete</mat-icon>
+              <span>削除</span>
+            </button>
+          </mat-menu>
+        </mat-list-item>
+        <mat-divider inset *ngIf="!last"></mat-divider>
+      </ng-container>
+    </mat-nav-list>
+  </div>
+</mat-card>

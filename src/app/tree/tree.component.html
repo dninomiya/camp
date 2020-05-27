@@ -1,0 +1,166 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    class="doc"
+    #docDrawer
+    position="end"
+    [autoFocus]="false"
+    (closed)="onCloseDoc()"
+  >
+    <button class="doc__close" mat-icon-button (click)="docDrawer.close()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div *ngIf="doc$ | async as doc; else loading">
+      <ng-container *ngIf="doc.lesson">
+        <div class="video">
+          <iframe
+            [src]="
+              'https://player.vimeo.com/video/' +
+                doc.lesson.videoId +
+                '?autoplay=1' | safe: 'resourceUrl'
+            "
+            width="640"
+            height="360"
+            frameborder="0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <h1 class="doc-title">{{ doc.title }}</h1>
+
+        <article class="article">
+          <markdown [data]="doc.lesson?.body"></markdown>
+        </article>
+      </ng-container>
+
+      <mat-divider *ngIf="doc.lesson && doc.resources?.length"></mat-divider>
+
+      <ul *ngIf="doc.resources" class="resources">
+        <li *ngFor="let resource of doc.resources">
+          <a [href]="resource.url" target="_blank">{{ resource.title }}</a>
+        </li>
+      </ul>
+
+      <button
+        mat-fab
+        class="edit"
+        [routerLink]="['/tree-edit']"
+        [queryParams]="active"
+        *ngIf="(user$ | async)?.admin"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-fab
+        class="done"
+        (click)="toggleStatus(doc.id)"
+        [class.done--yet]="!completeMap[doc.id]"
+      >
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
+    <ng-template #loading>
+      <div class="loading">
+        <mat-spinner *ngIf="!uiService.isMobile" [diameter]="40"></mat-spinner>
+        <mat-progress-bar
+          mode="indeterminate"
+          *ngIf="uiService.isMobile"
+        ></mat-progress-bar>
+      </div>
+    </ng-template>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <a class="logo" routerLink="/">
+        <img src="/assets/images/logo.png" alt="CAMP" />
+        <span class="logo__small">ATOMIC</span>
+      </a>
+      <span class="spacer"></span>
+      <button
+        *ngIf="(user$ | async)?.admin"
+        mat-icon-button
+        routerLink="/tree-edit"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        *ngIf="!(user$ | async) && !isLoading"
+        mat-raised-button
+        color="primary"
+        (click)="login()"
+      >
+        ログイン/登録
+      </button>
+      <button
+        class="avatar"
+        *ngIf="user$ | async as user"
+        [style.background-image]="'url(' + user.avatarURL + ')'"
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+      ></button>
+      <mat-menu #menu>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>ログアウト</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <div class="wrap">
+      <div>
+        <mat-card *ngFor="let section of sections$ | async">
+          <h2 class="section-title">{{ section.title }}</h2>
+          <div class="group">
+            <div *ngFor="let groupId of section.groupIds">
+              <ng-container *ngIf="section.group[groupId] as group">
+                <h3 class="group-title" *ngIf="section.groupIds.length !== 1">
+                  {{ group.title }}
+                </h3>
+                <div class="items">
+                  <ng-container *ngFor="let itemId of group.itemIds">
+                    <div
+                      *ngIf="group.item[itemId] as item"
+                      class="item"
+                      [class.active]="completeMap[item.id]"
+                    >
+                      <a
+                        (click)="
+                          openDoc(item);
+                          setActiveIds(section.id, groupId, itemId)
+                        "
+                      >
+                        <img [src]="item.iconURL" alt="" class="item__icon" />
+                      </a>
+                      <h4 class="item__title">{{ item.title }}</h4>
+                      <div
+                        class="item__body mat-elevation-z2"
+                        *ngIf="!uiService.isMobile"
+                      >
+                        <h3 class="item__body-title">{{ item.title }}</h3>
+                        <ul
+                          *ngIf="item.resources?.length"
+                          class="resources resources--no-padding"
+                        >
+                          <li *ngFor="let resource of item.resources">
+                            <a
+                              [href]="resource.url"
+                              target="_blank"
+                              target="_blank"
+                              >{{ resource.title }}</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

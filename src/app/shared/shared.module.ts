@@ -51,6 +51,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { FooterComponent } from './footer/footer.component';
 import { RatePipe } from './rate.pipe';
 import { PlanPipe } from './plan.pipe';
+import { CustomerPipe } from './customer.pipe';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { PlanPipe } from './plan.pipe';
     RefinementListComponent,
     RatePipe,
     PlanPipe,
+    CustomerPipe,
   ],
   imports: [
     CommonModule,
@@ -153,6 +155,7 @@ import { PlanPipe } from './plan.pipe';
     RefinementListComponent,
     RatePipe,
     PlanPipe,
+    CustomerPipe,
   ],
 })
 export class SharedModule {}

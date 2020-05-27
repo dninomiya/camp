@@ -1,0 +1,229 @@
+@import 'mixins';
+
+mat-toolbar {
+  button + button {
+    margin-left: 16px;
+  }
+}
+
+mat-card {
+  margin: 24px;
+  padding: 40px;
+  &:last-child {
+    margin-bottom: 160px;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 40px;
+  line-height: 1;
+}
+
+.logo {
+  height: 24px;
+  &__small {
+    vertical-align: 4px;
+    margin-left: 8px;
+    line-height: 1;
+    margin-left: 4px;
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+
+.group-title {
+  font-weight: 500;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(black, 0.12);
+  margin: 40px 0 16px;
+}
+
+.item {
+  text-align: center;
+  transition: 0.3s;
+  position: relative;
+  &.active &__icon {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+  &:hover {
+    z-index: 10;
+  }
+  &:hover &__body {
+    display: block;
+  }
+  &__body-title {
+    font-weight: 500;
+    margin: 0 0 16px;
+    font-size: 14px;
+    line-height: 1;
+  }
+  &__body {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    background: #fff;
+    top: 80%;
+    left: 0;
+    padding: 24px;
+    width: 320px;
+    text-align-last: left;
+  }
+  &__icon {
+    width: 64px;
+    height: 64px;
+    max-height: none;
+    margin-bottom: 12px;
+    filter: grayscale(100%);
+    border: 2px solid rgba(black, 0.6);
+    display: block;
+    box-sizing: border-box;
+    border-radius: 16px;
+    opacity: 0.38;
+  }
+  &__title {
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0;
+  }
+}
+
+.items {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fill, 64px);
+}
+
+.wrap {
+  position: relative;
+}
+
+.doc {
+  width: 400px;
+  max-width: 100%;
+  padding-bottom: 80px;
+  &__close {
+    display: none;
+    @include sp {
+      display: block;
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+    }
+  }
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @include sp {
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: none;
+  }
+}
+
+.video {
+  position: relative;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  background: #eeedf3;
+  width: 100%;
+  @include sp {
+    border-radius: 0;
+  }
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.article {
+  padding: 24px;
+}
+
+.done {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 20;
+  &--yet {
+    filter: grayscale(100%);
+    opacity: 0.38;
+  }
+}
+
+.edit {
+  position: fixed;
+  bottom: 88px;
+  right: 16px;
+  z-index: 20;
+  background: #666;
+}
+
+.avatar {
+  background: center/cover;
+}
+
+@mixin icon($domain, $name: $domain) {
+  &[href^="https://#{$domain}"]:before
+  {
+    background-image: url(/assets/images/tree/#{$name}.png);
+  }
+}
+
+.resources {
+  padding: 24px;
+  margin: 0;
+  &--no-padding {
+    padding: 0;
+  }
+  a {
+    color: #1976d2;
+    &:hover {
+      text-decoration: underline;
+    }
+    &:before {
+      content: '';
+      width: 1em;
+      height: 1em;
+      background: #000;
+      display: inline-block;
+      background: center/contain no-repeat;
+      vertical-align: -2px;
+      margin-right: 8px;
+    }
+    &:after {
+      content: 'open_in_new';
+      font-family: 'Material Icons';
+      padding-left: 2px;
+      display: inline-block;
+    }
+    @include icon(null, global);
+    @include icon('developer.mozilla', mozilla);
+    @include icon('github');
+    @include icon('stackblitz');
+    @include icon('firebase');
+    @include icon('qiita');
+    @include icon('codepen');
+  }
+}
+
+.doc-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 24px 24px 0;
+}

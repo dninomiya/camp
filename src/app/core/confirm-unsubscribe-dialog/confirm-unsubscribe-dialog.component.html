@@ -1,5 +1,5 @@
 <ng-container *ngIf="!isLoading; else loading">
-  <h1>{{ data.planId | plan }}プランを解約しますか？</h1>
+  <h1>{{ data.planId | plan }}自動更新を停止しますか？</h1>
 
   <form [formGroup]="form" (ngSubmit)="unsubscribe()">
     <mat-dialog-content>
@@ -27,7 +27,7 @@
     <mat-dialog-actions>
       <button mat-button type="button" matDialogClose>キャンセル</button>
       <button mat-raised-button color="primary" [disabled]="form.invalid">
-        解約
+        更新停止
       </button>
     </mat-dialog-actions>
   </form>
@@ -36,6 +36,6 @@
 <ng-template #loading>
   <div class="is-loading">
     <mat-spinner [diameter]="40"></mat-spinner>
-    <p>解約しています。</p>
+    <p>停止しています。</p>
   </div>
 </ng-template>

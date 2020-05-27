@@ -22,6 +22,15 @@
       <ais-configure [searchParameters]="searchParameters"> </ais-configure>
       <app-search-kit></app-search-kit>
     </ais-instantsearch>
+    <button
+      class="skill-button"
+      mat-icon-button
+      routerLink="/atomic"
+      matTooltip="スキルツリー"
+      *ngIf="!isMobile"
+    >
+      <mat-icon>account_tree</mat-icon>
+    </button>
     <ng-container *ngIf="user$ | async as user; else loginButton">
       <div class="btns">
         <div class="toolbar">
@@ -69,6 +78,14 @@
           >
             <mat-icon>compare_arrows</mat-icon>
             <span>チャンネル管理</span>
+          </a>
+          <a
+            *ngIf="user.admin && !isMobile"
+            mat-menu-item
+            routerLink="/tree-edit"
+          >
+            <mat-icon>account_tree</mat-icon>
+            <span>ツリー管理</span>
           </a>
           <button mat-menu-item (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>

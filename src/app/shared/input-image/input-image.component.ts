@@ -5,6 +5,17 @@ import { StorageService } from 'src/app/services/storage.service';
 import { first } from 'rxjs/operators';
 import * as Jimp from 'jimp';
 
+export interface ImageOption {
+  path?: string;
+  label?: boolean;
+  crop?: boolean;
+  size: {
+    width: number;
+    height: number;
+    limitMb?: number;
+  };
+}
+
 @Component({
   selector: 'app-input-image',
   templateUrl: './input-image.component.html',
@@ -15,16 +26,7 @@ export class InputImageComponent implements OnInit {
   @Output() file = new EventEmitter<string>();
 
   @Input() oldSrc?: string;
-  @Input() options: {
-    path?: string;
-    label?: boolean;
-    crop?: boolean;
-    size: {
-      width: number;
-      height: number;
-      limitMb: number;
-    };
-  };
+  @Input() options: ImageOption;
 
   src: string;
   isOver: boolean;
@@ -97,7 +99,6 @@ export class InputImageComponent implements OnInit {
               resolve(base64);
             });
         });
-        console.log(fileReader.result);
       };
 
       fileReader.readAsArrayBuffer(file);
