@@ -39,6 +39,7 @@ export class TreeComponent implements OnInit {
   private treeItemSource = new ReplaySubject<TreeItem>();
   private treeItem$: Observable<TreeItem> = this.treeItemSource.asObservable();
 
+  activeLessonId: string;
   active: {
     sectionId?: string;
     groupId?: string;
@@ -56,11 +57,12 @@ export class TreeComponent implements OnInit {
   doc$: Observable<ItemWithLesson> = this.treeItem$.pipe(
     switchMap((treeItem) => {
       if (treeItem) {
+        this.activeLessonId = treeItem.lessonId;
         return combineLatest([
           of(treeItem),
           this.lessonService
             .getLesson(treeItem.lessonId)
-            .pipe(catchError((error) => of(null))),
+            .pipe(catchError(() => of(null))),
         ]);
       } else {
         return of(null);

@@ -3,72 +3,86 @@
     class="doc"
     #docDrawer
     position="end"
+    fixedInViewport
     [autoFocus]="false"
     (closed)="onCloseDoc()"
   >
-    <button class="doc__close" mat-icon-button (click)="docDrawer.close()">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <div *ngIf="doc$ | async as doc; else loading">
-      <ng-container *ngIf="doc.lesson">
-        <div class="video">
-          <iframe
-            [src]="
-              'https://player.vimeo.com/video/' +
-                doc.lesson.videoId +
-                '?autoplay=1' | safe: 'resourceUrl'
-            "
-            width="640"
-            height="360"
-            frameborder="0"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-          ></iframe>
-        </div>
-
-        <h1 class="doc-title">{{ doc.title }}</h1>
-
-        <article class="article">
-          <markdown [data]="doc.lesson?.body"></markdown>
-        </article>
-      </ng-container>
-
-      <mat-divider *ngIf="doc.lesson && doc.resources?.length"></mat-divider>
-
-      <ul *ngIf="doc.resources" class="resources">
-        <li *ngFor="let resource of doc.resources">
-          <a [href]="resource.url" target="_blank">{{ resource.title }}</a>
-        </li>
-      </ul>
-
-      <button
-        mat-fab
-        class="edit"
-        [routerLink]="['/tree-edit']"
-        [queryParams]="active"
-        *ngIf="(user$ | async)?.admin"
-      >
-        <mat-icon>edit</mat-icon>
+    <div class="doc__body">
+      <button class="doc__close" mat-icon-button (click)="docDrawer.close()">
+        <mat-icon>arrow_back</mat-icon>
       </button>
+      <div *ngIf="doc$ | async as doc; else loading">
+        <ng-container *ngIf="doc.lesson; else blankLesson">
+          <div class="video">
+            <iframe
+              [src]="
+                'https://player.vimeo.com/video/' +
+                  doc.lesson.videoId +
+                  '?autoplay=1' | safe: 'resourceUrl'
+              "
+              width="640"
+              height="360"
+              frameborder="0"
+              allow="autoplay; fullscreen"
+              allowfullscreen
+            ></iframe>
+          </div>
 
-      <button
-        mat-fab
-        class="done"
-        (click)="toggleStatus(doc.id)"
-        [class.done--yet]="!completeMap[doc.id]"
-      >
-        <mat-icon>done</mat-icon>
-      </button>
-    </div>
-    <ng-template #loading>
-      <div class="loading">
-        <mat-spinner *ngIf="!uiService.isMobile" [diameter]="40"></mat-spinner>
-        <mat-progress-bar
-          mode="indeterminate"
-          *ngIf="uiService.isMobile"
-        ></mat-progress-bar>
+          <h1 class="doc-title">{{ doc.title }}</h1>
+
+          <article class="article">
+            <markdown [data]="doc.lesson?.body"></markdown>
+          </article>
+        </ng-container>
+        <ng-template #blankLesson>
+          <div class="permission" *ngIf="activeLessonId">
+            <figure class="permission__cover"></figure>
+            <h2 class="permission__title">一緒にサービスを作ろう！</h2>
+            <p>このレッスンは有料会員専用です。</p>
+            <button
+              mat-raised-button
+              color="primary"
+              routerLink="/about"
+              fragment="plan"
+            >
+              プランを見る
+            </button>
+          </div>
+        </ng-template>
+
+        <mat-divider *ngIf="doc.lesson && doc.resources?.length"></mat-divider>
+
+        <ul *ngIf="doc.resources?.length" class="resources">
+          <li *ngFor="let resource of doc.resources">
+            <a [href]="resource.url" target="_blank">{{ resource.title }}</a>
+          </li>
+        </ul>
+
+        <button
+          mat-fab
+          class="edit"
+          [routerLink]="['/tree-edit']"
+          [queryParams]="active"
+          *ngIf="(user$ | async)?.admin"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-fab
+          class="done"
+          (click)="toggleStatus(doc.id)"
+          [class.done--yet]="!completeMap[doc.id]"
+        >
+          <mat-icon>done</mat-icon>
+        </button>
       </div>
-    </ng-template>
+      <ng-template #loading>
+        <div class="loading">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+      </ng-template>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
