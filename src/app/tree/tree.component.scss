@@ -108,9 +108,6 @@ mat-card {
   width: 400px;
   max-width: 100%;
   box-sizing: border-box;
-  &__body {
-    padding-bottom: 80px;
-  }
   &__close {
     display: none;
     @include sp {
@@ -241,4 +238,8 @@ mat-card {
   p {
     margin-bottom: 24px;
   }
+}
+
+mat-sidenav-container {
+  min-height: 100%;
 }

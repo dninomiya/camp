@@ -13,7 +13,7 @@
       </button>
       <div *ngIf="doc$ | async as doc; else loading">
         <ng-container *ngIf="doc.lesson; else blankLesson">
-          <div class="video">
+          <div class="video" *ngIf="doc.lesson.videoId">
             <iframe
               [src]="
                 'https://player.vimeo.com/video/' +
