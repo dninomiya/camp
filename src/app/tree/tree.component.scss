@@ -206,6 +206,10 @@ mat-card {
       padding-left: 2px;
       display: inline-block;
     }
+    &[href^='http']:before {
+      background-image: url(/assets/images/tree/global.png);
+    }
+
     @include icon(null, global);
     @include icon('developer.mozilla', mozilla);
     @include icon('github');
