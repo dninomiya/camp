@@ -214,6 +214,8 @@ mat-card {
     @include icon('developer.mozilla', mozilla);
     @include icon('github');
     @include icon('algolia');
+    @include icon('stripe');
+    @include icon('sendgrid');
     @include icon('stackblitz');
     @include icon('firebase');
     @include icon('qiita');
