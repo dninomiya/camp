@@ -1,6 +1,6 @@
 <mat-card *ngIf="sections" class="wrap">
   <div>
-    <mat-nav-list cdkDropList (cdkDropListDropped)="sortSection($event)">
+    <mat-nav-list dense cdkDropList (cdkDropListDropped)="sortSection($event)">
       <h2 matSubheader class="list-heading">
         <span>セクション</span>
         <button mat-icon-button (click)="openTitleDialog('section')">
@@ -10,6 +10,7 @@
       <mat-divider inset></mat-divider>
       <ng-container *ngFor="let section of sections; last as last">
         <mat-list-item
+          dense
           [class.active]="activeSection?.id === section?.id"
           (click)="activeSection = section"
           routerLink="./"
@@ -43,6 +44,7 @@
   </div>
   <div>
     <mat-nav-list
+      dense
       cdkDropList
       (cdkDropListDropped)="sortGroup($event, activeSection?.groupIds)"
     >
@@ -61,6 +63,7 @@
         *ngFor="let groupId of activeSection?.groupIds; last as last"
       >
         <mat-list-item
+          dense
           cdkDrag
           *ngIf="activeSection.group[groupId] as group"
           routerLink="./"
@@ -93,6 +96,7 @@
   </div>
   <div>
     <mat-nav-list
+      dense
       cdkDropList
       (cdkDropListDropped)="sortItem($event, activeGroup?.itemIds)"
     >
@@ -109,6 +113,7 @@
       <mat-divider inset></mat-divider>
       <ng-container *ngFor="let itemId of activeGroup?.itemIds; last as last">
         <mat-list-item
+          dense
           routerLink="./"
           [queryParams]="{ itemId: itemId }"
           queryParamsHandling="merge"

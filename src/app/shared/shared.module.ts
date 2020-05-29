@@ -1,3 +1,4 @@
+import { ResourceIconPipe } from './resource-icon.pipe';
 import { NgxPicaModule } from '@digitalascetic/ngx-pica';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -76,6 +77,7 @@ import { CustomerPipe } from './customer.pipe';
     RatePipe,
     PlanPipe,
     CustomerPipe,
+    ResourceIconPipe,
   ],
   imports: [
     CommonModule,
@@ -144,6 +146,7 @@ import { CustomerPipe } from './customer.pipe';
     PrivacyLabelPipe,
     PrivacyIconPipe,
     MatDialogModule,
+    ResourceIconPipe,
     InputImageComponent,
     LimitPipe,
     CommentComponent,

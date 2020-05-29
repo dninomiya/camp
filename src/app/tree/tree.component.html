@@ -37,26 +37,82 @@
         <ng-template #blankLesson>
           <div class="permission" *ngIf="activeLessonId">
             <figure class="permission__cover"></figure>
-            <h2 class="permission__title">一緒にサービスを作ろう！</h2>
-            <p>このレッスンは有料会員専用です。</p>
-            <button
-              mat-raised-button
-              color="primary"
-              routerLink="/about"
-              fragment="plan"
-            >
-              プランを見る
-            </button>
+            <h2 class="permission__title">MEMBER ONLY</h2>
+            <p class="permission__description">
+              CAMPに参加してコンテンツを解放しましょう
+            </p>
+
+            <div class="plans">
+              <div class="plan">
+                <figure class="plan__image">
+                  <img src="assets/images/welcome/team.svg" alt="" />
+                </figure>
+                <div class="plan__body">
+                  <h3 class="plan__title">メンタープラン</h3>
+                  <p class="plan__description">
+                    メンターが徹底サポート。ソースレビューや毎日の進捗ミーティングなど、完全に実務として進めます。
+                  </p>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    routerLink="/intl/signup"
+                    [queryParams]="{ planId: 'mentor' }"
+                    fragment="plan"
+                  >
+                    プランを見る
+                  </button>
+                  <span class="plan__price"
+                    >{{ plan.mentor.amount | number }}円/月</span
+                  >
+                </div>
+              </div>
+              <div class="plan">
+                <figure class="plan__image plan__image--alone">
+                  <img src="assets/images/welcome/alone.svg" alt="" />
+                </figure>
+                <div class="plan__body">
+                  <h3 class="plan__title">ソロ/ライトプラン</h3>
+                  <p class="plan__description">
+                    教材見放題。なんでも質問し放題のソロプランと教材サポートありのライトプランがあります。
+                  </p>
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    routerLink="/intl/signup"
+                    [queryParams]="{ planId: 'solo' }"
+                    fragment="plan"
+                  >
+                    プランを見る
+                  </button>
+                  <span class="plan__price"
+                    >{{ plan.solo.amount | number }}円/月</span
+                  >
+                </div>
+              </div>
+            </div>
           </div>
         </ng-template>
 
-        <mat-divider *ngIf="doc.lesson && doc.resources?.length"></mat-divider>
-
-        <ul *ngIf="doc.resources?.length" class="resources">
-          <li *ngFor="let resource of doc.resources">
-            <a [href]="resource.url" target="_blank">{{ resource.title }}</a>
-          </li>
-        </ul>
+        <ng-container *ngIf="doc.resources?.length">
+          <mat-divider></mat-divider>
+          <mat-nav-list dense>
+            <h3 matSubheader>リソース</h3>
+            <a
+              mat-list-item
+              [href]="resource.url"
+              target="_blank"
+              *ngFor="let resource of doc.resources"
+            >
+              <mat-icon mat-list-icon svgIcon="github"></mat-icon>
+              <span matLine class="resource__title">{{ resource.title }}</span>
+              <span>
+                <mat-icon inline>
+                  open_in_new
+                </mat-icon>
+              </span>
+            </a>
+          </mat-nav-list>
+        </ng-container>
 
         <button
           mat-fab
@@ -152,20 +208,31 @@
                         class="item__body mat-elevation-z2"
                         *ngIf="!uiService.isMobile"
                       >
-                        <h3 class="item__body-title">{{ item.title }}</h3>
-                        <ul
-                          *ngIf="item.resources?.length"
-                          class="resources resources--no-padding"
-                        >
-                          <li *ngFor="let resource of item.resources">
-                            <a
-                              [href]="resource.url"
-                              target="_blank"
-                              target="_blank"
-                              >{{ resource.title }}</a
+                        <mat-nav-list *ngIf="item.resources?.length" dense>
+                          <h3 matSubheader>リソース</h3>
+                          <a
+                            mat-list-item
+                            [href]="resource.url"
+                            target="_blank"
+                            *ngFor="let resource of item.resources"
+                          >
+                            <mat-icon
+                              mat-list-icon
+                              [svgIcon]="resource.url | resourceIcon: 'svg'"
+                              >{{
+                                resource.url | resourceIcon: 'material'
+                              }}</mat-icon
                             >
-                          </li>
-                        </ul>
+                            <span matLine class="resource__title">{{
+                              resource.title
+                            }}</span>
+                            <span>
+                              <mat-icon inline>
+                                open_in_new
+                              </mat-icon>
+                            </span>
+                          </a>
+                        </mat-nav-list>
                       </div>
                     </div>
                   </ng-container>

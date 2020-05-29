@@ -173,4 +173,21 @@ export class TreeService {
       [key]: itemIds,
     });
   }
+
+  getSectionAndGroupByItemId(sections: TreeSection[], id: string) {
+    const result = {
+      sectionId: null,
+      groupId: null,
+    };
+    sections.some((section) => {
+      Object.values(section.group).some((group) => {
+        if (group.item[id]) {
+          result.sectionId = section.id;
+          result.groupId = group.id;
+          return true;
+        }
+      });
+      return !!result.sectionId;
+    });
+  }
 }

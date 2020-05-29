@@ -70,9 +70,8 @@ mat-card {
     background: #fff;
     top: 80%;
     left: 0;
-    padding: 24px;
     width: 320px;
-    text-align-last: left;
+    text-align: left;
   }
   &__icon {
     width: 64px;
@@ -105,7 +104,7 @@ mat-card {
 }
 
 .doc {
-  width: 400px;
+  width: 640px;
   max-width: 100%;
   box-sizing: border-box;
   &__close {
@@ -173,56 +172,9 @@ mat-card {
 }
 
 @mixin icon($domain, $name: $domain) {
-  &[href^="https://#{$domain}"]:before
+  &[href^="https://#{$domain}"] &__title:before
   {
     background-image: url(/assets/images/tree/#{$name}.png);
-  }
-}
-
-.resources {
-  padding: 24px;
-  margin: 0;
-  &--no-padding {
-    padding: 0;
-  }
-  li + li {
-    margin-top: 8px;
-  }
-  a {
-    color: #1976d2;
-    &:hover {
-      text-decoration: underline;
-    }
-    &:before {
-      content: '';
-      width: 1em;
-      height: 1em;
-      background: #000;
-      display: inline-block;
-      background: center/contain no-repeat;
-      vertical-align: -2px;
-      margin-right: 8px;
-    }
-    &:after {
-      content: 'open_in_new';
-      font-family: 'Material Icons';
-      padding-left: 2px;
-      display: inline-block;
-    }
-    &[href^='http']:before {
-      background-image: url(/assets/images/tree/global.png);
-    }
-
-    @include icon(null, global);
-    @include icon('developer.mozilla', mozilla);
-    @include icon('github');
-    @include icon('algolia');
-    @include icon('stripe');
-    @include icon('sendgrid');
-    @include icon('stackblitz');
-    @include icon('firebase');
-    @include icon('qiita');
-    @include icon('codepen');
   }
 }
 
@@ -234,6 +186,7 @@ mat-card {
 
 .permission {
   text-align: center;
+  margin-bottom: 40px;
   &__cover {
     background: #a8c42d center bottom/200px
       url('/assets/images/tree/premium.png') no-repeat;
@@ -241,12 +194,49 @@ mat-card {
     height: 200px;
   }
   &__title {
-    font-weight: bold;
+    font-weight: 500;
+    letter-spacing: 1px;
     font-size: 24px;
     margin-bottom: 16px;
   }
-  p {
+  &__description {
+    margin-bottom: 40px;
+  }
+}
+
+.plan {
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 80px;
+  @include sp {
+    display: block;
+  }
+  &__image {
+    width: 160px;
+    text-align: center;
+    margin-right: 40px;
+    &--alone img {
+      height: 160px;
+    }
+    @include sp {
+      margin: 0 auto 16px;
+    }
+  }
+  &__title {
+    margin: 0 0 16px;
+    font-weight: 500;
+  }
+  &__description {
     margin-bottom: 24px;
+  }
+  &__body {
+    text-align: left;
+    flex: 1;
+  }
+  &__price {
+    margin-left: 16px;
+    color: rgba(black, 0.6);
   }
 }
 

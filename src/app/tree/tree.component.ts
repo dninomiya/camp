@@ -1,3 +1,4 @@
+import { PLAN } from 'src/app/services/plan.service';
 import { UiService } from './../services/ui.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -39,6 +40,7 @@ export class TreeComponent implements OnInit {
   private treeItemSource = new ReplaySubject<TreeItem>();
   private treeItem$: Observable<TreeItem> = this.treeItemSource.asObservable();
 
+  plan = PLAN;
   activeLessonId: string;
   active: {
     sectionId?: string;
@@ -143,6 +145,7 @@ export class TreeComponent implements OnInit {
       groupId,
       itemId,
     };
+    console.log(this.active);
   }
 
   onCloseDoc() {

@@ -29,30 +29,28 @@ export class TreeEditorComponent implements OnInit {
     combineLatest([this.route.queryParamMap, this.allSections$]).subscribe(
       ([map, sections]) => {
         this.sections = sections;
-        if (this.activeSection) {
-          this.activeSection = this.sections.find(
-            (sec) => sec?.id === this.activeSection.id
-          );
-        }
-        if (this.activeGroup) {
-          this.activeGroup = this.sections.find(
-            (sec) => sec?.id === this.activeSection.id
-          )?.group[this.activeGroup.id];
-        }
 
         const sectionId = map.get('sectionId');
-        this.activeSection = this.sections.find(
-          (section) => section.id === sectionId
-        );
+        if (sectionId) {
+          this.activeSection = this.sections.find(
+            (section) => section.id === sectionId
+          );
+        } else {
+          this.router.navigate([], {
+            queryParams: {
+              sectionId: sections[0].id,
+              groupId: sections[0].groupIds[0],
+            },
+          });
+        }
 
         const groupId = map.get('groupId');
         if (groupId) {
           this.activeGroup = this.activeSection.group[groupId];
-          console.log(this.activeGroup);
         }
 
         const itemId = map.get('itemId');
-        if (itemId && this.activeGroup) {
+        if (itemId && this.activeSection && this.activeGroup) {
           this.openItemDialog(this.activeGroup.item[itemId]);
         }
       }
@@ -88,13 +86,17 @@ export class TreeEditorComponent implements OnInit {
   }
 
   updateGroup(title: string) {
-    this.treeService.updateGroup(
-      {
-        ...this.activeGroup,
-        title,
-      },
-      this.activeSection.id
-    );
+    this.treeService
+      .updateGroup(
+        {
+          ...this.activeGroup,
+          title,
+        },
+        this.activeSection.id
+      )
+      .then(() => {
+        this.activeGroup = Object.assign({}, this.activeGroup);
+      });
   }
 
   addItem(data: TreeItem, image: string) {
