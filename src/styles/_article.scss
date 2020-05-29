@@ -301,7 +301,7 @@
 
 .doc .article {
   * {
-    font-size: 14px;
+    font-size: 13px;
   }
   h2,
   h3,
@@ -311,11 +311,17 @@
       display: none !important;
     }
   }
+  h2 {
+    font-size: 14px;
+  }
   h3 {
     margin-top: 32px;
   }
   code {
     font-size: 12px;
+    * {
+      font-size: 12px;
+    }
   }
   .info * {
     font-size: 12px;

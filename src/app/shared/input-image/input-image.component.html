@@ -9,7 +9,9 @@
   <ng-container *ngIf="!src">
     <div class="placeholder__icon">
       <mat-icon class="mat-18" inline>add_photo_alternate</mat-icon>
-      <span *ngIf="options.label">{{options.size.width}} × {{options.size.height}}以上</span>
+      <span *ngIf="options.label"
+        >{{ options.size.width }} × {{ options.size.height }}以上</span
+      >
     </div>
   </ng-container>
   <input
@@ -17,6 +19,6 @@
     (change)="getFile(input.files[0])"
     #input
     accept="image/png, image/jpeg"
-    style="display: none"
+    style="display: none;"
   />
 </label>
