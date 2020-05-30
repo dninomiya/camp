@@ -9,7 +9,6 @@ mat-toolbar {
 mat-card {
   margin: 24px;
   padding: 40px;
-  background: #f5f5f5;
   &:last-child {
     margin-bottom: 160px;
   }
@@ -49,7 +48,6 @@ mat-card {
   transition: 0.3s;
   position: relative;
   .active &__icon {
-    box-shadow: inset 2px 2px 8px #d0d0d0, inset -7px -7px 8px #ffffff;
     img {
       filter: grayscale(0);
       opacity: 1;
@@ -82,12 +80,10 @@ mat-card {
     height: 64px;
     margin-bottom: 12px;
     box-sizing: border-box;
-    border-radius: 16px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f5f5f5;
-    box-shadow: 2px 2px 8px #d0d0d0, -7px -7px 8px #ffffff;
     img {
       filter: grayscale(100%);
       opacity: 0.38;

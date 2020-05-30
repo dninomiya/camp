@@ -197,6 +197,7 @@
                     >
                       <a
                         class="item__icon"
+                        [class.mat-elevation-z2]="!completeMap[item.id]"
                         (click)="
                           openDoc(item);
                           setActiveIds(section.id, groupId, itemId)
