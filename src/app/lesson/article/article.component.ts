@@ -362,8 +362,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       tap(() => {
         this.loadingService.endLoading();
         const fragment = this.route.snapshot.fragment;
-        const target = document.querySelector('#' + fragment);
-        if (fragment && target) {
+        if (fragment) {
           setTimeout(() => {
             document.querySelector('#' + fragment).scrollIntoView();
             window.scrollBy(0, -70);

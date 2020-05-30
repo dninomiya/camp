@@ -20,7 +20,7 @@ export class ItemDialogComponent implements OnInit {
 
   options: ImageOption = {
     label: true,
-    crop: true,
+    contain: true,
     size: {
       width: 160,
       height: 160,
@@ -79,7 +79,6 @@ export class ItemDialogComponent implements OnInit {
       event.previousIndex,
       event.currentIndex
     );
-    console.log(this.resourceControls.value);
     this.form.markAsDirty();
   }
 }

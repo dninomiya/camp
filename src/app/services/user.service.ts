@@ -18,7 +18,6 @@ export class UserService {
     uid: string,
     data: Partial<Omit<User, 'id' | 'createdAt' | 'admin'>>
   ): Promise<void> {
-    console.log(data);
     return this.db.doc<User>(`users/${uid}`).update(data);
   }
 

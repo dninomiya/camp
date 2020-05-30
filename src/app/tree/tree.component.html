@@ -8,7 +8,7 @@
     (closed)="onCloseDoc()"
   >
     <div class="doc__body">
-      <button class="doc__close" mat-icon-button (click)="docDrawer.close()">
+      <button class="doc__close" mat-fab (click)="docDrawer.close()">
         <mat-icon>arrow_back</mat-icon>
       </button>
       <div *ngIf="doc$ | async as doc; else loading">
@@ -95,7 +95,7 @@
 
         <ng-container *ngIf="doc.resources?.length">
           <mat-divider></mat-divider>
-          <mat-nav-list dense>
+          <mat-nav-list dense class="doc__resources">
             <h3 matSubheader>リソース</h3>
             <a
               mat-list-item

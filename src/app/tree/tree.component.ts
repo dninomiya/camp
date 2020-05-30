@@ -16,6 +16,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawer } from '@angular/material/sidenav';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ViewportScroller } from '@angular/common';
 
 interface ItemWithLesson extends TreeItem {
   lesson: Lesson;
@@ -40,6 +41,7 @@ export class TreeComponent implements OnInit {
   private treeItemSource = new ReplaySubject<TreeItem>();
   private treeItem$: Observable<TreeItem> = this.treeItemSource.asObservable();
 
+  lastPos: [number, number];
   plan = PLAN;
   activeLessonId: string;
   active: {
@@ -92,7 +94,8 @@ export class TreeComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    public uiService: UiService
+    public uiService: UiService,
+    private viewportScroller: ViewportScroller
   ) {}
 
   ngOnInit(): void {
@@ -137,6 +140,7 @@ export class TreeComponent implements OnInit {
         id: item.id,
       },
     });
+    this.lastPos = this.viewportScroller.getScrollPosition();
   }
 
   setActiveIds(sectionId: string, groupId: string, itemId: string) {
@@ -145,7 +149,6 @@ export class TreeComponent implements OnInit {
       groupId,
       itemId,
     };
-    console.log(this.active);
   }
 
   onCloseDoc() {

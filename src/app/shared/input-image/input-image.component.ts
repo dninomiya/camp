@@ -9,6 +9,7 @@ export interface ImageOption {
   path?: string;
   label?: boolean;
   crop?: boolean;
+  contain?: boolean;
   size: {
     width: number;
     height: number;
@@ -80,20 +81,19 @@ export class InputImageComponent implements OnInit {
       .toPromise();
   }
 
-  crop(
+  private jimp(
     file: File,
-    size: {
-      width: number;
-      height: number;
-    }
+    size: { width: number; height: number },
+    type: 'crop' | 'contain'
   ): Promise<string> {
+    const method = type === 'crop' ? 'cover' : 'contain';
+
     return new Promise((resolve) => {
       const fileReader = new FileReader();
 
       fileReader.onload = () => {
         Jimp.read(fileReader.result as string).then((result) => {
-          result
-            .cover(size.width, size.height)
+          result[method](size.width, size.height)
             .getBase64Async(Jimp.MIME_PNG)
             .then((base64) => {
               resolve(base64);
@@ -184,7 +184,9 @@ export class InputImageComponent implements OnInit {
       let base64Image: string;
 
       if (this.options.crop) {
-        base64Image = await this.crop(file, this.options.size);
+        base64Image = await this.jimp(file, this.options.size, 'crop');
+      } else if (this.options.contain) {
+        base64Image = await this.jimp(file, this.options.size, 'contain');
       } else {
         const imageFile = await this.resizeImage(file, this.options.size);
         base64Image = await this.getImageByFile(imageFile);
