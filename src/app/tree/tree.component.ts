@@ -145,7 +145,6 @@ export class TreeComponent implements OnInit {
       groupId,
       itemId,
     };
-    console.log(this.active);
   }
 
   onCloseDoc() {
