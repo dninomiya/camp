@@ -115,11 +115,18 @@ mat-card {
   box-sizing: border-box;
   &__close {
     display: none;
+    background: #666;
     @include sp {
       display: block;
       position: fixed;
       bottom: 16px;
       left: 16px;
+      z-index: 100;
+    }
+  }
+  &__resources {
+    @include sp {
+      margin-bottom: 80px;
     }
   }
 }
