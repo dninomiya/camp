@@ -47,18 +47,15 @@
           >
         </mat-select>
       </mat-form-field>
-      <div *ngIf="(lists$ | async)?.length === 0" class="create-cause">
-        <div class="cause-section">
-          <button
-            type="button"
-            mat-stroked-button
-            color="primary"
-            (click)="openNewListDialog(user.id)"
-          >
-            コースを作成
-          </button>
-        </div>
-      </div>
+      <button
+        *ngIf="(lists$ | async)?.length === 0"
+        type="button"
+        mat-stroked-button
+        color="primary"
+        (click)="openNewListDialog(user.id)"
+      >
+        コースを作成
+      </button>
       <mat-form-field *ngIf="vimeoUser">
         <mat-label>動画ID</mat-label>
         <mat-error *ngIf="form.get('videoId').hasError('videoId')"
@@ -73,18 +70,16 @@
         />
         <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon>
       </mat-form-field>
-      <div *ngIf="vimeoUser === null" class="connect-vimeo">
-        <div class="connect-vimeo">
-          <button
-            type="button"
-            mat-raised-button
-            (click)="openVideoUploader()"
-            color="primary"
-          >
-            Vimeoと接続
-          </button>
-        </div>
-      </div>
+      <button
+        *ngIf="vimeoUser === null"
+        type="button"
+        mat-raised-button
+        (click)="openVideoUploader()"
+        color="primary"
+      >
+        Vimeoと接続
+      </button>
+      <button mat-stroked-button>アトミック</button>
     </div>
     <div class="wrap">
       <div class="body">

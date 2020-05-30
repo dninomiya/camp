@@ -11,12 +11,17 @@ export interface LessonMeta {
   readonly updatedAt: firestore.Timestamp;
   readonly authorId: string;
   readonly thumbnailURL?: string;
+  readonly iconURL?: string;
 
   title: string;
   videoId?: string;
   public: boolean;
   free: boolean;
   tags?: string[];
+  resources?: {
+    title: string;
+    url: string;
+  }[];
 }
 
 export interface LessonTraction {

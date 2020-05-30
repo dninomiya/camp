@@ -35,7 +35,6 @@ import { EditorHelpComponent } from '../editor-help/editor-help.component';
 import { PlanService } from 'src/app/services/plan.service';
 import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
 import { VimeoService } from 'src/app/services/vimeo.service';
-import { Simplemde } from 'ng2-simplemde';
 import { addedDiff, updatedDiff } from 'deep-object-diff';
 import { VimeoUser } from 'src/app/interfaces/vimeo';
 import { environment } from 'src/environments/environment';
@@ -52,9 +51,6 @@ export class EditorComponent implements OnInit {
   @ViewChild('body', {
     static: false,
   })
-  simplemde: Simplemde;
-  prices: number[] = [100, 500, 1000, 1500, 5000, 10000, 25000, 50000, 100000];
-
   thumbnailOption = {
     path: '',
     size: {

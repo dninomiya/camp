@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 :host {
   display: block;
@@ -17,10 +17,11 @@
 
 .form-header {
   display: grid;
-  grid-template-columns: 120px 1fr auto auto auto;
+  grid-template-columns: 120px 1fr auto auto auto auto;
   gap: 0 16px;
-  padding: 8px 24px 8px 0;
+  padding-right: 24px;
   position: relative;
+  align-items: center;
   border-bottom: 1px solid rgba(black, 0.12);
   z-index: 10;
   mat-form-field {
@@ -36,11 +37,11 @@
 
 .thumbnail {
   position: relative;
-  margin: -8px 0;
   border-right: 1px solid rgba(black, 0.12);
+  height: 100%;
   &--invalid {
     &:after {
-      content: "";
+      content: '';
       cursor: pointer;
       position: absolute;
       top: 0;
@@ -166,22 +167,4 @@
 
 .actions {
   margin-left: auto;
-}
-
-.connect-vimeo {
-  align-self: center;
-  justify-self: center;
-}
-
-.cause-section {
-  align-self: center;
-  justify-self: center;
-}
-
-.create-cause {
-  align-self: center;
-}
-
-.connect-vimeo {
-  align-self: center;
 }
