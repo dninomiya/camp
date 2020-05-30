@@ -47,9 +47,11 @@ mat-card {
   text-align: center;
   transition: 0.3s;
   position: relative;
-  &.active &__icon {
-    filter: grayscale(0);
-    opacity: 1;
+  .active &__icon {
+    img {
+      filter: grayscale(0);
+      opacity: 1;
+    }
   }
   &:hover {
     z-index: 10;
@@ -76,14 +78,18 @@ mat-card {
   &__icon {
     width: 64px;
     height: 64px;
-    max-height: none;
     margin-bottom: 12px;
-    filter: grayscale(100%);
-    border: 2px solid rgba(black, 0.6);
-    display: block;
     box-sizing: border-box;
-    border-radius: 16px;
-    opacity: 0.38;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      filter: grayscale(100%);
+      opacity: 0.38;
+      width: 40px;
+      height: 40px;
+    }
   }
   &__title {
     font-size: 10px;

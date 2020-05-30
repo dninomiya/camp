@@ -196,12 +196,14 @@
                       [class.active]="completeMap[item.id]"
                     >
                       <a
+                        class="item__icon"
+                        [class.mat-elevation-z2]="!completeMap[item.id]"
                         (click)="
                           openDoc(item);
                           setActiveIds(section.id, groupId, itemId)
                         "
                       >
-                        <img [src]="item.iconURL" alt="" class="item__icon" />
+                        <img [src]="item.iconURL" alt="" />
                       </a>
                       <h4 class="item__title">{{ item.title }}</h4>
                       <div
