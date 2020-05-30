@@ -9,6 +9,7 @@ mat-toolbar {
 mat-card {
   margin: 24px;
   padding: 40px;
+  background: #f5f5f5;
   &:last-child {
     margin-bottom: 160px;
   }
@@ -47,9 +48,12 @@ mat-card {
   text-align: center;
   transition: 0.3s;
   position: relative;
-  &.active &__icon {
-    filter: grayscale(0);
-    opacity: 1;
+  .active &__icon {
+    box-shadow: inset 2px 2px 8px #d0d0d0, inset -7px -7px 8px #ffffff;
+    img {
+      filter: grayscale(0);
+      opacity: 1;
+    }
   }
   &:hover {
     z-index: 10;
@@ -76,14 +80,20 @@ mat-card {
   &__icon {
     width: 64px;
     height: 64px;
-    max-height: none;
     margin-bottom: 12px;
-    filter: grayscale(100%);
-    border: 2px solid rgba(black, 0.6);
-    display: block;
     box-sizing: border-box;
     border-radius: 16px;
-    opacity: 0.38;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    box-shadow: 2px 2px 8px #d0d0d0, -7px -7px 8px #ffffff;
+    img {
+      filter: grayscale(100%);
+      opacity: 0.38;
+      width: 40px;
+      height: 40px;
+    }
   }
   &__title {
     font-size: 10px;
