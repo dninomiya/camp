@@ -9,6 +9,7 @@ export class ResourceIconPipe implements PipeTransform {
     iconName?: string;
   }[] = [
     { url: 'github' },
+    { url: 'help.github', iconName: 'github' },
     { url: 'developer.mozilla', iconName: 'mozilla' },
     { url: 'algolia' },
     { url: 'stackblitz' },
