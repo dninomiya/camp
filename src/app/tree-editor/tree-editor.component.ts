@@ -189,13 +189,6 @@ export class TreeEditorComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((result) => {
-        this.router.navigate([], {
-          queryParams: {
-            itemId: null,
-          },
-          queryParamsHandling: 'merge',
-        });
-
         if (!result) return;
 
         if (oldItem) {
@@ -209,6 +202,13 @@ export class TreeEditorComponent implements OnInit {
         } else {
           this.addItem(result.data, result.image);
         }
+
+        this.router.navigate([], {
+          queryParams: {
+            itemId: null,
+          },
+          queryParamsHandling: 'merge',
+        });
       });
   }
 }
