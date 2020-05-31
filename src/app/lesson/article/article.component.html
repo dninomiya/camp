@@ -73,6 +73,28 @@
       <article class="article" *ngIf="permission$ | async">
         <markdown [data]="lesson.body"></markdown>
       </article>
+
+      <mat-nav-list dense *ngIf="lesson.resources?.length" class="resources">
+        <h3 matSubheader>参考リソース</h3>
+        <a
+          mat-list-item
+          [href]="resource.url"
+          target="_blank"
+          *ngFor="let resource of lesson.resources; last as last"
+        >
+          <mat-icon
+            mat-list-icon
+            [svgIcon]="resource.url | resourceIcon: 'svg'"
+            >{{ resource.url | resourceIcon: 'material' }}</mat-icon
+          >
+          <span matLine class="resource__title">{{ resource.title }}</span>
+          <span>
+            <mat-icon inline>
+              open_in_new
+            </mat-icon>
+          </span>
+        </a>
+      </mat-nav-list>
     </ng-container>
 
     <ng-template #noPermission>

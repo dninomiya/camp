@@ -1,4 +1,4 @@
-<mat-card *ngIf="sections" class="wrap">
+<mat-card *ngIf="tree" class="wrap">
   <div>
     <mat-nav-list dense cdkDropList (cdkDropListDropped)="sortSection($event)">
       <h2 matSubheader class="list-heading">
@@ -8,14 +8,11 @@
         </button>
       </h2>
       <mat-divider inset></mat-divider>
-      <ng-container *ngFor="let section of sections; last as last">
+      <ng-container *ngFor="let section of tree.sections; last as last">
         <mat-list-item
           dense
-          [class.active]="activeSection?.id === section?.id"
+          [class.active]="activeSection?.title === section?.title"
           (click)="activeSection = section"
-          routerLink="./"
-          [queryParams]="{ sectionId: section.id }"
-          queryParamsHandling="merge"
           cdkDrag
           *ngIf="section"
         >
@@ -46,7 +43,7 @@
     <mat-nav-list
       dense
       cdkDropList
-      (cdkDropListDropped)="sortGroup($event, activeSection?.groupIds)"
+      (cdkDropListDropped)="sortGroup($event, activeSection?.groups)"
     >
       <h2 matSubheader class="list-heading">
         <span>グループ</span>
@@ -60,16 +57,13 @@
       </h2>
       <mat-divider inset></mat-divider>
       <ng-container
-        *ngFor="let groupId of activeSection?.groupIds; last as last"
+        *ngFor="let group of activeSection?.groups; index as i; last as last"
       >
         <mat-list-item
           dense
           cdkDrag
-          *ngIf="activeSection.group[groupId] as group"
-          routerLink="./"
-          [queryParams]="{ groupId: groupId }"
-          queryParamsHandling="merge"
-          [class.active]="activeGroup?.id === group.id"
+          [class.active]="group.title === activeGroup?.title"
+          (click)="selectGroup(group)"
         >
           <mat-icon matListIcon cdkDragHandle>drag_handle</mat-icon>
           <span matLine>{{ group.title }}</span>
@@ -84,7 +78,7 @@
               <mat-icon>edit</mat-icon>
               <span>編集</span>
             </button>
-            <button mat-menu-item (click)="deleteGroup()">
+            <button mat-menu-item (click)="deleteGroup(i)">
               <mat-icon>delete</mat-icon>
               <span>削除</span>
             </button>
@@ -98,30 +92,21 @@
     <mat-nav-list
       dense
       cdkDropList
-      (cdkDropListDropped)="sortItem($event, activeGroup?.itemIds)"
+      (cdkDropListDropped)="sortItem($event, activeGroup?.atomicIds)"
     >
       <h2 matSubheader class="list-heading">
         <span>アイテム</span>
-        <button
-          [disabled]="!activeGroup"
-          mat-icon-button
-          (click)="openItemDialog()"
-        >
+        <button [disabled]="!activeGroup" mat-icon-button routerLink="/new">
           <mat-icon>add</mat-icon>
         </button>
       </h2>
       <mat-divider inset></mat-divider>
-      <ng-container *ngFor="let itemId of activeGroup?.itemIds; last as last">
-        <mat-list-item
-          dense
-          routerLink="./"
-          [queryParams]="{ itemId: itemId }"
-          queryParamsHandling="merge"
-          cdkDrag
-          *ngIf="activeGroup.item[itemId] as item"
-        >
+      <ng-container
+        *ngFor="let id of activeGroup?.atomicIds; last as last; index as i"
+      >
+        <mat-list-item dense cdkDrag *ngIf="atomic && atomic[id] as atomic">
           <mat-icon matListIcon cdkDragHandle>drag_handle</mat-icon>
-          <span matLine>{{ item.title }}</span>
+          <span matLine>{{ atomic.title }}</span>
           <button
             mat-icon-button
             (click)="$event.stopPropagation()"
@@ -130,11 +115,11 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #itemMenu>
-            <button mat-menu-item (click)="openItemDialog(item)">
+            <button routerLink="/edit" [queryParams]="{ v: id }" mat-menu-item>
               <mat-icon>edit</mat-icon>
               <span>編集</span>
             </button>
-            <button mat-menu-item (click)="deleteItem(itemId)">
+            <button mat-menu-item (click)="deleteItem(i)">
               <mat-icon>delete</mat-icon>
               <span>削除</span>
             </button>

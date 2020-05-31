@@ -1,3 +1,6 @@
+import { TreeService } from './tree.service';
+import { AtomicPosition } from './../interfaces/tree';
+import { LessonMeta } from 'src/app/interfaces/lesson';
 import { environment } from './../../environments/environment';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
@@ -21,13 +24,16 @@ export class LessonService {
     private fns: AngularFireFunctions,
     private http: HttpClient,
     private storageService: StorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private treeService: TreeService
   ) {}
 
   async createLesson(
     authorId: string,
     lesson: Pick<Lesson, 'title' | 'videoId' | 'public' | 'free' | 'body'>,
-    thumbnail?: string
+    thumbnail?: string,
+    icon?: string,
+    atomicPosition?: AtomicPosition
   ): Promise<string> {
     const id = this.db.createId();
     const body = lesson.body;
@@ -52,9 +58,14 @@ export class LessonService {
         thumbnail
       );
     }
+    let iconURL: string;
+    if (icon) {
+      iconURL = await this.storageService.upload(`lessons/${id}/icon`, icon);
+    }
     await this.db.doc(`lessons/${id}`).set({
       ...data,
       thumbnailURL: thumbnailURL || null,
+      iconURL: iconURL || null,
     });
     await this.db.doc(`lessons/${id}/body/content`).set({
       body,
@@ -69,7 +80,17 @@ export class LessonService {
     //     data.id
     // );
 
+    if (atomicPosition) {
+      await this.treeService.updateTreeWithPosition(atomicPosition, id);
+    }
+
     return id;
+  }
+
+  getLessonMetasByIds(ids: string[]): Observable<LessonMeta[]> {
+    return combineLatest(
+      ids.map((id) => this.db.doc<LessonMeta>(`lessons/${id}`).valueChanges())
+    ).pipe(take(1));
   }
 
   getLessonsByChannelId(cid: string, limit = 100): Observable<LessonMeta[]> {
@@ -150,7 +171,13 @@ export class LessonService {
     data: Partial<
       Pick<
         Lesson,
-        'title' | 'videoId' | 'public' | 'free' | 'body' | 'thumbnailURL'
+        | 'title'
+        | 'videoId'
+        | 'public'
+        | 'free'
+        | 'body'
+        | 'thumbnailURL'
+        | 'iconURL'
       >
     >
   ): Promise<void> {

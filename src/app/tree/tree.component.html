@@ -12,7 +12,7 @@
         <mat-icon>arrow_back</mat-icon>
       </button>
       <div *ngIf="doc$ | async as doc; else loading">
-        <ng-container *ngIf="doc.lesson; else blankLesson">
+        <!-- <ng-container *ngIf="doc.lesson; else blankLesson">
           <div class="video" *ngIf="doc.lesson.videoId">
             <iframe
               [src]="
@@ -33,7 +33,7 @@
           <article class="article">
             <markdown [data]="doc.lesson?.body"></markdown>
           </article>
-        </ng-container>
+        </ng-container> -->
         <ng-template #blankLesson>
           <div class="permission" *ngIf="activeLessonId">
             <figure class="permission__cover"></figure>
@@ -103,7 +103,11 @@
               target="_blank"
               *ngFor="let resource of doc.resources"
             >
-              <mat-icon mat-list-icon svgIcon="github"></mat-icon>
+              <mat-icon
+                mat-list-icon
+                [svgIcon]="resource.url | resourceIcon: 'svg'"
+                >{{ resource.url | resourceIcon: 'material' }}</mat-icon
+              >
               <span matLine class="resource__title">{{ resource.title }}</span>
               <span>
                 <mat-icon inline>
@@ -178,68 +182,65 @@
       </mat-menu>
     </mat-toolbar>
 
-    <div class="wrap">
+    <div class="wrap" *ngIf="tree$ | async as tree">
       <div>
-        <mat-card *ngFor="let section of sections$ | async">
+        <mat-card *ngFor="let section of tree.sections">
           <h2 class="section-title">{{ section.title }}</h2>
           <div class="group">
-            <div *ngFor="let groupId of section.groupIds">
-              <ng-container *ngIf="section.group[groupId] as group">
-                <h3 class="group-title" *ngIf="section.groupIds.length !== 1">
-                  {{ group.title }}
-                </h3>
-                <div class="items">
-                  <ng-container *ngFor="let itemId of group.itemIds">
-                    <div
-                      *ngIf="group.item[itemId] as item"
-                      class="item"
-                      [class.active]="completeMap[item.id]"
+            <div *ngFor="let group of section.groups">
+              <h3 class="group-title">
+                {{ group.title }}
+              </h3>
+              <div class="items">
+                <ng-container *ngFor="let atomicId of group.atomicIds">
+                  <div
+                    *ngIf="group.item[itemId] as item"
+                    class="item"
+                    [class.active]="completeMap[item.id]"
+                  >
+                    <a
+                      class="item__icon"
+                      [class.mat-elevation-z2]="!completeMap[item.id]"
+                      (click)="
+                        openDoc(item); setActiveIds(section.id, groupId, itemId)
+                      "
                     >
-                      <a
-                        class="item__icon"
-                        [class.mat-elevation-z2]="!completeMap[item.id]"
-                        (click)="
-                          openDoc(item);
-                          setActiveIds(section.id, groupId, itemId)
-                        "
-                      >
-                        <img [src]="item.iconURL" alt="" />
-                      </a>
-                      <h4 class="item__title">{{ item.title }}</h4>
-                      <div
-                        class="item__body mat-elevation-z2"
-                        *ngIf="!uiService.isMobile"
-                      >
-                        <mat-nav-list *ngIf="item.resources?.length" dense>
-                          <h3 matSubheader>リソース</h3>
-                          <a
-                            mat-list-item
-                            [href]="resource.url"
-                            target="_blank"
-                            *ngFor="let resource of item.resources"
+                      <img [src]="item.iconURL" alt="" />
+                    </a>
+                    <h4 class="item__title">{{ item.title }}</h4>
+                    <div
+                      class="item__body mat-elevation-z2"
+                      *ngIf="!uiService.isMobile"
+                    >
+                      <mat-nav-list *ngIf="item.resources?.length" dense>
+                        <h3 matSubheader>リソース</h3>
+                        <a
+                          mat-list-item
+                          [href]="resource.url"
+                          target="_blank"
+                          *ngFor="let resource of item.resources"
+                        >
+                          <mat-icon
+                            mat-list-icon
+                            [svgIcon]="resource.url | resourceIcon: 'svg'"
+                            >{{
+                              resource.url | resourceIcon: 'material'
+                            }}</mat-icon
                           >
-                            <mat-icon
-                              mat-list-icon
-                              [svgIcon]="resource.url | resourceIcon: 'svg'"
-                              >{{
-                                resource.url | resourceIcon: 'material'
-                              }}</mat-icon
-                            >
-                            <span matLine class="resource__title">{{
-                              resource.title
-                            }}</span>
-                            <span>
-                              <mat-icon inline>
-                                open_in_new
-                              </mat-icon>
-                            </span>
-                          </a>
-                        </mat-nav-list>
-                      </div>
+                          <span matLine class="resource__title">{{
+                            resource.title
+                          }}</span>
+                          <span>
+                            <mat-icon inline>
+                              open_in_new
+                            </mat-icon>
+                          </span>
+                        </a>
+                      </mat-nav-list>
                     </div>
-                  </ng-container>
-                </div>
-              </ng-container>
+                  </div>
+                </ng-container>
+              </div>
             </div>
           </div>
         </mat-card>

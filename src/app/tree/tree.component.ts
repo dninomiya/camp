@@ -1,3 +1,5 @@
+import { Tree } from 'src/app/interfaces/tree';
+import { LessonMeta } from 'src/app/interfaces/lesson';
 import { PLAN } from 'src/app/services/plan.service';
 import { UiService } from './../services/ui.service';
 import { UserService } from 'src/app/services/user.service';
@@ -5,22 +7,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
 import { AuthService } from './../services/auth.service';
 import { User } from 'src/app/interfaces/user';
-import { Lesson } from './../interfaces/lesson';
-import { switchMap, map, tap, catchError } from 'rxjs/operators';
+import { switchMap, map, tap, catchError, take } from 'rxjs/operators';
 import { LessonService } from 'src/app/services/lesson.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TreeSection, TreeItem, TreeGroup } from './../interfaces/tree';
-import { Observable, combineLatest, of, ReplaySubject } from 'rxjs';
+import { TreeSection } from './../interfaces/tree';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { TreeService } from './../services/tree.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawer } from '@angular/material/sidenav';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ViewportScroller } from '@angular/common';
-
-interface ItemWithLesson extends TreeItem {
-  lesson: Lesson;
-}
 
 @Component({
   selector: 'app-tree',
@@ -38,10 +35,10 @@ interface ItemWithLesson extends TreeItem {
 export class TreeComponent implements OnInit {
   @ViewChild('docDrawer') private docDrawer: MatDrawer;
   private uid: string;
-  private treeItemSource = new ReplaySubject<TreeItem>();
-  private treeItem$: Observable<TreeItem> = this.treeItemSource.asObservable();
+  private atomicIdSource = new ReplaySubject<string>();
+  private atomicId$: Observable<string> = this.atomicIdSource.asObservable();
 
-  lastPos: [number, number];
+  tree$: Observable<Tree> = this.treeService.getTree();
   plan = PLAN;
   activeLessonId: string;
   active: {
@@ -58,31 +55,8 @@ export class TreeComponent implements OnInit {
   );
   sections$: Observable<TreeSection[]> = this.treeService.getAllSections();
   completeMap: object = {};
-  doc$: Observable<ItemWithLesson> = this.treeItem$.pipe(
-    switchMap((treeItem) => {
-      if (treeItem) {
-        this.activeLessonId = treeItem.lessonId;
-        return combineLatest([
-          of(treeItem),
-          this.lessonService
-            .getLesson(treeItem.lessonId)
-            .pipe(catchError(() => of(null))),
-        ]);
-      } else {
-        return of(null);
-      }
-    }),
-    map((result) => {
-      if (result) {
-        const [treeItem, lesson] = result;
-        return {
-          ...treeItem,
-          lesson,
-        };
-      } else {
-        return null;
-      }
-    })
+  doc$: Observable<LessonMeta> = this.atomicId$.pipe(
+    switchMap((id) => this.lessonService.getLesson(id).pipe(take(1)))
   );
 
   constructor(
@@ -99,25 +73,12 @@ export class TreeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([this.sections$, this.route.queryParamMap]).subscribe(
-      ([sections, queryMap]) => {
-        const id = queryMap.get('id');
-        if (id) {
-          sections.some((section) => {
-            let status: boolean;
-            Object.values(section.group).some((group) => {
-              if (group.item[id]) {
-                this.openDoc(group.item[id]);
-                status = true;
-                this.setActiveIds(section.id, group.id, id);
-                return true;
-              }
-            });
-            return status;
-          });
-        }
+    this.route.queryParamMap.subscribe((map) => {
+      const id = map.get('id');
+      if (id) {
+        this.openDoc(id);
       }
-    );
+    });
 
     this.user$
       .pipe(
@@ -132,15 +93,14 @@ export class TreeComponent implements OnInit {
       .subscribe((skillStatus) => (this.completeMap = skillStatus || {}));
   }
 
-  openDoc(item: TreeItem) {
+  openDoc(id: string) {
     this.docDrawer.open();
-    this.treeItemSource.next(item);
+    this.atomicIdSource.next(id);
     this.router.navigate([], {
       queryParams: {
-        id: item.id,
+        id,
       },
     });
-    this.lastPos = this.viewportScroller.getScrollPosition();
   }
 
   setActiveIds(sectionId: string, groupId: string, itemId: string) {
@@ -152,7 +112,7 @@ export class TreeComponent implements OnInit {
   }
 
   onCloseDoc() {
-    this.treeItemSource.next(null);
+    this.atomicIdSource.next(null);
     this.router.navigate([], {
       queryParams: {
         id: null,

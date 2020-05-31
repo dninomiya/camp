@@ -1,12 +1,12 @@
 import { StorageService } from './storage.service';
 import { firestore } from 'firebase/app';
 import {
+  Tree,
   TreeSection,
   TreeGroup,
-  TreeItem,
-  TreeSections,
+  AtomicPosition,
 } from './../interfaces/tree';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Observable, combineLatest, of } from 'rxjs';
@@ -19,6 +19,22 @@ export class TreeService {
     private db: AngularFirestore,
     private storageService: StorageService
   ) {}
+
+  getTree(): Observable<Tree> {
+    return this.db.doc<Tree>('core/tree').valueChanges().pipe(take(1));
+  }
+
+  updateTree(tree: Tree): Promise<void> {
+    return this.db.doc<Tree>('core/tree').set(tree, { merge: true });
+  }
+
+  async updateTreeWithPosition(position: AtomicPosition, id: string) {
+    const tree = await this.getTree().toPromise();
+    tree.sections[position.sectionIndex].groups[
+      position.groupIndex
+    ].atomicIds.push(id);
+    return this.updateTree(tree);
+  }
 
   getAllSections(): Observable<TreeSection[]> {
     return this.db

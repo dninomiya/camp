@@ -1,4 +1,5 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { AtomicPosition } from './../../interfaces/tree';
+import { Component, OnInit, HostListener } from '@angular/core';
 import {
   NgxPicaErrorInterface,
   NgxPicaService,
@@ -19,6 +20,7 @@ import {
   FormControl,
   AbstractControl,
 } from '@angular/forms';
+import { AtomicDialogComponent } from './../item-dialog/item-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
@@ -35,7 +37,6 @@ import { EditorHelpComponent } from '../editor-help/editor-help.component';
 import { PlanService } from 'src/app/services/plan.service';
 import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
 import { VimeoService } from 'src/app/services/vimeo.service';
-import { addedDiff, updatedDiff } from 'deep-object-diff';
 import { VimeoUser } from 'src/app/interfaces/vimeo';
 import { environment } from 'src/environments/environment';
 import { ListEditDialogComponent } from 'src/app/core/list-edit-dialog/list-edit-dialog.component';
@@ -48,9 +49,6 @@ import { VimeoHelpDialogComponent } from '../vimeo-help-dialog/vimeo-help-dialog
   styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit {
-  @ViewChild('body', {
-    static: false,
-  })
   thumbnailOption = {
     path: '',
     size: {
@@ -62,6 +60,7 @@ export class EditorComponent implements OnInit {
 
   algoliaConfig = environment.algolia;
   oldThumbnail: string;
+  iconImage: string;
   uploadStep$ = this.vimeoService.uploadStep$;
   user$ = this.authService.authUser$.pipe(shareReplay(1));
   lists$: Observable<LessonList[]> = this.user$.pipe(
@@ -76,6 +75,7 @@ export class EditorComponent implements OnInit {
   oldLesson: Lesson;
   isComplete: boolean;
   thumbnail: string;
+  atomicPosition: AtomicPosition;
   opts: any = {
     autofocus: true,
     toolbar: [
@@ -127,6 +127,7 @@ export class EditorComponent implements OnInit {
         // updateOn: 'blur'
       },
     ],
+    resources: this.fb.array([]),
     public: [true, Validators.required],
     free: [false],
   });
@@ -243,22 +244,17 @@ export class EditorComponent implements OnInit {
     }
 
     if (this.oldLesson) {
-      const added = addedDiff(this.oldLesson, this.form.value);
-      const updated = updatedDiff(this.oldLesson, this.form.value);
-      const newValue = {
-        ...added,
-        ...updated,
-      };
-
-      action = this.lessonService.updateLesson(this.oldLesson.id, {
-        body: this.form.value.body,
-        ...newValue,
-      });
+      action = this.lessonService.updateLesson(
+        this.oldLesson.id,
+        this.form.value
+      );
     } else {
       action = this.lessonService.createLesson(
         id,
         this.form.value,
-        this.thumbnail
+        this.thumbnail,
+        this.iconImage,
+        this.atomicPosition
       );
     }
 
@@ -463,10 +459,10 @@ export class EditorComponent implements OnInit {
     });
   }
 
-  uploadThumbnail(image: string) {
+  uploadThumbnail(thumbnailURL: string) {
     if (this.oldLesson) {
       this.lessonService.updateLesson(this.oldLesson.id, {
-        thumbnailURL: image,
+        thumbnailURL,
       });
     }
   }
@@ -492,5 +488,21 @@ export class EditorComponent implements OnInit {
 
   openVimeoHelp() {
     this.dialog.open(VimeoHelpDialogComponent);
+  }
+
+  openAtomicEditor() {
+    this.dialog
+      .open(AtomicDialogComponent, {
+        width: '800px',
+        data: {
+          form: this.form,
+          meta: this.oldLesson,
+        },
+      })
+      .afterClosed()
+      .subscribe(({ iconImage, atomicPosition }) => {
+        this.iconImage = iconImage;
+        this.atomicPosition = atomicPosition;
+      });
   }
 }

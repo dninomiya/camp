@@ -1,32 +1,19 @@
-export interface TreeSections {
-  sectionIds: string[];
+import { LessonMeta } from 'src/app/interfaces/lesson';
+export interface Tree {
+  sections: TreeSection[];
 }
 
 export interface TreeSection {
-  id: string;
   title: string;
-  group: {
-    [keyName: string]: TreeGroup;
-  };
-  groupIds: string[];
+  groups: TreeGroup[];
 }
 
 export interface TreeGroup {
-  id: string;
   title: string;
-  item: {
-    [keyName: string]: TreeItem;
-  };
-  itemIds: string[];
+  atomicIds: string[];
 }
 
-export interface TreeItem {
-  id: string;
-  title: string;
-  iconURL: string;
-  lessonId: string;
-  resources?: {
-    title: string;
-    url: string;
-  }[];
+export interface AtomicPosition {
+  sectionIndex: number;
+  groupIndex: number;
 }

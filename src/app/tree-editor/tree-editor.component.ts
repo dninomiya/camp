@@ -1,13 +1,12 @@
-import { combineLatest } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ItemDialogComponent } from './item-dialog/item-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LessonMeta } from 'src/app/interfaces/lesson';
+import { LessonService } from 'src/app/services/lesson.service';
 import { InputDialogComponent } from './input-dialog/input-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TreeItem } from './../interfaces/tree';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { TreeService } from './../services/tree.service';
 import { Component, OnInit } from '@angular/core';
-import { TreeSection, TreeGroup } from '../interfaces/tree';
+import { TreeSection, TreeGroup, Tree } from '../interfaces/tree';
 
 @Component({
   selector: 'app-tree-editor',
@@ -15,200 +14,118 @@ import { TreeSection, TreeGroup } from '../interfaces/tree';
   styleUrls: ['./tree-editor.component.scss'],
 })
 export class TreeEditorComponent implements OnInit {
-  sections: TreeSection[];
-  activeSection: TreeSection;
+  tree: Tree;
   activeGroup: TreeGroup;
-  private allSections$ = this.treeService.getAllSections();
+  activeSection: TreeSection;
+  atomic: {
+    [keyName: string]: LessonMeta;
+  };
 
   constructor(
     private treeService: TreeService,
+    private lessonService: LessonService,
     private dialog: MatDialog,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    combineLatest([this.route.queryParamMap, this.allSections$]).subscribe(
-      ([map, sections]) => {
-        this.sections = sections;
+    private snackBar: MatSnackBar
+  ) {}
 
-        const sectionId = map.get('sectionId');
-        if (sectionId) {
-          this.activeSection = this.sections.find(
-            (section) => section.id === sectionId
-          );
-        } else {
-          this.router.navigate([], {
-            queryParams: {
-              sectionId: sections[0].id,
-              groupId: sections[0].groupIds[0],
-            },
-          });
-        }
-
-        const groupId = map.get('groupId');
-        if (groupId) {
-          this.activeGroup = this.activeSection.group[groupId];
-        }
-
-        const itemId = map.get('itemId');
-        if (itemId && this.activeSection && this.activeGroup) {
-          this.openItemDialog(this.activeGroup.item[itemId]);
-        }
-      }
-    );
-  }
-
-  ngOnInit(): void {}
-
-  addSection(title: string) {
-    this.treeService.addSection({
-      title,
-      group: {},
-      groupIds: [],
+  ngOnInit(): void {
+    this.treeService.getTree().subscribe((tree) => {
+      this.tree = tree;
+      this.activeSection = tree.sections[0];
     });
   }
 
-  updateSection(title: string) {
-    this.treeService.updateSection({
-      ...this.activeSection,
+  addSection(title: string) {
+    this.tree.sections.push({
       title,
+      groups: [],
     });
   }
 
   addGroup(title: string) {
-    this.treeService.addGroup(
-      {
-        title,
-        item: {},
-        itemIds: [],
-      },
-      this.activeSection.id
-    );
+    this.activeSection.groups.push({
+      title,
+      atomicIds: [],
+    });
   }
 
-  updateGroup(title: string) {
-    this.treeService
-      .updateGroup(
-        {
-          ...this.activeGroup,
-          title,
-        },
-        this.activeSection.id
-      )
-      .then(() => {
-        this.activeGroup = Object.assign({}, this.activeGroup);
-      });
-  }
-
-  addItem(data: TreeItem, image: string) {
-    this.treeService.addItem(
-      this.activeSection.id,
-      this.activeGroup.id,
-      data,
-      image
-    );
+  addItem(id: string) {
+    this.activeGroup.atomicIds.push(id);
   }
 
   sortSection(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.sections, event.previousIndex, event.currentIndex);
-    this.treeService.updateSectionOrder(
-      this.sections.map((section) => section.id)
+    moveItemInArray(
+      this.tree.sections,
+      event.previousIndex,
+      event.currentIndex
     );
   }
 
-  sortGroup(event: CdkDragDrop<string[]>, ids: string[]) {
-    moveItemInArray(ids, event.previousIndex, event.currentIndex);
-    this.treeService.updateGroupOrder(this.activeSection.id, ids);
+  sortGroup(event: CdkDragDrop<string[]>, groups: TreeGroup[]) {
+    moveItemInArray(groups, event.previousIndex, event.currentIndex);
   }
 
-  sortItem(event: CdkDragDrop<string[]>, ids: string[]) {
-    moveItemInArray(ids, event.previousIndex, event.currentIndex);
-    this.treeService.updateItemOrder(
-      this.activeSection.id,
-      this.activeGroup.id,
-      ids
+  sortItem(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.activeGroup.atomicIds,
+      event.previousIndex,
+      event.currentIndex
     );
   }
 
-  deleteGroup() {
-    this.treeService.deleteGroup(this.activeSection.id, this.activeGroup.id);
+  deleteGroup(index: number) {
+    this.activeSection.groups.splice(index, 1);
+    this.activeGroup = null;
   }
 
-  deleteItem(itemId: string) {
-    this.treeService.deleteItem(
-      this.activeSection.id,
-      this.activeGroup.id,
-      itemId
-    );
+  deleteItem(i: number) {
+    this.activeGroup.atomicIds.splice(i, 1);
   }
 
-  deleteSection() {
-    this.treeService.deleteSection(this.activeSection.id);
+  deleteSection(i: number) {
+    this.tree.sections.splice(i, 1);
   }
 
-  setFocus(elm) {
-    setTimeout(() => {
-      elm.focus();
-    }, 100);
-  }
-
-  updateItem(data: TreeItem, image: string) {
-    this.treeService.updateItem(
-      this.activeSection.id,
-      this.activeGroup.id,
-      data,
-      image
-    );
-  }
-
-  openTitleDialog(target: string, oldTitle?: string) {
+  openTitleDialog(target: 'section' | 'group', oldTitle?: string) {
     this.dialog
       .open(InputDialogComponent, {
         data: oldTitle,
       })
       .afterClosed()
-      .subscribe((data) => {
-        if (data) {
+      .subscribe((title) => {
+        if (title) {
           switch (target) {
             case 'section':
-              oldTitle ? this.updateSection(data) : this.addSection(data);
+              oldTitle
+                ? (this.activeSection.title = title)
+                : this.addSection(title);
               break;
             case 'group':
-              oldTitle ? this.updateGroup(data) : this.addGroup(data);
+              oldTitle
+                ? (this.activeGroup.title = title)
+                : this.addGroup(title);
               break;
           }
+          this.updateTree();
         }
       });
   }
 
-  openItemDialog(oldItem?: TreeItem) {
-    this.dialog
-      .open(ItemDialogComponent, {
-        data: oldItem,
-        width: '800px',
-        autoFocus: true,
-      })
-      .afterClosed()
-      .subscribe((result) => {
-        if (!result) return;
+  private updateTree() {
+    this.treeService
+      .updateTree(this.tree)
+      .then(() => this.snackBar.open('ツリーを更新しました'));
+  }
 
-        if (oldItem) {
-          this.updateItem(
-            {
-              ...oldItem,
-              ...result.data,
-            },
-            result.image
-          );
-        } else {
-          this.addItem(result.data, result.image);
-        }
-
-        this.router.navigate([], {
-          queryParams: {
-            itemId: null,
-          },
-          queryParamsHandling: 'merge',
-        });
+  selectGroup(group: TreeGroup) {
+    this.activeGroup = group;
+    this.lessonService
+      .getLessonMetasByIds(group.atomicIds)
+      .subscribe((atomics) => {
+        this.atomic = atomics.reduce((obj, atomic) => {
+          obj[atomic.id] = atomic;
+          return obj;
+        }, {});
       });
   }
 }

@@ -1,5 +1,5 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <h1 matDialogTitle>アイテム編集</h1>
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="submit()">
+  <h1 matDialogTitle>アトミック情報</h1>
 
   <mat-dialog-content>
     <div class="head">
@@ -7,30 +7,29 @@
         <app-input-image
           (file)="image = $event; form.markAsDirty()"
           [options]="options"
-          [oldSrc]="item?.iconURL"
+          [oldSrc]="meta?.iconURL"
         ></app-input-image>
       </div>
       <div class="head__body">
-        <mat-form-field>
-          <mat-label>タイトル</mat-label>
-          <input
-            type="text"
-            matInput
-            #itemInput
-            formControlName="title"
-            required
-            autocomplete="off"
-          />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>lessonId</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="lessonId"
-            required
-            autocomplete="off"
-          />
+        <mat-form-field *ngIf="tree">
+          <mat-label>グループ</mat-label>
+          <mat-select
+            (selectionChange)="setGroupData($event.value)"
+            [formControl]="atomicGroupControl"
+          >
+            <mat-option>-- なし --</mat-option>
+            <mat-optgroup
+              *ngFor="let section of tree.sections; index as sectionIndex"
+              [label]="section.title"
+            >
+              <mat-option
+                *ngFor="let group of section.groups; index as groupIndex"
+                [value]="{ sectionIndex: sectionIndex, groupIndex: groupIndex }"
+              >
+                {{ group.title }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
@@ -41,10 +40,11 @@
       cdkDropList
       (cdkDropListDropped)="sortResources($event)"
       class="resources"
+      *ngIf="resourceControls.controls.length"
     >
       <ng-container *ngFor="let ctrl of resourceControls.controls; index as i">
         <div [formGroupName]="i" cdkDrag class="resource">
-          <button mat-icon-button>
+          <button mat-icon-button type="button" cdkDragHandle>
             <mat-icon>drag_handle</mat-icon>
           </button>
           <mat-form-field>
@@ -83,7 +83,11 @@
     <button
       mat-raised-button
       color="primary"
-      [disabled]="form.invalid || form.pristine || (!item && !image)"
+      [disabled]="
+        resourceControls.invalid ||
+        resourceControls.pristine ||
+        (!meta && !image)
+      "
     >
       保存
     </button>
