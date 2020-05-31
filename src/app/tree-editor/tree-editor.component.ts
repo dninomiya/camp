@@ -186,6 +186,7 @@ export class TreeEditorComponent implements OnInit {
         data: oldItem,
         width: '800px',
         autoFocus: true,
+        disableClose: true,
       })
       .afterClosed()
       .subscribe((result) => {
