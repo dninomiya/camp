@@ -117,8 +117,8 @@
         <button
           mat-fab
           class="edit"
-          [routerLink]="['/tree-edit']"
-          [queryParams]="active"
+          [routerLink]="['/edit']"
+          [queryParams]="{ v: doc.lessonId }"
           *ngIf="(user$ | async)?.admin"
         >
           <mat-icon>edit</mat-icon>
