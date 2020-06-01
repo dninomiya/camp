@@ -16,7 +16,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent implements OnInit, AfterViewInit {
   videos = [
@@ -24,14 +24,14 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     'QCJ1THnyAec',
     'MDyCX0d-NOE',
     'P1dPxsu-kyI',
-    'nww-Y7HiaGE'
+    'nww-Y7HiaGE',
   ];
   swiperConfig: SwiperOptions = {
     slidesPerView: 3,
     centeredSlides: true,
     loop: true,
     autoplay: true,
-    allowTouchMove: false
+    allowTouchMove: false,
   };
   isCampaign = this.planService.isCampaign;
   isSwiperReady: boolean;
@@ -44,7 +44,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   payment: UserPayment;
   player: YT.Player;
   playerVars: YT.PlayerVars = {
-    controls: 0
+    controls: 0,
   };
   user$ = this.authService.authUser$;
   loading: boolean;
@@ -59,12 +59,12 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.authService.authUser$.subscribe(user => {
+    this.authService.authUser$.subscribe((user) => {
       this.user = user;
       if (user) {
         this.paymentService
           .getUserPayment(user.id)
-          .subscribe(payment => (this.payment = payment));
+          .subscribe((payment) => (this.payment = payment));
       } else {
         this.payment = null;
       }
@@ -78,7 +78,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
 
     this.authService.authUser$
       .pipe(
-        switchMap(user => {
+        switchMap((user) => {
           if (user) {
             return this.paymentService.getUserPayment(user.id).pipe(take(1));
           } else {
@@ -86,7 +86,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
           }
         })
       )
-      .subscribe(payment => (this.payment = payment));
+      .subscribe((payment) => (this.payment = payment));
   }
 
   ngAfterViewInit() {
@@ -101,7 +101,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     $element.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
-      inline: 'nearest'
+      inline: 'nearest',
     });
   }
 
@@ -112,20 +112,20 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
       this.dialog
         .open(LoginDialogComponent)
         .afterClosed()
-        .subscribe(status => {
+        .subscribe((status) => {
           if (status) {
             this.loading = true;
             this.loginSnackBar = this.snackBar.open(
               'ログインしています',
               null,
               {
-                duration: 2000
+                duration: 2000,
               }
             );
             this.authService
               .login()
               .then(() => {
-                this.user$.subscribe(user => {
+                this.user$.subscribe((user) => {
                   if (user) {
                     this.loginSnackBar.dismiss();
                     this.router.navigateByUrl('/intl/signup?planId=' + planId);
@@ -143,9 +143,4 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
         });
     }
   }
-
-  savePlayer(player) {
-    this.player = player;
-  }
-  onStateChange(event) {}
 }
