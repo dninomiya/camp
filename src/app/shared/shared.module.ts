@@ -41,9 +41,7 @@ import { PrivacyIconPipe } from './privacy-icon.pipe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { InputImageComponent } from './input-image/input-image.component';
 import { LimitPipe } from './limit.pipe';
-import { CommentComponent } from './comment/comment.component';
 import { VisibleDirective } from './visible.directive';
-import { StarRatingComponent } from './star-rating/star-rating.component';
 import { AttachmentUserPipe } from './attachment-user.pipe';
 import { LinkIconPipe } from './link-icon.pipe';
 import { SearchKitComponent } from '../shell/search-kit/search-kit.component';
@@ -66,9 +64,7 @@ import { CustomerPipe } from './customer.pipe';
     PrivacyIconPipe,
     InputImageComponent,
     LimitPipe,
-    CommentComponent,
     VisibleDirective,
-    StarRatingComponent,
     AttachmentUserPipe,
     FooterComponent,
     LinkIconPipe,
@@ -149,9 +145,7 @@ import { CustomerPipe } from './customer.pipe';
     ResourceIconPipe,
     InputImageComponent,
     LimitPipe,
-    CommentComponent,
     VisibleDirective,
-    StarRatingComponent,
     AttachmentUserPipe,
     LinkIconPipe,
     SearchKitComponent,

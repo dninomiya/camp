@@ -1,3 +1,4 @@
+import { PlanID } from './../../interfaces/plan';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PaymentService } from 'src/app/services/payment.service';
@@ -47,7 +48,7 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: {
       uid: string;
-      planId: string;
+      planId: PlanID;
     },
     private fb: FormBuilder,
     private paymentService: PaymentService,
