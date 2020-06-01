@@ -167,4 +167,10 @@ export class AuthService {
         }
       });
   }
+
+  async connectGitHub(): Promise<auth.UserCredential> {
+    const user = await this.afAuth.currentUser;
+    await user.unlink('github');
+    return user.linkWithPopup(new auth.GithubAuthProvider());
+  }
 }

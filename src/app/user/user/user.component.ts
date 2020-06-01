@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TaskComponent } from './../task/task.component';
 import { MatDialog } from '@angular/material/dialog';
 import { firestore } from 'firebase/app';
@@ -49,7 +50,8 @@ export class UserComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   isDone(tasks: string[], taskId: string): boolean {
@@ -78,6 +80,13 @@ export class UserComponent implements OnInit {
     this.dialog.open(TaskComponent, {
       data: task,
       autoFocus: false,
+    });
+  }
+
+  connectGitHub() {
+    this.authService.connectGitHub().then((result) => {
+      console.log(result);
+      this.snackBar.open('GitHubと連携しました');
     });
   }
 }
