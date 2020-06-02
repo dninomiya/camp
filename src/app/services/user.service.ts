@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { firestore } from 'firebase/app';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
@@ -67,5 +68,16 @@ export class UserService {
       },
       { merge: true }
     );
+  }
+
+  getUserByRepoId(repoId: string): Observable<User> {
+    return this.db
+      .collection<User>(`users`, (ref) => ref.where('repoId', '==', repoId))
+      .valueChanges()
+      .pipe(
+        map((repos) => {
+          return repos && repos[0];
+        })
+      );
   }
 }

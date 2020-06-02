@@ -1,8 +1,8 @@
-import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 import { ApolloService } from './../../services/apollo.service';
 import { tap, switchMap, map } from 'rxjs/operators';
 import { ProductWithAuthor } from './../../interfaces/product';
-import { Observable, of } from 'rxjs';
+import { Observable, of, combineLatest } from 'rxjs';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
@@ -39,17 +39,38 @@ export class ProjectListComponent implements OnInit {
           );
         }, 0);
 
+        const suHours = repo.amount + Math.round(repo.amount / 56) * 16;
+
         repo.goal =
           repo.amount &&
           moment()
-            .add(repo.amount + Math.round(repo.amount / 56) * 16, 'h')
+            .add(suHours / 8, 'days')
             .toDate();
         return repo;
       });
     }),
+    map((repos) => {
+      return repos.filter((repo) => !!repo.amount);
+    }),
+    switchMap((repos: object[]) => {
+      return combineLatest([
+        of(repos),
+        combineLatest(
+          repos.map((repo: any) => this.userService.getUserByRepoId(repo.id))
+        ),
+      ]);
+    }),
+    map(([repos, users]) => {
+      return repos.map((repo, index) => {
+        return {
+          ...repo,
+          user: users[index],
+        };
+      });
+    }),
     tap((res) => {
-      this.tableLoading = false;
       console.log(res);
+      this.tableLoading = false;
     })
   );
 
@@ -64,7 +85,7 @@ export class ProjectListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private apolloService: ApolloService,
-    private authService: AuthService
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {}
