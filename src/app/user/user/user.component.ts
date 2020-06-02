@@ -112,4 +112,10 @@ export class UserComponent implements OnInit {
         }
       });
   }
+
+  importLabels(repoId: string) {
+    this.apolloService.createLabel(repoId).then(() => {
+      this.snackBar.open('ラベルを初期化しました');
+    });
+  }
 }

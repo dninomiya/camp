@@ -61,3 +61,10 @@ img {
   text-align: center;
   margin: 24px 0;
 }
+
+.gant {
+  padding: 40px 0;
+  &__table {
+    width: 100%;
+  }
+}

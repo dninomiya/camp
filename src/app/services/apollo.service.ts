@@ -1,6 +1,6 @@
-import { map, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { repos, ownRepos, OwnRepos } from './gql';
+import { map, switchMap, tap, take } from 'rxjs/operators';
+import { Observable, Subject, of, ReplaySubject, combineLatest } from 'rxjs';
+import { repos, ownRepos, OwnRepos, createLabel } from './gql';
 import { AuthService } from 'src/app/services/auth.service';
 import { Injectable } from '@angular/core';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -12,7 +12,9 @@ import { HttpLink } from 'apollo-angular-link-http';
   providedIn: 'root',
 })
 export class ApolloService {
-  isReady: boolean;
+  readySource = new ReplaySubject<boolean>(1);
+  isReady$: Observable<boolean> = this.readySource.asObservable();
+  repos;
 
   constructor(
     private apollo: Apollo,
@@ -21,9 +23,11 @@ export class ApolloService {
   ) {
     this.authService.getGitHubToken().subscribe((token) => {
       this.apollo.removeClient();
-      this.isReady = !!token;
       if (token) {
-        this.initApollo(token);
+        console.log('set tapollo');
+        this.initApollo(token).then(() => {
+          this.readySource.next(!!token);
+        });
       }
     });
   }
@@ -31,10 +35,9 @@ export class ApolloService {
   async initApollo(token: string) {
     const http = this.httpLink.create({
       uri: 'https://api.github.com/graphql',
-      headers: new HttpHeaders().set(
-        'Authorization',
-        `Bearer ${token}` || null
-      ),
+      headers: new HttpHeaders()
+        .set('Authorization', `Bearer ${token}` || null)
+        .set('Accept', 'application/vnd.github.bane-preview+json'),
     });
 
     this.apollo.create({
@@ -43,16 +46,29 @@ export class ApolloService {
     });
   }
 
-  getRepos(): Observable<any> {
-    return this.apollo
-      .watchQuery<any>({
-        query: repos,
-      })
-      .valueChanges.pipe
-      // switchMap(({ data }) => {
-      //   data.organization.repo
-      // })
-      ();
+  getRepos() {
+    console.log(this.repos);
+    if (this.repos) {
+      return of(this.repos);
+    } else {
+      return this.apollo
+        .watchQuery<any>({
+          query: repos,
+        })
+        .valueChanges.pipe(
+          map(({ data }) => {
+            return data.organization.repositories.edges.map(
+              (iteme) => iteme.node
+            );
+          }),
+          tap((result) => {
+            this.repos = result;
+            console.log({
+              items: result,
+            });
+          })
+        );
+    }
   }
 
   getOwnRepos(): Observable<{ id: string; name: string }[]> {
@@ -66,5 +82,24 @@ export class ApolloService {
           return data.organization.repositories.nodes;
         })
       );
+  }
+
+  createLabel(repoId: string): Promise<any> {
+    return combineLatest(
+      [0.5, 1, 2, 3, 4, 5, 6, 7, 8, 16].map((h) => {
+        return this.apollo.mutate({
+          mutation: createLabel,
+          variables: {
+            input: {
+              repositoryId: repoId,
+              color: 'ddd',
+              name: h + 'H',
+            },
+          },
+        });
+      })
+    )
+      .pipe(take(1))
+      .toPromise();
   }
 }

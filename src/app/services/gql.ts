@@ -12,6 +12,11 @@ export const repos = gql`
               nodes {
                 name
                 id
+                issues(first: 100) {
+                  nodes {
+                    state
+                  }
+                }
               }
             }
             id
@@ -21,18 +26,6 @@ export const repos = gql`
             }
             pullRequests(states: OPEN) {
               totalCount
-            }
-            issues(states: OPEN, first: 100) {
-              edges {
-                cursor
-                node {
-                  labels(first: 5) {
-                    nodes {
-                      id
-                    }
-                  }
-                }
-              }
             }
           }
         }
@@ -49,6 +42,16 @@ export const ownRepos = gql`
           id
           name
         }
+      }
+    }
+  }
+`;
+
+export const createLabel = gql`
+  mutation createLabel($input: CreateLabelInput!) {
+    createLabel(input: $input) {
+      label {
+        name
       }
     }
   }
