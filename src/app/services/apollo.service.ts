@@ -1,6 +1,6 @@
 import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { repos, ownRepos, OwnRepos } from './qql';
+import { repos, ownRepos, OwnRepos } from './gql';
 import { AuthService } from 'src/app/services/auth.service';
 import { Injectable } from '@angular/core';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -48,11 +48,11 @@ export class ApolloService {
       .watchQuery<any>({
         query: repos,
       })
-      .valueChanges.pipe(
-        switchMap(({ data }) => {
-          data;
-        })
-      );
+      .valueChanges.pipe
+      // switchMap(({ data }) => {
+      //   data.organization.repo
+      // })
+      ();
   }
 
   getOwnRepos(): Observable<{ id: string; name: string }[]> {
