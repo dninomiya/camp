@@ -14,12 +14,20 @@
       </p>
       <ng-container matColumnDef="project">
         <th mat-header-cell *matHeaderCellDef>プロジェクト</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        <td mat-cell *matCellDef="let element">
+          <a
+            href="https://github.com/camp-team/{{ element.name }}"
+            target="_blank"
+          >
+            <span>{{ element.name }}</span>
+            <mat-icon class="new-window" inline>open_in_new</mat-icon></a
+          >
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="assign">
-        <th mat-header-cell *matHeaderCellDef>assign</th>
-        <td mat-cell *matCellDef="let element">-</td>
+        <th mat-header-cell *matHeaderCellDef>担当</th>
+        <td mat-cell *matCellDef="let element">{{ element.user?.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="pullRequest">
