@@ -89,7 +89,6 @@ export class UserComponent implements OnInit {
 
   connectGitHub() {
     this.authService.connectGitHub().then((result) => {
-      console.log(result);
       this.snackBar.open('GitHubと連携しました');
     });
   }

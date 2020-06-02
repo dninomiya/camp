@@ -37,12 +37,6 @@ export class ProjectListComponent implements OnInit {
               return sum;
             }, 0)
           );
-          // if (label.name.match(/(.*)H$/)) {
-          //   console.log(label.name);
-          //   const hours = +label.name.match(/(.*)H$/)[1];
-          //   return total + hours;
-          // }
-          // return total;
         }, 0);
 
         repo.goal =

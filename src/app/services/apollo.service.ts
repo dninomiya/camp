@@ -24,7 +24,7 @@ export class ApolloService {
     this.authService.getGitHubToken().subscribe((token) => {
       this.apollo.removeClient();
       if (token) {
-        console.log('set tapollo');
+        console.log('set apollo');
         this.initApollo(token).then(() => {
           this.readySource.next(!!token);
         });
@@ -47,7 +47,6 @@ export class ApolloService {
   }
 
   getRepos() {
-    console.log(this.repos);
     if (this.repos) {
       return of(this.repos);
     } else {
@@ -63,9 +62,6 @@ export class ApolloService {
           }),
           tap((result) => {
             this.repos = result;
-            console.log({
-              items: result,
-            });
           })
         );
     }
