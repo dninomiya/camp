@@ -1,3 +1,5 @@
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { ApolloModule } from 'apollo-angular';
 import { filter } from 'rxjs/operators';
 import { Router, Scroll, Event } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,7 +16,6 @@ import localeJa from '@angular/common/locales/ja';
 import { registerLocaleData, ViewportScroller } from '@angular/common';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(localeJa);
@@ -29,7 +30,8 @@ registerLocaleData(localeJa);
     ServiceWorkerModule.register('/ngsw-worker.js', {
       enabled: environment.production,
     }),
-    GraphQLModule,
+    ApolloModule,
+    HttpLinkModule,
     HttpClientModule,
   ],
   providers: [
