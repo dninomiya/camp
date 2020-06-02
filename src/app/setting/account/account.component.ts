@@ -63,7 +63,6 @@ export class AccountComponent implements OnInit {
     private planPipe: PlanPipe
   ) {
     this.user$.subscribe((user) => {
-      console.log(user.name);
       this.profileForm.setValue({
         name: user.name,
       });

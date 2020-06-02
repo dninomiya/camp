@@ -37,7 +37,7 @@
         (change)="handleFileSelected($event)"
         #input
         accept="video/*"
-        style="display: none"
+        style="display: none;"
       />
     </label>
   </div>
@@ -55,7 +55,7 @@
         <button
           class="vimeo__button"
           color="primary"
-          (click)="connectVimeo(user)"
+          (click)="connectVimeo()"
           mat-raised-button
         >
           Vimeo登録＆連携
@@ -69,10 +69,17 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button [disabled]="createWaiting" matDialogClose>キャンセル</button>
+  <button mat-button [disabled]="createWaiting" matDialogClose>
+    キャンセル
+  </button>
   <ng-container *ngIf="vimeoAccount$ | async as user">
-    <button [disabled]="!size || createWaiting" color="primary" (click)="createVideo(user)" mat-raised-button>
-      アップロード{{createWaiting && '中'}}
+    <button
+      [disabled]="!size || createWaiting"
+      color="primary"
+      (click)="createVideo(user)"
+      mat-raised-button
+    >
+      アップロード{{ createWaiting && '中' }}
     </button>
   </ng-container>
 </mat-dialog-actions>

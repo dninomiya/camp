@@ -14,6 +14,32 @@
       <button routerLink="/edit-product" mat-stroked-button>
         プロダクト管理
       </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="connectRepo()"
+        *ngIf="(githubToken$ | async) && !user.repoId; else connect"
+      >
+        リポジトリ登録
+      </button>
+      <ng-template #connect>
+        <button
+          (click)="importLabels(user.repoId)"
+          mat-button
+          *ngIf="user.repoId"
+        >
+          ラベルインポート
+        </button>
+        <button
+          *ngIf="!user.repoId"
+          class="github"
+          mat-button
+          (click)="connectGitHub()"
+        >
+          <mat-icon svgIcon="github"></mat-icon>
+          <span>連携</span>
+        </button>
+      </ng-template>
     </div>
 
     <mat-divider inset></mat-divider>

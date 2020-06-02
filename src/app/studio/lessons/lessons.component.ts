@@ -25,7 +25,7 @@ interface LessonListWithCheckStatus extends LessonList {
 @Component({
   selector: 'app-lessons',
   templateUrl: './lessons.component.html',
-  styleUrls: ['./lessons.component.scss']
+  styleUrls: ['./lessons.component.scss'],
 })
 export class LessonsComponent implements OnInit {
   algoliaConfig = environment.algolia;
@@ -33,7 +33,7 @@ export class LessonsComponent implements OnInit {
   searchParameters = {
     hitsPerPage: 10,
     page: 0,
-    filters: `NOT deleted:true`
+    filters: `NOT deleted:true`,
   };
   causeOptions: {
     [key: string]: LessonListWithCheckStatus;
@@ -55,11 +55,11 @@ export class LessonsComponent implements OnInit {
     'private',
     'createdAt',
     'viewCount',
-    'action'
+    'action',
   ];
   selection = new SelectionModel<LessonMeta>(true, []);
   channel$ = this.authService.authUser$.pipe(
-    switchMap(user => this.channelService.getChannel(user.id))
+    switchMap((user) => this.channelService.getChannel(user.id))
   );
 
   constructor(
@@ -101,7 +101,7 @@ export class LessonsComponent implements OnInit {
 
   ngOnInit() {}
 
-  isAllSelected(source) {
+  isAllSelected(source?) {
     if (source) {
       const numSelected = this.selection.selected.length;
       const numRows = source.length;
@@ -109,10 +109,10 @@ export class LessonsComponent implements OnInit {
     }
   }
 
-  masterToggle(source) {
+  masterToggle(source?) {
     this.isAllSelected(source)
       ? this.selection.clear()
-      : source.forEach(row => this.selection.select(row));
+      : source.forEach((row) => this.selection.select(row));
   }
 
   changePager(event) {
@@ -125,13 +125,13 @@ export class LessonsComponent implements OnInit {
       .open(SharedConfirmDialogComponent, {
         data: {
           title: '本当に削除しますか？',
-          description: '削除すると復元できません'
+          description: '削除すると復元できません',
         },
         restoreFocus: false,
-        autoFocus: false
+        autoFocus: false,
       })
       .afterClosed()
-      .subscribe(status => {
+      .subscribe((status) => {
         if (status) {
           const processing = this.snackBar.open('動画を削除しています。');
 
@@ -139,34 +139,34 @@ export class LessonsComponent implements OnInit {
 
           processing.dismiss();
           this.snackBar.open('動画を削除しました', null, {
-            duration: 2000
+            duration: 2000,
           });
         }
       });
   }
 
   deleteLessons() {
-    const lessonIds = this.selection.selected.map(lesson => {
+    const lessonIds = this.selection.selected.map((lesson) => {
       return lesson.id;
     });
     this.dialog
       .open(SharedConfirmDialogComponent, {
         data: {
           title: '本当に削除しますか？',
-          description: `${lessonIds.length}件のポストを削除しようとしています。削除すると復元できません`
+          description: `${lessonIds.length}件のポストを削除しようとしています。削除すると復元できません`,
         },
         restoreFocus: false,
-        autoFocus: false
+        autoFocus: false,
       })
       .afterClosed()
-      .subscribe(status => {
+      .subscribe((status) => {
         if (status) {
           const processing = this.snackBar.open(
             `${lessonIds.length}件のポストを削除しています。`
           );
 
           Promise.all(
-            lessonIds.map(id => {
+            lessonIds.map((id) => {
               this.lessonService.deleteLesson(id);
             })
           ).then(() => {
@@ -175,7 +175,7 @@ export class LessonsComponent implements OnInit {
               `${lessonIds.length}件のポストを削除しました`,
               null,
               {
-                duration: 2000
+                duration: 2000,
               }
             );
           });
@@ -184,31 +184,31 @@ export class LessonsComponent implements OnInit {
   }
 
   openMultipleEditor() {
-    const lessonIds = this.selection.selected.map(lesson => {
+    const lessonIds = this.selection.selected.map((lesson) => {
       return lesson.id;
     });
     this.dialog
       .open(MultipleLessonEditDialogComponent, {
         restoreFocus: false,
         width: '800px',
-        data: lessonIds.length
+        data: lessonIds.length,
       })
       .afterClosed()
       .subscribe((data: { free: boolean }) => {
         if (data) {
           const processing = this.snackBar.open('一括編集を開始します', null, {
-            duration: 2000
+            duration: 2000,
           });
 
           Promise.all(
-            lessonIds.map(id => {
+            lessonIds.map((id) => {
               return this.lessonService.updateLesson(id, data);
             })
           ).then(() => {
             processing.dismiss();
 
             this.snackBar.open('一括編集が完了しました', null, {
-              duration: 2000
+              duration: 2000,
             });
           });
         }
@@ -217,7 +217,7 @@ export class LessonsComponent implements OnInit {
 
   togglePublic(isPublic: boolean) {
     const label = isPublic ? '公開' : '非公開';
-    const lessonIds = this.selection.selected.map(lesson => {
+    const lessonIds = this.selection.selected.map((lesson) => {
       return lesson.id;
     });
     const length = lessonIds.length;
@@ -226,22 +226,22 @@ export class LessonsComponent implements OnInit {
       .open(SharedConfirmDialogComponent, {
         data: {
           title: `${length}件のポストを${label}にしますか？`,
-          description: `${length}件のポストを${label}にしようとしています。`
+          description: `${length}件のポストを${label}にしようとしています。`,
         },
         restoreFocus: false,
-        autoFocus: false
+        autoFocus: false,
       })
       .afterClosed()
-      .subscribe(status => {
+      .subscribe((status) => {
         if (status) {
           const processing = this.snackBar.open(
             `${length}件のポストを${label}にしています。`
           );
 
           Promise.all(
-            lessonIds.map(id => {
+            lessonIds.map((id) => {
               this.lessonService.updateLesson(id, {
-                public: isPublic
+                public: isPublic,
               });
             })
           ).then(() => {
@@ -250,7 +250,7 @@ export class LessonsComponent implements OnInit {
               `${length}件のポストを${label}にしました`,
               null,
               {
-                duration: 2000
+                duration: 2000,
               }
             );
           });
@@ -260,13 +260,13 @@ export class LessonsComponent implements OnInit {
 
   onenCouseSelector() {
     this.causeOptions$ = this.causes$.pipe(
-      map(causes => {
+      map((causes) => {
         const totalCount = this.selection.selected.length;
         return causes.map((cause: LessonListWithCheckStatus, i) => {
           let hitCount = 0;
           let status: boolean;
 
-          this.selection.selected.forEach(lesson => {
+          this.selection.selected.forEach((lesson) => {
             hitCount += cause.lessonIds.includes(lesson.id) ? 1 : 0;
           });
 
@@ -283,7 +283,7 @@ export class LessonsComponent implements OnInit {
 
           this.causeOptions[cause.id] = {
             ...cause,
-            status
+            status,
           };
 
           return cause;
@@ -295,15 +295,15 @@ export class LessonsComponent implements OnInit {
   updateCauses() {
     const lessons = this.selection.selected;
     Promise.all(
-      Object.values(this.causeOptions).map(cause => {
+      Object.values(this.causeOptions).map((cause) => {
         if (cause.status) {
-          lessons.forEach(lesson => {
+          lessons.forEach((lesson) => {
             if (!cause.lessonIds.includes(lesson.id)) {
               cause.lessonIds.push(lesson.id);
             }
           });
         } else if (cause.status === false) {
-          lessons.forEach(lesson => {
+          lessons.forEach((lesson) => {
             if (cause.lessonIds.includes(lesson.id)) {
               const index = cause.lessonIds.indexOf(lesson.id);
               cause.lessonIds.splice(index, 1);
@@ -315,14 +315,14 @@ export class LessonsComponent implements OnInit {
           return this.listService.updateList({
             id: cause.id,
             data: {
-              lessonIds: cause.lessonIds
-            }
+              lessonIds: cause.lessonIds,
+            },
           });
         }
       })
     ).then(() => {
       this.snackBar.open('コースを更新しました', null, {
-        duration: 2000
+        duration: 2000,
       });
     });
   }

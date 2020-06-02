@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
-import { switchMap, tap, shareReplay } from 'rxjs/operators';
+import {
+  switchMap,
+  tap,
+  shareReplay,
+  take,
+  map,
+  distinctUntilChanged,
+} from 'rxjs/operators';
 import { User as AfUser, auth } from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -166,5 +173,46 @@ export class AuthService {
           });
         }
       });
+  }
+
+  async connectGitHub(): Promise<void> {
+    const user = await this.afAuth.currentUser;
+    if (user.providerData.find((prov) => prov.providerId === 'github.com')) {
+      await user.unlink('github.com');
+    }
+    const provider = new auth.GithubAuthProvider();
+    provider.addScope('read:org');
+    provider.addScope('repo');
+    provider.setCustomParameters({
+      prompt: 'select_account',
+    });
+    const result = await user.linkWithPopup(provider);
+    const data: any = result.credential;
+    const addedUser: any = result.additionalUserInfo.profile;
+
+    return this.db.doc(`users/${result.user.uid}/private/token`).set(
+      {
+        github: data.accessToken,
+        githubId: addedUser.node_id,
+      },
+      { merge: true }
+    );
+  }
+
+  getGitHubToken(): Observable<string> {
+    return this.authUser$.pipe(
+      map((user) => !!user),
+      distinctUntilChanged(),
+      switchMap((user) => {
+        if (user) {
+          return this.db
+            .doc<{ github: string }>(`users/${this.user.id}/private/token`)
+            .valueChanges();
+        } else {
+          return of(null);
+        }
+      }),
+      map((data) => data?.github)
+    );
   }
 }

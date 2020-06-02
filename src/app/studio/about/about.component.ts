@@ -142,7 +142,7 @@ export class AboutComponent implements OnInit {
     }
   }
 
-  onDrop(event, type: string) {
+  onDrop(event: DragEvent) {
     const files = event.dataTransfer.files;
     event.preventDefault();
 
@@ -151,12 +151,12 @@ export class AboutComponent implements OnInit {
     }
   }
 
-  onDragOver(event, type: string) {
+  onDragOver(event: DragEvent) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  onDragLeave(event, type: string) {
+  onDragLeave(event: DragEvent) {
     event.preventDefault();
   }
 

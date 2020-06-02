@@ -61,4 +61,16 @@ section {
 
 .actions {
   margin-bottom: 24px;
+  button {
+    margin-right: 16px;
+  }
+}
+
+.github {
+  background: #333;
+  color: white;
+  margin-left: 16px;
+  mat-icon {
+    margin-right: 8px;
+  }
 }
