@@ -30,6 +30,13 @@
         <td mat-cell *matCellDef="let element">{{ element.user?.name }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="lastPullRequestDate">
+        <th mat-header-cell *matHeaderCellDef>最終PR</th>
+        <td mat-cell *matCellDef="let element">
+          {{ (element.user?.lastPullRequestDate | fromNow) || '-' }}
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="pullRequest">
         <th mat-header-cell *matHeaderCellDef>PR</th>
         <td mat-cell *matCellDef="let element">
@@ -52,7 +59,12 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr
+        [class.warning]="row.sleepTime > 2 && row.sleepTime <= 4"
+        [class.denger]="row.sleepTime > 5"
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
     </table>
     <mat-progress-bar
       mode="indeterminate"
