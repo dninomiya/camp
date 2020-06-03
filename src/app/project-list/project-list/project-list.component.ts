@@ -50,7 +50,9 @@ export class ProjectListComponent implements OnInit {
       });
     }),
     map((repos) => {
-      return repos.filter((repo) => !!repo.amount);
+      return repos
+        .filter((repo) => !!repo.amount)
+        .sort((a, b) => a.amount - b.amount);
     }),
     switchMap((repos: object[]) => {
       return combineLatest([
@@ -61,20 +63,36 @@ export class ProjectListComponent implements OnInit {
       ]);
     }),
     map(([repos, users]) => {
-      return repos.map((repo, index) => {
-        return {
-          ...repo,
-          user: users[index],
-        };
-      });
+      return repos
+        .map((repo, index) => {
+          return {
+            ...repo,
+            user: users[index],
+          };
+        })
+        .map((item: any) => {
+          if (item.user?.lastPullRequestDate) {
+            item.sleepTime = moment().diff(
+              item.user.lastPullRequestDate.toDate(),
+              'days'
+            );
+          }
+          return item;
+        });
     }),
     tap((res) => {
-      console.log(res);
       this.tableLoading = false;
     })
   );
 
-  displayedColumns = ['project', 'assign', 'pullRequest', 'amount', 'goal'];
+  displayedColumns = [
+    'project',
+    'assign',
+    'lastPullRequestDate',
+    'pullRequest',
+    'amount',
+    'goal',
+  ];
 
   products$: Observable<
     ProductWithAuthor[]
