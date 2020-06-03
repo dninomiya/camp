@@ -24,6 +24,7 @@ export class AppComponent {
     'algolia',
     'qiita',
     'codepen',
+    'angular',
   ];
 
   constructor(
