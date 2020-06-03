@@ -25,13 +25,13 @@ export const connectVimeo = functions
                 'basic ' +
                 Buffer.from(`${clientId}:${clientSecret}`).toString('base64'),
               'Content-Type': 'application/json',
-              Accept: 'application/vnd.vimeo.*+json;version=3.4'
+              Accept: 'application/vnd.vimeo.*+json;version=3.4',
             },
             json: {
               code: data.code,
               grant_type: 'authorization_code',
-              redirect_uri: host + '/connect-vimeo'
-            }
+              redirect_uri: host + '/connect-vimeo',
+            },
           },
           (error, res, body) => {
             if (!error && res.statusCode === 200) {
@@ -48,6 +48,6 @@ export const connectVimeo = functions
     }
 
     return db.doc(`users/${context.auth.uid}/private/vimeo`).set({
-      token
+      token,
     });
   });
