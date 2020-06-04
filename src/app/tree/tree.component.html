@@ -103,7 +103,11 @@
               target="_blank"
               *ngFor="let resource of doc.resources"
             >
-              <mat-icon mat-list-icon svgIcon="github"></mat-icon>
+              <mat-icon
+                mat-list-icon
+                [svgIcon]="resource.url | resourceIcon: 'svg'"
+                >{{ resource.url | resourceIcon: 'material' }}</mat-icon
+              >
               <span matLine class="resource__title">{{ resource.title }}</span>
               <span>
                 <mat-icon inline>
