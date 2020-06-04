@@ -52,6 +52,13 @@
           <mat-icon class="mat-18">edit</mat-icon>
           <span>編集</span>
         </a>
+        <a class="actions__item" mat-button (click)="toggleFavorite()">
+          <mat-icon class="mat-18" *ngIf="!(isFav$ | async)">add</mat-icon>
+          <mat-icon class="mat-18" *ngIf="isFav$ | async">remove</mat-icon>
+          <span>{{
+            (isFav$ | async) ? 'リストから削除' : 'リストに追加'
+          }}</span>
+        </a>
       </div>
     </div>
     <mat-divider></mat-divider>

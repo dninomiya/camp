@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  padding: 24px 0;
+}
+
+.tag {
+  color: rgba(black, 0.6);
+}
+
+.tag + .tag:before {
+  content: '/';
+  margin: 0 4px;
+}

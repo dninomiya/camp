@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>マイリスト</h1>
+  <mat-card *ngIf="favorites$ | async as favorites; else blank">
+    <mat-nav-list dense>
+      <a
+        mat-list-item
+        *ngFor="let lesson of favorites"
+        routerLink="/lesson"
+        [queryParams]="{ v: lesson.id }"
+      >
+        <span matLine>{{ lesson.title }}</span>
+        <span matLine
+          ><span class="tag" *ngFor="let tag of lesson.tags">{{
+            tag
+          }}</span></span
+        >
+        <mat-icon (click)="removeFavorite(lesson.id); $event.preventDefault()"
+          >remove</mat-icon
+        >
+      </a>
+    </mat-nav-list>
+  </mat-card>
+
+  <ng-template #blank>
+    <p>アイテムがありません</p>
+  </ng-template>
+</div>

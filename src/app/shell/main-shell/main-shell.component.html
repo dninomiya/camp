@@ -17,6 +17,13 @@
   >
     <app-drawer [isLoading$]="causeLoading$">
       <app-cause-list (complete)="completeCauseList()"></app-cause-list>
+      <mat-divider></mat-divider>
+      <mat-nav-list dense>
+        <a mat-list-item routerLink="/favorites">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <span mat-line>マイリスト</span>
+        </a>
+      </mat-nav-list>
     </app-drawer>
   </mat-sidenav>
   <mat-sidenav-content>
