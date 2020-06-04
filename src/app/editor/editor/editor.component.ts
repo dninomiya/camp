@@ -123,7 +123,7 @@ export class EditorComponent implements OnInit {
   form = this.fb.group({
     title: ['', Validators.required],
     body: ['', Validators.required],
-    tags: [''],
+    tags: [[]],
     videoId: [
       '',
       {
@@ -490,6 +490,7 @@ export class EditorComponent implements OnInit {
       .subscribe((tags) => {
         if (tags) {
           this.form.get('tags').patchValue(tags);
+          this.form.markAsDirty();
         }
       });
   }

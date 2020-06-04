@@ -1,3 +1,5 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FavoriteService } from './../../services/favorite.service';
 import { LessonBody } from './../../interfaces/lesson';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChannelService } from 'src/app/services/channel.service';
@@ -45,6 +47,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
       return this.lessonId;
     }),
     shareReplay(1)
+  );
+  isFav: boolean;
+  isFav$: Observable<boolean> = this.lessonId$.pipe(
+    switchMap((id) =>
+      this.favoriteService.isFavorite(this.authService.user.id, id)
+    ),
+    tap((isFav) => (this.isFav = isFav))
   );
 
   cause$: Observable<LessonList> = this.route.queryParamMap.pipe(
@@ -149,13 +158,15 @@ export class ArticleComponent implements OnInit, OnDestroy {
   constructor(
     private channelService: ChannelService,
     private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
     private lessonService: LessonService,
     private authService: AuthService,
     private listService: ListService,
     private seoService: SeoService,
     private router: Router,
     private uiService: UiService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private favoriteService: FavoriteService
   ) {
     this.lesson$.subscribe((lesson) => {
       if (lesson) {
@@ -213,7 +224,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       description: lesson.body
         ? lesson.body.replace(/# -/gm, '').substring(0, 100)
         : '',
-      size: lesson.tags.includes('mentor') ? 'summary' : 'summary_large_image',
+      size: 'summary_large_image',
     });
   }
 
@@ -391,6 +402,26 @@ export class ArticleComponent implements OnInit, OnDestroy {
     clearTimeout(this.viewTimer);
     if (this.subs) {
       this.subs.unsubscribe();
+    }
+  }
+
+  addFavorite() {
+    this.favoriteService
+      .addFavorite(this.authService.user.id, this.lessonId)
+      .then(() => this.snackBar.open('お気に入りに追加しました！'));
+  }
+
+  removeFavorite() {
+    this.favoriteService
+      .removeFavorite(this.authService.user.id, this.lessonId)
+      .then(() => this.snackBar.open('お気に入りにから削除しました！'));
+  }
+
+  toggleFavorite() {
+    if (this.isFav) {
+      this.removeFavorite();
+    } else {
+      this.addFavorite();
     }
   }
 }

@@ -1,3 +1,4 @@
+import { AdminGuard } from './guards/admin.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
@@ -53,10 +54,16 @@ const routes: Routes = [
           import('./tree-editor/tree-editor.module').then(
             (m) => m.TreeEditorModule
           ),
-        canLoad: [AuthGuard],
+        canLoad: [AdminGuard],
         data: {
           hideNav: true,
         },
+      },
+      {
+        path: 'favorites',
+        loadChildren: () =>
+          import('./favorite/favorite.module').then((m) => m.FavoriteModule),
+        canLoad: [AuthGuard],
       },
       {
         path: 'new',
