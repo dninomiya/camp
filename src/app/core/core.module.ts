@@ -32,6 +32,7 @@ import { ListEditDialogComponent } from './list-edit-dialog/list-edit-dialog.com
 import { TagEditorDialogComponent } from './tag-editor-dialog/tag-editor-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { PointDialogComponent } from '../point-dialog/point-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     LoginDialogComponent,
     ListEditDialogComponent,
     TagEditorDialogComponent,
+    PointDialogComponent,
   ],
   imports: [
     SharedModule,

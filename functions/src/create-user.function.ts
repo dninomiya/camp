@@ -13,6 +13,7 @@ const createChannel = (user: UserRecord) => {
     avatarURL: user.photoURL,
     createdAt: new Date(),
     email: user.email,
+    point: 0,
     statistics: {
       followerCount: 0,
       lessonCount: 0,

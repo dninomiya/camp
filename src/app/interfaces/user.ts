@@ -16,6 +16,7 @@ export interface User {
   readonly isTrial?: boolean;
   readonly tasks?: string[];
   readonly repoId?: string;
+  readonly point?: number;
   readonly lastPullRequestDate?: firestore.Timestamp;
   readonly isa?: {
     start: firestore.Timestamp;

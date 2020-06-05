@@ -53,6 +53,16 @@
             <mat-icon class="mat-18">video_call</mat-icon>
           </button>
         </div>
+        <button
+          matTooltip="ポイント"
+          mat-stroked-button
+          (click)="openPointDialog()"
+          class="point"
+          *ngIf="!isMobile"
+        >
+          <mat-icon>loyalty</mat-icon>
+          <span>{{ user.point || 0 | number }}P</span>
+        </button>
         <span class="plan">{{ user.plan | plan }}</span>
         <button
           class="avatar"

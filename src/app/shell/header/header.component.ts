@@ -1,3 +1,5 @@
+import { PointDialogComponent } from './../../point-dialog/point-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
@@ -41,7 +43,11 @@ export class HeaderComponent implements OnInit {
   isMobile = this.uiService.isMobile;
   algoliaConfig = environment.algolia;
 
-  constructor(private authService: AuthService, private uiService: UiService) {}
+  constructor(
+    private authService: AuthService,
+    private uiService: UiService,
+    private dialog: MatDialog
+  ) {}
 
   login() {
     this.loginWaiting = true;
@@ -57,4 +63,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  openPointDialog() {
+    this.dialog.open(PointDialogComponent, {
+      width: '400px',
+    });
+  }
 }
