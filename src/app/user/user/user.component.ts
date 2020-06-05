@@ -55,7 +55,7 @@ export class UserComponent implements OnInit {
     private userService: UserService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private apolloService: ApolloService
+    public apolloService: ApolloService
   ) {}
 
   ngOnInit() {}

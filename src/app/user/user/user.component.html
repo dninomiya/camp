@@ -14,24 +14,26 @@
       <button routerLink="/edit-product" mat-stroked-button>
         プロダクト管理
       </button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="connectRepo()"
-        *ngIf="(githubToken$ | async) && !user.repoId; else connect"
-      >
-        リポジトリ登録
-      </button>
+      <ng-container *ngIf="apolloService.isReady$ | async">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="connectRepo()"
+          *ngIf="(githubToken$ | async) && !user.repoId; else connect"
+        >
+          リポジトリ登録
+        </button>
+      </ng-container>
       <ng-template #connect>
         <button
           (click)="importLabels(user.repoId)"
           mat-button
-          *ngIf="user.repoId"
+          *ngIf="user.repoId && !apolloService.authInvalid"
         >
           ラベルインポート
         </button>
         <button
-          *ngIf="!user.repoId"
+          *ngIf="!user.repoId || apolloService.authInvalid"
           class="github"
           mat-button
           (click)="connectGitHub()"
