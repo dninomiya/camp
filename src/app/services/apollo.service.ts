@@ -1,5 +1,5 @@
-import { map, switchMap, tap, take } from 'rxjs/operators';
-import { Observable, Subject, of, ReplaySubject, combineLatest } from 'rxjs';
+import { map, tap, take } from 'rxjs/operators';
+import { Observable, of, ReplaySubject, combineLatest } from 'rxjs';
 import { repos, ownRepos, OwnRepos, createLabel } from './gql';
 import { AuthService } from 'src/app/services/auth.service';
 import { Injectable } from '@angular/core';
@@ -7,6 +7,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { Apollo } from 'apollo-angular';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpLink } from 'apollo-angular-link-http';
+import { onError } from 'apollo-link-error';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +16,7 @@ import { HttpLink } from 'apollo-angular-link-http';
 export class ApolloService {
   readySource = new ReplaySubject<boolean>(1);
   isReady$: Observable<boolean> = this.readySource.asObservable();
-  repos;
+  authInvalid: boolean;
 
   constructor(
     private apollo: Apollo,
@@ -25,9 +27,9 @@ export class ApolloService {
       this.apollo.removeClient();
       if (token) {
         console.log('set apollo');
-        this.initApollo(token).then(() => {
-          this.readySource.next(!!token);
-        });
+        this.initApollo(token);
+      } else {
+        this.readySource.next(true);
       }
     });
   }
@@ -40,31 +42,34 @@ export class ApolloService {
         .set('Accept', 'application/vnd.github.bane-preview+json'),
     });
 
+    const link = onError(({ networkError }) => {
+      const error = networkError as any;
+      this.readySource.next(true);
+      this.authInvalid = error.status && error.status === 401;
+    });
+
     this.apollo.create({
-      link: http,
+      link: link.concat(http),
       cache: new InMemoryCache(),
+    });
+
+    this.getOwnRepos().subscribe((res) => {
+      this.readySource.next(true);
     });
   }
 
   getRepos() {
-    if (this.repos) {
-      return of(this.repos);
-    } else {
-      return this.apollo
-        .watchQuery<any>({
-          query: repos,
+    return this.apollo
+      .watchQuery<any>({
+        query: repos,
+      })
+      .valueChanges.pipe(
+        map(({ data }) => {
+          return data.organization.repositories.edges.map(
+            (iteme) => iteme.node
+          );
         })
-        .valueChanges.pipe(
-          map(({ data }) => {
-            return data.organization.repositories.edges.map(
-              (iteme) => iteme.node
-            );
-          }),
-          tap((result) => {
-            this.repos = result;
-          })
-        );
-    }
+      );
   }
 
   getOwnRepos(): Observable<{ id: string; name: string }[]> {

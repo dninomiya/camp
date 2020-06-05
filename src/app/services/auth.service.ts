@@ -181,8 +181,6 @@ export class AuthService {
       await user.unlink('github.com');
     }
     const provider = new auth.GithubAuthProvider();
-    provider.addScope('read:org');
-    provider.addScope('repo');
     provider.setCustomParameters({
       prompt: 'select_account',
     });
