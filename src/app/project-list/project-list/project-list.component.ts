@@ -51,7 +51,7 @@ export class ProjectListComponent implements OnInit {
     }),
     map((repos) => {
       return repos
-        .filter((repo) => !!repo.amount)
+        .filter((repo) => !!repo.amount && repo.name !== 'template')
         .sort((a, b) => a.amount - b.amount);
     }),
     switchMap((repos: object[]) => {

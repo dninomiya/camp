@@ -80,3 +80,15 @@ img {
 .denger {
   background: #ffcdd2;
 }
+
+.user {
+  display: flex;
+  align-items: center;
+  &__avatar {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    display: block;
+  }
+}
