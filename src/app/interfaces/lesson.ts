@@ -43,3 +43,14 @@ export interface Lesson extends LessonMeta, LessonBody {}
 export interface LessonMetaWithChannel extends LessonMeta {
   author: ChannelMeta;
 }
+
+export interface Revision {
+  id: string;
+  uid: string;
+  lessonId: string;
+  newDoc: string;
+  oldDoc: string;
+  comment: string;
+  createdAt: firestore.Timestamp;
+  isOpen: boolean;
+}

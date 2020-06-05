@@ -1,3 +1,4 @@
+import { Revision } from './../interfaces/lesson';
 import { environment } from './../../environments/environment';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
@@ -240,5 +241,41 @@ export class LessonService {
         first()
       )
       .toPromise();
+  }
+
+  addRevision(params: Omit<Revision, 'id' | 'createdAt'>): Promise<void> {
+    const id = this.db.createId();
+    return this.db
+      .doc<Revision>(`lessons/${params.lessonId}/revisions/${id}`)
+      .set({
+        ...params,
+        id,
+        isOpen: true,
+        createdAt: firestore.Timestamp.now(),
+      });
+  }
+
+  removeRevision(lessonId: string, revisionId: string): Promise<void> {
+    return this.db.doc(`lessons/${lessonId}/revisions/${revisionId}`).delete();
+  }
+
+  updateRevision(
+    lessonId: string,
+    revisionId: string,
+    newDoc: string
+  ): Promise<void> {
+    return this.db
+      .doc<Revision>(`lessons/${lessonId}/revisions/${revisionId}`)
+      .update({
+        newDoc,
+      });
+  }
+
+  acceptRevision(lessonId: string, revisionId: string): Promise<void> {
+    return this.db
+      .doc<Revision>(`lessons/${lessonId}/revisions/${revisionId}`)
+      .update({
+        isOpen: false,
+      });
   }
 }

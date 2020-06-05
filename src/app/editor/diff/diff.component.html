@@ -1,0 +1,18 @@
+<ng-container *ngIf="data">
+  <h1 matDialogTitle>{{ data.title }}</h1>
+
+  <mat-dialog-content>
+    <inline-diff
+      *ngIf="data.oldDoc && data.newDoc"
+      [oldText]="data.oldDoc"
+      [newText]="data.newDoc"
+    ></inline-diff>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button matDialogClose>却下</button>
+    <button mat-raised-button color="primary" [matDialogClose]="true">
+      承認
+    </button>
+  </mat-dialog-actions>
+</ng-container>

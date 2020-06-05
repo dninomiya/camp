@@ -1,3 +1,4 @@
+import { DiffComponent } from './../diff/diff.component';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import {
   NgxPicaErrorInterface,
@@ -64,6 +65,7 @@ export class EditorComponent implements OnInit {
     },
   };
 
+  suggestionBody = 'aafafafa';
   algoliaConfig = environment.algolia;
   oldThumbnail: string;
   uploadStep$ = this.vimeoService.uploadStep$;
@@ -238,7 +240,7 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  submit(id: string) {
+  submit(userId: string) {
     let action;
     const activeListIds = this.listControl.value || [];
 
@@ -260,7 +262,7 @@ export class EditorComponent implements OnInit {
       });
     } else {
       action = this.lessonService.createLesson(
-        id,
+        userId,
         this.form.value,
         this.thumbnail
       );
@@ -497,5 +499,26 @@ export class EditorComponent implements OnInit {
 
   openVimeoHelp() {
     this.dialog.open(VimeoHelpDialogComponent);
+  }
+
+  openDiff() {
+    this.dialog
+      .open(DiffComponent, {
+        data: {
+          title: 'test',
+          oldDoc: this.oldLesson.body,
+          newDoc: this.suggestionBody,
+        },
+        width: '900px',
+      })
+      .afterClosed()
+      .subscribe((status) => {
+        if (status) {
+          this.form.patchValue({
+            body: this.suggestionBody,
+          });
+          this.submit(this.authService.user.id);
+        }
+      });
   }
 }
