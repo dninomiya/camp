@@ -11,10 +11,16 @@
     </div>
 
     <div class="actions">
-      <button routerLink="/edit-product" mat-stroked-button>
+      <button
+        routerLink="/edit-product"
+        mat-stroked-button
+        *ngIf="user | customer"
+      >
         プロダクト管理
       </button>
-      <ng-container *ngIf="apolloService.isReady$ | async">
+      <ng-container
+        *ngIf="(apolloService.isReady$ | async) && (user | customer)"
+      >
         <button
           mat-raised-button
           color="primary"
@@ -46,7 +52,13 @@
 
     <mat-divider inset></mat-divider>
 
-    <mat-nav-list>
+    <mat-nav-list
+      *ngIf="
+        user.plan === 'admin' || user.plan === 'mentor' || user.plan === 'isa';
+        else notMentor
+      "
+    >
+      <h3 matSubheader>フロー</h3>
       <mat-list-item
         (click)="openTaskDialog(task)"
         *ngFor="let task of tasks; index as i"
@@ -57,6 +69,15 @@
         >
       </mat-list-item>
     </mat-nav-list>
+
+    <ng-template #notMentor>
+      <mat-list>
+        <h3 matSubheader>フロー</h3>
+        <mat-list-item>1. Slackに登録</mat-list-item>
+        <mat-list-item>2. チュートリアルを進める</mat-list-item>
+        <mat-list-item>3. プロダクト開発を進める</mat-list-item>
+      </mat-list>
+    </ng-template>
 
     <section *ngIf="user.plan === 'isa'">
       <h2>ISA</h2>
