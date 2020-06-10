@@ -65,10 +65,8 @@ export class UserComponent implements OnInit {
     return !!tasks.find((id) => id === taskId);
   }
 
-  getDays(
-    start: firestore.Timestamp,
-    end: firestore.Timestamp = firestore.Timestamp.now()
-  ): number {
+  getDays(start: firestore.Timestamp, end: firestore.Timestamp): number {
+    end = end || firestore.Timestamp.now();
     return moment(end.toMillis()).diff(moment(start.toMillis()), 'days');
   }
 
