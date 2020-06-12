@@ -14,6 +14,7 @@ export class ResourceIconPipe implements PipeTransform {
     { url: 'developer.mozilla', iconName: 'mozilla' },
     { url: 'algolia' },
     { url: 'stackblitz' },
+    { url: 'material' },
     { url: 'stripe' },
     { url: 'sendgrid' },
     { url: 'firebase' },

@@ -26,6 +26,7 @@ export class AppComponent {
     'codepen',
     'angular',
     'rxjs',
+    'material',
   ];
 
   constructor(
