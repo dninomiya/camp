@@ -25,6 +25,7 @@ export class AppComponent {
     'qiita',
     'codepen',
     'angular',
+    'rxjs',
   ];
 
   constructor(

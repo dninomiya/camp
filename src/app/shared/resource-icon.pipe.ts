@@ -18,6 +18,7 @@ export class ResourceIconPipe implements PipeTransform {
     { url: 'sendgrid' },
     { url: 'firebase' },
     { url: 'qiita' },
+    { url: 'rxjs' },
     { url: 'codepen' },
   ];
 
