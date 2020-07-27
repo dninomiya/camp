@@ -1,3 +1,4 @@
+import { CustomerGuard } from './guards/customer.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -76,7 +77,7 @@ const routes: Routes = [
       },
       {
         path: 'projects',
-        canLoad: [AuthGuard],
+        canLoad: [CustomerGuard],
         data: {
           hideNav: true,
         },

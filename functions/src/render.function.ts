@@ -13,7 +13,7 @@ const generateUrl = (req: any) => {
   return url.format({
     protocol: 'https',
     host: appUrl,
-    pathname: req.originalUrl
+    pathname: req.originalUrl,
   });
 };
 
