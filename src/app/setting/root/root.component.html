@@ -11,20 +11,26 @@
 </div>
 
 <nav *ngIf="isMobile" mat-tab-nav-bar>
-  <a mat-tab-link
-      routerLink="/setting/account"
-      routerLinkActive #rla="routerLinkActive"
-      [active]="rla.isActive">
+  <a
+    mat-tab-link
+    routerLink="/setting/account"
+    routerLinkActive
+    #rla="routerLinkActive"
+    [active]="rla.isActive"
+  >
     アカウント
   </a>
-  <a mat-tab-link
-      routerLink="/setting/billing"
-      routerLinkActive #rla2="routerLinkActive"
-      [active]="rla2.isActive">
+  <a
+    mat-tab-link
+    routerLink="/setting/billing"
+    routerLinkActive
+    #rla2="routerLinkActive"
+    [active]="rla2.isActive"
+  >
     請求とお支払い
   </a>
 </nav>
 
 <div class="content">
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
