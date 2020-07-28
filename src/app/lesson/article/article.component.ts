@@ -294,7 +294,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   private setSeek() {
     const seeks = document.querySelectorAll('.seek');
-    this.player = new Player(document.getElementById('vimeo'));
+    const element = document.getElementById('vimeo');
+    if (!element) {
+      return;
+    }
+    this.player = new Player(element);
     if (seeks) {
       seeks.forEach((seek) => {
         seek.addEventListener('click', () => {
