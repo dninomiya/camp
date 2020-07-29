@@ -10,7 +10,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LessonGuideComponent } from './lesson-guide/lesson-guide.component';
 import { EditorHelpComponent } from './editor-help/editor-help.component';
 import { NgxFilesizeModule } from 'ngx-filesize';
-import { NgxDiffModule } from 'ngx-diff';
 import { VimeoDialogComponent } from './vimeo-dialog/vimeo-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
 import { VimeoHelpDialogComponent } from './vimeo-help-dialog/vimeo-help-dialog.component';
@@ -33,7 +32,6 @@ import { DiffComponent } from './diff/diff.component';
     MatDialogModule,
     MatSidenavModule,
     NgAisModule,
-    NgxDiffModule,
     SimplemdeModule.forRoot({
       provide: SIMPLEMDE_CONFIG,
       useValue: {

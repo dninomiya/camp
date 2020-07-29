@@ -44,7 +44,11 @@
         </a>
         <a
           class="actions__item"
-          *ngIf="!isMobile && (isOwner$ | async)"
+          *ngIf="
+            !isMobile &&
+            (permission$ | async) &&
+            (user$ | async).plan !== 'free'
+          "
           mat-button
           [routerLink]="['/edit']"
           [queryParams]="{ v: lesson.id }"

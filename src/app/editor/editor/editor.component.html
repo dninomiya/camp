@@ -7,18 +7,21 @@
       position="end"
       #revision
     >
-      <div class="revisions">
-        <mat-list>
+      <div class="revisions" *ngIf="revisions$ | async as revisions">
+        <mat-list *ngIf="revisions.length">
           <h2 matSubheader>リビジョン</h2>
-          <mat-list-item dense>
+          <mat-list-item dense *ngFor="let revision of revisions">
             <img src="" matListAvatar alt="" />
-            <h3 matLine>Lorem ipsum dolor sit.</h3>
-            <span matLine>Lorem ipsum dolor sit.</span>
+            <h3 matLine>{{ revision.comment }}</h3>
+            <span matLine>{{
+              revision.createdAt.toDate() | date: 'yyyy年MM月dd日'
+            }}</span>
             <button mat-icon-button (click)="openDiff()">
               <mat-icon>preview</mat-icon>
             </button>
           </mat-list-item>
         </mat-list>
+        <p *ngIf="!revisions.length">バージョン履歴はありません</p>
       </div></mat-sidenav
     >
 
@@ -26,7 +29,7 @@
       <form
         class="form"
         [formGroup]="form"
-        (ngSubmit)="submit(user.id)"
+        (ngSubmit)="submit(user)"
         *ngIf="!isLoading"
       >
         <div class="form-header">
@@ -66,7 +69,10 @@
               <mat-option *ngFor="let list of lists$ | async" [value]="list.id">
                 {{ list.title }}
               </mat-option>
-              <a class="add-list" (click)="openNewListDialog(user.id)"
+              <a
+                class="add-list"
+                *ngIf="user.admin"
+                (click)="openNewListDialog(user.id)"
                 >新しくコースを作成</a
               >
             </mat-select>
@@ -97,7 +103,7 @@
             >
           </mat-form-field>
           <button
-            *ngIf="vimeoUser === null"
+            *ngIf="vimeoUser === null && user.admin"
             type="button"
             mat-raised-button
             (click)="openVideoUploader()"
@@ -106,7 +112,7 @@
             Vimeoと接続
           </button>
           <button type="button" mat-stroked-button (click)="revision.toggle()">
-            差分
+            バージョン
           </button>
         </div>
         <div class="wrap">
@@ -115,7 +121,7 @@
               class="body__editor"
               #body
               (paste)="onPaste($event)"
-              (keydown)="shortCut($event, user.id)"
+              (keydown)="shortCut($event, user)"
               formControlName="body"
               [options]="opts"
               [codemirror]="codemirrorOpts"
@@ -137,17 +143,18 @@
             <p class="uploader__step">{{ step }}%完了</p>
           </div>
           <div class="actions">
-            <mat-slide-toggle formControlName="free">無料</mat-slide-toggle>
-            <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
-
-            <button
-              type="button"
-              *ngIf="oldLesson"
-              mat-button
-              (click)="deleteLesson()"
-            >
-              削除
-            </button>
+            <ng-container *ngIf="user.admin">
+              <mat-slide-toggle formControlName="free">無料</mat-slide-toggle>
+              <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
+              <button
+                type="button"
+                *ngIf="oldLesson"
+                mat-button
+                (click)="deleteLesson()"
+              >
+                削除
+              </button>
+            </ng-container>
             <button type="button" mat-button (click)="cancel()">
               キャンセル
             </button>
@@ -156,7 +163,7 @@
               color="primary"
               [disabled]="form.invalid || form.pristine || isValidWaiting"
             >
-              {{ oldLesson ? '変更' : '作成' }}
+              {{ user.admin ? '保存' : 'リクエスト' }}
             </button>
           </div>
         </div>

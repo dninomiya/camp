@@ -1,3 +1,5 @@
+import { User } from 'src/app/interfaces/user';
+import { Revision } from './../../interfaces/lesson';
 import { DiffComponent } from './../diff/diff.component';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import {
@@ -65,6 +67,16 @@ export class EditorComponent implements OnInit {
     },
   };
 
+  revisions$: Observable<Revision[]> = this.route.queryParamMap.pipe(
+    switchMap((maps) => {
+      const id = maps.get('v');
+      if (id) {
+        return this.lessonService.getRevisions(id);
+      } else {
+        return of(null);
+      }
+    })
+  );
   suggestionBody = 'aafafafa';
   algoliaConfig = environment.algolia;
   oldThumbnail: string;
@@ -72,7 +84,7 @@ export class EditorComponent implements OnInit {
   user$ = this.authService.authUser$.pipe(shareReplay(1));
   lists$: Observable<LessonList[]> = this.user$.pipe(
     switchMap((user) => {
-      return this.channelService.getListByChannelId(user.id);
+      return this.channelService.getListByChannelId(environment.hostChannel);
     }),
     tap((lists) => (this.lists = lists))
   );
@@ -119,6 +131,7 @@ export class EditorComponent implements OnInit {
   vimeoUser: VimeoUser;
   oldLesson$: Observable<Lesson>;
   isValidWaiting: boolean;
+  revisionId: string;
 
   readyImages = [];
 
@@ -126,13 +139,7 @@ export class EditorComponent implements OnInit {
     title: ['', Validators.required],
     body: ['', Validators.required],
     tags: [[]],
-    videoId: [
-      '',
-      {
-        // asyncValidators: [this.validateVimeoId.bind(this)],
-        // updateOn: 'blur'
-      },
-    ],
+    videoId: [''],
     public: [true, Validators.required],
     free: [false],
   });
@@ -163,6 +170,7 @@ export class EditorComponent implements OnInit {
 
     this.route.queryParamMap.subscribe((params) => {
       const tag = params.get('tag');
+      this.revisionId = params.get('r');
       if (tag === 'mentor') {
         this.form.patchValue({
           tags: ['mentor'],
@@ -240,7 +248,7 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  submit(userId: string) {
+  submit(user: User) {
     let action;
     const activeListIds = this.listControl.value || [];
 
@@ -249,33 +257,21 @@ export class EditorComponent implements OnInit {
     }
 
     if (this.oldLesson) {
-      const added = addedDiff(this.oldLesson, this.form.value);
-      const updated = updatedDiff(this.oldLesson, this.form.value);
-      const newValue = {
-        ...added,
-        ...updated,
-      };
-
-      action = this.lessonService.updateLesson(this.oldLesson.id, {
-        body: this.form.value.body,
-        ...newValue,
-      });
+      if (user.admin) {
+        action = this.updateLesson();
+      } else {
+        if (this.revisionId) {
+          this.updateRevision();
+        } else {
+          this.createRevision(user.id);
+        }
+      }
     } else {
-      action = this.lessonService.createLesson(
-        userId,
-        this.form.value,
-        this.thumbnail
-      );
+      action = this.createLesson(user.id);
     }
 
     action.then((lessonId?: string) => {
-      this.snackBar.open(
-        `ポストを${this.oldLesson ? '更新' : '作成'}しました`,
-        null,
-        {
-          duration: 2000,
-        }
-      );
+      this.snackBar.open(`ポストを${this.oldLesson ? '更新' : '作成'}しました`);
       this.listService.patchList({
         allLists: this.lists,
         activeListIds,
@@ -288,6 +284,46 @@ export class EditorComponent implements OnInit {
           v: this.oldLesson ? this.oldLesson.id : lessonId,
         },
       });
+    });
+  }
+
+  private createRevision(uid: string) {
+    return this.lessonService.addRevision({
+      uid,
+      lessonId: this.oldLesson.id,
+      oldDoc: this.oldLesson.body,
+      newDoc: this.form.value.body,
+      comment: '',
+    });
+  }
+
+  private updateRevision() {
+    return this.lessonService.updateRevision(
+      this.oldLesson.id,
+      this.revisionId,
+      this.form.value.body
+    );
+  }
+
+  private createLesson(userId: string) {
+    return this.lessonService.createLesson(
+      userId,
+      this.form.value,
+      this.thumbnail
+    );
+  }
+
+  private updateLesson() {
+    const added = addedDiff(this.oldLesson, this.form.value);
+    const updated = updatedDiff(this.oldLesson, this.form.value);
+    const newValue = {
+      ...added,
+      ...updated,
+    };
+
+    return this.lessonService.updateLesson(this.oldLesson.id, {
+      body: this.form.value.body,
+      ...newValue,
     });
   }
 
@@ -321,9 +357,9 @@ export class EditorComponent implements OnInit {
     this.form.markAsDirty();
   }
 
-  shortCut(event: KeyboardEvent, uid: string) {
+  shortCut(event: KeyboardEvent, user: User) {
     if (event.metaKey && event.key === 'Enter') {
-      this.submit(uid);
+      this.submit(user);
     }
   }
 
@@ -509,15 +545,21 @@ export class EditorComponent implements OnInit {
           oldDoc: this.oldLesson.body,
           newDoc: this.suggestionBody,
         },
+        restoreFocus: false,
+        autoFocus: false,
         width: '900px',
       })
       .afterClosed()
       .subscribe((status) => {
-        if (status) {
-          this.form.patchValue({
-            body: this.suggestionBody,
-          });
-          this.submit(this.authService.user.id);
+        switch (status) {
+          case 'accept':
+            this.form.patchValue({
+              body: this.suggestionBody,
+            });
+            this.submit(this.authService.user);
+            break;
+          case 'reject':
+            break;
         }
       });
   }

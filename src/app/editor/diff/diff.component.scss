@@ -1,0 +1,11 @@
+.diff {
+  color: grey;
+  white-space: pre-wrap;
+  &--insert {
+    color: green;
+  }
+
+  &--delete {
+    color: red;
+  }
+}

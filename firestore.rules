@@ -97,7 +97,7 @@ service cloud.firestore {
         allow create: if isSignIn();
         allow update: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.authorId == request.auth.uid;
       }
-      match /rivisions/{rivisionId} {
+      match /revisions/{revisionId} {
         allow read: if isSignIn()
         allow create: if isSignIn();
         allow update: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.authorId == request.auth.uid;
