@@ -1,3 +1,4 @@
+import { PointService } from './../../services/point.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FavoriteService } from './../../services/favorite.service';
 import { LessonBody } from './../../interfaces/lesson';
@@ -42,6 +43,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   title = environment.title;
   isMobile = this.uiService.isMobile;
   lessonId$: Observable<string> = this.route.queryParamMap.pipe(
+    tap(() => this.loadingService.startLoading()),
     map((params) => {
       this.lessonId = params.get('v');
       return this.lessonId;
@@ -166,7 +168,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
     private router: Router,
     private uiService: UiService,
     private loadingService: LoadingService,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private pointService: PointService
   ) {
     this.lesson$.subscribe((lesson) => {
       if (lesson) {
@@ -315,7 +318,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   private getBody(): Observable<LessonBody> {
     return this.lessonId$.pipe(
-      tap(() => this.loadingService.startLoading()),
       switchMap((id) => {
         if (id) {
           return this.lessonService.getLessonBody(id);
@@ -399,6 +401,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
     this.viewTimer = setTimeout(() => {
       this.lessonService.countUpView(lid);
+      this.pointService.incrementPoint(this.uid, 1);
     }, 10000);
   }
 

@@ -1,6 +1,4 @@
 import { User } from 'src/app/interfaces/user';
-import { Revision } from './../../interfaces/lesson';
-import { DiffComponent } from './../diff/diff.component';
 import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import {
   NgxPicaErrorInterface,
@@ -67,17 +65,6 @@ export class EditorComponent implements OnInit {
     },
   };
 
-  revisions$: Observable<Revision[]> = this.route.queryParamMap.pipe(
-    switchMap((maps) => {
-      const id = maps.get('v');
-      if (id) {
-        return this.lessonService.getRevisions(id);
-      } else {
-        return of(null);
-      }
-    })
-  );
-  suggestionBody = 'aafafafa';
   algoliaConfig = environment.algolia;
   oldThumbnail: string;
   uploadStep$ = this.vimeoService.uploadStep$;
@@ -257,15 +244,7 @@ export class EditorComponent implements OnInit {
     }
 
     if (this.oldLesson) {
-      if (user.admin) {
-        action = this.updateLesson();
-      } else {
-        if (this.revisionId) {
-          this.updateRevision();
-        } else {
-          this.createRevision(user.id);
-        }
-      }
+      action = this.updateLesson();
     } else {
       action = this.createLesson(user.id);
     }
@@ -285,24 +264,6 @@ export class EditorComponent implements OnInit {
         },
       });
     });
-  }
-
-  private createRevision(uid: string) {
-    return this.lessonService.addRevision({
-      uid,
-      lessonId: this.oldLesson.id,
-      oldDoc: this.oldLesson.body,
-      newDoc: this.form.value.body,
-      comment: '',
-    });
-  }
-
-  private updateRevision() {
-    return this.lessonService.updateRevision(
-      this.oldLesson.id,
-      this.revisionId,
-      this.form.value.body
-    );
   }
 
   private createLesson(userId: string) {
@@ -459,6 +420,8 @@ export class EditorComponent implements OnInit {
   openHelpDialog() {
     this.dialog.open(EditorHelpComponent, {
       width: '600px',
+      restoreFocus: false,
+      autoFocus: false,
     });
   }
 
@@ -535,32 +498,5 @@ export class EditorComponent implements OnInit {
 
   openVimeoHelp() {
     this.dialog.open(VimeoHelpDialogComponent);
-  }
-
-  openDiff() {
-    this.dialog
-      .open(DiffComponent, {
-        data: {
-          title: 'test',
-          oldDoc: this.oldLesson.body,
-          newDoc: this.suggestionBody,
-        },
-        restoreFocus: false,
-        autoFocus: false,
-        width: '900px',
-      })
-      .afterClosed()
-      .subscribe((status) => {
-        switch (status) {
-          case 'accept':
-            this.form.patchValue({
-              body: this.suggestionBody,
-            });
-            this.submit(this.authService.user);
-            break;
-          case 'reject':
-            break;
-        }
-      });
   }
 }

@@ -7,7 +7,7 @@ const createChannel = (user: UserRecord) => {
     id: user.uid,
     contact: user.email,
     authorId: user.uid,
-    title: user.displayName + 'のブートキャンプ',
+    title: user.displayName,
     ownerName: user.displayName,
     coverURL: '',
     avatarURL: user.photoURL,

@@ -42,20 +42,22 @@
           <mat-icon class="mat-18">flag</mat-icon>
           <span>報告</span>
         </a>
-        <a
-          class="actions__item"
-          *ngIf="
-            !isMobile &&
-            (permission$ | async) &&
-            (user$ | async).plan !== 'free'
-          "
-          mat-button
-          [routerLink]="['/edit']"
-          [queryParams]="{ v: lesson.id }"
-        >
-          <mat-icon class="mat-18">edit</mat-icon>
-          <span>編集</span>
-        </a>
+        <ng-container *ngIf="user$ | async as user">
+          <a
+            class="actions__item"
+            *ngIf="
+              !isMobile &&
+              (user.admin ||
+                ((permission$ | async) && user.id === lesson.authorId))
+            "
+            mat-button
+            [routerLink]="['/edit']"
+            [queryParams]="{ v: lesson.id }"
+          >
+            <mat-icon class="mat-18">edit</mat-icon>
+            <span>編集</span>
+          </a>
+        </ng-container>
         <a class="actions__item" mat-button (click)="toggleFavorite()">
           <mat-icon class="mat-18" *ngIf="!(isFav$ | async)">add</mat-icon>
           <mat-icon class="mat-18" *ngIf="isFav$ | async">remove</mat-icon>

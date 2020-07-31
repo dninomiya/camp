@@ -48,9 +48,9 @@
             mat-icon-button
             routerLink="/new"
             matTooltip="投稿"
-            *ngIf="user.admin"
+            *ngIf="user.plan && user.plan !== 'free'"
           >
-            <mat-icon class="mat-18">video_call</mat-icon>
+            <mat-icon class="mat-18">post_add</mat-icon>
           </button>
         </div>
         <button

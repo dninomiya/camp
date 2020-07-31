@@ -189,11 +189,9 @@ export class LessonService {
     if (!lessonId) {
       return;
     }
-    const callable = this.fns.httpsCallable('countUp');
-    return callable({
-      path: `lessons/${lessonId}`,
-      key: 'viewCount',
-    }).toPromise();
+    this.db.doc(`lessons/${lessonId}`).update({
+      viewCount: firestore.FieldValue.increment(1),
+    });
   }
 
   getOGPs(urls: string[]): Observable<object[]> {
@@ -203,7 +201,7 @@ export class LessonService {
 
   checkPermission(lessonId: string): Observable<boolean> {
     return combineLatest([
-      this.authService.authUser$,
+      this.authService.authUser$.pipe(take(1)),
       this.db
         .doc<LessonMeta>(`lessons/${lessonId}`)
         .valueChanges()
