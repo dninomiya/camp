@@ -67,6 +67,7 @@ export class HeaderComponent implements OnInit {
   openPointDialog() {
     this.dialog.open(PointDialogComponent, {
       width: '400px',
+      restoreFocus: false,
     });
   }
 }
