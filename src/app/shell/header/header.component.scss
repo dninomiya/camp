@@ -105,7 +105,14 @@
   border-radius: 2px;
   border: 1px solid rgba(black, 0.12);
   line-height: 1;
+  margin-right: 16px;
+}
+
+.point {
   margin: 0 16px;
+  mat-icon {
+    margin-right: 4px;
+  }
 }
 
 .skill-button {
