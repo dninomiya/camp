@@ -42,6 +42,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   settlementStatus: boolean;
   channel: ChannelMeta;
   title = environment.title;
+  lessonMeta: LessonMeta;
   isMobile = this.uiService.isMobile;
   lessonId$: Observable<string> = this.route.queryParamMap.pipe(
     tap(() => this.loadingService.startLoading()),
@@ -79,6 +80,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       }
     }),
     tap((meta) => {
+      this.lessonMeta = meta;
       if (!meta) {
         this.router.navigate(['not-found']);
         return of(null);
@@ -414,7 +416,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
     this.viewTimer = setTimeout(() => {
       this.lessonService.countUpView(lid);
-      this.pointService.incrementPoint(this.uid, 1);
+      this.pointService.incrementPoint(this.lessonMeta.authorId, 1);
     }, 10000);
   }
 
