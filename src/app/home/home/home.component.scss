@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 :host {
   display: block;
@@ -131,4 +131,33 @@ h2 {
   @include sp {
     grid-template-columns: 1fr;
   }
+}
+
+.swiper {
+  margin: -8px;
+  padding: 0 24px;
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    mat-icon {
+      vertical-align: bottom;
+    }
+    &.swiper-button-disabled {
+      display: none;
+    }
+    &--next {
+      right: 0;
+    }
+    &--prev {
+      left: 0;
+    }
+  }
+}
+
+.swiper-slide {
+  padding: 8px;
+  box-sizing: border-box;
+  width: 240px;
 }

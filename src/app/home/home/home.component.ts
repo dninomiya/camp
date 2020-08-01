@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SeoService } from 'src/app/services/seo.service';
 import { Title } from '@angular/platform-browser';
+import { SwiperOptions } from 'swiper';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,14 @@ export class HomeComponent implements OnInit {
   algoliaConfig = {
     ...environment.algolia,
     indexName: environment.algolia.indexName + '-latest',
+  };
+
+  swiperConfig: SwiperOptions = {
+    slidesPerView: 4,
+    navigation: {
+      nextEl: '.swiper__arrow--next',
+      prevEl: '.swiper__arrow--prev',
+    },
   };
 
   latestParams = {

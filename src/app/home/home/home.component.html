@@ -4,12 +4,25 @@
     <ng-template let-hits="hits" let-results="results">
       <ng-container *ngIf="hits && hits.length">
         <h2>新着レッスン</h2>
-        <div class="lesson-grid">
-          <app-grid-lesson-item
-            *ngFor="let hit of hits | attachmentUser | async"
-            [lesson]="hit"
-          ></app-grid-lesson-item>
-        </div>
+        <swiper
+          class="swiper"
+          [config]="swiperConfig"
+          *ngIf="hits | attachmentUser | async as lessons"
+        >
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let lesson of lessons">
+              <app-grid-lesson-item [lesson]="lesson"></app-grid-lesson-item>
+            </div>
+          </div>
+          <div class="swiper__arrow swiper__arrow--next">
+            <button mat-mini-fab><mat-icon>navigate_next</mat-icon></button>
+          </div>
+          <div class="swiper__arrow swiper__arrow--prev">
+            <button mat-mini-fab>
+              <mat-icon>navigate_before</mat-icon>
+            </button>
+          </div>
+        </swiper>
       </ng-container>
     </ng-template>
   </ais-hits>
