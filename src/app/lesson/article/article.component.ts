@@ -38,6 +38,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   uid: string;
   loading$ = this.loadingService.isLoading$;
   lessonId?: string;
+  isLiked: boolean;
   settlementStatus: boolean;
   channel: ChannelMeta;
   title = environment.title;
@@ -184,6 +185,18 @@ export class ArticleComponent implements OnInit, OnDestroy {
         }
       }
     );
+
+    combineLatest([this.authService.authUser$, this.route.queryParamMap])
+      .pipe(
+        switchMap(([user, paramMap]) => {
+          if (user) {
+            return this.lessonService.isLiked(user.id, paramMap.get('v'));
+          } else {
+            return of(false);
+          }
+        })
+      )
+      .subscribe((isLiked) => (this.isLiked = isLiked));
   }
 
   async setSchema(lesson: Lesson, channel: ChannelMeta) {
@@ -429,6 +442,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
       this.removeFavorite();
     } else {
       this.addFavorite();
+    }
+  }
+
+  toggleLike() {
+    if (this.isLiked) {
+      this.lessonService.unlike(this.uid, this.lessonId);
+    } else {
+      this.lessonService.like(this.uid, this.lessonId);
     }
   }
 }

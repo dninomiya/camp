@@ -20,6 +20,17 @@
     <h1 class="title">{{ lesson.title }}</h1>
     <div class="video-footer">
       <div class="actions">
+        <button
+          class="actions__item actions__item--default"
+          mat-button
+          [class.actions__item--active]="isLiked"
+          color="primary"
+          *ngIf="(permission$ | async) && (user$ | async)"
+          (click)="toggleLike()"
+        >
+          <mat-icon class="mat-18">thumb_up</mat-icon>
+          <span>いいね</span>
+        </button>
         <a
           href="https://to-camp.slack.com/archives/C0116JHDY2H"
           target="_blank"
@@ -86,6 +97,18 @@
       <article class="article" *ngIf="permission$ | async">
         <markdown [data]="lesson.body"></markdown>
       </article>
+
+      <div class="review">
+        <button
+          mat-stroked-button
+          *ngIf="(permission$ | async) && (user$ | async)"
+          (click)="toggleLike()"
+          [color]="isLiked ? 'primary' : null"
+        >
+          <mat-icon>thumb_up</mat-icon>
+          <span>分かりやすかった！</span>
+        </button>
+      </div>
     </ng-container>
 
     <ng-template #noPermission>

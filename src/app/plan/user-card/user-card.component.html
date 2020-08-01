@@ -1,35 +1,24 @@
-<mat-card class="card">
-  <div
-    *ngIf="channel.coverURL"
-    matCardImage
-    class="header"
-    [style.background-image]="'url(' + channel.coverURL + ')' | safe: 'style'"
-  ></div>
-
-  <div *ngIf="!channel.coverURL" matCardImage class="header header--no-cover">
-    <img
-      class="header__avatar"
-      [src]="channel.avatarURL | safe: 'url'"
-      alt=""
-    />
+<mat-card class="card" *ngIf="data">
+  <div matCardImage class="header header--no-cover">
+    <img class="header__avatar" [src]="data.avatar | safe: 'url'" alt="" />
   </div>
 
   <div class="profile">
-    <p class="profile__name">{{ channel.title }}</p>
-    <p class="profile__description">{{ channel.description }}</p>
+    <p class="profile__name">{{ data.name }}</p>
+    <p class="profile__description">{{ data.profile }}</p>
 
     <div class="profile__links">
       <a
         [href]="link"
         target="_blank"
         class="profile__link"
-        *ngFor="let link of channel.links"
+        *ngFor="let link of data.links"
       >
         <i [class]="link | linkIcon"></i>
       </a>
     </div>
 
-    <div class="camp">
+    <div class="camp" *ngIf="data.isHost">
       <button mat-raised-button color="primary" routerLink="/about">
         CAMPについて
       </button>

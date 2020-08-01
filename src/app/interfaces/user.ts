@@ -6,6 +6,7 @@ export interface User {
   readonly name: string;
   readonly email: string;
   readonly avatarURL: string;
+  readonly profile?: string;
   readonly createdAt: firestore.Timestamp;
   readonly admin: boolean;
   readonly plan: PlanID;
@@ -17,6 +18,7 @@ export interface User {
   readonly tasks?: string[];
   readonly repoId?: string;
   readonly point?: number;
+  readonly links?: string[];
   readonly lastPullRequestDate?: firestore.Timestamp;
   readonly isa?: {
     start: firestore.Timestamp;

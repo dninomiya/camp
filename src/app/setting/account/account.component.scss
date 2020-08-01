@@ -31,3 +31,20 @@ h2 {
   overflow: hidden;
   margin-bottom: 16px;
 }
+
+mat-form-field {
+  display: block;
+}
+
+.link-title {
+  font-size: 12px;
+  margin: 0 0 8px;
+  line-height: 1;
+}
+
+.link {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  margin-bottom: 16px;
+}

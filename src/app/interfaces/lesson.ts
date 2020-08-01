@@ -11,6 +11,7 @@ export interface LessonMeta {
   readonly updatedAt: firestore.Timestamp;
   readonly authorId: string;
   readonly thumbnailURL?: string;
+  readonly likedCount?: number;
 
   title: string;
   videoId?: string;
