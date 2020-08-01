@@ -283,6 +283,7 @@ export class EditorComponent implements OnInit {
     };
 
     return this.lessonService.updateLesson(this.oldLesson.id, {
+      title: this.form.value.title,
       body: this.form.value.body,
       ...newValue,
     });
