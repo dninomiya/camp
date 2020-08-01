@@ -1,29 +1,81 @@
-<ais-instantsearch [config]="algoliaConfig" class="list">
-  <ais-configure [searchParameters]="latestParams"> </ais-configure>
-  <ais-hits>
-    <ng-template let-hits="hits" let-results="results">
-      <ng-container *ngIf="hits && hits.length">
-        <h2>新着レッスン</h2>
-        <swiper
-          class="swiper"
-          [config]="swiperConfig"
-          *ngIf="hits | attachmentUser | async as lessons"
-        >
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" *ngFor="let lesson of lessons">
-              <app-grid-lesson-item [lesson]="lesson"></app-grid-lesson-item>
-            </div>
-          </div>
-          <div class="swiper__arrow swiper__arrow--next">
-            <button mat-mini-fab><mat-icon>navigate_next</mat-icon></button>
-          </div>
-          <div class="swiper__arrow swiper__arrow--prev">
-            <button mat-mini-fab>
-              <mat-icon>navigate_before</mat-icon>
-            </button>
-          </div>
-        </swiper>
-      </ng-container>
-    </ng-template>
-  </ais-hits>
-</ais-instantsearch>
+<div class="hero">
+  <div>
+    <h1 class="hero__title">リニューアル</h1>
+    <p class="hero__lead">
+      CAMPが大幅にリニューアルしました！ホーム画面の刷新、投稿機能、ポイント機能、新料金プランなど多くのアップデートを行いました！
+    </p>
+    <button mat-raised-button color="primary">詳しくはこちら</button>
+  </div>
+</div>
+
+<section>
+  <h2>人気</h2>
+  <swiper
+    class="swiper"
+    [config]="swiperConfig"
+    *ngIf="likedLessons$ | async as lessons"
+  >
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let lesson of lessons">
+        <app-grid-lesson-item
+          [noDate]="true"
+          [lesson]="lesson"
+        ></app-grid-lesson-item>
+      </div>
+    </div>
+    <div class="swiper__arrow swiper__arrow--next">
+      <button mat-mini-fab><mat-icon>navigate_next</mat-icon></button>
+    </div>
+    <div class="swiper__arrow swiper__arrow--prev">
+      <button mat-mini-fab>
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+    </div>
+  </swiper>
+</section>
+
+<section>
+  <h2>新着</h2>
+  <swiper
+    class="swiper"
+    [config]="swiperConfig"
+    *ngIf="latestLessons$ | async as lessons"
+  >
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let lesson of lessons">
+        <app-grid-lesson-item [lesson]="lesson"></app-grid-lesson-item>
+      </div>
+    </div>
+    <div class="swiper__arrow swiper__arrow--next">
+      <button mat-mini-fab><mat-icon>navigate_next</mat-icon></button>
+    </div>
+    <div class="swiper__arrow swiper__arrow--prev">
+      <button mat-mini-fab>
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+    </div>
+  </swiper>
+</section>
+
+<section>
+  <h2>アップデート</h2>
+  <swiper
+    class="swiper"
+    [config]="swiperConfig"
+    *ngIf="updatedLessons$ | async as lessons"
+  >
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let lesson of lessons">
+        <app-grid-lesson-item [lesson]="lesson"></app-grid-lesson-item>
+      </div>
+    </div>
+    <div class="swiper__arrow swiper__arrow--next">
+      <button mat-mini-fab><mat-icon>navigate_next</mat-icon></button>
+    </div>
+    <div class="swiper__arrow swiper__arrow--prev">
+      <button mat-mini-fab>
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+    </div>
+  </swiper>
+</section>

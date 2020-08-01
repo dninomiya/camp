@@ -1,5 +1,5 @@
+import { LessonMetaWithUser } from 'src/app/interfaces/lesson';
 import { Component, OnInit, Input } from '@angular/core';
-import { LessonMetaWithChannel } from 'src/app/interfaces/lesson';
 
 @Component({
   selector: 'app-grid-lesson-item',
@@ -7,9 +7,11 @@ import { LessonMetaWithChannel } from 'src/app/interfaces/lesson';
   styleUrls: ['./grid-lesson-item.component.scss'],
 })
 export class GridLessonItemComponent implements OnInit {
-  @Input() lesson: LessonMetaWithChannel;
+  @Input() lesson: LessonMetaWithUser;
   @Input() type?: string;
   @Input() causeId?: string;
+  @Input() noDate?: boolean;
+  @Input() simple?: boolean;
 
   constructor() {}
 

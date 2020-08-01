@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { PointService } from './../../services/point.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FavoriteService } from './../../services/favorite.service';
@@ -155,6 +156,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
     shareReplay(1)
   );
 
+  author$: Observable<User> = this.lessonMeta$.pipe(
+    switchMap((meta) => this.userService.getUser(meta.authorId))
+  );
+
   viewTimer;
   subs: Subscription;
 
@@ -170,7 +175,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
     private uiService: UiService,
     private loadingService: LoadingService,
     private favoriteService: FavoriteService,
-    private pointService: PointService
+    private pointService: PointService,
+    private userService: UserService
   ) {
     this.lesson$.subscribe((lesson) => {
       if (lesson) {

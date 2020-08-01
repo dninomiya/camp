@@ -1,3 +1,8 @@
+import { UiService } from './../../services/ui.service';
+import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { LessonMeta } from 'src/app/interfaces/lesson';
+import { LessonService } from 'src/app/services/lesson.service';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SeoService } from 'src/app/services/seo.service';
@@ -10,25 +15,33 @@ import { SwiperOptions } from 'swiper';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  algoliaConfig = {
-    ...environment.algolia,
-    indexName: environment.algolia.indexName + '-latest',
-  };
-
+  isMobile = this.uiService.isMobile;
   swiperConfig: SwiperOptions = {
-    slidesPerView: 4,
+    slidesPerView: this.isMobile ? 1 : 4,
+    slidesPerGroup: this.isMobile ? 1 : 4,
     navigation: {
       nextEl: '.swiper__arrow--next',
       prevEl: '.swiper__arrow--prev',
     },
   };
+  updatedLessons$: Observable<
+    LessonMeta[]
+  > = this.lessonService.getUpdatedLessons().pipe(take(1));
 
-  latestParams = {
-    hitsPerPage: 20,
-    filters: 'public:true AND NOT deleted:true',
-  };
+  likedLessons$: Observable<
+    LessonMeta[]
+  > = this.lessonService.getLikedLessons().pipe(take(1));
 
-  constructor(private seoService: SeoService, private titleService: Title) {
+  latestLessons$: Observable<
+    LessonMeta[]
+  > = this.lessonService.getLatestLessons().pipe(take(1));
+
+  constructor(
+    private seoService: SeoService,
+    private titleService: Title,
+    private lessonService: LessonService,
+    private uiService: UiService
+  ) {
     this.seoService.setSchema({
       '@type': 'WebSite',
       logo: '/assets/images/logo.png',

@@ -28,17 +28,13 @@ h2 {
   font-size: 16px;
   margin-bottom: 24px;
   font-weight: normal;
+  padding-left: 8px;
   line-height: 1;
   @include sp {
-    margin-bottom: 16px;
+    margin: 40px 0 16px;
     font-size: 13px;
     color: rgba(black, 0.6);
   }
-}
-
-.list {
-  margin-bottom: 40px;
-  display: block;
 }
 
 .home-loading {
@@ -134,13 +130,21 @@ h2 {
 }
 
 .swiper {
-  margin: -8px;
-  padding: 0 24px;
+  margin: -8px -24px;
+  overflow: hidden;
+  padding: 0 120px 0 24px;
+  @include sp {
+    padding: 0 24px 0 8px;
+    margin: -8px -16px;
+  }
   &__arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
+    @include sp {
+      display: none;
+    }
     mat-icon {
       vertical-align: bottom;
     }
@@ -148,10 +152,10 @@ h2 {
       display: none;
     }
     &--next {
-      right: 0;
+      right: -12px;
     }
     &--prev {
-      left: 0;
+      left: -12px;
     }
   }
 }
@@ -159,5 +163,30 @@ h2 {
 .swiper-slide {
   padding: 8px;
   box-sizing: border-box;
-  width: 240px;
+  height: auto;
+  @include sp {
+    padding: 4px;
+  }
+}
+
+.hero {
+  height: 400px;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  background: #111;
+  color: white;
+  margin: -24px -24px 40px;
+  padding: 40px;
+  @include sp {
+    margin: -16px -16px 40px;
+  }
+  &__title {
+    font-size: 24px;
+    line-height: 38px;
+  }
+  &__lead {
+    margin-bottom: 24px;
+    max-width: 320px;
+  }
 }

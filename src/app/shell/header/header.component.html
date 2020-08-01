@@ -26,10 +26,10 @@
       class="skill-button"
       mat-icon-button
       routerLink="/atomic"
-      matTooltip="スキルツリー"
+      matTooltip="スキル"
       *ngIf="!isMobile"
     >
-      <mat-icon>account_tree</mat-icon>
+      <mat-icon>how_to_reg</mat-icon>
     </button>
     <ng-container *ngIf="user$ | async as user; else loginButton">
       <div class="btns">

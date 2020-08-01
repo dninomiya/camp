@@ -1,3 +1,4 @@
+import { User } from 'src/app/interfaces/user';
 import { firestore } from 'firebase/app';
 import { ChannelMeta } from './channel';
 
@@ -41,8 +42,8 @@ export interface LessonBody {
 
 export interface Lesson extends LessonMeta, LessonBody {}
 
-export interface LessonMetaWithChannel extends LessonMeta {
-  author: ChannelMeta;
+export interface LessonMetaWithUser extends LessonMeta {
+  author: User;
 }
 
 export interface Revision {

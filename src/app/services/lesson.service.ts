@@ -1,5 +1,6 @@
+import { User } from 'src/app/interfaces/user';
 import { environment } from 'src/environments/environment';
-import { Revision } from './../interfaces/lesson';
+import { Revision, LessonMetaWithUser } from './../interfaces/lesson';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -180,6 +181,7 @@ export class LessonService {
   deleteLesson(id: string): Promise<void> {
     return this.db.doc(`lessons/${id}`).update({
       deleted: true,
+      public: false,
     });
   }
 
@@ -289,5 +291,47 @@ export class LessonService {
     return this.db
       .doc<Revision>(`lessons/${lessonId}/revisions/${revisionId}`)
       .delete();
+  }
+
+  getUpdatedLessons(): Observable<LessonMeta[]> {
+    return this.getLessonsWithAuthor((ref) =>
+      ref.where('public', '==', true).orderBy('updatedAt', 'desc').limit(8)
+    );
+  }
+
+  getLikedLessons(): Observable<LessonMeta[]> {
+    return this.getLessonsWithAuthor((ref) =>
+      ref.where('public', '==', true).orderBy('likedCount', 'desc').limit(8)
+    );
+  }
+
+  getLatestLessons(): Observable<LessonMetaWithUser[]> {
+    return this.getLessonsWithAuthor((ref) =>
+      ref.where('public', '==', true).orderBy('createdAt', 'desc').limit(8)
+    );
+  }
+
+  private getLessonsWithAuthor(query): Observable<LessonMetaWithUser[]> {
+    return this.db
+      .collection<LessonMeta>('lessons', query)
+      .valueChanges()
+      .pipe(
+        switchMap((metas) => {
+          const uids = Array.from(new Set(metas.map((meta) => meta.authorId)));
+          const users$: Observable<User>[] = uids.map((uid) =>
+            this.db.doc<User>(`users/${uid}`).valueChanges()
+          );
+
+          return combineLatest([of(metas), combineLatest(users$)]);
+        }),
+        map(([metas, users]) => {
+          return metas.map((meta) => {
+            return {
+              ...meta,
+              author: users.find((user) => user.id === meta.authorId),
+            };
+          });
+        })
+      );
   }
 }
