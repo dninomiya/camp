@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Revision } from './../interfaces/lesson';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
@@ -8,7 +9,7 @@ import { switchMap, map, first, take } from 'rxjs/operators';
 import { ChannelMeta } from '../interfaces/channel';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { LessonList } from '../interfaces/lesson-list';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firestore } from 'firebase/app';
 import { StorageService } from './storage.service';
 
@@ -156,10 +157,24 @@ export class LessonService {
       });
     }
 
-    return this.db.doc(`lessons/${id}`).update({
+    await this.db.doc(`lessons/${id}`).update({
       ...data,
       updatedAt: new Date(),
     });
+
+    await this.http
+      .post(
+        'https://hooks.slack.com/services/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',
+        {
+          text: `「${data.title}」が更新されました。\n${environment.host}?v=${id}`,
+        },
+        {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          }),
+        }
+      )
+      .toPromise();
   }
 
   deleteLesson(id: string): Promise<void> {
