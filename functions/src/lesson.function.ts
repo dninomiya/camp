@@ -1,6 +1,11 @@
+import { sendSlack } from './utils/slack';
+import { firestore } from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { db, countUp, countDown } from './utils';
 import { addIndex, updateIndex, removeIndex } from './utils/algolia';
+
+const slackURL =
+  'https://hooks.slack.com/services/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';
 
 export const createLessonMeta = functions
   .region('asia-northeast1')
@@ -18,6 +23,23 @@ export const createLessonMeta = functions
           `channels/${meta.channelId}`,
           'statistics.publicLessonCount'
         );
+      }
+
+      const userDoc = db.doc(`users/${meta.authorId}`);
+      const user = (await userDoc.get()).data();
+
+      await userDoc.update({
+        point: firestore.FieldValue.increment(10),
+      });
+
+      if (user) {
+        sendSlack(slackURL, {
+          text: `${user.name}が「${
+            meta.title
+          }」を投稿して**10P**獲得しました！👏👏👏\n${
+            functions.config().host.url
+          }v=${meta.id}`,
+        });
       }
     }
   });
@@ -70,7 +92,7 @@ export const updateLessonMeta = functions
 
       return updateIndex({
         ...after,
-        body: content.body
+        body: content.body,
       });
     }
   });
@@ -84,7 +106,7 @@ export const createLesson = functions
     const data = snap.data();
     const body = {
       ...meta,
-      ...data
+      ...data,
     };
     return addIndex(body);
   });
@@ -105,6 +127,55 @@ export const deleteLesson = functions
         'statistics.publicLessonCount'
       );
     }
+
+    const userDoc = db.doc(`users/${lesson.authorId}`);
+    await userDoc.update({
+      point: firestore.FieldValue.increment(-10),
+    });
+
     await countDown(`channels/${lesson.channelId}`, 'statistics.lessonCount');
     return removeIndex(lesson.id);
+  });
+
+export const likeLesson = functions
+  .region('asia-northeast1')
+  .firestore.document('channels/{uid}/likes/{lessonId}')
+  .onCreate(async (snapshot, context) => {
+    const lessonDoc = db.doc(`lessons/${context.params.lessonId}`);
+
+    await lessonDoc.update({
+      likedCount: firestore.FieldValue.increment(1),
+    });
+
+    const userDoc = db.doc(`users/${context.params.uid}`);
+
+    await userDoc.update({
+      point: firestore.FieldValue.increment(100),
+    });
+
+    const user = (await userDoc.get()).data();
+    const lesson = (await lessonDoc.get()).data();
+
+    if (user && lesson) {
+      return sendSlack(slackURL, {
+        text: `${user.name}の「${
+          lesson.title
+        }」が感謝され、100P獲得しました！👏👏👏\n${
+          functions.config().host.url
+        }?v=${lesson.id}`,
+      });
+    }
+  });
+
+export const unLikeLesson = functions
+  .region('asia-northeast1')
+  .firestore.document('channels/{uid}/likes/{lessonId}')
+  .onDelete(async (snapshot, context) => {
+    await db.doc(`lessons/${context.params.lessonId}`).update({
+      likedCount: firestore.FieldValue.increment(-1),
+    });
+
+    return db.doc(`users/${context.params.uid}`).update({
+      point: firestore.FieldValue.increment(-100),
+    });
   });

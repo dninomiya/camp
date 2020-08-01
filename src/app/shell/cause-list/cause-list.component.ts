@@ -9,16 +9,12 @@ import { ListService } from 'src/app/services/list.service';
 @Component({
   selector: 'app-cause-list',
   templateUrl: './cause-list.component.html',
-  styleUrls: ['./cause-list.component.scss']
+  styleUrls: ['./cause-list.component.scss'],
 })
 export class CauseListComponent implements OnInit {
   causes$: Observable<LessonList[]> = this.listService
-    .getLists(
-      environment.production
-        ? 'ypPxvg7WBUPkYZDN7ao3VyLs9OL2'
-        : 'eX5RTeZF9Iape0Se9iPXlIwaU273'
-    )
-    .pipe(tap(_ => this.complete.emit(true)));
+    .getLists(environment.hostChannel)
+    .pipe(tap((_) => this.complete.emit(true)));
 
   @Output() complete = new EventEmitter();
 

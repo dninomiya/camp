@@ -20,6 +20,17 @@
     <h1 class="title">{{ lesson.title }}</h1>
     <div class="video-footer">
       <div class="actions">
+        <button
+          class="actions__item actions__item--default"
+          mat-button
+          [class.actions__item--active]="isLiked"
+          color="primary"
+          *ngIf="(permission$ | async) && (user$ | async)"
+          (click)="toggleLike()"
+        >
+          <mat-icon class="mat-18">thumb_up</mat-icon>
+          <span>いいね</span>
+        </button>
         <a
           href="https://to-camp.slack.com/archives/C0116JHDY2H"
           target="_blank"
@@ -42,16 +53,22 @@
           <mat-icon class="mat-18">flag</mat-icon>
           <span>報告</span>
         </a>
-        <a
-          class="actions__item"
-          *ngIf="!isMobile && (isOwner$ | async)"
-          mat-button
-          [routerLink]="['/edit']"
-          [queryParams]="{ v: lesson.id }"
-        >
-          <mat-icon class="mat-18">edit</mat-icon>
-          <span>編集</span>
-        </a>
+        <ng-container *ngIf="user$ | async as user">
+          <a
+            class="actions__item"
+            *ngIf="
+              !isMobile &&
+              (user.admin ||
+                ((permission$ | async) && user.id === lesson.authorId))
+            "
+            mat-button
+            [routerLink]="['/edit']"
+            [queryParams]="{ v: lesson.id }"
+          >
+            <mat-icon class="mat-18">edit</mat-icon>
+            <span>編集</span>
+          </a>
+        </ng-container>
         <a class="actions__item" mat-button (click)="toggleFavorite()">
           <mat-icon class="mat-18" *ngIf="!(isFav$ | async)">add</mat-icon>
           <mat-icon class="mat-18" *ngIf="isFav$ | async">remove</mat-icon>
@@ -80,6 +97,18 @@
       <article class="article" *ngIf="permission$ | async">
         <markdown [data]="lesson.body"></markdown>
       </article>
+
+      <div class="review">
+        <button
+          mat-stroked-button
+          *ngIf="(permission$ | async) && (user$ | async)"
+          (click)="toggleLike()"
+          [color]="isLiked ? 'primary' : null"
+        >
+          <mat-icon>thumb_up</mat-icon>
+          <span>分かりやすかった！</span>
+        </button>
+      </div>
     </ng-container>
 
     <ng-template #noPermission>

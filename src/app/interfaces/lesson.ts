@@ -11,6 +11,7 @@ export interface LessonMeta {
   readonly updatedAt: firestore.Timestamp;
   readonly authorId: string;
   readonly thumbnailURL?: string;
+  readonly likedCount?: number;
 
   title: string;
   videoId?: string;
@@ -42,4 +43,15 @@ export interface Lesson extends LessonMeta, LessonBody {}
 
 export interface LessonMetaWithChannel extends LessonMeta {
   author: ChannelMeta;
+}
+
+export interface Revision {
+  id: string;
+  uid: string;
+  lessonId: string;
+  newDoc: string;
+  oldDoc: string;
+  comment: string;
+  createdAt: firestore.Timestamp;
+  isOpen: boolean;
 }

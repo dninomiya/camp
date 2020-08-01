@@ -1,119 +1,115 @@
-<ng-container *ngIf="user$ | async as user">
-  <form
-    class="form"
-    [formGroup]="form"
-    (ngSubmit)="submit(user.id)"
-    *ngIf="!isLoading"
-  >
-    <div class="form-header">
-      <div class="thumbnail" matTooltip="サムネイル">
-        <app-input-image
-          [options]="thumbnailOption"
-          [oldSrc]="oldThumbnail"
-          (uploaded)="uploadThumbnail($event)"
-          (file)="setThumbnail($event)"
-        ></app-input-image>
-      </div>
-      <mat-form-field>
-        <mat-label>タイトル</mat-label>
-        <input
-          type="text"
-          formControlName="title"
-          matInput
-          placeholder="タイトル"
-          autocomplete="off"
-          required
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>タグ</mat-label>
-        <input type="text" matInput formControlName="tags" readonly />
-        <mat-icon (click)="openTagEditor()" class="mat-18" matSuffix
-          >edit</mat-icon
+<form
+  class="form"
+  [formGroup]="form"
+  *ngIf="user$ | async as user"
+  (ngSubmit)="submit(user)"
+>
+  <div class="form-header">
+    <div class="thumbnail" matTooltip="サムネイル">
+      <app-input-image
+        [options]="thumbnailOption"
+        [oldSrc]="oldThumbnail"
+        (uploaded)="uploadThumbnail($event)"
+        (file)="setThumbnail($event)"
+      ></app-input-image>
+    </div>
+    <mat-form-field>
+      <mat-label>タイトル</mat-label>
+      <input
+        type="text"
+        formControlName="title"
+        matInput
+        placeholder="タイトル"
+        autocomplete="off"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>タグ</mat-label>
+      <input type="text" matInput formControlName="tags" readonly />
+      <mat-icon (click)="openTagEditor()" class="mat-18" matSuffix
+        >edit</mat-icon
+      >
+    </mat-form-field>
+    <mat-form-field *ngIf="(lists$ | async)?.length">
+      <mat-label>コース</mat-label>
+      <mat-select
+        [formControl]="listControl"
+        multiple
+        (selectionChange)="changeList()"
+      >
+        <mat-option *ngFor="let list of lists$ | async" [value]="list.id">
+          {{ list.title }}
+        </mat-option>
+        <a
+          class="add-list"
+          *ngIf="user.admin"
+          (click)="openNewListDialog(user.id)"
+          >新しくコースを作成</a
         >
-      </mat-form-field>
-      <mat-form-field *ngIf="(lists$ | async)?.length">
-        <mat-label>コース</mat-label>
-        <mat-select
-          [formControl]="listControl"
-          multiple
-          (selectionChange)="changeList()"
-        >
-          <mat-option *ngFor="let list of lists$ | async" [value]="list.id">
-            {{ list.title }}
-          </mat-option>
-          <a class="add-list" (click)="openNewListDialog(user.id)"
-            >新しくコースを作成</a
-          >
-        </mat-select>
-      </mat-form-field>
-      <div *ngIf="(lists$ | async)?.length === 0" class="create-cause">
-        <div class="cause-section">
-          <button
-            type="button"
-            mat-stroked-button
-            color="primary"
-            (click)="openNewListDialog(user.id)"
-          >
-            コースを作成
-          </button>
-        </div>
-      </div>
-      <mat-form-field *ngIf="vimeoUser">
-        <mat-label>動画ID</mat-label>
-        <mat-error *ngIf="form.get('videoId').hasError('videoId')"
-          >自分の動画ではありません</mat-error
-        >
-        <input
-          type="text"
-          formControlName="videoId"
-          matInput
-          placeholder="12345"
-          autocomplete="off"
-        />
-        <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon>
-      </mat-form-field>
-      <div *ngIf="vimeoUser === null" class="connect-vimeo">
-        <div class="connect-vimeo">
-          <button
-            type="button"
-            mat-raised-button
-            (click)="openVideoUploader()"
-            color="primary"
-          >
-            Vimeoと接続
-          </button>
-        </div>
+      </mat-select>
+    </mat-form-field>
+    <button
+      *ngIf="(lists$ | async)?.length === 0"
+      type="button"
+      mat-stroked-button
+      color="primary"
+      (click)="openNewListDialog(user.id)"
+    >
+      コースを作成
+    </button>
+    <mat-form-field *ngIf="vimeoUser">
+      <mat-label>動画ID</mat-label>
+      <mat-error *ngIf="form.get('videoId').hasError('videoId')"
+        >自分の動画ではありません</mat-error
+      >
+      <input
+        type="text"
+        formControlName="videoId"
+        matInput
+        placeholder="12345"
+        autocomplete="off"
+      />
+      <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon>
+    </mat-form-field>
+    <button
+      *ngIf="vimeoUser === null && user.admin"
+      type="button"
+      mat-raised-button
+      (click)="openVideoUploader()"
+      color="primary"
+    >
+      Vimeoと接続
+    </button>
+  </div>
+  <div class="wrap">
+    <div class="body">
+      <simplemde
+        class="body__editor"
+        #body
+        (paste)="onPaste($event)"
+        (keydown)="shortCut($event, user)"
+        formControlName="body"
+        [options]="opts"
+        [codemirror]="codemirrorOpts"
+      ></simplemde>
+    </div>
+    <div class="preview">
+      <div class="article">
+        <markdown [data]="body.value || ' '"></markdown>
       </div>
     </div>
-    <div class="wrap">
-      <div class="body">
-        <simplemde
-          class="body__editor"
-          #body
-          (paste)="onPaste($event)"
-          (keydown)="shortCut($event, user.id)"
-          formControlName="body"
-          [options]="opts"
-          [codemirror]="codemirrorOpts"
-        ></simplemde>
-      </div>
-      <div class="preview">
-        <div class="article">
-          <markdown [data]="body.value || ' '"></markdown>
-        </div>
-      </div>
+  </div>
+  <div class="footer">
+    <div class="uploader" *ngIf="uploadStep$ | async as step">
+      <p class="uploader__label">動画をアップロードしています...</p>
+      <mat-progress-bar mode="determinate" [value]="step"></mat-progress-bar>
+      <p class="uploader__step">{{ step }}%完了</p>
     </div>
-    <div class="footer">
-      <div class="uploader" *ngIf="uploadStep$ | async as step">
-        <p class="uploader__label">動画をアップロードしています...</p>
-        <mat-progress-bar mode="determinate" [value]="step"></mat-progress-bar>
-        <p class="uploader__step">{{ step }}%完了</p>
-      </div>
-      <div class="actions">
+    <div class="actions">
+      <ng-container *ngIf="user.admin">
         <mat-slide-toggle formControlName="free">無料</mat-slide-toggle>
         <mat-slide-toggle formControlName="public">公開</mat-slide-toggle>
-
         <button
           type="button"
           *ngIf="oldLesson"
@@ -122,17 +118,17 @@
         >
           削除
         </button>
-        <button type="button" mat-button (click)="cancel()">
-          キャンセル
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          [disabled]="form.invalid || form.pristine || isValidWaiting"
-        >
-          {{ oldLesson ? '変更' : '作成' }}
-        </button>
-      </div>
+      </ng-container>
+      <button type="button" mat-button (click)="cancel()">
+        キャンセル
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="form.invalid || form.pristine || isValidWaiting"
+      >
+        保存
+      </button>
     </div>
-  </form>
-</ng-container>
+  </div>
+</form>

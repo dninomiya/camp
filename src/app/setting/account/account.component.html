@@ -23,6 +23,42 @@
           autocomplete="off"
         />
       </mat-form-field>
+      <mat-form-field>
+        <mat-label>プロフィール</mat-label>
+        <textarea
+          formControlName="profile"
+          matInput
+          required
+          matTextareaAutosize
+        ></textarea>
+        <mat-hint
+          >{{ profileForm.value.profile?.length || 0 }} / 400文字</mat-hint
+        >
+      </mat-form-field>
+      <div formArrayName="links">
+        <div
+          class="link"
+          *ngFor="let link of linkControls.controls; index as i"
+        >
+          <mat-form-field>
+            <mat-label>リンク</mat-label>
+            <input
+              [formControlName]="i"
+              matInput
+              required
+              placeholder="https://"
+              autocomplete="off"
+            />
+            <mat-hint>TwitterやGitHubなど</mat-hint>
+          </mat-form-field>
+          <button mat-icon-button type="button" (click)="removeLink(i)">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <button mat-icon-button type="button" (click)="addLink()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
       <button
         mat-raised-button
         color="primary"

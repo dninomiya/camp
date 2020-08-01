@@ -17,10 +17,11 @@
 
 .form-header {
   display: grid;
-  grid-template-columns: 120px 1fr auto auto auto;
+  grid-template-columns: 120px 1fr auto auto auto auto;
   gap: 0 16px;
-  padding: 8px 24px 8px 0;
+  padding-right: 24px;
   position: relative;
+  align-items: center;
   border-bottom: 1px solid rgba(black, 0.12);
   z-index: 10;
   mat-form-field {
@@ -36,8 +37,8 @@
 
 .thumbnail {
   position: relative;
-  margin: -8px 0;
   border-right: 1px solid rgba(black, 0.12);
+  height: 100%;
   &--invalid {
     &:after {
       content: '';
@@ -166,24 +167,20 @@
 
 .actions {
   margin-left: auto;
-  display: flex;
-  align-items: center;
 }
 
-.connect-vimeo {
-  align-self: center;
-  justify-self: center;
+mat-sidenav-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.cause-section {
-  align-self: center;
-  justify-self: center;
+mat-sidenav {
+  width: 400px;
 }
 
-.create-cause {
-  align-self: center;
-}
-
-.connect-vimeo {
-  align-self: center;
+.revisions {
+  padding: 16px;
 }

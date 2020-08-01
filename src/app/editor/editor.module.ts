@@ -1,3 +1,4 @@
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgModule } from '@angular/core';
 
 import { EditorRoutingModule } from './editor-routing.module';
@@ -12,16 +13,24 @@ import { NgxFilesizeModule } from 'ngx-filesize';
 import { VimeoDialogComponent } from './vimeo-dialog/vimeo-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
 import { VimeoHelpDialogComponent } from './vimeo-help-dialog/vimeo-help-dialog.component';
-
+import { DiffComponent } from './diff/diff.component';
 
 @NgModule({
-  declarations: [EditorComponent, LessonGuideComponent, EditorHelpComponent, VimeoDialogComponent, VimeoHelpDialogComponent],
+  declarations: [
+    EditorComponent,
+    LessonGuideComponent,
+    EditorHelpComponent,
+    VimeoDialogComponent,
+    VimeoHelpDialogComponent,
+    DiffComponent,
+  ],
   imports: [
     SharedModule,
     EditorRoutingModule,
     NgxPicaModule,
     NgxFilesizeModule,
     MatDialogModule,
+    MatSidenavModule,
     NgAisModule,
     SimplemdeModule.forRoot({
       provide: SIMPLEMDE_CONFIG,
@@ -30,23 +39,16 @@ import { VimeoHelpDialogComponent } from './vimeo-help-dialog/vimeo-help-dialog.
         lineNumbers: false,
         spellChecker: false,
         indentWithTabs: false,
-        hideIcons: [
-          'fullscreen',
-          'side-by-side',
-          'preview'
-        ],
-        showIcons: [
-          'table',
-          'code'
-        ]
-      }
-    })
+        hideIcons: ['fullscreen', 'side-by-side', 'preview'],
+        showIcons: ['table', 'code'],
+      },
+    }),
   ],
   entryComponents: [
     LessonGuideComponent,
     EditorHelpComponent,
     VimeoDialogComponent,
-    VimeoHelpDialogComponent
-  ]
+    VimeoHelpDialogComponent,
+  ],
 })
-export class EditorModule { }
+export class EditorModule {}

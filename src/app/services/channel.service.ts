@@ -83,12 +83,4 @@ export class ChannelService {
         })
       );
   }
-
-  getCamps(ids: string[]): Observable<ChannelMeta[]> {
-    return forkJoin(
-      ids.map((id) =>
-        this.db.doc<ChannelMeta>(`channels/${id}`).valueChanges().pipe(take(1))
-      )
-    );
-  }
 }

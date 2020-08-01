@@ -20,7 +20,7 @@ export const deletePlan = functions
     }
 
     await stripe.plans.delete(data.id, {
-      stripe_account: paymentData.stripeUserId
+      stripe_account: paymentData.stripeUserId,
     });
 
     const members = await db
@@ -28,11 +28,11 @@ export const deletePlan = functions
       .get();
 
     await Promise.all(
-      members.docs.map(async doc => {
+      members.docs.map(async (doc) => {
         const member = doc.data();
         await db.doc(`users/${member.uid}/subscriptions/${data.pid}`).delete();
         return stripe.subscriptions.del(member.subscriptionId, {
-          stripe_account: paymentData.stripeUserId
+          stripe_account: paymentData.stripeUserId,
         });
       })
     );
@@ -43,7 +43,7 @@ export const deletePlan = functions
         project: process.env.GCLOUD_PROJECT,
         recursive: true,
         yes: true,
-        token: functions.config().fb.token
+        token: functions.config().fb.token,
       }
     );
   });

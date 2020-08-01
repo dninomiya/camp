@@ -1,3 +1,4 @@
+import { PointService } from './../../services/point.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FavoriteService } from './../../services/favorite.service';
 import { LessonBody } from './../../interfaces/lesson';
@@ -37,11 +38,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
   uid: string;
   loading$ = this.loadingService.isLoading$;
   lessonId?: string;
+  isLiked: boolean;
   settlementStatus: boolean;
   channel: ChannelMeta;
   title = environment.title;
   isMobile = this.uiService.isMobile;
   lessonId$: Observable<string> = this.route.queryParamMap.pipe(
+    tap(() => this.loadingService.startLoading()),
     map((params) => {
       this.lessonId = params.get('v');
       return this.lessonId;
@@ -166,7 +169,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
     private router: Router,
     private uiService: UiService,
     private loadingService: LoadingService,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private pointService: PointService
   ) {
     this.lesson$.subscribe((lesson) => {
       if (lesson) {
@@ -181,6 +185,18 @@ export class ArticleComponent implements OnInit, OnDestroy {
         }
       }
     );
+
+    combineLatest([this.authService.authUser$, this.route.queryParamMap])
+      .pipe(
+        switchMap(([user, paramMap]) => {
+          if (user) {
+            return this.lessonService.isLiked(user.id, paramMap.get('v'));
+          } else {
+            return of(false);
+          }
+        })
+      )
+      .subscribe((isLiked) => (this.isLiked = isLiked));
   }
 
   async setSchema(lesson: Lesson, channel: ChannelMeta) {
@@ -294,7 +310,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   private setSeek() {
     const seeks = document.querySelectorAll('.seek');
-    this.player = new Player(document.getElementById('vimeo'));
+    const element = document.getElementById('vimeo');
+    if (!element) {
+      return;
+    }
+    this.player = new Player(element);
     if (seeks) {
       seeks.forEach((seek) => {
         seek.addEventListener('click', () => {
@@ -311,7 +331,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   private getBody(): Observable<LessonBody> {
     return this.lessonId$.pipe(
-      tap(() => this.loadingService.startLoading()),
       switchMap((id) => {
         if (id) {
           return this.lessonService.getLessonBody(id);
@@ -395,6 +414,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
     this.viewTimer = setTimeout(() => {
       this.lessonService.countUpView(lid);
+      this.pointService.incrementPoint(this.uid, 1);
     }, 10000);
   }
 
@@ -422,6 +442,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
       this.removeFavorite();
     } else {
       this.addFavorite();
+    }
+  }
+
+  toggleLike() {
+    if (this.isLiked) {
+      this.lessonService.unlike(this.uid, this.lessonId);
+    } else {
+      this.lessonService.like(this.uid, this.lessonId);
     }
   }
 }

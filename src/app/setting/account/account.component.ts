@@ -10,6 +10,7 @@ import {
   Validators,
   ValidatorFn,
   FormBuilder,
+  FormArray,
 } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -40,6 +41,8 @@ export class AccountComponent implements OnInit {
 
   profileForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(80)]],
+    profile: ['', [Validators.required, Validators.maxLength(400)]],
+    links: this.fb.array([]),
   });
 
   avatarOptions = {
@@ -52,6 +55,10 @@ export class AccountComponent implements OnInit {
     },
   };
 
+  get linkControls(): FormArray {
+    return this.profileForm.get('links') as FormArray;
+  }
+
   constructor(
     private authService: AuthService,
     private snackBar: MatSnackBar,
@@ -63,9 +70,14 @@ export class AccountComponent implements OnInit {
     private planPipe: PlanPipe
   ) {
     this.user$.subscribe((user) => {
-      this.profileForm.setValue({
-        name: user.name,
-      });
+      this.profileForm.patchValue(user);
+      if (!user.links?.length) {
+        this.addLink();
+      } else {
+        user.links.forEach((link) => {
+          this.addLink(link);
+        });
+      }
       if (user && user.mailSettings) {
         this.mailForm.patchValue(user.mailSettings);
       }
@@ -96,11 +108,23 @@ export class AccountComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  addLink(link?: string) {
+    this.linkControls.push(
+      new FormControl(link, [
+        Validators.required,
+        Validators.maxLength(100),
+        Validators.pattern(/https?:\/\/+/),
+      ])
+    );
+  }
+
+  removeLink(i: number) {
+    this.linkControls.removeAt(i);
+  }
+
   updateProfile() {
     this.userService
-      .updateUser(this.authService.user.id, {
-        name: this.profileForm.value.name,
-      })
+      .updateUser(this.authService.user.id, this.profileForm.value)
       .then(() => {
         this.snackBar.open('プロフィールを更新しました');
       });

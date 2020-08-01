@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment';
+import { Revision } from './../interfaces/lesson';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -8,7 +8,7 @@ import { switchMap, map, first, take } from 'rxjs/operators';
 import { ChannelMeta } from '../interfaces/channel';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { LessonList } from '../interfaces/lesson-list';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { firestore } from 'firebase/app';
 import { StorageService } from './storage.service';
 
@@ -60,14 +60,6 @@ export class LessonService {
       body,
       authorId,
     });
-
-    // await this.sendSlack(
-    //   `test` +
-    //     'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq\n' +
-    //     environment.host +
-    //     '/lessons?v=' +
-    //     data.id
-    // );
 
     return id;
   }
@@ -164,14 +156,6 @@ export class LessonService {
       });
     }
 
-    // await this.sendSlack(
-    //   `test` +
-    //     'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq\n' +
-    //     environment.host +
-    //     '/lessons?v=' +
-    //     id
-    // );
-
     return this.db.doc(`lessons/${id}`).update({
       ...data,
       updatedAt: new Date(),
@@ -205,11 +189,9 @@ export class LessonService {
     if (!lessonId) {
       return;
     }
-    const callable = this.fns.httpsCallable('countUp');
-    return callable({
-      path: `lessons/${lessonId}`,
-      key: 'viewCount',
-    }).toPromise();
+    this.db.doc(`lessons/${lessonId}`).update({
+      viewCount: firestore.FieldValue.increment(1),
+    });
   }
 
   getOGPs(urls: string[]): Observable<object[]> {
@@ -219,7 +201,7 @@ export class LessonService {
 
   checkPermission(lessonId: string): Observable<boolean> {
     return combineLatest([
-      this.authService.authUser$,
+      this.authService.authUser$.pipe(take(1)),
       this.db
         .doc<LessonMeta>(`lessons/${lessonId}`)
         .valueChanges()
@@ -240,5 +222,57 @@ export class LessonService {
         first()
       )
       .toPromise();
+  }
+
+  getRevisions(lessonId: string): Observable<Revision[]> {
+    return this.db
+      .collection<Revision>(`lessons/${lessonId}/revisions`, (ref) => {
+        return ref.where('isOpen', '==', true);
+      })
+      .valueChanges();
+  }
+
+  addRevision(
+    params: Omit<Revision, 'id' | 'createdAt' | 'isOpen'>
+  ): Promise<void> {
+    const id = this.db.createId();
+    return this.db
+      .doc<Revision>(`lessons/${params.lessonId}/revisions/${id}`)
+      .set({
+        ...params,
+        id,
+        isOpen: true,
+        createdAt: firestore.Timestamp.now(),
+      });
+  }
+
+  removeRevision(lessonId: string, revisionId: string): Promise<void> {
+    return this.db.doc(`lessons/${lessonId}/revisions/${revisionId}`).delete();
+  }
+
+  updateRevision(
+    lessonId: string,
+    revisionId: string,
+    newDoc: string
+  ): Promise<void> {
+    return this.db
+      .doc<Revision>(`lessons/${lessonId}/revisions/${revisionId}`)
+      .update({
+        newDoc,
+      });
+  }
+
+  acceptRevision(lessonId: string, revisionId: string): Promise<void> {
+    return this.db
+      .doc<Revision>(`lessons/${lessonId}/revisions/${revisionId}`)
+      .update({
+        isOpen: false,
+      });
+  }
+
+  rejectRevision(lessonId: string, revisionId: string): Promise<void> {
+    return this.db
+      .doc<Revision>(`lessons/${lessonId}/revisions/${revisionId}`)
+      .delete();
   }
 }
