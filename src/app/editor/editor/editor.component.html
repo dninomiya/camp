@@ -125,7 +125,9 @@
       <button
         mat-raised-button
         color="primary"
-        [disabled]="form.invalid || form.pristine || isValidWaiting"
+        [disabled]="
+          form.invalid || form.pristine || isValidWaiting || isLoading
+        "
       >
         保存
       </button>

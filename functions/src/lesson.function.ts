@@ -38,7 +38,7 @@ export const createLessonMeta = functions
             meta.title
           }」を投稿して**10P**獲得しました！👏👏👏\n${
             functions.config().host.url
-          }v=${meta.id}`,
+          }?v=${meta.id}`,
         });
       }
     }

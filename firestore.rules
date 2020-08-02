@@ -106,7 +106,7 @@ service cloud.firestore {
     match /lists/{listId} {
       allow read: if true;
       allow create: if isSignIn();
-      allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
+      allow update: if isSignIn() && safeId();
       allow delete: if isOwner(resource.data.authorId);
     }
   }
