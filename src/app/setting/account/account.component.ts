@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 import { ConfirmUnsubscribeDialogComponent } from './../../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
 import { PlanPipe } from './../../shared/plan.pipe';
@@ -69,7 +70,7 @@ export class AccountComponent implements OnInit {
     private dialog: MatDialog,
     private planPipe: PlanPipe
   ) {
-    this.user$.subscribe((user) => {
+    this.user$.pipe(take(1)).subscribe((user) => {
       this.profileForm.patchValue(user);
       if (!user.links?.length) {
         this.addLink();

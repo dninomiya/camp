@@ -1,6 +1,6 @@
-import { Router } from '@angular/router';
+import { User } from 'src/app/interfaces/user';
 import { environment } from 'src/environments/environment';
-import { Revision } from './../interfaces/lesson';
+import { Revision, LessonMetaWithUser } from './../interfaces/lesson';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -23,8 +23,7 @@ export class LessonService {
     private fns: AngularFireFunctions,
     private http: HttpClient,
     private storageService: StorageService,
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) {}
 
   async createLesson(
@@ -64,20 +63,22 @@ export class LessonService {
       authorId,
     });
 
-    await this.http
-      .post(
-        'https://hooks.slack.com/services/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',
-        {
-          text: `「${data.title}」が投稿されました。ためになったら「いいね」しましょう！（投稿者にポイントが付与されます）\n${environment.host}?v=${id}`,
-        },
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }),
-          responseType: 'text',
-        }
-      )
-      .toPromise();
+    if (data.public) {
+      await this.http
+        .post(
+          'https://hooks.slack.com/services/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',
+          {
+            text: `「${data.title}」が投稿されました。ためになったら「いいね」しましょう！（投稿者にポイントが付与されます）\n${environment.host}?v=${id}`,
+          },
+          {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/x-www-form-urlencoded',
+            }),
+            responseType: 'text',
+          }
+        )
+        .toPromise();
+    }
 
     return id;
   }
@@ -179,25 +180,28 @@ export class LessonService {
       updatedAt: new Date(),
     });
 
-    await this.http
-      .post(
-        'https://hooks.slack.com/services/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',
-        {
-          text: `「${data.title}」が更新されました。\n${environment.host}?v=${id}`,
-        },
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }),
-          responseType: 'text',
-        }
-      )
-      .toPromise();
+    if (data.public) {
+      await this.http
+        .post(
+          'https://hooks.slack.com/services/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',
+          {
+            text: `「${data.title}」が更新されました。\n${environment.host}?v=${id}`,
+          },
+          {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/x-www-form-urlencoded',
+            }),
+            responseType: 'text',
+          }
+        )
+        .toPromise();
+    }
   }
 
   deleteLesson(id: string): Promise<void> {
     return this.db.doc(`lessons/${id}`).update({
       deleted: true,
+      public: false,
     });
   }
 
@@ -307,5 +311,47 @@ export class LessonService {
     return this.db
       .doc<Revision>(`lessons/${lessonId}/revisions/${revisionId}`)
       .delete();
+  }
+
+  getUpdatedLessons(): Observable<LessonMeta[]> {
+    return this.getLessonsWithAuthor((ref) =>
+      ref.where('public', '==', true).orderBy('updatedAt', 'desc').limit(8)
+    );
+  }
+
+  getLikedLessons(): Observable<LessonMeta[]> {
+    return this.getLessonsWithAuthor((ref) =>
+      ref.where('public', '==', true).orderBy('likedCount', 'desc').limit(8)
+    );
+  }
+
+  getLatestLessons(): Observable<LessonMetaWithUser[]> {
+    return this.getLessonsWithAuthor((ref) =>
+      ref.where('public', '==', true).orderBy('createdAt', 'desc').limit(8)
+    );
+  }
+
+  private getLessonsWithAuthor(query): Observable<LessonMetaWithUser[]> {
+    return this.db
+      .collection<LessonMeta>('lessons', query)
+      .valueChanges()
+      .pipe(
+        switchMap((metas) => {
+          const uids = Array.from(new Set(metas.map((meta) => meta.authorId)));
+          const users$: Observable<User>[] = uids.map((uid) =>
+            this.db.doc<User>(`users/${uid}`).valueChanges()
+          );
+
+          return combineLatest([of(metas), combineLatest(users$)]);
+        }),
+        map(([metas, users]) => {
+          return metas.map((meta) => {
+            return {
+              ...meta,
+              author: users.find((user) => user.id === meta.authorId),
+            };
+          });
+        })
+      );
   }
 }

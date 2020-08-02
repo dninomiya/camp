@@ -5,7 +5,7 @@ import { db, countUp, countDown } from './utils';
 import { addIndex, updateIndex, removeIndex } from './utils/algolia';
 
 const slackURL =
-  'https://hooks.slack.com/services/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';
+  'https://hooks.slack.com/services/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';
 
 export const createLessonMeta = functions
   .region('asia-northeast1')
