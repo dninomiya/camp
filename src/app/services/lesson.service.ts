@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Revision } from './../interfaces/lesson';
 import { AuthService } from './auth.service';
@@ -22,7 +23,8 @@ export class LessonService {
     private fns: AngularFireFunctions,
     private http: HttpClient,
     private storageService: StorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   async createLesson(
@@ -175,6 +177,12 @@ export class LessonService {
         }
       )
       .toPromise();
+
+    this.router.navigate(['lesson'], {
+      queryParams: {
+        v: id,
+      },
+    });
   }
 
   deleteLesson(id: string): Promise<void> {
