@@ -166,23 +166,18 @@ export class LessonService {
 
     await this.http
       .post(
-        'https://hooks.slack.com/services/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',
+        'https://hooks.slack.com/services/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',
         {
           text: `「${data.title}」が更新されました。\n${environment.host}?v=${id}`,
         },
         {
           headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Content-Type': 'application/x-www-form-urlencoded',
           }),
+          responseType: 'text',
         }
       )
       .toPromise();
-
-    this.router.navigate(['lesson'], {
-      queryParams: {
-        v: id,
-      },
-    });
   }
 
   deleteLesson(id: string): Promise<void> {
