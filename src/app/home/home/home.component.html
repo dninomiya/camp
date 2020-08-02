@@ -1,10 +1,17 @@
-<div class="hero">
+<div class="hero" style="background-image: url(assets/images/cover.png);">
   <div class="hero__body">
     <h1 class="hero__title">リニューアル</h1>
     <p class="hero__lead">
       CAMPが大幅にリニューアルしました！ホーム画面の刷新、投稿機能、ポイント機能、新料金プランなど多くのアップデートを行いました！
     </p>
-    <button mat-raised-button color="primary">詳しくはこちら</button>
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/lesson"
+      [queryParams]="{ v: '2MyqhBJ88colzk27O2vB' }"
+    >
+      アップデート詳細
+    </button>
   </div>
 </div>
 
