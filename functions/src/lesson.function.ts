@@ -38,7 +38,7 @@ export const createLessonMeta = functions
             meta.title
           }」を投稿して**10P**獲得しました！👏👏👏\n${
             functions.config().host.url
-          }v=${meta.id}`,
+          }?v=${meta.id}`,
         });
       }
     }
@@ -147,14 +147,14 @@ export const likeLesson = functions
       likedCount: firestore.FieldValue.increment(1),
     });
 
-    const userDoc = db.doc(`users/${context.params.uid}`);
+    const lesson = (await lessonDoc.get()).data();
+    const userDoc = db.doc(`users/${lesson?.authorId}`);
 
     await userDoc.update({
       point: firestore.FieldValue.increment(100),
     });
 
     const user = (await userDoc.get()).data();
-    const lesson = (await lessonDoc.get()).data();
 
     if (user && lesson) {
       return sendSlack(slackURL, {
@@ -171,11 +171,15 @@ export const unLikeLesson = functions
   .region('asia-northeast1')
   .firestore.document('channels/{uid}/likes/{lessonId}')
   .onDelete(async (snapshot, context) => {
-    await db.doc(`lessons/${context.params.lessonId}`).update({
+    const lessonDoc = db.doc(`lessons/${context.params.lessonId}`);
+
+    await lessonDoc.update({
       likedCount: firestore.FieldValue.increment(-1),
     });
 
-    return db.doc(`users/${context.params.uid}`).update({
+    const lesson = (await lessonDoc.get()).data();
+
+    return db.doc(`users/${lesson?.authorId}`).update({
       point: firestore.FieldValue.increment(-100),
     });
   });
