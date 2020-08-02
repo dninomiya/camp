@@ -35,6 +35,14 @@
           >{{ profileForm.value.profile?.length || 0 }} / 400文字</mat-hint
         >
       </mat-form-field>
+      <button
+        mat-button
+        *ngIf="!linkControls.controls?.length"
+        (click)="addLink()"
+      >
+        <mat-icon>add</mat-icon>
+        <span>リンクを追加</span>
+      </button>
       <div formArrayName="links">
         <div
           class="link"
