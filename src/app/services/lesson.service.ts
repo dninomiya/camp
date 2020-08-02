@@ -63,20 +63,22 @@ export class LessonService {
       authorId,
     });
 
-    await this.http
-      .post(
-        'https://hooks.slack.com/services/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',
-        {
-          text: `「${data.title}」が投稿されました。ためになったら「いいね」しましょう！（投稿者にポイントが付与されます）\n${environment.host}?v=${id}`,
-        },
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }),
-          responseType: 'text',
-        }
-      )
-      .toPromise();
+    if (data.public) {
+      await this.http
+        .post(
+          'https://hooks.slack.com/services/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',
+          {
+            text: `「${data.title}」が投稿されました。ためになったら「いいね」しましょう！（投稿者にポイントが付与されます）\n${environment.host}?v=${id}`,
+          },
+          {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/x-www-form-urlencoded',
+            }),
+            responseType: 'text',
+          }
+        )
+        .toPromise();
+    }
 
     return id;
   }
@@ -178,20 +180,22 @@ export class LessonService {
       updatedAt: new Date(),
     });
 
-    await this.http
-      .post(
-        'https://hooks.slack.com/services/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',
-        {
-          text: `「${data.title}」が更新されました。\n${environment.host}?v=${id}`,
-        },
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }),
-          responseType: 'text',
-        }
-      )
-      .toPromise();
+    if (data.public) {
+      await this.http
+        .post(
+          'https://hooks.slack.com/services/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',
+          {
+            text: `「${data.title}」が更新されました。\n${environment.host}?v=${id}`,
+          },
+          {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/x-www-form-urlencoded',
+            }),
+            responseType: 'text',
+          }
+        )
+        .toPromise();
+    }
   }
 
   deleteLesson(id: string): Promise<void> {
