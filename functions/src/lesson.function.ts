@@ -36,7 +36,7 @@ export const createLessonMeta = functions
         sendSlack(slackURL, {
           text: `${user.name}が「${
             meta.title
-          }」を投稿して**10P**獲得しました！👏👏👏\n${
+          }」を投稿して10P獲得しました！👏👏👏\n${
             functions.config().host.url
           }?v=${meta.id}`,
         });
