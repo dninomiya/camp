@@ -77,6 +77,7 @@ export class EditorComponent implements OnInit {
   );
   lists: LessonList[];
   isLoading: boolean;
+  postLoading: boolean;
   causeId: string;
   oldLesson: Lesson;
   isComplete: boolean;
@@ -237,7 +238,7 @@ export class EditorComponent implements OnInit {
 
   submit(user: User) {
     let action;
-    this.isLoading = true;
+    this.postLoading = true;
     const activeListIds = this.listControl.value || [];
 
     if (this.form.invalid) {
@@ -264,7 +265,7 @@ export class EditorComponent implements OnInit {
           v: this.oldLesson ? this.oldLesson.id : lessonId,
         },
       });
-      this.isLoading = false;
+      this.postLoading = false;
     });
   }
 
