@@ -12,6 +12,7 @@ export class GridLessonItemComponent implements OnInit {
   @Input() causeId?: string;
   @Input() noDate?: boolean;
   @Input() simple?: boolean;
+  @Input() updated?: boolean;
 
   constructor() {}
 

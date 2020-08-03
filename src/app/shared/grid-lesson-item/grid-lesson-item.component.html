@@ -27,7 +27,7 @@
       </h3>
       <p class="lesson__sub" *ngIf="!noDate">
         <span>
-          {{ lesson.createdAt | fromNow }}
+          {{ (updated ? lesson.updatedAt : lesson.createdAt) | fromNow }}
         </span>
         <span *ngIf="lesson.free" class="lesson__free">無料</span>
       </p>
