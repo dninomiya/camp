@@ -111,16 +111,40 @@ export class LessonService {
       );
   }
 
-  getLessonsByListId(lid: string): Observable<LessonMeta[]> {
+  getLessonsByListId(lid: string): Observable<LessonMetaWithUser[]> {
     return this.db
       .doc<LessonList>(`lists/${lid}`)
       .valueChanges()
       .pipe(
         switchMap((list) => {
           if (list.lessonIds.length) {
-            return combineLatest(
+            const metas$: Observable<LessonMeta[]> = combineLatest(
               list.lessonIds.map((id) => {
                 return this.db.doc<LessonMeta>(`lessons/${id}`).valueChanges();
+              })
+            );
+            const authors$: Observable<User[]> = metas$.pipe(
+              switchMap((lessons) => {
+                const uids = Array.from(
+                  new Set(lessons.map((meta) => meta.authorId))
+                );
+                return combineLatest(
+                  uids.map((uid) =>
+                    this.db.doc<User>(`users/${uid}`).valueChanges()
+                  )
+                );
+              })
+            );
+            return combineLatest([metas$, authors$]).pipe(
+              map(([metas, authors]) => {
+                return metas.map((meta) => {
+                  return {
+                    ...meta,
+                    author: authors.find(
+                      (author) => author.id === meta.authorId
+                    ),
+                  };
+                });
               })
             );
           } else {
