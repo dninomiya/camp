@@ -73,7 +73,10 @@
   >
     <div class="swiper-wrapper">
       <div class="swiper-slide" *ngFor="let lesson of lessons">
-        <app-grid-lesson-item [lesson]="lesson"></app-grid-lesson-item>
+        <app-grid-lesson-item
+          [updated]="true"
+          [lesson]="lesson"
+        ></app-grid-lesson-item>
       </div>
     </div>
     <div class="swiper__arrow swiper__arrow--next">

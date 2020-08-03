@@ -4,6 +4,8 @@ import * as functions from 'firebase-functions';
 import { db, countUp, countDown } from './utils';
 import { addIndex, updateIndex, removeIndex } from './utils/algolia';
 
+const LIKE_INCENTIVE = 100;
+
 const slackURL =
   'https://hooks.slack.com/services/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';
 
@@ -151,16 +153,18 @@ export const likeLesson = functions
     const userDoc = db.doc(`users/${lesson?.authorId}`);
 
     await userDoc.update({
-      point: firestore.FieldValue.increment(100),
+      point: firestore.FieldValue.increment(LIKE_INCENTIVE),
     });
 
     const user = (await userDoc.get()).data();
 
-    if (user && lesson) {
+    const likeUser = (await db.doc(`users/${context.params.uid}`).get()).data();
+
+    if (user && lesson && likeUser) {
       return sendSlack(slackURL, {
-        text: `${user.name}の「${
-          lesson.title
-        }」が感謝され、100P獲得しました！👏👏👏\n${
+        text: `${user.name}の「${lesson.title}」が ${
+          likeUser.name
+        } に感謝され、${LIKE_INCENTIVE}P獲得しました！👏👏👏\n${
           functions.config().host.url
         }/lesson?v=${lesson.id}`,
       });
@@ -180,6 +184,6 @@ export const unLikeLesson = functions
     const lesson = (await lessonDoc.get()).data();
 
     return db.doc(`users/${lesson?.authorId}`).update({
-      point: firestore.FieldValue.increment(-100),
+      point: firestore.FieldValue.increment(-LIKE_INCENTIVE),
     });
   });

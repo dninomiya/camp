@@ -25,7 +25,10 @@
           mat-raised-button
           color="primary"
           (click)="connectRepo()"
-          *ngIf="(githubToken$ | async) && !user.repoId; else connect"
+          *ngIf="
+            (githubData$ | async)?.githubUniqueId && !user.repoId;
+            else connect
+          "
         >
           リポジトリ登録
         </button>
