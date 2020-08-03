@@ -38,7 +38,7 @@ export const createLessonMeta = functions
             meta.title
           }」を投稿して10P獲得しました！👏👏👏\n${
             functions.config().host.url
-          }?v=${meta.id}`,
+          }/lesson?v=${meta.id}`,
         });
       }
     }
@@ -162,7 +162,7 @@ export const likeLesson = functions
           lesson.title
         }」が感謝され、100P獲得しました！👏👏👏\n${
           functions.config().host.url
-        }?v=${lesson.id}`,
+        }/lesson?v=${lesson.id}`,
       });
     }
   });
