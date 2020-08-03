@@ -5,7 +5,7 @@ import { db, countUp, countDown } from './utils';
 import { addIndex, updateIndex, removeIndex } from './utils/algolia';
 
 const slackURL =
-  'https://hooks.slack.com/services/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';
+  'https://hooks.slack.com/services/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';
 
 export const createLessonMeta = functions
   .region('asia-northeast1')
@@ -36,7 +36,7 @@ export const createLessonMeta = functions
         sendSlack(slackURL, {
           text: `${user.name}が「${
             meta.title
-          }」を投稿して**10P**獲得しました！👏👏👏\n${
+          }」を投稿して10P獲得しました！👏👏👏\n${
             functions.config().host.url
           }?v=${meta.id}`,
         });

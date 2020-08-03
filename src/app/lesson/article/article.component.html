@@ -79,13 +79,13 @@
       </div>
     </div>
     <mat-divider></mat-divider>
-    <div class="channel-box" *ngIf="channel$ | async as channel">
+    <div class="channel-box" *ngIf="author$ | async as author">
       <div class="channel">
         <a class="channel__avatar">
-          <img [src]="channel.avatarURL" alt="" />
+          <img [src]="author.avatarURL" alt="" />
         </a>
         <div class="channel__body">
-          <a class="channel__title">{{ channel.ownerName || channel.title }}</a>
+          <a class="channel__title">{{ author.name }}</a>
           <p class="channel__date">
             {{ lesson.updatedAt?.toDate() | date: 'yyyy/MM/dd' }} に更新
           </p>

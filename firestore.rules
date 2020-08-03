@@ -43,15 +43,6 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    match /threads/{threadId} {
-      allow create: if request.auth.uid != null;
-      allow update: if (request.auth.uid == resource.data.authorId || request.auth.uid == resource.data.targetId) && safeKey('id') && safeKey('targetId') && safeKey('authorId');
-      allow read: if request.auth.uid == resource.data.authorId || request.auth.uid == resource.data.targetId;
-      match /replies/{replieId} {
-        allow read, write: if true;
-      }
-    }
-
     match /csrf/{doc} {
       allow create: if request.auth.uid == request.resource.data.uid;
       allow read, delete: if request.auth.uid == resource.data.uid;
@@ -91,11 +82,11 @@ service cloud.firestore {
     match /lessons/{lessonId} {
       allow read: if resource.data.public == true || isOwner(resource.data.authorId);
       allow create: if isSignIn();
-      allow update: if isOwner(resource.data.authorId) && safeId() && safeKey('authorId');
+      allow update: if isAdmin() || (isOwner(resource.data.authorId) && safeId() && safeKey('authorId'));
       match /body/content {
         allow read: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.free == true || (request.auth != null && !(isUndefined(get(/databases/$(database)/documents/users/$(request.auth.uid)).data, 'plan')) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.plan != 'free');
         allow create: if isSignIn();
-        allow update: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.authorId == request.auth.uid;
+        allow update: if isAdmin() || (isOwner(get(/databases/$(database)/documents/lessons/$(lessonId)).data.authorId));
       }
       match /revisions/{revisionId} {
         allow read: if isSignIn()

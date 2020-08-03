@@ -60,6 +60,9 @@
     -webkit-line-clamp: 2;
     display: -webkit-box;
     width: 100%;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
   &__sub {
     font-size: 13px;
@@ -79,18 +82,12 @@
   &__body {
     flex: 1;
   }
-  &__avatar {
-    display: none;
-    @include sp {
-      display: block;
-    }
-  }
   &__avatar img {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: block;
-    margin-right: 16px;
+    margin-right: 12px;
   }
   &__free {
     font-size: 12px;
