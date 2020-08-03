@@ -5,7 +5,6 @@ import {
   switchMap,
   tap,
   shareReplay,
-  take,
   map,
   distinctUntilChanged,
 } from 'rxjs/operators';
@@ -54,6 +53,15 @@ export class AuthService {
       }),
       shareReplay(1)
     );
+
+    this.db
+      .collectionGroup('private', (ref) =>
+        ref.where('githubUniqueId', '==', 5842851)
+      )
+      .valueChanges()
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   async login(): Promise<auth.UserCredential> {
@@ -191,13 +199,16 @@ export class AuthService {
     return this.db.doc(`users/${result.user.uid}/private/token`).set(
       {
         github: data.accessToken,
-        githubId: addedUser.node_id,
+        githubUniqueId: addedUser.id,
       },
       { merge: true }
     );
   }
 
-  getGitHubToken(): Observable<string> {
+  getGitHubData(): Observable<{
+    github: string;
+    githubUniqueId: string;
+  }> {
     return this.authUser$.pipe(
       map((user) => !!user),
       distinctUntilChanged(),
@@ -209,8 +220,7 @@ export class AuthService {
         } else {
           return of(null);
         }
-      }),
-      map((data) => data?.github)
+      })
     );
   }
 }

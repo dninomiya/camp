@@ -11,4 +11,5 @@ export * from './render.function';
 export * from './vimeo.function';
 export * from './admin.function';
 export * from './zoom.function';
+export * from './github/best-answer.function';
 export * from './github/pull-request.function';

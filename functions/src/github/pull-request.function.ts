@@ -3,7 +3,7 @@ import { db } from '../utils';
 
 export const pullRequest = functions
   .region('asia-northeast1')
-  .https.onRequest(async (req: functions.https.Request, res: any) => {
+  .https.onRequest(async (req, resp) => {
     const data = req.body;
 
     console.log(data);
@@ -21,7 +21,9 @@ export const pullRequest = functions
 
     if (!userData) return;
 
-    return db.doc(`users/${userData.id}`).update({
+    await db.doc(`users/${userData.id}`).update({
       lastPullRequestDate: new Date(),
     });
+
+    resp.status(200).send(true);
   });

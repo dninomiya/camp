@@ -1,5 +1,5 @@
-import { map, tap, take } from 'rxjs/operators';
-import { Observable, of, ReplaySubject, combineLatest } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { Observable, ReplaySubject, combineLatest } from 'rxjs';
 import { repos, ownRepos, OwnRepos, createLabel } from './gql';
 import { AuthService } from 'src/app/services/auth.service';
 import { Injectable } from '@angular/core';
@@ -8,7 +8,6 @@ import { Apollo } from 'apollo-angular';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpLink } from 'apollo-angular-link-http';
 import { onError } from 'apollo-link-error';
-import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +22,11 @@ export class ApolloService {
     private httpLink: HttpLink,
     private authService: AuthService
   ) {
-    this.authService.getGitHubToken().subscribe((token) => {
+    this.authService.getGitHubData().subscribe((data) => {
       this.apollo.removeClient();
-      if (token) {
+      if (data.github) {
         console.log('set apollo');
-        this.initApollo(token);
+        this.initApollo(data.github);
       } else {
         this.readySource.next(true);
       }

@@ -21,7 +21,7 @@ export class UserComponent implements OnInit {
   user$: Observable<User> = this.userService.getUser(this.authService.user.id);
   dayCost = 16666;
   maxCost = 3000000;
-  githubToken$: Observable<string> = this.authService.getGitHubToken();
+  githubData$ = this.authService.getGitHubData();
 
   tasks = [
     {
