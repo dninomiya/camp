@@ -1,22 +1,34 @@
 {
-  "fb": {
-    "token": "1/wkrgsQ21jBZPf0Ly5t3rNqKboX3Qz2xOTxXFNW6Gpiodpx5MRs_JYaXlEeTnchIj"
+  "sendgrid": {
+    "key": "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"
+  },
+  "algolia": {
+    "app_id": "JDCC4O77OA",
+    "api_key": "9900121940721121d81cf944e688c1b5"
+  },
+  "plan": {
+    "solo": "plan_GsQId4xBWN2HU7",
+    "standard": "plan_GjSD2Fz2dBIQ2e",
+    "lite": "plan_GsQIDT7azlgGkW",
+    "mentor": "plan_GsQIT5CEbkfhJZ"
   },
   "env": {
-    "mode": "prod"
+    "mode": "dev"
   },
   "stripe": {
-    "key": "sk_test_Yf8Q8H99TAuciqXTf5DRpEcy00Rah086YB"
+    "key": "sk_test_Yf8Q8H99TAuciqXTf5DRpEcy00Rah086YB",
+    "coupon": "hoy0WN4f",
+    "tax": "txr_1GByBvAg8h03lWNH7xRaTAQ1",
+    "client_id": "ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ"
+  },
+  "host": {
+    "url": "https://dev-update.firebaseapp.com"
+  },
+  "fb": {
+    "token": "1/IqBSRxEFXTJNcnXAy8kqpDNhMKmJ53QIaatq2PLbXK4"
   },
   "vimeo": {
     "client_id": "45622d0c9345317a2482c24ecbdc9f3552eda034",
-    "client_sercret": "EIpT+LS5j1ioGaFWINFiVKBw7S1KYsyq68o6C+8r1zjIk2rqBAjA4g15iY/l0j2wAtTlooInbVwiTzIEZcs/ZsRLFhcBG+5bK0VzSqT96jVTLhjjSCGOHL8Yyed8LDrL"
-  },
-  "algolia": {
-    "app_id": "WVB08E3GUS",
-    "api_key": "54fa63c47006c79945a504c6f996929c"
-  },
-  "sendgrid": {
-    "key": "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"
+    "client_secret": "EIpT+LS5j1ioGaFWINFiVKBw7S1KYsyq68o6C+8r1zjIk2rqBAjA4g15iY/l0j2wAtTlooInbVwiTzIEZcs/ZsRLFhcBG+5bK0VzSqT96jVTLhjjSCGOHL8Yyed8LDrL"
   }
 }

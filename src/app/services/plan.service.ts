@@ -8,7 +8,7 @@ export const PLAN: {
   lite: {
     title: 'ライト',
     subTitle: '教材閲覧のみ',
-    price: 12500,
+    amount: 12500,
     points: [
       '有料教材の閲覧',
       '教材に関する質問',

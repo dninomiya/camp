@@ -22,6 +22,9 @@
     "paths": {
       "moment": [
         "../node_modules/moment/min/moment.min.js"
+      ],
+      "@interfaces/*": [
+        "functions/src/interfaces/*"
       ]
     }
   },
