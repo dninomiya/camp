@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
-import { NgxStripeModule } from 'ngx-stripe';
 
 import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 import { AppRoutingModule } from '../app-routing.module';
@@ -68,7 +67,6 @@ import { PointDialogComponent } from '../point-dialog/point-dialog.component';
         useFactory: markedOptionsFactory,
       },
     }),
-    NgxStripeModule.forRoot(environment.stripe.publicKey),
     DeviceDetectorModule.forRoot(),
   ],
   exports: [
