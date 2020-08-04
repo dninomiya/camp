@@ -2,7 +2,7 @@ export interface Plan {
   id: string;
   subTitle: string;
   title: string;
-  amount: number;
+  price: string;
   points: string[];
 }
 

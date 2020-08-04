@@ -54,6 +54,28 @@ export const PLAN_FEATURES = [
     description:
       '応募先企業の評価、レジュメ添削、模擬面接など必要に応じて支援します。',
   },
+  {
+    image: null,
+    title: 'ペアプロ',
+    description: 'ユーザー同士で教え合うペアプロを毎日行っています。',
+  },
+  {
+    image: null,
+    title: 'チーム開発',
+    description:
+      'お題となるWebサービスをチームで役割分担して開発します。（任意参加）',
+  },
+  {
+    image: null,
+    title: 'マンツーレッスン（1on1）',
+    description:
+      '毎月1回メンターと1on1で進捗確認や技術、進路相談のMTGを行います。',
+  },
+  {
+    image: null,
+    title: '勉強会',
+    description: '隔週さまざまなテーマで勉強会を行っています。',
+  },
 ];
 
 export const QUESTIONS = [
