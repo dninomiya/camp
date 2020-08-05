@@ -3,12 +3,9 @@ import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { of } from 'rxjs';
-import { take, switchMap } from 'rxjs/operators';
-import { User, UserPayment } from './../interfaces/user';
+import { User } from './../interfaces/user';
 import { MatDialog } from '@angular/material/dialog';
 import * as AOS from 'aos';
-import { PaymentService } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
 import { SwiperOptions } from 'swiper';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
@@ -41,7 +38,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   skills = SKILLS;
   plans = this.planService.plans;
   user: User;
-  payment: UserPayment;
   player: YT.Player;
   playerVars: YT.PlayerVars = {
     controls: 0,
@@ -52,7 +48,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
 
   constructor(
     private authService: AuthService,
-    private paymentService: PaymentService,
     private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -61,13 +56,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   ) {
     this.authService.authUser$.subscribe((user) => {
       this.user = user;
-      if (user) {
-        this.paymentService
-          .getUserPayment(user.id)
-          .subscribe((payment) => (this.payment = payment));
-      } else {
-        this.payment = null;
-      }
     });
   }
 
@@ -75,18 +63,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
-
-    this.authService.authUser$
-      .pipe(
-        switchMap((user) => {
-          if (user) {
-            return this.paymentService.getUserPayment(user.id).pipe(take(1));
-          } else {
-            return of(null);
-          }
-        })
-      )
-      .subscribe((payment) => (this.payment = payment));
   }
 
   ngAfterViewInit() {

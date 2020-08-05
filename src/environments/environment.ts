@@ -9,6 +9,13 @@ export const environment = {
   stripe: {
     publicKey: 'pk_test_lKq5jlH5mdbAxDeBfB4f0sn400ZYUYdpvH',
     clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ',
+    price: {
+      lite: {
+        id: 'prod_HmCWurmpvo2Nyr',
+        mainPrice: '',
+        list: [''],
+      },
+    },
   },
   firebase: {
     apiKey: 'AIzaSyD4MlPYXXp9_bjLsGmgzGlRYTSrKUTCqzY',

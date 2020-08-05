@@ -7,52 +7,49 @@
     クレジットカードは世界的な決済サービスStripeによって厳重に保管されており、漏洩の心配はありません。
   </p>
 
-  <ng-container *ngIf="payment$ | async as payment; else new">
-    <div class="card" *ngIf="card$ | async as card">
+  <ng-container *ngIf="method; else createSection">
+    <div class="card">
       <p class="card__number">
         <i
           class="fab fa-cc-{{
-            card.brand.toLowerCase() === 'american express'
+            method.card.brand.toLowerCase() === 'american express'
               ? 'amex'
-              : card.brand.toLowerCase()
+              : method.card.brand.toLowerCase()
           }}"
         ></i
         >**** **** ****
-        {{ card.last4 }}
+        {{ method.card.last4 }}
       </p>
 
-      <button
-        class="card__button"
-        mat-icon-button
-        (click)="openCardDialog(payment.customerId)"
-      >
+      <button class="card__button" mat-icon-button (click)="openCardDialog()">
         <mat-icon class="mat-18">edit</mat-icon>
       </button>
     </div>
 
     <h2>支払い履歴</h2>
 
-    <mat-list *ngFor="let settlement of settlements$ | async" dense>
-      <mat-list-item>
-        <span matLine>{{ settlement.title }}</span>
+    <mat-list dense>
+      <mat-list-item *ngIf="!invoices?.length"></mat-list-item>
+      <mat-list-item *ngFor="let charge of invoices">
         <span matLine
-          >{{ settlement.amount | number }}円 -
-          {{ settlement.createdAt.toDate() | date: 'yyyy/MM/dd' }}</span
+          >{{
+            (charge.invoice?.lines?.data)[0]?.description || charge.description
+          }}
+          / {{ charge.amount | number }}円</span
         >
-        <a
-          mat-icon-button
-          [href]="settlement.pdf"
-          target="_blank"
-          matTooltip="請求書"
-        >
-          <mat-icon class="mat-18">receipt</mat-icon>
+        <span matLine>{{ charge.created * 1000 | date: 'yyyy/MM/dd' }}</span>
+        <a mat-icon-button [href]="charge.receipt_url" target="_blank">
+          <mat-icon inline>receipt</mat-icon>
         </a>
       </mat-list-item>
+      <mat-list-item *ngIf="invoices && !invoices.length"
+        >購入履歴はありません</mat-list-item
+      >
     </mat-list>
   </ng-container>
 
-  <ng-template #new>
-    <div *ngIf="!loading" class="create-card">
+  <ng-template #createSection>
+    <div class="create-card">
       <button mat-raised-button color="primary" (click)="openCardDialog()">
         新しくカードを作成
       </button>

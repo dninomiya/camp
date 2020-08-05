@@ -1,6 +1,4 @@
-import { db } from './../utils/db';
-import { Customer } from './../interfaces/customer';
-import { stripe } from './client';
+import { StripeService } from './service';
 import * as functions from 'firebase-functions';
 import Stripe from 'stripe';
 
@@ -28,12 +26,17 @@ export const payStripeProduct = functions
         );
       }
 
-      const customer: Customer = (
-        await db.doc(`customers/${context.auth.uid}`).get()
-      ).data() as Customer;
+      const customer = await StripeService.getCampCustomer(context.auth.uid);
+
+      if (!customer) {
+        throw new functions.https.HttpsError(
+          'permission-denied',
+          'カスタマーが存在しません'
+        );
+      }
 
       try {
-        await stripe.invoiceItems.create({
+        await StripeService.client.invoiceItems.create({
           customer: customer.customerId,
           price: data.priceId,
           tax_rates: [functions.config().stripe.tax],
@@ -48,9 +51,9 @@ export const payStripeProduct = functions
           params.transfer_data = { destination: data.connectedAccountId };
         }
 
-        const invoice = await stripe.invoices.create(params);
+        const invoice = await StripeService.client.invoices.create(params);
 
-        return stripe.invoices.pay(invoice.id);
+        return StripeService.client.invoices.pay(invoice.id);
       } catch (error) {
         throw new functions.https.HttpsError('unauthenticated', error.code);
       }

@@ -121,19 +121,10 @@ export const restartStripeSubscription = functions
 
 export const getStripePrices = functions
   .region('asia-northeast1')
-  .https.onCall(async (data: { product?: string; stripeAccount?: string }) => {
-    const params: Stripe.PriceListParams = {
-      active: true,
-      product: data.product,
-      type: 'recurring',
-      expand: ['data.product'],
-    };
-
-    return StripeService.client.prices
-      .list(params, {
-        stripeAccount: data.stripeAccount,
-      })
-      .then((prices) => prices.data[0]);
+  .https.onCall(async (ids: string[]) => {
+    return Promise.all(
+      ids.map((id) => StripeService.client.prices.retrieve(id))
+    );
   });
 
 export const getAllStripeCoupons = functions
@@ -142,38 +133,20 @@ export const getAllStripeCoupons = functions
     return (await StripeService.client.coupons.list()).data;
   });
 
-export const deleteSubscription = functions
-  .region('asia-northeast1')
-  .https.onCall(async (subscriptionId: string, context) => {
-    if (!subscriptionId) {
-      throw new functions.https.HttpsError(
-        'data-loss',
-        'サブスクリプションIDが見つかりません'
-      );
-    }
-
-    if (!context.auth) {
-      throw new functions.https.HttpsError('permission-denied', 'not user');
-    }
-
-    try {
-      return StripeService.client.subscriptions.del(subscriptionId);
-    } catch (error) {
-      throw new functions.https.HttpsError('unauthenticated', error.code);
-    }
-  });
-
 export const onDeleteStripeSubscription = functions
   .region('asia-northeast1')
   .https.onRequest(async (req, res) => {
     const customer: string = req.body.data.object.customer;
     const doc = (
-      await db.collection('customers').where('customerId', '==', customer).get()
+      await db
+        .collectionGroup('private')
+        .where('customerId', '==', customer)
+        .get()
     ).docs[0];
 
     if (doc) {
       await doc.ref.update({
-        plan: null,
+        plan: 'free',
       });
     }
 

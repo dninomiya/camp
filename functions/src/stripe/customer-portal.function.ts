@@ -1,6 +1,5 @@
-import { stripe } from './client';
+import { StripeService } from './service';
 import * as functions from 'firebase-functions';
-import { db } from '../db';
 
 export const getStripeCustomerPortalURL = functions
   .region('asia-northeast1')
@@ -9,18 +8,19 @@ export const getStripeCustomerPortalURL = functions
       throw new functions.https.HttpsError('permission-denied', 'not user');
     }
 
-    const customer: any = (
-      await db.doc(`customers/${context.auth.uid}`).get()
-    ).data();
+    const customer = await StripeService.getCampCustomer(context.auth.uid);
+
+    if (!customer) {
+      throw new functions.https.HttpsError('permission-denied', 'not customer');
+    }
 
     try {
-      const result = await stripe.billingPortal.sessions.create({
+      const result = await StripeService.client.billingPortal.sessions.create({
         customer: customer.customerId,
       });
 
       return result.url;
     } catch (error) {
-      console.error(error);
       throw new functions.https.HttpsError('unknown', error);
     }
   });

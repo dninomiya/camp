@@ -1,4 +1,5 @@
-import { PriceWithProduct } from 'src/interfaces/price';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ChargeWithInvoice } from 'src/app/interfaces/charge';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
@@ -16,7 +17,8 @@ import Stripe from 'stripe';
 export class PaymentService {
   constructor(
     private fns: AngularFireFunctions,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private db: AngularFirestore
   ) {}
 
   async getStripeClient(): Promise<StripeClient> {
@@ -31,9 +33,9 @@ export class PaymentService {
     return callable(params).toPromise();
   }
 
-  getPrices(): Promise<PriceWithProduct[]> {
+  getPrices(ids: string[]): Promise<Stripe.Price[]> {
     const callable = this.fns.httpsCallable('getStripePrices');
-    return callable(environment.stripe.prices).toPromise();
+    return callable(ids).toPromise();
   }
 
   async setPaymemtMethod(
@@ -115,9 +117,14 @@ export class PaymentService {
     return callable(subscriptionId).toPromise();
   }
 
-  cancelSubscription(subscriptionId: string) {
+  async cancelSubscription(body: {
+    userId: string;
+    reason: string;
+    subscriptionId: string;
+  }) {
     const callable = this.fns.httpsCallable('cancelStripeSubscription');
-    return callable(subscriptionId).toPromise();
+    await callable(body.subscriptionId).toPromise();
+    this.db.doc(``);
   }
 
   async deleteSubscription(subscriptionId: string) {
@@ -132,5 +139,17 @@ export class PaymentService {
   getCoupons(): Promise<Stripe.Coupon[]> {
     const callable = this.fns.httpsCallable('getAllStripeCoupons');
     return callable({}).toPromise();
+  }
+
+  async getInvoices(params?: {
+    startingAfter?: string;
+    endingBefore?: string;
+    stripeAccountId?: string;
+  }): Promise<ChargeWithInvoice[]> {
+    const callable = this.fns.httpsCallable('getStripeInvoices');
+    const result = (await callable(params).toPromise()) as Stripe.ApiList<
+      ChargeWithInvoice
+    >;
+    return result.data;
   }
 }
