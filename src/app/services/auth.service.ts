@@ -53,15 +53,6 @@ export class AuthService {
       }),
       shareReplay(1)
     );
-
-    this.db
-      .collectionGroup('private', (ref) =>
-        ref.where('githubUniqueId', '==', 5842851)
-      )
-      .valueChanges()
-      .subscribe((res) => {
-        console.log(res);
-      });
   }
 
   async login(): Promise<auth.UserCredential> {
