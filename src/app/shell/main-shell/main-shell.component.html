@@ -23,7 +23,7 @@
           <mat-icon mat-list-icon>how_to_reg</mat-icon>
           <span mat-line>スキル</span>
         </a>
-        <a mat-list-item routerLink="/favorites">
+        <a mat-list-item routerLink="/favorites" *ngIf="user$ | async">
           <mat-icon mat-list-icon>playlist_play</mat-icon>
           <span mat-line>マイリスト</span>
         </a>
