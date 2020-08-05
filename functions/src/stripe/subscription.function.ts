@@ -1,6 +1,5 @@
+import { StripeService } from './service';
 import { db } from './../utils/db';
-import { Customer } from './../interfaces/customer';
-import { stripe } from './client';
 import * as functions from 'firebase-functions';
 import Stripe from 'stripe';
 
@@ -11,7 +10,6 @@ export const createStripeSubscription = functions
       data: {
         priceId: string;
         couponId?: string;
-        stripeAccount?: string;
       },
       context
     ) => {
@@ -23,26 +21,22 @@ export const createStripeSubscription = functions
         throw new functions.https.HttpsError('permission-denied', 'not user');
       }
 
-      const customer: Customer = (
-        await db.doc(`customers/${context.auth.uid}`).get()
-      ).data() as Customer;
+      const customer = await StripeService.getCampCustomer(context.auth.uid);
 
-      const params: Stripe.SubscriptionCreateParams = {
+      if (!customer) {
+        throw new functions.https.HttpsError(
+          'permission-denied',
+          '顧客が存在しません'
+        );
+      }
+
+      const subscription = await StripeService.client.subscriptions.create({
         customer: customer.customerId,
         items: [{ price: data.priceId }],
         default_tax_rates: [functions.config().stripe.tax],
         coupon: data.couponId,
         expand: ['latest_invoice.payment_intent'],
-      };
-
-      if (data.stripeAccount) {
-        params.application_fee_percent = 10;
-        params.transfer_data = {
-          destination: data.stripeAccount,
-        };
-      }
-
-      const subscription = await stripe.subscriptions.create(params);
+      });
       const invoice = subscription.latest_invoice as Stripe.Invoice;
 
       if (subscription.status === 'active') {
@@ -86,7 +80,7 @@ export const cancelStripeSubscription = functions
     }
 
     try {
-      await stripe.subscriptions.update(subscriptionId, {
+      await StripeService.client.subscriptions.update(subscriptionId, {
         cancel_at_period_end: true,
       });
     } catch (error) {
@@ -113,7 +107,7 @@ export const restartStripeSubscription = functions
     }
 
     try {
-      await stripe.subscriptions.update(subscriptionId, {
+      await StripeService.client.subscriptions.update(subscriptionId, {
         cancel_at_period_end: false,
       });
     } catch (error) {
@@ -135,7 +129,7 @@ export const getStripePrices = functions
       expand: ['data.product'],
     };
 
-    return stripe.prices
+    return StripeService.client.prices
       .list(params, {
         stripeAccount: data.stripeAccount,
       })
@@ -145,7 +139,7 @@ export const getStripePrices = functions
 export const getAllStripeCoupons = functions
   .region('asia-northeast1')
   .https.onCall(async (product: string) => {
-    return (await stripe.coupons.list()).data;
+    return (await StripeService.client.coupons.list()).data;
   });
 
 export const deleteSubscription = functions
@@ -163,7 +157,7 @@ export const deleteSubscription = functions
     }
 
     try {
-      return stripe.subscriptions.del(subscriptionId);
+      return StripeService.client.subscriptions.del(subscriptionId);
     } catch (error) {
       throw new functions.https.HttpsError('unauthenticated', error.code);
     }

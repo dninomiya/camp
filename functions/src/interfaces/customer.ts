@@ -1,8 +1,15 @@
+export interface PaymentCard {
+  address_zip: string;
+  exp_month: string;
+  exp_year: string;
+  last4: string;
+  brand: string;
+  id: string;
+}
+
 export interface Customer {
-  userId: string;
+  card: PaymentCard;
   customerId: string;
-  paymentMethods: string[];
-  defaultPaymentMethod: string;
-  plan?: string;
-  cancelAtPeriodEnd?: number;
+  subscriptionId?: string;
+  paymentMethod: string;
 }

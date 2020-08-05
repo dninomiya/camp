@@ -1,6 +1,4 @@
-import { Customer } from './../interfaces/customer';
-import { stripe } from './client';
-import { db } from './../utils/db';
+import { StripeService } from './service';
 import * as functions from 'firebase-functions';
 import Stripe from 'stripe';
 
@@ -10,7 +8,13 @@ import Stripe from 'stripe';
 export const createStripeSetupIntent = functions
   .region('asia-northeast1')
   .https.onCall(
-    async (data, context): Promise<Stripe.SetupIntent> => {
+    async (
+      data: {
+        name: string;
+        email: string;
+      },
+      context
+    ): Promise<Stripe.SetupIntent> => {
       if (!context.auth) {
         throw new functions.https.HttpsError(
           'permission-denied',
@@ -18,20 +22,20 @@ export const createStripeSetupIntent = functions
         );
       }
 
-      const customer: Customer = (
-        await db.doc(`customers/${context.auth.uid}`).get()
-      ).data() as Customer;
+      const customer = await StripeService.getCampCustomer(context.auth.uid);
+
+      let customerId = customer?.customerId;
 
       if (!customer) {
-        throw new functions.https.HttpsError(
-          'permission-denied',
-          'プラットフォームにカスタマーが存在しません。'
-        );
+        customerId = await StripeService.createStripeCustomer({
+          name: data.name,
+          email: data.email,
+        });
       }
 
-      return stripe.setupIntents.create({
+      return StripeService.client.setupIntents.create({
         payment_method_types: ['card'],
-        customer: customer.customerId,
+        customer: customerId,
       });
     }
   );

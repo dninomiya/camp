@@ -23,9 +23,12 @@ export class PaymentService {
     return loadStripe(environment.stripe.publicKey);
   }
 
-  private createStripeSetupIntent(): Promise<Stripe.SetupIntent> {
+  private createStripeSetupIntent(params: {
+    name: string;
+    email: string;
+  }): Promise<Stripe.SetupIntent> {
     const callable = this.fns.httpsCallable('createStripeSetupIntent');
-    return callable({}).toPromise();
+    return callable(params).toPromise();
   }
 
   getPrices(): Promise<PriceWithProduct[]> {
@@ -39,7 +42,10 @@ export class PaymentService {
     name: string,
     email: string
   ): Promise<void> {
-    const intent = await this.createStripeSetupIntent();
+    const intent = await this.createStripeSetupIntent({
+      name,
+      email,
+    });
     const { setupIntent, error } = await client.confirmCardSetup(
       intent.client_secret,
       {
