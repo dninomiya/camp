@@ -26,7 +26,7 @@ service cloud.firestore {
     }
 
     match /users/{uid} {
-      allow read: if request.auth.uid != null;
+      allow read: if true;
       allow write: if safeId();
       match /{document=**} {
         allow read, write: if isOwner(uid) || isAdmin();

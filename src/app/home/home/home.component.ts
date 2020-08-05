@@ -17,7 +17,7 @@ import { SwiperOptions } from 'swiper';
 export class HomeComponent implements OnInit {
   isMobile = this.uiService.isMobile;
   swiperConfig: SwiperOptions = {
-    allowTouchMove: false,
+    allowTouchMove: this.isMobile,
     slidesPerView: this.isMobile ? 1 : 4,
     slidesPerGroup: this.isMobile ? 1 : 4,
     navigation: {
