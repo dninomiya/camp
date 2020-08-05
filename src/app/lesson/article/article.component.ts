@@ -55,9 +55,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
   );
   isFav: boolean;
   isFav$: Observable<boolean> = this.lessonId$.pipe(
-    switchMap((id) =>
-      this.favoriteService.isFavorite(this.authService.user.id, id)
-    ),
+    switchMap((id) => {
+      if (this.authService.user) {
+        return this.favoriteService.isFavorite(this.authService.user.id, id);
+      } else {
+        return of(null);
+      }
+    }),
     tap((isFav) => (this.isFav = isFav))
   );
 
