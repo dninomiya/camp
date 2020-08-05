@@ -10,4 +10,4 @@ node_modules/
 firebase-debug.log
 index.html
 gcpkey.json
-.runtimeconfig
+.runtimeconfig.json
