@@ -2,7 +2,7 @@ import { toTimeStamp } from './../utils/db';
 import { sendEmail } from './../utils/sendgrid';
 import * as functions from 'firebase-functions';
 import { db } from '../utils';
-import moment = require('moment');
+import * as moment from 'moment';
 
 const stripe = require('stripe')(functions.config().stripe.key);
 
