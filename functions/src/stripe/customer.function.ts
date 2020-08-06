@@ -6,23 +6,12 @@ import * as functions from 'firebase-functions';
 export const getStripeCustomer = functions
   .region('asia-northeast1')
   .https.onCall(
-    async (_, context): Promise<Stripe.Customer | Stripe.DeletedCustomer> => {
+    async (_, context): Promise<Stripe.Customer | null> => {
       if (!context.auth) {
         throw new functions.https.HttpsError('permission-denied', 'not user');
       }
 
-      const customer = await StripeService.getCampCustomer(context.auth.uid);
-
-      if (!customer) {
-        throw new functions.https.HttpsError(
-          'permission-denied',
-          'there is no customer'
-        );
-      }
-
-      return StripeService.client.customers.retrieve(customer.customerId, {
-        expand: ['subscriptions'],
-      });
+      return StripeService.getStripeCustomer(context.auth.uid);
     }
   );
 

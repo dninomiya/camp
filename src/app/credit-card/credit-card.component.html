@@ -1,21 +1,24 @@
-<ng-container *ngIf="payment$ | async as payment; else new">
-  <div class="card" *ngIf="card$ | async as card">
+<ng-container *ngIf="method; else createSection">
+  <div class="card">
     <p class="card__number">
-      <i class="fab fa-cc-{{ card.brand.toLowerCase() }}"></i>**** **** ****
-      {{ card.last4 }}
+      <i
+        class="fab fa-cc-{{
+          method.card.brand.toLowerCase() === 'american express'
+            ? 'amex'
+            : method.card.brand.toLowerCase()
+        }}"
+      ></i
+      >**** **** ****
+      {{ method.card.last4 }}
     </p>
 
-    <button
-      class="card__button"
-      mat-icon-button
-      (click)="openCardDialog(payment.customerId)"
-    >
+    <button class="card__button" mat-icon-button (click)="openCardDialog()">
       <mat-icon class="mat-18">edit</mat-icon>
     </button>
   </div>
 </ng-container>
 
-<ng-template #new>
+<ng-template #createSection>
   <div *ngIf="!loading" class="create-card">
     <button mat-raised-button color="primary" (click)="openCardDialog()">
       新しくカードを作成

@@ -61,10 +61,7 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
   unsubscribe() {
     this.isLoading = true;
     this.paymentService
-      .cancelSubscription({
-        userId: this.data.uid,
-        reason: this.form.value,
-      })
+      .cancelSubscription(this.form.value)
       .then(() => {
         this.snackBar.open('停止しました', null, {
           duration: 2000,

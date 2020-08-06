@@ -20,8 +20,54 @@ export class StripeService {
     }
   }
 
+  static async getCampUidByCustomerId(id: string) {
+    const payment = await db
+      .collectionGroup('private')
+      .where('customerId', '==', id)
+      .get();
+
+    const uid = payment.docs[0].ref.parent.parent?.id;
+
+    if (uid) {
+      return (await db.doc(`users/${uid}`).get()).data();
+    } else {
+      return null;
+    }
+  }
+
+  static async getProductByPrice(id: string): Promise<Stripe.Product> {
+    const price = await this.client.prices.retrieve(id, {
+      expand: ['product'],
+    });
+    return price.product as Stripe.Product;
+  }
+
+  static async getStripeCustomer(uid: string): Promise<Stripe.Customer | null> {
+    const campCustomer = await this.getCampCustomer(uid);
+
+    if (campCustomer) {
+      return this.client.customers.retrieve(campCustomer.customerId, {
+        expand: ['subscriptions'],
+      }) as Promise<Stripe.Customer>;
+    } else {
+      return null;
+    }
+  }
+
+  static async getSubscriptinoId(uid: string): Promise<string | undefined> {
+    const stripeCustomer = await this.getStripeCustomer(uid);
+    return stripeCustomer?.subscriptions?.data[0].id;
+  }
+
   static async updateCampCustomer(uid: string, data: any): Promise<any> {
     return db.doc(`users/${uid}/private/payment`).update(data);
+  }
+
+  static async deleteCustomerByUid(uid: string): Promise<void> {
+    const customer = await this.getCampCustomer(uid);
+    if (customer) {
+      await this.client.customers.del(customer.customerId);
+    }
   }
 
   static async createStripeCustomer(data: {

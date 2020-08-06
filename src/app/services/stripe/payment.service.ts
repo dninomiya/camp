@@ -33,9 +33,9 @@ export class PaymentService {
     return callable(params).toPromise();
   }
 
-  getPrices(ids: string[]): Promise<Stripe.Price[]> {
+  getPrices(productId: string): Promise<Stripe.Price[]> {
     const callable = this.fns.httpsCallable('getStripePrices');
-    return callable(ids).toPromise();
+    return callable(productId).toPromise();
   }
 
   async setPaymemtMethod(
@@ -99,17 +99,14 @@ export class PaymentService {
       });
   }
 
-  async createSubscription(
-    priceId: string,
-    couponId?: string,
-    stripeAccount?: string
-  ): Promise<void> {
+  async createSubscription(params: {
+    priceId: string;
+    couponId?: string;
+    trialUsed?: string;
+    subscriptionId?: string;
+  }): Promise<void> {
     const callable = this.fns.httpsCallable('createStripeSubscription');
-    return callable({
-      priceId,
-      couponId,
-      stripeAccount,
-    }).toPromise();
+    return callable(params).toPromise();
   }
 
   restartSubscription(subscriptionId: string) {
@@ -117,14 +114,9 @@ export class PaymentService {
     return callable(subscriptionId).toPromise();
   }
 
-  async cancelSubscription(body: {
-    userId: string;
-    reason: string;
-    subscriptionId: string;
-  }) {
+  async cancelSubscription(reason: { types: string[]; detail: string }) {
     const callable = this.fns.httpsCallable('cancelStripeSubscription');
-    await callable(body.subscriptionId).toPromise();
-    this.db.doc(``);
+    await callable(reason).toPromise();
   }
 
   async deleteSubscription(subscriptionId: string) {

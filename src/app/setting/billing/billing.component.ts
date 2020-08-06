@@ -46,10 +46,10 @@ export class BillingComponent implements OnInit {
 
   ngOnInit() {}
 
-  openCardDialog(customerId = null) {
+  openCardDialog() {
     this.dialog.open(CardDialogComponent, {
       width: '560px',
-      data: customerId,
+      data: this.method,
     });
   }
 }

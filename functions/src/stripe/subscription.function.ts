@@ -1,52 +1,99 @@
+import { config } from './../config';
+import { sendEmail } from './../utils/sendgrid';
 import { StripeService } from './service';
-import { db } from './../utils/db';
+import { db, toTimeStamp } from './../utils/db';
 import * as functions from 'firebase-functions';
 import Stripe from 'stripe';
+import * as moment from 'moment';
 
 export const createStripeSubscription = functions
   .region('asia-northeast1')
   .https.onCall(
     async (
       data: {
+        planId: 'lite' | 'solo' | 'mentor' | 'mentorLite';
         priceId: string;
         couponId?: string;
       },
       context
     ) => {
-      if (!data || !data.priceId) {
-        throw new functions.https.HttpsError('data-loss', 'not customer');
+      const uid = context.auth?.uid;
+
+      if (!uid) {
+        throw new Error('認証エラー');
       }
 
-      if (!context.auth) {
-        throw new functions.https.HttpsError('permission-denied', 'not user');
-      }
+      const stripeCustomer = await StripeService.getStripeCustomer(uid);
+      const user = (await db.doc(`users/${uid}`).get()).data();
 
-      const customer = await StripeService.getCampCustomer(context.auth.uid);
-
-      if (!customer) {
+      if (!stripeCustomer || !user) {
         throw new functions.https.HttpsError(
           'permission-denied',
           '顧客が存在しません'
         );
       }
 
-      const subscription = await StripeService.client.subscriptions.create({
-        customer: customer.customerId,
-        items: [{ price: data.priceId }],
-        default_tax_rates: [functions.config().stripe.tax],
-        coupon: data.couponId,
-        expand: ['latest_invoice.payment_intent'],
+      const subscriptionId = await StripeService.getSubscriptinoId(uid);
+      let subscription: Stripe.Subscription;
+
+      if (subscriptionId) {
+        functions.logger.info('プラン変更: ' + subscriptionId);
+        subscription = await StripeService.client.subscriptions.update(
+          subscriptionId,
+          {
+            items: [{ price: data.priceId }],
+            expand: ['latest_invoice.payment_intent'],
+          }
+        );
+      } else {
+        const ukey = moment().format('YYYY-MM-DD-HH') + '-' + uid;
+        subscription = await StripeService.client.subscriptions.create(
+          {
+            customer: stripeCustomer.id,
+            items: [{ price: data.priceId }],
+            default_tax_rates: [functions.config().stripe.tax],
+            coupon: data.couponId,
+            trial_from_plan: user.trialUsed,
+            expand: ['latest_invoice.payment_intent'],
+          },
+          {
+            idempotency_key: ukey,
+          }
+        );
+      }
+
+      await db.doc(`users/${uid}`).update({
+        plan: data.planId,
+        trialUsed: true,
+        isTrial: !user.trialUsed,
+        isCaneclSubscription: false,
+        currentPeriodStart: toTimeStamp(subscription.current_period_start),
+        currentPeriodEnd: toTimeStamp(subscription.current_period_end),
       });
+
+      const product = await StripeService.getProductByPrice(data.priceId);
+
+      await sendEmail({
+        to: 'daichi.ninomiya@deer.co.jp',
+        templateId: 'registerToAdmin',
+        dynamicTemplateData: {
+          email: user.email,
+          name: user.name,
+          plan: product.name,
+        },
+      });
+
+      await sendEmail({
+        to: user.email,
+        templateId: 'changePlan',
+        dynamicTemplateData: {
+          plan: product.name,
+        },
+      });
+
       const invoice = subscription.latest_invoice as Stripe.Invoice;
 
       if (subscription.status === 'active') {
-        await db.doc(`customers/${context.auth.uid}`).set(
-          {
-            plan: subscription.items.data[0].price.product,
-          },
-          { merge: true }
-        );
-
         return subscription;
       } else if (
         (invoice?.payment_intent as Stripe.PaymentIntent)?.status ===
@@ -67,43 +114,71 @@ export const createStripeSubscription = functions
 
 export const cancelStripeSubscription = functions
   .region('asia-northeast1')
-  .https.onCall(async (subscriptionId: string, context) => {
-    if (!subscriptionId) {
-      throw new functions.https.HttpsError(
-        'data-loss',
-        'サブスクリプションIDが見つかりません'
+  .https.onCall(
+    async (
+      reason: {
+        types: string[];
+        detail: string;
+      },
+      context
+    ) => {
+      if (!context.auth) {
+        throw new functions.https.HttpsError('permission-denied', 'not user');
+      }
+
+      const subscriptionId = await StripeService.getSubscriptinoId(
+        context.auth.uid
       );
-    }
 
-    if (!context.auth) {
-      throw new functions.https.HttpsError('permission-denied', 'not user');
-    }
+      if (!subscriptionId) {
+        throw new functions.https.HttpsError(
+          'data-loss',
+          'サブスクリプションがありません'
+        );
+      }
 
-    try {
-      await StripeService.client.subscriptions.update(subscriptionId, {
-        cancel_at_period_end: true,
+      try {
+        await StripeService.client.subscriptions.update(subscriptionId, {
+          cancel_at_period_end: true,
+        });
+      } catch (error) {
+        throw new functions.https.HttpsError('unauthenticated', error.code);
+      }
+
+      await db.doc(`users/${context.auth.uid}/private/payment`).update({
+        isCaneclSubscription: true,
       });
-    } catch (error) {
-      throw new functions.https.HttpsError('unauthenticated', error.code);
-    }
 
-    return db.doc(`customers/${context.auth.uid}`).update({
-      cancelAtPeriodEnd: true,
-    });
-  });
+      const user = (await db.doc(`users/${context.auth.uid}`).get()).data();
+
+      if (user) {
+        return db.collection('unsubscribeReasons').add({
+          userId: context.auth.uid,
+          planId: user.plan,
+          reason,
+        });
+      } else {
+        return;
+      }
+    }
+  );
 
 export const restartStripeSubscription = functions
   .region('asia-northeast1')
-  .https.onCall(async (subscriptionId: string, context) => {
+  .https.onCall(async (_, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('permission-denied', 'not user');
+    }
+
+    const subscriptionId = await StripeService.getSubscriptinoId(
+      context.auth.uid
+    );
+
     if (!subscriptionId) {
       throw new functions.https.HttpsError(
         'data-loss',
-        'サブスクリプションIDが見つかりません'
+        'サブスクリプションが存在しません'
       );
-    }
-
-    if (!context.auth) {
-      throw new functions.https.HttpsError('permission-denied', 'not user');
     }
 
     try {
@@ -114,41 +189,65 @@ export const restartStripeSubscription = functions
       throw new functions.https.HttpsError('unauthenticated', error.code);
     }
 
-    return db.doc(`customers/${context.auth.uid}`).update({
-      cancelAtPeriodEnd: false,
+    return db.doc(`users/${context.auth.uid}`).update({
+      isCaneclSubscription: false,
     });
   });
 
 export const getStripePrices = functions
   .region('asia-northeast1')
-  .https.onCall(async (ids: string[]) => {
-    return Promise.all(
-      ids.map((id) => StripeService.client.prices.retrieve(id))
-    );
+  .https.onCall(async (product: string) => {
+    const reuslt = await StripeService.client.prices.list({
+      product,
+      active: true,
+    });
+    return reuslt.data;
   });
 
 export const getAllStripeCoupons = functions
   .region('asia-northeast1')
-  .https.onCall(async (product: string) => {
+  .https.onCall(async () => {
     return (await StripeService.client.coupons.list()).data;
   });
 
-export const onDeleteStripeSubscription = functions
+export const deleteSubscription = functions
   .region('asia-northeast1')
-  .https.onRequest(async (req, res) => {
-    const customer: string = req.body.data.object.customer;
-    const doc = (
-      await db
-        .collectionGroup('private')
-        .where('customerId', '==', customer)
-        .get()
-    ).docs[0];
+  .https.onRequest(async (req: any, res: any) => {
+    const data = req.body.data.object;
+    const uid = StripeService.getCampUidByCustomerId(data.customer);
 
-    if (doc) {
-      await doc.ref.update({
+    if (uid) {
+      const user: any = (await db.doc(`users/${uid}`).get()).data();
+
+      await db.doc(`users/${uid}`).update({
         plan: 'free',
+        currentPeriodStart: null,
+        currentPeriodEnd: null,
+        isCaneclSubscription: false,
+      });
+
+      await db.doc(`users/${uid}/private/payment`).update({
+        subscriptionId: null,
+      });
+
+      await sendEmail({
+        to: config.adminEmail,
+        templateId: 'downgradeToAdmin',
+        dynamicTemplateData: {
+          name: user.name,
+          oldPlan: user.plan,
+          newPlan: 'フリー',
+        },
+      });
+
+      await sendEmail({
+        to: user.email,
+        templateId: 'changePlan',
+        dynamicTemplateData: {
+          plan: 'フリー',
+        },
       });
     }
 
-    res.status(200).send('success');
+    res.status(200).send(true);
   });

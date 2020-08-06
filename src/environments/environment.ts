@@ -12,8 +12,7 @@ export const environment = {
     price: {
       lite: {
         id: 'prod_HmCWurmpvo2Nyr',
-        mainPrice: '',
-        list: [''],
+        mainPrice: 'price_1HCe7HAg8h03lWNH1oJN8uz9',
       },
     },
   },
