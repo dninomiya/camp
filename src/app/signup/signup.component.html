@@ -1,87 +1,106 @@
-<div class="container" *ngIf="plan$ | async as plan">
-  <div class="wrap" *ngIf="user$ | async as user">
-    <h1>{{ plan.title }}プランをはじめる</h1>
+<div class="wrap" *ngIf="product">
+  <div
+    class="background"
+    [style.background-image]="
+      'url(assets/images/plan/plan-bg-' + planId + '.png)'
+    "
+  ></div>
+  <form class="main" *ngIf="user$ | async as user" [formGroup]="form">
+    <h1>{{ product.name }}をはじめる</h1>
 
-    <div class="section">
-      <h2>料金</h2>
-      <ng-container *ngIf="campaign; else default">
-        <p>
-          半額キャンペーン実施中！4月31日までに入会すると全プラン3ヶ月半額になります！
-        </p>
-        <p>
-          {{ plan.amount / 2 | number }}円（税込）/月
-          <span class="default-price"
-            >定価: {{ plan.amount | number }}円/月</span
-          >
-        </p>
-
-        <ul class="notice">
-          <li>3ヶ月以降は通常価格で決済がはじまります</li>
-        </ul>
-      </ng-container>
-      <ng-template #default> {{ plan.amount | number }}円/月 </ng-template>
-    </div>
-
-    <div class="section">
-      <h2>プラン内容</h2>
-
-      <ul>
-        <li *ngFor="let point of plan.points">
+    <section class="section">
+      <mat-list dense>
+        <h2 matSubheader>プラン内容</h2>
+        <mat-list-item *ngFor="let point of plan.points">
           {{ point }}
-        </li>
-      </ul>
-    </div>
+        </mat-list-item>
+      </mat-list>
+    </section>
 
-    <div class="section">
-      <h2>決済方法</h2>
+    <section class="section">
       <app-credit-card></app-credit-card>
-    </div>
+    </section>
 
-    <div class="section">
-      <h2>登録</h2>
-      <ng-container *ngIf="payment$ | async as payment">
-        <ng-container *ngIf="plan.id !== user.plan; else disabled">
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="
-              signUp(plan.id, payment.customerId, payment.subscriptionId)
-            "
-            [disabled]="!payment.customerId || loading"
+    <section class="section">
+      <mat-selection-list [multiple]="false" dense formControlName="price">
+        <h2 matSubheader>プラン選択</h2>
+        <mat-list-option
+          *ngFor="let price of prices"
+          [value]="price"
+          [disabled]="!method || activePrice === price.id"
+        >
+          <span matLine
+            >{{ product.name }}（{{ price.recurring.interval_count
+            }}{{ price.recurring.interval | interval }}）
+            <span class="label" *ngIf="activePrice === price.id"
+              >継続中</span
+            ></span
           >
-            {{ getSignUpLabel(plan.id) }}
-          </button>
-          <p class="trial" *ngIf="!user?.trialUsed; else noTrial">
-            7日のフリートライアル後に決済がスタートします。
-          </p>
-          <ng-template #noTrial>
-            <p class="trial">以前登録しているためトライアルはありません。</p>
-          </ng-template>
-        </ng-container>
-
-        <ng-template #disabled>
-          <p>
-            既に{{ plan.title }}プランに登録しています。（{{
-              user.currentPeriodStart?.toDate() | date: 'yyyy年MM月dd日'
-            }}〜{{ user.currentPeriodEnd?.toDate() | date: 'yyyy年MM月dd' }}）
-          </p>
-
-          <a
-            *ngIf="!canceled; else canceledArea"
-            mat-stroked-button
-            routerLink="/mypage"
+          <span matLine
+            >{{ price.unit_amount | number }}円<span
+              *ngIf="!user.trialUsed && price.recurring.trial_period_days"
+              >（{{ price.recurring.trial_period_days }}日間のトライアル）</span
+            ></span
           >
-            自動更新を止める
-          </a>
-          <ng-template #canceledArea>
-            <p>
-              {{
-                user.currentPeriodEnd?.toDate() | date: 'yyyy年MM月dd'
-              }}に課金停止（フリープランに変更）予定
-            </p>
-          </ng-template>
-        </ng-template>
-      </ng-container>
-    </div>
-  </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </section>
+
+    <section class="section">
+      <mat-selection-list [multiple]="false" dense formControlName="coupon">
+        <h2 matSubheader>クーポン選択</h2>
+        <mat-list-option disabled *ngIf="!coupons?.length"
+          >有効なクーポンはありません</mat-list-option
+        >
+        <mat-list-option>使わない</mat-list-option>
+        <mat-list-option *ngFor="let coupon of coupons" [value]="coupon">
+          <span matLine
+            >{{ coupon.name
+            }}<span *ngIf="coupon.duration"
+              >（{{ coupon.duration_in_months }}か月有効）</span
+            ></span
+          >
+          <span matLine>{{ coupon.percent_off }}%OFF</span>
+        </mat-list-option>
+      </mat-selection-list>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <mat-list class="total">
+      <h2 matSubheader>合計</h2>
+      <mat-list-item>
+        <span matLine
+          >プラン:
+          {{ (form.value.price[0]?.unit_amount | number) || '-' }} 円</span
+        >
+        <span matLine *ngIf="form.value.coupon[0]?.percent_off"
+          >{{ form.value.coupon[0].percent_off || '-' }}% OFF</span
+        >
+      </mat-list-item>
+      <mat-list-item *ngIf="form.value.price[0]?.unit_amount"
+        >初回課金:
+        {{
+          form.value.price[0].unit_amount *
+            (form.value.coupon[0]?.percent_off || 100) *
+            0.01 | number
+        }}円</mat-list-item
+      >
+    </mat-list>
+
+    <button mat-raised-button color="primary" [disabled]="form.invalid">
+      {{ plan.title }}プランを開始
+    </button>
+
+    <ul class="notice">
+      <li>入会金、退会金はありません。</li>
+      <li>途中退会における返金はありません。</li>
+      <li>価格はすべて税込です。</li>
+      <li>
+        トライアルがある場合、トライアル終了後に課金が開始されます。トライアル中に更新を停止した場合課金が発生しません。
+      </li>
+      <li>自動更新を停止しない限り、契約は自動的に更新されます。</li>
+      <li>前払いで即座に引き落とされます。</li>
+    </ul>
+  </form>
 </div>

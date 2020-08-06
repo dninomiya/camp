@@ -1,7 +1,7 @@
 import { PlanService } from 'src/app/services/plan.service';
 import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { User } from './../interfaces/user';
 import { MatDialog } from '@angular/material/dialog';
@@ -51,8 +51,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {
     this.authService.authUser$.subscribe((user) => {
       this.user = user;
@@ -95,7 +94,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
               'ログインしています',
               null,
               {
-                duration: 2000,
+                duration: null,
               }
             );
             this.authService
@@ -103,12 +102,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
               .then(() => {
                 this.user$.subscribe((user) => {
                   if (user) {
-                    this.loginSnackBar.dismiss();
                     this.router.navigateByUrl('/intl/signup?planId=' + planId);
-                  } else {
-                    this.loginSnackBar.dismiss();
-                    this.loading = false;
                   }
+                  this.loginSnackBar.dismiss();
                 });
               })
               .catch(() => {

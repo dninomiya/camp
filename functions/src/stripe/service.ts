@@ -1,13 +1,10 @@
 import * as functions from 'firebase-functions';
 import Stripe from 'stripe';
-export const stripe = new Stripe(functions.config().stripe.secret, {
-  apiVersion: '2020-03-02',
-});
 import { Customer } from './../interfaces/customer';
 import { db } from './../utils/db';
 
 export class StripeService {
-  static client = new Stripe(functions.config().stripe.secret, {
+  static client = new Stripe(functions.config().stripe.key, {
     apiVersion: '2020-03-02',
   });
 
@@ -49,6 +46,21 @@ export class StripeService {
       return this.client.customers.retrieve(campCustomer.customerId, {
         expand: ['subscriptions'],
       }) as Promise<Stripe.Customer>;
+    } else {
+      return null;
+    }
+  }
+
+  static async getPaymentMethod(
+    uid: string
+  ): Promise<Stripe.PaymentMethod | null> {
+    const customer = await this.getCampCustomer(uid);
+    if (customer?.customerId) {
+      const result = await this.client.paymentMethods.list({
+        customer: customer.customerId,
+        type: 'card',
+      });
+      return result.data[0];
     } else {
       return null;
     }

@@ -1,4 +1,4 @@
-<h1 matDialogTitle>クレジットカードを{{ customerId ? '変更' : '登録' }}</h1>
+<h1 matDialogTitle>クレジットカードを登録</h1>
 
 <mat-dialog-content>
   <form
@@ -6,7 +6,7 @@
     novalidate
     (ngSubmit)="saveCard()"
     [formGroup]="form"
-    [class.is-loading]="loading"
+    [class.is-loading]="loading || inProgress"
   >
     <div id="card-element" class="field"></div>
 
@@ -19,6 +19,18 @@
         formControlName="name"
         placeholder="TARO YAMADA"
       />
+    </mat-form-field>
+
+    <mat-form-field class="name">
+      <mat-label>メールアドレス</mat-label>
+      <input
+        type="text"
+        matInput
+        autocomplete="email"
+        formControlName="email"
+        placeholder="xxx@xxx.com"
+      />
+      <mat-hint>領収書などが届きます</mat-hint>
     </mat-form-field>
 
     <p class="form__notice">
@@ -38,7 +50,7 @@
     </ul>
   </form>
 
-  <div *ngIf="loading">
+  <div *ngIf="inProgress">
     <div class="doing">
       <mat-spinner [diameter]="32"></mat-spinner>
       <p>カード登録中です。</p>
@@ -52,8 +64,8 @@
     (click)="saveCard()"
     mat-raised-button
     color="primary"
-    [disabled]="!isComplete || loading"
+    [disabled]="!isComplete || loading || form.invalid || inProgress"
   >
-    {{ customerId ? '更新' : '登録' }}
+    登録
   </button>
 </mat-dialog-actions>

@@ -8,7 +8,6 @@ export const PLAN: {
   lite: {
     title: 'ライト',
     subTitle: '教材閲覧のみ',
-    amount: 12500,
     points: [
       '有料教材の閲覧',
       '教材に関する質問',
@@ -19,7 +18,6 @@ export const PLAN: {
   solo: {
     title: 'ソロ',
     subTitle: 'ひとりで学びたい人',
-    amount: 30000,
     points: [
       '有料教材の閲覧',
       '無制限な質問',
@@ -30,7 +28,6 @@ export const PLAN: {
   mentor: {
     title: 'メンター',
     subTitle: 'メンターと進めたい人',
-    amount: 85000,
     points: [
       '有料教材の閲覧',
       '無制限な質問',

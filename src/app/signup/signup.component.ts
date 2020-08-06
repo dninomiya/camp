@@ -1,13 +1,16 @@
+import { subscribePlan } from './../../../functions/src/payments/subscribe-plan.function';
+import { FormBuilder, Validators } from '@angular/forms';
+import { LoadingService } from './../services/loading.service';
+import { environment } from './../../environments/environment';
+import { PLAN } from './../services/plan.service';
+import { Plan } from './../interfaces/plan';
 import { PaymentService } from './../services/stripe/payment.service';
 import { PlanPipe } from './../shared/plan.pipe';
 import { User } from './../interfaces/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
-import { Plan } from 'src/app/interfaces/plan';
 import { PlanService } from 'src/app/services/plan.service';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import Stripe from 'stripe';
 
@@ -18,49 +21,69 @@ import Stripe from 'stripe';
   providers: [PlanPipe],
 })
 export class SignupComponent implements OnInit {
-  plan$: Observable<Plan> = this.route.queryParamMap.pipe(
-    map((queryParamMap) => {
-      return this.planService.getPlan(queryParamMap.get('planId'));
-    }),
-    tap((plan) => {
-      if (!plan) {
-        this.router.navigate(['not-found']);
-      }
-    })
-  );
-
+  product: Stripe.Product;
   prices: Stripe.Price[];
   user$ = this.authService.authUser$;
   user: User;
   isUpgrade: boolean;
+  method: Stripe.PaymentMethod;
   loading: boolean;
   canceled: boolean;
+  coupons: Stripe.Coupon[];
   campaign = this.planService.isCampaign;
   customer: Stripe.Customer;
+  activePrice: string;
+  plan: Omit<Plan, 'id'>;
+  planId: string;
+  form = this.fb.group({
+    price: [[], [Validators.required]],
+    coupon: [[]],
+  });
 
   constructor(
     private route: ActivatedRoute,
     private planService: PlanService,
     private authService: AuthService,
     private paymentService: PaymentService,
+    private loadingService: LoadingService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private fb: FormBuilder
   ) {
-    this.plan$.subscribe((plan) => {
-      if (plan) {
-        this.isUpgrade = this.planService.isUpgrade(this.user.plan, plan.id);
-      }
-    });
-
     this.route.queryParamMap.subscribe((queryMap) => {
-      const productId = queryMap.get('id');
+      this.loadingService.startLoading();
+      this.planId = queryMap.get('planId');
+      const productId = environment.stripe.product[this.planId].id;
+
       this.paymentService.getPrices(productId).then((prices) => {
         this.prices = prices;
       });
+
+      this.paymentService.getProduct(productId).then((product) => {
+        this.product = product;
+        this.loadingService.endLoading();
+      });
+
+      this.plan = PLAN[this.planId];
+    });
+
+    this.getMethod();
+
+    this.paymentService
+      .getCoupons()
+      .then((coupons) => (this.coupons = coupons));
+  }
+
+  ngOnInit(): void {
+    this.form.valueChanges.subscribe((value) => {
+      const { priceId, couponId } = value;
     });
   }
 
-  ngOnInit(): void {}
+  getMethod() {
+    this.paymentService
+      .getPaymentMethod()
+      .then((method) => (this.method = method));
+  }
 
   signUp() {
     const snackBar = this.snackBar.open('プランに登録しています...');

@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PaymentService } from 'src/app/services/stripe/payment.service';
@@ -31,9 +31,7 @@ export class CardDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<CardDialogComponent>,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
-    public paymentService: PaymentService,
-    public customerService: CustomerService,
-    @Inject(MAT_DIALOG_DATA) public customerId?: string
+    public paymentService: PaymentService
   ) {}
 
   ngOnInit(): void {
@@ -48,8 +46,8 @@ export class CardDialogComponent implements OnInit {
     this.paymentService.getPaymentMethod().then((method) => {
       if (method) {
         this.setCardToForm(method);
-        this.loading = false;
       }
+      this.loading = false;
     });
   }
 
@@ -82,7 +80,7 @@ export class CardDialogComponent implements OnInit {
         )
         .then(() => {
           this.snackBar.open('カードを登録しました');
-          this.dialogRef.close();
+          this.dialogRef.close(true);
         })
         .catch((error: Error) => {
           console.error(error.message);
@@ -95,7 +93,7 @@ export class CardDialogComponent implements OnInit {
           }
         })
         .finally(() => {
-          this.loading = false;
+          this.inProgress = false;
         });
     }
   }

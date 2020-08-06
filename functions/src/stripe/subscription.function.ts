@@ -194,22 +194,6 @@ export const restartStripeSubscription = functions
     });
   });
 
-export const getStripePrices = functions
-  .region('asia-northeast1')
-  .https.onCall(async (product: string) => {
-    const reuslt = await StripeService.client.prices.list({
-      product,
-      active: true,
-    });
-    return reuslt.data;
-  });
-
-export const getAllStripeCoupons = functions
-  .region('asia-northeast1')
-  .https.onCall(async () => {
-    return (await StripeService.client.coupons.list()).data;
-  });
-
 export const deleteSubscription = functions
   .region('asia-northeast1')
   .https.onRequest(async (req: any, res: any) => {

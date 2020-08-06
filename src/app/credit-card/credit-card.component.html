@@ -1,27 +1,33 @@
 <ng-container *ngIf="method; else createSection">
-  <div class="card">
-    <p class="card__number">
-      <i
-        class="fab fa-cc-{{
-          method.card.brand.toLowerCase() === 'american express'
-            ? 'amex'
-            : method.card.brand.toLowerCase()
-        }}"
-      ></i
-      >**** **** ****
-      {{ method.card.last4 }}
-    </p>
-
-    <button class="card__button" mat-icon-button (click)="openCardDialog()">
-      <mat-icon class="mat-18">edit</mat-icon>
-    </button>
-  </div>
+  <mat-list dense>
+    <h2 matSubheader>決済方法</h2>
+    <mat-list-item>
+      <span matLine>
+        <i
+          class="fab fa-cc-{{
+            method.card.brand.toLowerCase() === 'american express'
+              ? 'amex'
+              : method.card.brand.toLowerCase()
+          }}"
+        ></i
+        >**** **** **** {{ method.card.last4 }}</span
+      >
+      <button mat-icon-button (click)="openCardDialog()">
+        <mat-icon inline class="mat-18">edit</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
 </ng-container>
 
 <ng-template #createSection>
   <div *ngIf="!loading" class="create-card">
-    <button mat-raised-button color="primary" (click)="openCardDialog()">
-      新しくカードを作成
+    <button
+      mat-raised-button
+      type="button"
+      color="primary"
+      (click)="openCardDialog()"
+    >
+      新しくカードを登録
     </button>
   </div>
 </ng-template>

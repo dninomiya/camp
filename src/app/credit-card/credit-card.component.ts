@@ -20,13 +20,14 @@ export class CreditCardComponent implements OnInit {
     private paymentService: PaymentService,
     private dialog: MatDialog
   ) {
+    this.getPaymentMethod();
+  }
+
+  private getPaymentMethod() {
     this.paymentService
       .getPaymentMethod()
       .then((method) => {
         this.method = method;
-      })
-      .catch(() => {
-        console.log('error');
       })
       .finally(() => {
         this.loading = false;
@@ -36,9 +37,19 @@ export class CreditCardComponent implements OnInit {
   ngOnInit(): void {}
 
   openCardDialog() {
-    this.dialog.open(CardDialogComponent, {
-      width: '560px',
-      data: this.method,
-    });
+    this.dialog
+      .open(CardDialogComponent, {
+        width: '560px',
+        data: this.method,
+        minHeight: '400px',
+        autoFocus: false,
+        restoreFocus: false,
+      })
+      .afterClosed()
+      .subscribe((reflesh) => {
+        if (reflesh) {
+          this.getPaymentMethod();
+        }
+      });
   }
 }

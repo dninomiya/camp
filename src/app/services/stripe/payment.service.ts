@@ -38,6 +38,11 @@ export class PaymentService {
     return callable(productId).toPromise();
   }
 
+  getProduct(productId: string): Promise<Stripe.Product> {
+    const callable = this.fns.httpsCallable('getProduct');
+    return callable(productId).toPromise();
+  }
+
   async setPaymemtMethod(
     client: StripeClient,
     card: StripeCardElement,

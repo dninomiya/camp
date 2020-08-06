@@ -6,19 +6,12 @@ export const getPaymentMethod = functions
   .region('asia-northeast1')
   .https.onCall(
     async (_, context): Promise<Stripe.PaymentMethod | null> => {
-      if (!context.auth) {
+      const uid = context.auth?.uid;
+      if (!uid) {
         throw new functions.https.HttpsError('permission-denied', 'not user');
       }
 
-      const customer = await StripeService.getCampCustomer(context.auth.uid);
-
-      if (!customer || !customer.paymentMethod) {
-        return null;
-      }
-
-      return StripeService.client.paymentMethods.retrieve(
-        customer.paymentMethod
-      );
+      return StripeService.getPaymentMethod(uid);
     }
   );
 
@@ -42,16 +35,27 @@ export const setStripePaymentMethod = functions
 
       const customer = await StripeService.getCampCustomer(context.auth.uid);
 
-      if (customer?.paymentMethod) {
-        await StripeService.client.customers.update(customer.customerId, {
-          invoice_settings: {
-            default_payment_method: data.paymentMethod,
-          },
-        });
+      if (!customer) {
+        throw new functions.https.HttpsError(
+          'permission-denied',
+          '顧客が存在しません'
+        );
       }
 
-      return StripeService.updateCampCustomer(context.auth.uid, {
-        defaultPaymentMethod: data.paymentMethod,
+      if (customer.paymentMethod) {
+        await StripeService.client.paymentMethods.detach(
+          customer.paymentMethod
+        );
+      }
+
+      await StripeService.updateCampCustomer(context.auth.uid, {
+        paymentMethod: data.paymentMethod,
+      });
+
+      await StripeService.client.customers.update(customer.customerId, {
+        invoice_settings: {
+          default_payment_method: data.paymentMethod,
+        },
       });
     }
   );
