@@ -5,7 +5,12 @@
       'url(assets/images/plan/plan-bg-' + planId + '.png)'
     "
   ></div>
-  <form class="main" *ngIf="user$ | async as user" [formGroup]="form">
+  <form
+    class="main"
+    *ngIf="user$ | async as user"
+    [formGroup]="form"
+    (ngSubmit)="createSubscription()"
+  >
     <h1>{{ product.name }}をはじめる</h1>
 
     <section class="section">

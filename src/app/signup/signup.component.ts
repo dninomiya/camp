@@ -10,7 +10,7 @@ import { User } from './../interfaces/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
 import { PlanService } from 'src/app/services/plan.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import Stripe from 'stripe';
 
@@ -47,7 +47,8 @@ export class SignupComponent implements OnInit {
     private paymentService: PaymentService,
     private loadingService: LoadingService,
     private snackBar: MatSnackBar,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.route.queryParamMap.subscribe((queryMap) => {
       this.loadingService.startLoading();
@@ -73,11 +74,7 @@ export class SignupComponent implements OnInit {
       .then((coupons) => (this.coupons = coupons));
   }
 
-  ngOnInit(): void {
-    this.form.valueChanges.subscribe((value) => {
-      const { priceId, couponId } = value;
-    });
-  }
+  ngOnInit(): void {}
 
   getMethod() {
     this.paymentService
@@ -85,29 +82,24 @@ export class SignupComponent implements OnInit {
       .then((method) => (this.method = method));
   }
 
-  signUp() {
+  createSubscription() {
     const snackBar = this.snackBar.open('プランに登録しています...');
 
     this.loading = true;
 
-    // this.paymentService
-    //   .createSubscription({
-    //     priceId,
-    //     couponId,
-    //     trialUsed: this.user.trialUsed,
-    //     subscriptionId,
-    //   })
-    //   .then(() => {
-    //     snackBar.dismiss();
-    //     this.snackBar.open(
-    //       `${this.planPipe.transform(planId)}プランを開始しました`,
-    //       null,
-    //       {
-    //         duration: 2000,
-    //       }
-    //     );
-    //     this.router.navigate(['/mypage']);
-    //   });
+    this.paymentService
+      .createSubscription({
+        priceId: this.form.value.price[0].id,
+        couponId: this.form.value.coupon[0]?.id,
+        planId: this.planId,
+      })
+      .then(() => {
+        snackBar.dismiss();
+        this.snackBar.open(`${this.plan.title}プランを開始しました`, null, {
+          duration: 2000,
+        });
+        this.router.navigate(['/mypage']);
+      });
   }
 
   getSignUpLabel(planId: string): string {

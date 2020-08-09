@@ -107,8 +107,7 @@ export class PaymentService {
   async createSubscription(params: {
     priceId: string;
     couponId?: string;
-    trialUsed?: string;
-    subscriptionId?: string;
+    planId: string;
   }): Promise<void> {
     const callable = this.fns.httpsCallable('createStripeSubscription');
     return callable(params).toPromise();

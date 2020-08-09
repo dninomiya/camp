@@ -33,7 +33,7 @@ export const createStripeSubscription = functions
         );
       }
 
-      const subscriptionId = await StripeService.getSubscriptinoId(uid);
+      const subscriptionId = await StripeService.getSubscriptionId(uid);
       let subscription: Stripe.Subscription;
 
       if (subscriptionId) {
@@ -46,6 +46,7 @@ export const createStripeSubscription = functions
           }
         );
       } else {
+        functions.logger.info('check');
         const ukey = moment().format('YYYY-MM-DD-HH') + '-' + uid;
         subscription = await StripeService.client.subscriptions.create(
           {
@@ -60,6 +61,7 @@ export const createStripeSubscription = functions
             idempotency_key: ukey,
           }
         );
+        functions.logger.info('check2');
       }
 
       await db.doc(`users/${uid}`).update({
@@ -126,7 +128,7 @@ export const cancelStripeSubscription = functions
         throw new functions.https.HttpsError('permission-denied', 'not user');
       }
 
-      const subscriptionId = await StripeService.getSubscriptinoId(
+      const subscriptionId = await StripeService.getSubscriptionId(
         context.auth.uid
       );
 
@@ -170,7 +172,7 @@ export const restartStripeSubscription = functions
       throw new functions.https.HttpsError('permission-denied', 'not user');
     }
 
-    const subscriptionId = await StripeService.getSubscriptinoId(
+    const subscriptionId = await StripeService.getSubscriptionId(
       context.auth.uid
     );
 
