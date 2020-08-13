@@ -385,38 +385,30 @@
         自分に合ったプランを選択してください。
       </p>
       <div class="plans">
-        <div class="plan" *ngFor="let plan of plans">
-          <h3 class="plan__title">{{ plan.title }}</h3>
-          <p class="plan__sub-title">{{ plan.subTitle }}</p>
-          <p class="plan__campaign" *ngIf="isCampaign">
-            <span>半額キャンペーン中</span>
-            <span>4/30までに入会すると3ヶ月半額！</span>
-          </p>
+        <div class="plan" *ngFor="let price of prices; index as i">
+          <h3 class="plan__title">{{ price.product.name }}</h3>
+          <p class="plan__sub-title">{{ price.product.description }}</p>
           <p class="plan__price-label">月額料金</p>
           <p class="plan__price">
-            <small>¥</small
-            ><span>{{
-              (isCampaign ? plan.amount / 2 : plan.amount) | number
-            }}</span
+            <small>¥</small><span>{{ price.unit_amount | number }}</span
             ><small>/月</small>
           </p>
-          <p *ngIf="isCampaign" class="plan__fact-price">
-            正規価格 {{ plan.amount | number }} 円
-          </p>
           <ul class="plan__points">
-            <li *ngFor="let point of plan.points">{{ point }}</li>
+            <li *ngFor="let point of plans[i].points">{{ point }}</li>
           </ul>
 
           <button
-            (click)="start(plan.id)"
+            (click)="start(plans[i].id)"
             class="plan__action"
             mat-raised-button
             color="primary"
             [disabled]="loading"
           >
-            無料ではじめる
+            {{ price.recurring.trial_period_days && '無料で' }}はじめる
           </button>
-          <p class="plan__trial">1週間の無料トライアルあり</p>
+          <p class="plan__trial" *ngIf="price.recurring.trial_period_days">
+            {{ price.recurring.trial_period_days }}日間の無料トライアルあり
+          </p>
         </div>
       </div>
 

@@ -289,6 +289,7 @@ export class EditorComponent implements OnInit {
       ...newValue,
       title: this.form.value.title,
       body: this.form.value.body,
+      public: this.form.value.public,
     });
   }
 

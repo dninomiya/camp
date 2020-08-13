@@ -1,4 +1,4 @@
-import { subscribePlan } from './../../../functions/src/payments/subscribe-plan.function';
+import { PriceWithProduct } from './../interfaces/price';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoadingService } from './../services/loading.service';
 import { environment } from './../../environments/environment';
@@ -22,7 +22,7 @@ import Stripe from 'stripe';
 })
 export class SignupComponent implements OnInit {
   product: Stripe.Product;
-  prices: Stripe.Price[];
+  prices: PriceWithProduct[];
   user$ = this.authService.authUser$;
   user: User;
   isUpgrade: boolean;
@@ -65,13 +65,24 @@ export class SignupComponent implements OnInit {
       });
 
       this.plan = PLAN[this.planId];
+
+      this.paymentService.getActivePriceId().then((priceId) => {
+        console.log(priceId);
+        this.activePrice = priceId;
+      });
     });
 
     this.getMethod();
 
-    this.paymentService
-      .getCoupons()
-      .then((coupons) => (this.coupons = coupons));
+    this.paymentService.getCoupons().then((coupons) => {
+      this.coupons = coupons;
+      if (coupons?.length) {
+        console.log(coupons[0].id);
+        // this.form.patchValue({
+        //   coupon: coupons[0].id,
+        // });
+      }
+    });
   }
 
   ngOnInit(): void {}

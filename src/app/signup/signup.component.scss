@@ -1,12 +1,17 @@
 .wrap {
   background: #000;
   display: grid;
-  grid-template-columns: 1fr 560px;
-  margin-bottom: -80px;
+  grid-template-columns: 1fr 800px;
+  height: 100%;
+}
+
+.back {
+  margin-bottom: 40px;
 }
 
 h1 {
   padding: 0 16px;
+  margin-bottom: 56px;
 }
 
 .background {
@@ -15,7 +20,8 @@ h1 {
 
 .main {
   background: #fff;
-  padding: 80px;
+  padding: 40px 80px;
+  overflow: auto;
 }
 
 .section {

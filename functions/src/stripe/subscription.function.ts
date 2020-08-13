@@ -237,3 +237,13 @@ export const deleteSubscription = functions
 
     res.status(200).send(true);
   });
+
+export const getActivePriceId = functions
+  .region('asia-northeast1')
+  .https.onCall((_, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('permission-denied', 'not user');
+    }
+
+    return StripeService.getActivePriceId(context.auth.uid);
+  });

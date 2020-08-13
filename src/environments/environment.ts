@@ -14,6 +14,14 @@ export const environment = {
         id: 'prod_HmCWurmpvo2Nyr',
         mainPrice: 'price_1HCe7HAg8h03lWNH1oJN8uz9',
       },
+      solo: {
+        id: 'prod_HmCd17WUjIHy9B',
+        mainPrice: 'price_1HCeEIAg8h03lWNHtf5HiZlC',
+      },
+      mentor: {
+        id: 'prod_HmCfEoVUBgVxqG',
+        mainPrice: 'price_1HCeG8Ag8h03lWNH76LtWOER',
+      },
     },
   },
   firebase: {

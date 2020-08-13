@@ -1,3 +1,4 @@
+import { PriceWithProduct } from './../../interfaces/price';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ChargeWithInvoice } from 'src/app/interfaces/charge';
 import { environment } from 'src/environments/environment';
@@ -33,9 +34,14 @@ export class PaymentService {
     return callable(params).toPromise();
   }
 
-  getPrices(productId: string): Promise<Stripe.Price[]> {
+  getPrices(productId: string): Promise<PriceWithProduct[]> {
     const callable = this.fns.httpsCallable('getStripePrices');
     return callable(productId).toPromise();
+  }
+
+  getPrice(priceId: string): Promise<PriceWithProduct> {
+    const callable = this.fns.httpsCallable('getStripePrice');
+    return callable(priceId).toPromise();
   }
 
   getProduct(productId: string): Promise<Stripe.Product> {
@@ -130,6 +136,11 @@ export class PaymentService {
     const callable = this.fns.httpsCallable('deleteSubscription');
     await callable(subscriptionId).toPromise();
     this.snackBar.open('課金を停止しました');
+  }
+
+  getActivePriceId(): Promise<string> {
+    const callable = this.fns.httpsCallable('getActivePriceId');
+    return callable({}).toPromise();
   }
 
   getCoupons(): Promise<Stripe.Coupon[]> {

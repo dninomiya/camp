@@ -1,3 +1,6 @@
+import { PaymentService } from 'src/app/services/stripe/payment.service';
+import { environment } from 'src/environments/environment';
+import { PriceWithProduct } from './../interfaces/price';
 import { PlanService } from 'src/app/services/plan.service';
 import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
@@ -45,16 +48,31 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   user$ = this.authService.authUser$;
   loading: boolean;
   loginSnackBar: MatSnackBarRef<any>;
+  prices: PriceWithProduct[];
 
   constructor(
     private authService: AuthService,
     private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private paymentService: PaymentService
   ) {
     this.authService.authUser$.subscribe((user) => {
       this.user = user;
+    });
+
+    const product = environment.stripe.product;
+    Promise.all(
+      [
+        product.lite.mainPrice,
+        product.solo.mainPrice,
+        product.mentor.mainPrice,
+      ].map((id) => {
+        return this.paymentService.getPrice(id);
+      })
+    ).then((prices) => {
+      this.prices = prices;
     });
   }
 
@@ -82,7 +100,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
 
   start(planId: string) {
     if (this.authService.user) {
-      this.router.navigateByUrl('/intl/signup?planId=' + planId);
+      this.router.navigateByUrl('/signup?planId=' + planId);
     } else {
       this.dialog
         .open(LoginDialogComponent)
@@ -102,7 +120,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
               .then(() => {
                 this.user$.subscribe((user) => {
                   if (user) {
-                    this.router.navigateByUrl('/intl/signup?planId=' + planId);
+                    this.router.navigateByUrl('/signup?planId=' + planId);
                   }
                   this.loginSnackBar.dismiss();
                 });

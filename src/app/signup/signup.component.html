@@ -11,6 +11,9 @@
     [formGroup]="form"
     (ngSubmit)="createSubscription()"
   >
+    <button class="back" type="button" mat-icon-button routerLink="/about">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <h1>{{ product.name }}をはじめる</h1>
 
     <section class="section">
@@ -37,9 +40,10 @@
           <span matLine
             >{{ product.name }}（{{ price.recurring.interval_count
             }}{{ price.recurring.interval | interval }}）
-            <span class="label" *ngIf="activePrice === price.id"
-              >継続中</span
-            ></span
+            <span class="label" *ngIf="activePrice === price.id">継続中</span
+            ><span class="deal" *ngIf="prices | deal: price as deal">{{
+              deal
+            }}</span></span
           >
           <span matLine
             >{{ price.unit_amount | number }}円<span
@@ -53,12 +57,12 @@
 
     <section class="section">
       <mat-selection-list [multiple]="false" dense formControlName="coupon">
-        <h2 matSubheader>クーポン選択</h2>
+        <h2 matSubheader>クーポン</h2>
         <mat-list-option disabled *ngIf="!coupons?.length"
           >有効なクーポンはありません</mat-list-option
         >
-        <mat-list-option>使わない</mat-list-option>
-        <mat-list-option *ngFor="let coupon of coupons" [value]="coupon">
+        <mat-list-option *ngIf="!coupons?.length">なし</mat-list-option>
+        <mat-list-option *ngFor="let coupon of coupons" [value]="coupon.id">
           <span matLine
             >{{ coupon.name
             }}<span *ngIf="coupon.duration"
@@ -66,6 +70,9 @@
             ></span
           >
           <span matLine>{{ coupon.percent_off }}%OFF</span>
+          <span matLine *ngIf="coupon.max_redemptions"
+            >残り{{ coupon.max_redemptions | number }}名</span
+          >
         </mat-list-option>
       </mat-selection-list>
     </section>
