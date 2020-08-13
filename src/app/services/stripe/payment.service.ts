@@ -1,3 +1,4 @@
+import { PlanModel } from './../../interfaces/plan';
 import { PriceWithProduct } from './../../interfaces/price';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ChargeWithInvoice } from 'src/app/interfaces/charge';
@@ -34,6 +35,11 @@ export class PaymentService {
     return callable(params).toPromise();
   }
 
+  getAllPrices(): Promise<PriceWithProduct[]> {
+    const callable = this.fns.httpsCallable('getAllStripePrices');
+    return callable({}).toPromise();
+  }
+
   getPrices(productId: string): Promise<PriceWithProduct[]> {
     const callable = this.fns.httpsCallable('getStripePrices');
     return callable(productId).toPromise();
@@ -45,8 +51,13 @@ export class PaymentService {
   }
 
   getProduct(productId: string): Promise<Stripe.Product> {
-    const callable = this.fns.httpsCallable('getProduct');
+    const callable = this.fns.httpsCallable('getStripeProduct');
     return callable(productId).toPromise();
+  }
+
+  getAllProducts(): Promise<Stripe.Product[]> {
+    const callable = this.fns.httpsCallable('getAllStripeProducts');
+    return callable({}).toPromise();
   }
 
   async setPaymemtMethod(
@@ -166,5 +177,13 @@ export class PaymentService {
       ChargeWithInvoice
     >;
     return result.data;
+  }
+
+  async getPlansWithOrder(): Promise<PlanModel> {
+    return this.db.doc<PlanModel>('core/plans').valueChanges().toPromise();
+  }
+
+  savePlanWithOrder(data: PlanModel): Promise<void> {
+    return this.db.doc('core/plans').set(data);
   }
 }

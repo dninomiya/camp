@@ -29,3 +29,24 @@ export const getStripePrices = functions.region('asia-northeast1').https.onCall(
     return prices;
   }
 );
+
+export const getAllStripePrices = functions
+  .region('asia-northeast1')
+  .https.onCall(
+    async (): Promise<Stripe.Price[] | undefined> => {
+      let prices;
+
+      try {
+        prices = (
+          await StripeService.client.prices.list({
+            active: true,
+            expand: ['data.product'],
+          })
+        ).data;
+      } catch (error) {
+        functions.logger.error(error.message);
+      }
+
+      return prices;
+    }
+  );

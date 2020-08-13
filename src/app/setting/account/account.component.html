@@ -107,8 +107,8 @@
         </small>
       </p>
 
-      <ul *ngIf="getPlan(user.plan); else free">
-        <li *ngFor="let point of getPlan(user.plan).points">
+      <ul *ngIf="plan; else free">
+        <li *ngFor="let point of plan.features">
           {{ point }}
         </li>
       </ul>

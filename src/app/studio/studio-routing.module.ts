@@ -1,3 +1,5 @@
+import { PlanManageShellComponent } from './plan-manage-shell/plan-manage-shell.component';
+import { PlanManageComponent } from './plan-manage/plan-manage.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,30 +16,44 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'about'
+        redirectTo: 'about',
       },
       {
         path: 'about',
-        component: AboutComponent
+        component: AboutComponent,
       },
       {
         path: 'lessons',
-        component: LessonsComponent
+        component: LessonsComponent,
       },
       {
         path: 'lists',
-        component: ListsComponent
+        component: ListsComponent,
       },
       {
         path: 'users',
-        component: UserListComponent
-      }
-    ]
-  }
+        component: UserListComponent,
+      },
+      {
+        path: 'plans',
+        component: PlanManageShellComponent,
+        children: [
+          {
+            path: 'plan',
+            component: PlanManageComponent,
+          },
+          {
+            path: 'create',
+            component: PlanManageComponent,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class StudioRoutingModule {}

@@ -1,3 +1,4 @@
+import { PlanData } from './../../interfaces/plan';
 import { take } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 import { ConfirmUnsubscribeDialogComponent } from './../../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
@@ -56,6 +57,8 @@ export class AccountComponent implements OnInit {
     },
   };
 
+  plan: PlanData;
+
   get linkControls(): FormArray {
     return this.profileForm.get('links') as FormArray;
   }
@@ -82,14 +85,14 @@ export class AccountComponent implements OnInit {
       if (user && user.mailSettings) {
         this.mailForm.patchValue(user.mailSettings);
       }
+
+      this.planService.getPlan(user.plan).then((plan) => {
+        this.plan = plan;
+      });
     });
   }
 
   ngOnInit() {}
-
-  getPlan(planId: string) {
-    return this.planService.getPlan(planId);
-  }
 
   private idValidator(): ValidatorFn {
     return (control: FormControl): { [key: string]: any } | null => {

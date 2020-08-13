@@ -23,6 +23,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { UserEditorComponent } from './user-editor/user-editor.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PlanManageComponent } from './plan-manage/plan-manage.component';
+import { PlanManageShellComponent } from './plan-manage-shell/plan-manage-shell.component';
+import { CouponManageComponent } from './coupon-manage/coupon-manage.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     ImageDialogComponent,
     UserListComponent,
     UserEditorComponent,
+    PlanManageComponent,
+    PlanManageShellComponent,
+    CouponManageComponent,
   ],
   imports: [
     SharedModule,
