@@ -8,13 +8,17 @@ export class DealPipe implements PipeTransform {
   transform(
     prices: PriceWithProduct[],
     currentPrice: PriceWithProduct
-  ): string {
+  ): number {
     const montry = prices.find((price) => {
       return (
         price.recurring.interval === 'month' &&
         price.recurring.interval_count === 1
       );
     });
+
+    if (montry.id === currentPrice.id) {
+      return null;
+    }
 
     let totalCost: number;
 
@@ -26,7 +30,7 @@ export class DealPipe implements PipeTransform {
     }
 
     if (totalCost) {
-      return `${totalCost - currentPrice.unit_amount}円お得`;
+      return totalCost - currentPrice.unit_amount;
     } else {
       return null;
     }

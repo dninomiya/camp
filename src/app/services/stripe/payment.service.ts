@@ -148,6 +148,14 @@ export class PaymentService {
     return callable({}).toPromise();
   }
 
+  getCoupon(id: string): Promise<Stripe.Coupon> {
+    if (!id) {
+      return;
+    }
+    const callable = this.fns.httpsCallable('getStripeCoupon');
+    return callable(id).toPromise();
+  }
+
   async getInvoices(params?: {
     startingAfter?: string;
     endingBefore?: string;

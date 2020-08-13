@@ -9,6 +9,7 @@ export const environment = {
   stripe: {
     publicKey: 'pk_test_lKq5jlH5mdbAxDeBfB4f0sn400ZYUYdpvH',
     clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ',
+    campaignCoupon: 'BbFMNqOS',
     product: {
       lite: {
         id: 'prod_HmCWurmpvo2Nyr',

@@ -1,4 +1,4 @@
-<div class="wrap" *ngIf="product">
+<div class="wrap" *ngIf="product; else loading">
   <div
     class="background"
     [style.background-image]="
@@ -41,9 +41,9 @@
             >{{ product.name }}（{{ price.recurring.interval_count
             }}{{ price.recurring.interval | interval }}）
             <span class="label" *ngIf="activePrice === price.id">継続中</span
-            ><span class="deal" *ngIf="prices | deal: price as deal">{{
-              deal
-            }}</span></span
+            ><span class="deal" *ngIf="prices | deal: price | number as deal"
+              >{{ deal }}円お得</span
+            ></span
           >
           <span matLine
             >{{ price.unit_amount | number }}円<span
@@ -56,13 +56,10 @@
     </section>
 
     <section class="section">
-      <mat-selection-list [multiple]="false" dense formControlName="coupon">
+      <mat-selection-list [multiple]="false" dense>
         <h2 matSubheader>クーポン</h2>
-        <mat-list-option disabled *ngIf="!coupons?.length"
-          >有効なクーポンはありません</mat-list-option
-        >
-        <mat-list-option *ngIf="!coupons?.length">なし</mat-list-option>
-        <mat-list-option *ngFor="let coupon of coupons" [value]="coupon.id">
+        <mat-list-option *ngIf="!coupon" disabled>なし</mat-list-option>
+        <mat-list-option *ngIf="coupon" [value]="coupon.id" selected>
           <span matLine
             >{{ coupon.name
             }}<span *ngIf="coupon.duration"
@@ -79,25 +76,36 @@
 
     <mat-divider></mat-divider>
 
-    <mat-list class="total">
+    <mat-list class="total" dense>
       <h2 matSubheader>合計</h2>
-      <mat-list-item>
-        <span matLine
-          >プラン:
-          {{ (form.value.price[0]?.unit_amount | number) || '-' }} 円</span
-        >
-        <span matLine *ngIf="form.value.coupon[0]?.percent_off"
-          >{{ form.value.coupon[0].percent_off || '-' }}% OFF</span
-        >
-      </mat-list-item>
-      <mat-list-item *ngIf="form.value.price[0]?.unit_amount"
-        >初回課金:
-        {{
-          form.value.price[0].unit_amount *
-            (form.value.coupon[0]?.percent_off || 100) *
-            0.01 | number
-        }}円</mat-list-item
-      >
+      <ng-template #needChoice>
+        <mat-list-item disabled>プランを選択してください</mat-list-item>
+      </ng-template>
+      <ng-container *ngIf="form.value.price[0]?.unit_amount; else needChoice">
+        <mat-list-item>
+          <span matLine
+            >通常価格: {{ form.value.price[0]?.unit_amount | number }} 円</span
+          >
+        </mat-list-item>
+        <mat-list-item *ngIf="coupon">
+          <span matLine
+            >割引金額: -{{
+              form.value.price[0]?.unit_amount * coupon.percent_off * 0.01
+            }}
+            円（{{ coupon.duration_in_months }}か月有効）</span
+          >
+        </mat-list-item>
+        <mat-list-item>
+          <span matLine
+            >初回請求:
+            {{
+              form.value.price[0].unit_amount *
+                (coupon?.percent_off || 100) *
+                0.01 | number
+            }}円</span
+          >
+        </mat-list-item>
+      </ng-container>
     </mat-list>
 
     <button mat-raised-button color="primary" [disabled]="form.invalid">
@@ -109,10 +117,14 @@
       <li>途中退会における返金はありません。</li>
       <li>価格はすべて税込です。</li>
       <li>
-        トライアルがある場合、トライアル終了後に課金が開始されます。トライアル中に更新を停止した場合課金が発生しません。
+        トライアルがある場合、トライアル終了後に課金が開始されます。トライアル中に更新を停止した場合課金は発生しません。
       </li>
-      <li>自動更新を停止しない限り、契約は自動的に更新されます。</li>
-      <li>前払いで即座に引き落とされます。</li>
+      <li>自動更新を停止しない限り契約は自動的に更新されます。</li>
+      <li>トライアルがない場合前払いで即座に決済が行われます。</li>
     </ul>
   </form>
 </div>
+
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

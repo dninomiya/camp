@@ -384,7 +384,10 @@
       <p class="lead">
         自分に合ったプランを選択してください。
       </p>
-      <div class="plans">
+      <ng-template #planLoading>
+        <mat-spinner class="plan-loader" [diameter]="40"></mat-spinner>
+      </ng-template>
+      <div class="plans" *ngIf="prices?.length; else planLoading">
         <div class="plan" *ngFor="let price of prices; index as i">
           <h3 class="plan__title">{{ price.product.name }}</h3>
           <p class="plan__sub-title">{{ price.product.description }}</p>

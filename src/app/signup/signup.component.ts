@@ -1,7 +1,7 @@
+import { environment } from 'src/environments/environment';
 import { PriceWithProduct } from './../interfaces/price';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoadingService } from './../services/loading.service';
-import { environment } from './../../environments/environment';
 import { PLAN } from './../services/plan.service';
 import { Plan } from './../interfaces/plan';
 import { PaymentService } from './../services/stripe/payment.service';
@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
   method: Stripe.PaymentMethod;
   loading: boolean;
   canceled: boolean;
-  coupons: Stripe.Coupon[];
+  coupon: Stripe.Coupon;
   campaign = this.planService.isCampaign;
   customer: Stripe.Customer;
   activePrice: string;
@@ -37,7 +37,6 @@ export class SignupComponent implements OnInit {
   planId: string;
   form = this.fb.group({
     price: [[], [Validators.required]],
-    coupon: [[]],
   });
 
   constructor(
@@ -74,15 +73,9 @@ export class SignupComponent implements OnInit {
 
     this.getMethod();
 
-    this.paymentService.getCoupons().then((coupons) => {
-      this.coupons = coupons;
-      if (coupons?.length) {
-        console.log(coupons[0].id);
-        // this.form.patchValue({
-        //   coupon: coupons[0].id,
-        // });
-      }
-    });
+    this.paymentService
+      .getCoupon(environment.stripe.campaignCoupon)
+      .then((coupon) => (this.coupon = coupon));
   }
 
   ngOnInit(): void {}
@@ -101,7 +94,7 @@ export class SignupComponent implements OnInit {
     this.paymentService
       .createSubscription({
         priceId: this.form.value.price[0].id,
-        couponId: this.form.value.coupon[0]?.id,
+        couponId: this.coupon?.id,
         planId: this.planId,
       })
       .then(() => {
