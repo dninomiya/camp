@@ -62,6 +62,13 @@ export function markedOptionsFactory(): MarkedOptions {
     const caption = title ? `<figcaption>${title}</figcaption>` : '';
     return `<figure><a href="${href}" target="_blank"><img src="${href}"></a>${caption}</figure>`;
   };
+  renderer.paragraph = (text: string) => {
+    if (text.match('embedly-card')) {
+      return text;
+    } else {
+      return `<p>${text}</p>`;
+    }
+  };
   renderer.code = (t: string, l: string) => {
     let lang = l;
     let label = lang;
