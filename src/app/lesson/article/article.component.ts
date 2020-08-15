@@ -104,6 +104,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       if (permission) {
         return this.getBody();
       } else {
+        this.loadingService.endLoading();
         return of({
           body: '',
         });
