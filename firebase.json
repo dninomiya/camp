@@ -12,14 +12,10 @@
   },
   "hosting": {
     "public": "dist/workspace",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/lesson",
         "function": "render"
       }
     ]

@@ -1,20 +1,42 @@
-const functions = require('firebase-functions');
-const express = require('express');
-const fetch = require('node-fetch');
-const url = require('url');
-const useragent = require('express-useragent');
+import * as functions from 'firebase-functions';
+import * as express from 'express';
+import * as useragent from 'express-useragent';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+
+import { db } from './utils/db';
+
+const file = readFileSync(resolve(__dirname, 'index.html'), {
+  encoding: 'utf-8',
+});
 
 const appUrl =
   functions.config().env.mode === 'prod'
     ? 'to.camp'
     : 'dev-update.firebaseapp.com';
 
-const generateUrl = (req: any) => {
-  return url.format({
-    protocol: 'https',
-    host: appUrl,
-    pathname: req.originalUrl,
-  });
+const replacer = (data: string) => {
+  return (match: string, content: string): string => {
+    return match.replace(content, data);
+  };
+};
+
+const buildHtml = (lesson: { [key: string]: string }) => {
+  return file
+    .replace(
+      /<meta name="description" content="(.+)" \/>/gm,
+      replacer(lesson.body?.substr(0, 200).replace(/^#+ |^- /gm, ''))
+    )
+    .replace(/content="(.+ogp-cover.png)"/gm, replacer(lesson.thumbnailURL))
+    .replace(/<title>(.+)<\/title>"/gm, replacer(lesson.title))
+    .replace(
+      /<meta property="og:title" content="(.+)" \/>"/gm,
+      replacer(lesson.title)
+    )
+    .replace(
+      /<meta property="og:url" content="(.+)" \/>/g,
+      replacer(`https://${appUrl}/lesson?v=${lesson.id}`)
+    );
 };
 
 const app = express();
@@ -23,20 +45,17 @@ app.use(useragent.express());
 
 app.get('*', async (req: any, res: any) => {
   if (req.useragent.isBot) {
-    const response = await fetch(
-      `https://rendertron-255005.appspot.com/render/${generateUrl(req)}`
-    );
-    const body = await response.text();
-    res.set('Cache-Control', 'public, max-age=86400, s-maxage=86400');
-    res.set('Vary', 'User-Agent');
-    res.send(body.toString());
-  } else {
-    fetch(`https://${appUrl}`)
-      .then((result: any) => result.text())
-      .then((body: any) => {
-        res.send(body.toString());
-      });
+    const lesson = (await db.doc(`lessons/${req.query.v}`).get())?.data();
+    const content = (
+      await db.doc(`lessons/${req.query.v}/body/content`).get()
+    )?.data() as { body: string };
+    if (lesson && content) {
+      res.send(buildHtml({ ...lesson, body: content.body }));
+      return;
+    }
   }
+
+  res.send(file);
 });
 
 export const render = functions.https.onRequest(app);
