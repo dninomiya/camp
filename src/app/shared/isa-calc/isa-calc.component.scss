@@ -1,0 +1,25 @@
+.demo {
+  &__input {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    margin-bottom: 24px;
+  }
+  &__result {
+    padding: 16px;
+    background: #fafafa;
+    border-radius: 3px;
+    h4 {
+      font-weight: 500;
+      margin: 0 0 12px;
+      line-height: 1;
+      font-size: 12px;
+    }
+  }
+  &__detail {
+    margin: 16px 0;
+  }
+  &__calc p {
+    margin: 0;
+  }
+}

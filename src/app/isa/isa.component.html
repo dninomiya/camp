@@ -65,11 +65,15 @@
 
       <dl class="spec">
         <dt>分配開始条件</dt>
-        <dd><strong>年収320万円以上</strong>でIT系企業に就職すること</dd>
+        <dd><strong>年収300万円以上</strong>でIT系企業に就職すること</dd>
         <dt>分配金額（毎月）</dt>
         <dd>月給（年収を12分割した金額）の<strong>15%</strong></dd>
         <dt>分配上限金額</dt>
-        <dd>在籍日数 x {{ dayCost | number }}円（最大300万円）</dd>
+        <dd>
+          在籍日数 x {{ isaService.dayCost | number: '1.0-0' }}円（最大{{
+            isaService.maxCost / 10000
+          }}万円）
+        </dd>
         <dt>分配終了条件</dt>
         <dd>
           36回の支払い完了 or 卒業から5年経過 or 支払い上限金額に到達
@@ -86,6 +90,7 @@
 
       <ul class="notice">
         <li>年収とは社会保険料等が天引きされる前の金額を指します</li>
+        <li>年収はボーナスや残業代を含んだ金額を指します</li>
         <li>最終的には消費税が加算されます</li>
         <li>任意のタイミングで訓練終了することができます</li>
         <li>
@@ -93,55 +98,13 @@
         </li>
       </ul>
 
-      <h3>シミュレーション</h3>
-
-      <div class="demo">
-        <div class="demo__input">
-          <mat-form-field>
-            <mat-label>CAMP在籍日数</mat-label>
-            <input
-              matInput
-              value="120"
-              #day
-              type="number"
-              step="1"
-              autocomplete="off"
-            />
-            <span matSuffix>日</span>
-            <mat-hint>{{ day.value / 31 | number: '1.0-1' }}ヶ月</mat-hint>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>年収</mat-label>
-            <input
-              matInput
-              value="350"
-              #income
-              type="number"
-              step="10"
-              autocomplete="off"
-            />
-            <span matSuffix>万円</span>
-          </mat-form-field>
-        </div>
-        <div class="demo__result">
-          <h4>シミュレーション結果</h4>
-          <p class="demo__detail">
-            CAMPに<strong>{{ day.value }}日</strong>在籍した後5年以内に<strong
-              >年収{{ income.value }}万円</strong
-            >で就職した場合
-          </p>
-          <ng-container *ngIf="income.value >= 320; else low">
-            <p>
-              月の分配金額:
-              {{ (income.value / 12) * 0.15 | number: '1.0-1' }}万円（税別）
-            </p>
-            <p>分配上限金額: {{ getShareLimit(day) | number }}円</p>
-          </ng-container>
-          <ng-template #low>
-            <p>年収320万円以下なので一切の支払いは発生しません</p>
-          </ng-template>
-        </div>
-      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="isaService.openIsaCalc(120)"
+      >
+        シミュレーション
+      </button>
     </section>
 
     <section>

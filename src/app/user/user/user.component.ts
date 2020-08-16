@@ -1,3 +1,4 @@
+import { IsaService } from './../../services/isa.service';
 import { RepoSelectorComponent } from './../repo-selector/repo-selector.component';
 import { ApolloService } from './../../services/apollo.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,8 +20,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
   user$: Observable<User> = this.userService.getUser(this.authService.user.id);
-  dayCost = 16666;
-  maxCost = 3000000;
   githubData$ = this.authService.getGitHubData();
 
   tasks = [
@@ -55,7 +54,8 @@ export class UserComponent implements OnInit {
     private userService: UserService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    public apolloService: ApolloService
+    public apolloService: ApolloService,
+    public isaService: IsaService
   ) {}
 
   ngOnInit() {}
@@ -71,11 +71,16 @@ export class UserComponent implements OnInit {
   }
 
   getTotalPay(start: firestore.Timestamp, end: firestore.Timestamp): number {
-    return Math.min(this.getDays(start, end) * this.dayCost, this.maxCost);
+    return Math.min(
+      this.getDays(start, end) * this.isaService.dayCost,
+      this.isaService.maxCost
+    );
   }
 
   getPayLimit(end: firestore.Timestamp) {
-    return moment(end.toDate()).add(5, 'years').toDate();
+    return moment(end.toDate())
+      .add(this.isaService.limitYearCount, 'years')
+      .toDate();
   }
 
   openTaskDialog(task: object) {

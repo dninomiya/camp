@@ -52,6 +52,7 @@ import { RatePipe } from './rate.pipe';
 import { PlanPipe } from './plan.pipe';
 import { CustomerPipe } from './customer.pipe';
 import { IntervalPipe } from './interval.pipe';
+import { IsaCalcComponent } from './isa-calc/isa-calc.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { IntervalPipe } from './interval.pipe';
     CustomerPipe,
     ResourceIconPipe,
     IntervalPipe,
+    IsaCalcComponent,
   ],
   imports: [
     CommonModule,
@@ -99,6 +101,7 @@ import { IntervalPipe } from './interval.pipe';
     HttpClientJsonpModule,
     MatAutocompleteModule,
     NgxPicaModule,
+    MatDialogModule,
   ],
   exports: [
     CommonModule,
