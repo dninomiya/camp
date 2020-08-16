@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
 import { PlanService } from 'src/app/services/plan.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import Stripe from 'stripe';
 
 @Component({
@@ -48,7 +48,8 @@ export class SignupComponent implements OnInit {
     private loadingService: LoadingService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {
     this.route.queryParamMap.subscribe((queryMap) => {
       this.loadingService.startLoading();
@@ -88,8 +89,9 @@ export class SignupComponent implements OnInit {
     this.form.valueChanges
       .pipe(
         tap(() => (this.invoiceLoading = true)),
-        debounceTime(3000),
+        debounceTime(1000),
         switchMap((value) => {
+          this.invoiceLoading = true;
           return this.paymentService.getStripeRetrieveUpcoming(
             value.price[0].id,
             this.coupon.id
@@ -97,8 +99,10 @@ export class SignupComponent implements OnInit {
         })
       )
       .subscribe((invoice) => {
-        this.invoiceLoading = false;
-        this.invoice = invoice;
+        this.ngZone.run(() => {
+          this.invoiceLoading = false;
+          this.invoice = invoice;
+        });
       });
   }
 

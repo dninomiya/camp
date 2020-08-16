@@ -100,7 +100,10 @@
             >
           </mat-list-item>
           <mat-list-item>
-            <span matLine>初回請求: {{ invoice.total | number }}円</span>
+            <span matLine
+              >初回請求:
+              {{ (invoice.total > 0 ? invoice.total : 0) | number }}円</span
+            >
           </mat-list-item>
         </ng-container>
       </ng-container>
