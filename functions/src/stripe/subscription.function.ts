@@ -6,6 +6,33 @@ import * as functions from 'firebase-functions';
 import Stripe from 'stripe';
 import * as moment from 'moment';
 
+const REASONS = [
+  {
+    type: 'goal',
+    label: '目標達成した',
+  },
+  {
+    type: 'quality',
+    label: 'クオリティが低い',
+  },
+  {
+    type: 'volume',
+    label: 'コンテンツが少ない',
+  },
+  {
+    type: 'cost',
+    label: '料金が高い',
+  },
+  {
+    type: 'reply',
+    label: '返信、反応がない、遅い',
+  },
+  {
+    type: 'other',
+    label: 'その他',
+  },
+];
+
 export const createStripeSubscription = functions
   .region('asia-northeast1')
   .https.onCall(
@@ -118,9 +145,12 @@ export const cancelStripeSubscription = functions
   .region('asia-northeast1')
   .https.onCall(
     async (
-      reason: {
-        types: string[];
-        detail: string;
+      data: {
+        reason: {
+          types: string[];
+          detail: string;
+        };
+        plan: string;
       },
       context
     ) => {
@@ -147,17 +177,45 @@ export const cancelStripeSubscription = functions
         throw new functions.https.HttpsError('unauthenticated', error.code);
       }
 
+      const customer = await StripeService.getStripeCustomer(context.auth.uid);
+
+      if (customer) {
+        await sendEmail({
+          to: config.adminEmail,
+          templateId: 'unRegisterToAdmin',
+          dynamicTemplateData: {
+            email: customer.email,
+            name: customer.name,
+            plan: data.plan,
+            reasons: data.reason.types,
+            reasonDetail: data.reason.detail || 'なし',
+          },
+        });
+      }
+
       await db.doc(`users/${context.auth.uid}/private/payment`).update({
         isCaneclSubscription: true,
       });
 
       const user = (await db.doc(`users/${context.auth.uid}`).get()).data();
 
+      const reasons = data.reason.types
+        .map((type: string) => {
+          const item = REASONS.find((reason) => reason.type === type);
+          if (item) {
+            return item.label;
+          } else {
+            return null;
+          }
+        })
+        .filter((label) => !!label)
+        .join(' / ');
+
       if (user) {
         return db.collection('unsubscribeReasons').add({
           userId: context.auth.uid,
           planId: user.plan,
-          reason,
+          reason: reasons,
         });
       } else {
         return;
@@ -210,10 +268,6 @@ export const deleteSubscription = functions
         currentPeriodStart: null,
         currentPeriodEnd: null,
         isCaneclSubscription: false,
-      });
-
-      await db.doc(`users/${uid}/private/payment`).update({
-        subscriptionId: null,
       });
 
       await sendEmail({

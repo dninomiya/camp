@@ -142,15 +142,6 @@ export class PaymentService {
     await callable(reason).toPromise();
   }
 
-  async deleteSubscription(subscriptionId: string) {
-    this.snackBar.open('課金を停止しています', null, {
-      duration: 2000,
-    });
-    const callable = this.fns.httpsCallable('deleteSubscription');
-    await callable(subscriptionId).toPromise();
-    this.snackBar.open('課金を停止しました');
-  }
-
   getActivePriceId(): Promise<string> {
     const callable = this.fns.httpsCallable('getActivePriceId');
     return callable({}).toPromise();
