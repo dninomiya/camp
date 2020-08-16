@@ -68,7 +68,7 @@ export class LessonService {
         .post(
           'https://hooks.slack.com/services/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',
           {
-            text: `「${data.title}」が投稿されました。ためになったら「いいね」しましょう！（投稿者にポイントが付与されます）\n${environment.host}?v=${id}`,
+            text: `「${data.title}」が投稿されました。ためになったら「いいね」しましょう！（投稿者にポイントが付与されます）\n${environment.host}?lesson?v=${id}`,
           },
           {
             headers: new HttpHeaders({
