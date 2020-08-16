@@ -8,7 +8,7 @@ import { Lesson } from './../interfaces/lesson';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { LessonService } from 'src/app/services/lesson.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TreeSection, TreeItem, TreeGroup } from './../interfaces/tree';
+import { TreeSection, TreeItem } from './../interfaces/tree';
 import { Observable, combineLatest, of, ReplaySubject } from 'rxjs';
 import { TreeService } from './../services/tree.service';
 import { Component, OnInit, ViewChild } from '@angular/core';

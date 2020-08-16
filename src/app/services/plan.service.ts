@@ -1,10 +1,9 @@
 import { firestore } from 'firebase/app';
 import { PlanData, PlanOrder } from './../interfaces/plan';
 import { map, take } from 'rxjs/operators';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
