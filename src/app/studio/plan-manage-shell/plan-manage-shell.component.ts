@@ -1,3 +1,4 @@
+import { PlanData } from './../../interfaces/plan';
 import { PlanService } from './../../services/plan.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./plan-manage-shell.component.scss'],
 })
 export class PlanManageShellComponent implements OnInit {
-  plans$ = this.planService.getPlans();
+  plans: PlanData[];
 
-  constructor(private planService: PlanService) {}
+  constructor(private planService: PlanService) {
+    this.planService.getPlans().then((plans) => (this.plans = plans));
+  }
 
   ngOnInit(): void {}
 }

@@ -3,7 +3,7 @@
   <mat-list-item
     routerLink="plan"
     [queryParams]="{ id: plan.id }"
-    *ngFor="let plan of plans$ | async"
+    *ngFor="let plan of plans"
     >{{ plan.name }}</mat-list-item
   >
   <mat-list-item routerLink="plan">プラン作成</mat-list-item>

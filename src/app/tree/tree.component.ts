@@ -1,4 +1,3 @@
-import { PLAN } from 'src/app/services/plan.service';
 import { UiService } from './../services/ui.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -42,7 +41,6 @@ export class TreeComponent implements OnInit {
   private treeItem$: Observable<TreeItem> = this.treeItemSource.asObservable();
 
   lastPos: [number, number];
-  plan = PLAN;
   activeLessonId: string;
   active: {
     sectionId?: string;

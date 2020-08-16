@@ -39,8 +39,6 @@ export class ListEditDialogComponent implements OnInit {
     description: ['', [Validators.maxLength(400), Validators.required]],
   });
 
-  plans = this.planService.plans;
-
   getCoverFile(file: string) {
     this.coverImage = file;
     this.form.markAsDirty();

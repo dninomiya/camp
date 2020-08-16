@@ -2,8 +2,7 @@ import { environment } from 'src/environments/environment';
 import { PriceWithProduct } from './../interfaces/price';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoadingService } from './../services/loading.service';
-import { PLAN } from './../services/plan.service';
-import { Plan } from './../interfaces/plan';
+import { PlanData } from './../interfaces/plan';
 import { PaymentService } from './../services/stripe/payment.service';
 import { PlanPipe } from './../shared/plan.pipe';
 import { User } from './../interfaces/user';
@@ -30,10 +29,9 @@ export class SignupComponent implements OnInit {
   loading: boolean;
   canceled: boolean;
   coupon: Stripe.Coupon;
-  campaign = this.planService.isCampaign;
   customer: Stripe.Customer;
   activePrice: string;
-  plan: Omit<Plan, 'id'>;
+  plan: PlanData;
   planId: string;
   form = this.fb.group({
     price: [[], [Validators.required]],
@@ -63,7 +61,10 @@ export class SignupComponent implements OnInit {
         this.loadingService.endLoading();
       });
 
-      this.plan = PLAN[this.planId];
+      this.planService.getPlan(this.planId).then((plan) => {
+        console.log(plan);
+        this.plan = plan;
+      });
 
       this.paymentService.getActivePriceId().then((priceId) => {
         console.log(priceId);
@@ -73,9 +74,13 @@ export class SignupComponent implements OnInit {
 
     this.getMethod();
 
-    this.paymentService
-      .getCoupon(environment.stripe.campaignCoupon)
-      .then((coupon) => (this.coupon = coupon));
+    this.paymentService.getActiveCoupon().then((id) => {
+      if (id) {
+        this.paymentService
+          .getCoupon(id)
+          .then((coupon) => (this.coupon = coupon));
+      }
+    });
   }
 
   ngOnInit(): void {}
@@ -99,28 +104,10 @@ export class SignupComponent implements OnInit {
       })
       .then(() => {
         snackBar.dismiss();
-        this.snackBar.open(`${this.plan.title}プランを開始しました`, null, {
+        this.snackBar.open(`${this.plan.name}プランを開始しました`, null, {
           duration: 2000,
         });
         this.router.navigate(['/mypage']);
       });
-  }
-
-  getSignUpLabel(planId: string): string {
-    if (!this.user) {
-      return '';
-    }
-
-    if (!this.user.plan || this.user.plan === 'free') {
-      return (this.user.trialUsed ? '' : '無料で') + 'はじめる';
-    } else {
-      const newPlanIndex = this.planService.plans.findIndex(
-        (plan) => plan.id === planId
-      );
-      const oldPlanIndex = this.planService.plans.findIndex(
-        (plan) => plan.id === this.user.plan
-      );
-      return newPlanIndex > oldPlanIndex ? 'アップグレード' : 'ダウングレード';
-    }
   }
 }

@@ -387,17 +387,17 @@
       <ng-template #planLoading>
         <mat-spinner class="plan-loader" [diameter]="40"></mat-spinner>
       </ng-template>
-      <div class="plans" *ngIf="prices?.length; else planLoading">
-        <div class="plan" *ngFor="let price of prices; index as i">
-          <h3 class="plan__title">{{ price.product.name }}</h3>
-          <p class="plan__sub-title">{{ price.product.description }}</p>
+      <div class="plans" *ngIf="plans?.length; else planLoading">
+        <div class="plan" *ngFor="let plan of plans; index as i">
+          <h3 class="plan__title">{{ plan.price.product.name }}</h3>
+          <p class="plan__sub-title">{{ plan.price.product.description }}</p>
           <p class="plan__price-label">月額料金</p>
           <p class="plan__price">
-            <small>¥</small><span>{{ price.unit_amount | number }}</span
+            <small>¥</small><span>{{ plan.price.unit_amount | number }}</span
             ><small>/月</small>
           </p>
           <ul class="plan__points">
-            <li *ngFor="let point of plans[i].points">{{ point }}</li>
+            <li *ngFor="let feature of plans[i].features">{{ feature }}</li>
           </ul>
 
           <button
@@ -407,10 +407,10 @@
             color="primary"
             [disabled]="loading"
           >
-            {{ price.recurring.trial_period_days && '無料で' }}はじめる
+            {{ plan.price.recurring.trial_period_days && '無料で' }}はじめる
           </button>
-          <p class="plan__trial" *ngIf="price.recurring.trial_period_days">
-            {{ price.recurring.trial_period_days }}日間の無料トライアルあり
+          <p class="plan__trial" *ngIf="plan.price.recurring.trial_period_days">
+            {{ plan.price.recurring.trial_period_days }}日間の無料トライアルあり
           </p>
         </div>
       </div>

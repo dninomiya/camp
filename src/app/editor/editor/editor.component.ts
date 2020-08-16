@@ -110,8 +110,6 @@ export class EditorComponent implements OnInit {
     ],
   };
 
-  plans = this.planService.plans;
-
   codemirrorOpts = {
     lineNumbers: false,
   };

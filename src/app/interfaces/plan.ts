@@ -1,3 +1,4 @@
+import { PriceWithProduct } from './price';
 export interface Plan {
   id: string;
   subTitle: string;
@@ -30,4 +31,8 @@ export interface PlanModel {
 
 export interface PlanOrder {
   order: string[];
+}
+
+export interface PlanDataWithPrice extends PlanData {
+  price: PriceWithProduct;
 }

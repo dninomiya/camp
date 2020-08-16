@@ -19,8 +19,8 @@
     <section class="section">
       <mat-list dense>
         <h2 matSubheader>プラン内容</h2>
-        <mat-list-item *ngFor="let point of plan.points">
-          {{ point }}
+        <mat-list-item *ngFor="let feature of plan?.features">
+          {{ feature }}
         </mat-list-item>
       </mat-list>
     </section>
@@ -57,7 +57,7 @@
 
     <section class="section">
       <mat-selection-list [multiple]="false" dense>
-        <h2 matSubheader>クーポン</h2>
+        <h2 matSubheader>キャンペーン</h2>
         <mat-list-option *ngIf="!coupon" disabled>なし</mat-list-option>
         <mat-list-option *ngIf="coupon" [value]="coupon.id" selected>
           <span matLine
@@ -109,7 +109,7 @@
     </mat-list>
 
     <button mat-raised-button color="primary" [disabled]="form.invalid">
-      {{ plan.title }}プランを開始
+      {{ plan.name }}プランを開始
     </button>
 
     <ul class="notice">

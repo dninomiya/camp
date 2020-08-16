@@ -1,6 +1,6 @@
+import { PlanDataWithPrice } from './../interfaces/plan';
+import { take } from 'rxjs/operators';
 import { PaymentService } from 'src/app/services/stripe/payment.service';
-import { environment } from 'src/environments/environment';
-import { PriceWithProduct } from './../interfaces/price';
 import { PlanService } from 'src/app/services/plan.service';
 import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
@@ -33,13 +33,11 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     autoplay: true,
     allowTouchMove: false,
   };
-  isCampaign = this.planService.isCampaign;
   isSwiperReady: boolean;
   asks = ASKS;
   planFeatures = PLAN_FEATURES;
   qas = QUESTIONS;
   skills = SKILLS;
-  plans = this.planService.plans;
   user: User;
   player: YT.Player;
   playerVars: YT.PlayerVars = {
@@ -48,7 +46,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   user$ = this.authService.authUser$;
   loading: boolean;
   loginSnackBar: MatSnackBarRef<any>;
-  prices: PriceWithProduct[];
+  plans: PlanDataWithPrice[];
 
   constructor(
     private authService: AuthService,
@@ -62,17 +60,20 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
       this.user = user;
     });
 
-    const product = environment.stripe.product;
-    Promise.all(
-      [
-        product.lite.mainPrice,
-        product.solo.mainPrice,
-        product.mentor.mainPrice,
-      ].map((id) => {
-        return this.paymentService.getPrice(id);
-      })
-    ).then((prices) => {
-      this.prices = prices;
+    this.getPlans();
+  }
+
+  private async getPlans() {
+    const plans = await this.planService.getPlans();
+    const prices = await Promise.all(
+      plans.map((plan) => this.paymentService.getPrice(plan.mainPriceId))
+    );
+
+    this.plans = plans.map((plan) => {
+      return {
+        ...plan,
+        price: prices.find((price) => price.id === plan.mainPriceId),
+      };
     });
   }
 

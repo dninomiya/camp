@@ -1,3 +1,5 @@
+import { take, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { PlanModel } from './../../interfaces/plan';
 import { PriceWithProduct } from './../../interfaces/price';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -185,5 +187,28 @@ export class PaymentService {
 
   savePlanWithOrder(data: PlanModel): Promise<void> {
     return this.db.doc('core/plans').set(data);
+  }
+
+  setCoupon(id?: string) {
+    this.db.doc('core/coupon').set({
+      id: id || null,
+    });
+  }
+
+  setActiveCoupon(id?: string) {
+    this.db.doc('core/coupon').set({
+      id: id || null,
+    });
+  }
+
+  getActiveCoupon(): Promise<string> {
+    return this.db
+      .doc<{ id: string }>('core/coupon')
+      .valueChanges()
+      .pipe(
+        take(1),
+        map((res) => res.id)
+      )
+      .toPromise();
   }
 }

@@ -7,7 +7,7 @@
       <mat-select formControlName="plan">
         <mat-option value="free">フリー</mat-option>
         <mat-option *ngFor="let plan of plans" [value]="plan.id">
-          {{ plan.title }}
+          {{ plan.name }}
         </mat-option>
         <mat-option value="isa">ISA</mat-option>
       </mat-select>

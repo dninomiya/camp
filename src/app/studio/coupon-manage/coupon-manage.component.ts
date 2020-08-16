@@ -17,10 +17,13 @@ export class CouponManageComponent implements OnInit {
   ngOnInit(): void {
     this.paymentService.getCoupons().then((coupons) => {
       this.coupons = coupons;
+      this.paymentService.getActiveCoupon().then((id) => {
+        this.couponControl.setValue(id);
+      });
     });
   }
 
   save() {
-    console.log(this.couponControl.value);
+    this.paymentService.setCoupon(this.couponControl.value);
   }
 }

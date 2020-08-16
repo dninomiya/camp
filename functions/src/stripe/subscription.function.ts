@@ -247,3 +247,41 @@ export const getActivePriceId = functions
 
     return StripeService.getActivePriceId(context.auth.uid);
   });
+
+export const getStripeRetrieveUpcoming = functions
+  .region('asia-northeast1')
+  .https.onCall(
+    async (
+      data: {
+        coupon?: string;
+        price: string;
+      },
+      context
+    ) => {
+      const uid = context.auth?.uid;
+
+      if (!uid) {
+        throw new functions.https.HttpsError('permission-denied', 'not user');
+      }
+
+      const customer = await StripeService.getStripeCustomer(uid);
+
+      if (!customer) {
+        throw new functions.https.HttpsError('permission-denied', 'not user');
+      }
+
+      const subs = customer.subscriptions?.data[0];
+
+      return StripeService.client.invoices.retrieveUpcoming({
+        customer: customer.id,
+        subscription: subs?.id,
+        subscription_items: [
+          {
+            id: subs?.items.data[0].id,
+            price: data.price,
+          },
+        ],
+        coupon: data.coupon,
+      });
+    }
+  );

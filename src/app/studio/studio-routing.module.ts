@@ -1,3 +1,4 @@
+import { CouponManageComponent } from './coupon-manage/coupon-manage.component';
 import { PlanManageShellComponent } from './plan-manage-shell/plan-manage-shell.component';
 import { PlanManageComponent } from './plan-manage/plan-manage.component';
 import { UserListComponent } from './user-list/user-list.component';
@@ -45,6 +46,10 @@ const routes: Routes = [
           {
             path: 'create',
             component: PlanManageComponent,
+          },
+          {
+            path: 'coupon',
+            component: CouponManageComponent,
           },
         ],
       },
