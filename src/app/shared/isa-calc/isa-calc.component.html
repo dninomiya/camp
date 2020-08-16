@@ -36,7 +36,10 @@
           >年収{{ income.value }}万円</strong
         >で就職した場合
       </p>
-      <div class="demo__calc" *ngIf="income.value >= 320; else low">
+      <div
+        class="demo__calc"
+        *ngIf="income.value >= isaService.incomeLimit; else low"
+      >
         <p>
           月の分配金額:
           {{ (income.value / 12) * 0.15 | number: '1.0-1' }}万円（年収{{
@@ -56,7 +59,11 @@
         </p>
       </div>
       <ng-template #low>
-        <p>年収320万円以下なので一切の支払いは発生しません</p>
+        <p>
+          年収{{
+            isaService.incomeLimit
+          }}万円以下なので一切の支払いは発生しません
+        </p>
       </ng-template>
     </div>
   </div>

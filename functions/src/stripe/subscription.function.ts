@@ -272,6 +272,12 @@ export const getStripeRetrieveUpcoming = functions
 
       const subs = customer.subscriptions?.data[0];
 
+      console.log(subs?.id);
+      console.log(subs?.items.data[0].id);
+      console.log(customer.id);
+      console.log(data.coupon);
+      console.log(data.price);
+
       return StripeService.client.invoices.retrieveUpcoming({
         customer: customer.id,
         subscription: subs?.id,

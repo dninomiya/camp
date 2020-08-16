@@ -211,4 +211,15 @@ export class PaymentService {
       )
       .toPromise();
   }
+
+  getStripeRetrieveUpcoming(
+    price: string,
+    coupon?: string
+  ): Observable<Stripe.Invoice> {
+    const callable = this.fns.httpsCallable('getStripeRetrieveUpcoming');
+    return callable({
+      price,
+      coupon,
+    });
+  }
 }

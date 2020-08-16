@@ -1,3 +1,4 @@
+import { switchMap, debounceTime, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { PriceWithProduct } from './../interfaces/price';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -33,6 +34,8 @@ export class SignupComponent implements OnInit {
   activePrice: string;
   plan: PlanData;
   planId: string;
+  invoiceLoading: boolean;
+  invoice: Stripe.Invoice;
   form = this.fb.group({
     price: [[], [Validators.required]],
   });
@@ -62,12 +65,10 @@ export class SignupComponent implements OnInit {
       });
 
       this.planService.getPlan(this.planId).then((plan) => {
-        console.log(plan);
         this.plan = plan;
       });
 
       this.paymentService.getActivePriceId().then((priceId) => {
-        console.log(priceId);
         this.activePrice = priceId;
       });
     });
@@ -83,7 +84,23 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form.valueChanges
+      .pipe(
+        tap(() => (this.invoiceLoading = true)),
+        debounceTime(3000),
+        switchMap((value) => {
+          return this.paymentService.getStripeRetrieveUpcoming(
+            value.price[0].id,
+            this.coupon.id
+          );
+        })
+      )
+      .subscribe((invoice) => {
+        this.invoiceLoading = false;
+        this.invoice = invoice;
+      });
+  }
 
   getMethod() {
     this.paymentService

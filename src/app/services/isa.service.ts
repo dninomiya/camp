@@ -8,6 +8,7 @@ export class IsaService {
   maxCost = 2000000;
   dayCost = this.maxCost / (30 * 6);
   limitYearCount = 5;
+  incomeLimit = 300;
 
   constructor() {}
 

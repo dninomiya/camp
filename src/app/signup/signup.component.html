@@ -78,38 +78,36 @@
 
     <mat-list class="total" dense>
       <h2 matSubheader>合計</h2>
-      <ng-template #needChoice>
-        <mat-list-item disabled>プランを選択してください</mat-list-item>
+      <ng-template #loadingInvoice>
+        <mat-spinner [diameter]="40"></mat-spinner>
       </ng-template>
-      <ng-container *ngIf="form.value.price[0]?.unit_amount; else needChoice">
-        <mat-list-item>
-          <span matLine
-            >通常価格: {{ form.value.price[0]?.unit_amount | number }} 円</span
-          >
-        </mat-list-item>
-        <mat-list-item *ngIf="coupon">
-          <span matLine
-            >割引金額: -{{
-              form.value.price[0]?.unit_amount * coupon.percent_off * 0.01
-            }}
-            円（{{ coupon.duration_in_months }}か月有効）</span
-          >
-        </mat-list-item>
-        <mat-list-item>
-          <span matLine
-            >初回請求:
-            {{
-              form.value.price[0].unit_amount *
-                (coupon?.percent_off || 100) *
-                0.01 | number
-            }}円</span
-          >
-        </mat-list-item>
+      <ng-container *ngIf="!invoiceLoading; else loadingInvoice">
+        <ng-template #needChoice>
+          <mat-list-item disabled>プランを選択してください</mat-list-item>
+        </ng-template>
+        <ng-container *ngIf="invoice; else needChoice">
+          <mat-list-item>
+            <span matLine>通常価格: {{ invoice.subtotal | number }} 円</span>
+          </mat-list-item>
+          <mat-list-item *ngIf="coupon">
+            <span matLine
+              >割引金額: -{{
+                invoice.total_discount_amounts[0]?.amount
+              }}
+              円<span *ngIf="coupon.duration_in_months"
+                >（{{ coupon.duration_in_months }}か月有効）</span
+              ></span
+            >
+          </mat-list-item>
+          <mat-list-item>
+            <span matLine>初回請求: {{ invoice.total | number }}円</span>
+          </mat-list-item>
+        </ng-container>
       </ng-container>
     </mat-list>
 
     <button mat-raised-button color="primary" [disabled]="form.invalid">
-      {{ plan.name }}プランを開始
+      {{ plan?.name }}プランを開始
     </button>
 
     <ul class="notice">
