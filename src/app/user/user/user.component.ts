@@ -1,3 +1,4 @@
+import { IsaCalcComponent } from './../../shared/isa-calc/isa-calc.component';
 import { IsaService } from './../../services/isa.service';
 import { RepoSelectorComponent } from './../repo-selector/repo-selector.component';
 import { ApolloService } from './../../services/apollo.service';
@@ -118,6 +119,14 @@ export class UserComponent implements OnInit {
   importLabels(repoId: string) {
     this.apolloService.createLabel(repoId).then(() => {
       this.snackBar.open('ラベルを初期化しました');
+    });
+  }
+
+  openIsaCalc(day: number) {
+    this.dialog.open(IsaCalcComponent, {
+      restoreFocus: false,
+      width: '800px',
+      data: day,
     });
   }
 }
