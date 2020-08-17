@@ -13,10 +13,11 @@ import Stripe from 'stripe';
   styleUrls: ['./billing.component.scss'],
 })
 export class BillingComponent implements OnInit {
-  loading = true;
   user$ = this.authService.authUser$;
   method: Stripe.PaymentMethod;
   invoices: ChargeWithInvoice[];
+  isLoading: boolean;
+  isLoadInvoice: boolean;
 
   constructor(
     private authService: AuthService,
@@ -26,22 +27,26 @@ export class BillingComponent implements OnInit {
   ) {
     this.loadingService.startLoading();
 
+    this.isLoading = true;
+
     this.paymentService
       .getPaymentMethod()
       .then((method) => {
         this.method = method;
       })
-      .catch(() => {
-        console.log('error');
+      .catch((error) => {
+        console.log(error);
       })
       .finally(() => {
         this.loadingService.endLoading();
-        this.loading = false;
+        this.isLoading = false;
       });
 
+    this.isLoadInvoice = true;
     this.paymentService
       .getInvoices()
-      .then((invoices) => (this.invoices = invoices));
+      .then((invoices) => (this.invoices = invoices))
+      .finally(() => (this.isLoadInvoice = false));
   }
 
   ngOnInit() {}

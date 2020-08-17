@@ -115,7 +115,11 @@
       </ng-container>
     </mat-list>
 
-    <button mat-raised-button color="primary" [disabled]="form.invalid">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="form.invalid || isLoading"
+    >
       {{ plan?.name }}プランを開始
     </button>
 

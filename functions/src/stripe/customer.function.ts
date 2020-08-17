@@ -1,5 +1,4 @@
 import { StripeService } from './service';
-import { db } from './../utils/db';
 import Stripe from 'stripe';
 import * as functions from 'firebase-functions';
 

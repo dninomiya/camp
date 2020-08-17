@@ -5,9 +5,6 @@ export const pullRequest = functions
   .region('asia-northeast1')
   .https.onRequest(async (req, resp) => {
     const data = req.body;
-
-    console.log(data);
-
     const action = data.action;
 
     if (action !== 'opened') return;

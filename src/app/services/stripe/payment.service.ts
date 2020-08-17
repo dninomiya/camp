@@ -132,14 +132,17 @@ export class PaymentService {
     return callable(params).toPromise();
   }
 
-  restartSubscription(subscriptionId: string) {
+  restartSubscription() {
     const callable = this.fns.httpsCallable('restartStripeSubscription');
-    return callable(subscriptionId).toPromise();
+    return callable({}).toPromise();
   }
 
-  async cancelSubscription(reason: { types: string[]; detail: string }) {
+  async cancelSubscription(
+    reason: { types: string[]; detail: string },
+    plan: string
+  ) {
     const callable = this.fns.httpsCallable('cancelStripeSubscription');
-    await callable(reason).toPromise();
+    await callable({ reason, plan }).toPromise();
   }
 
   getActivePriceId(): Promise<string> {

@@ -125,7 +125,7 @@
             }}にフリープランになります。
           </li>
           <li>
-            退会が成功すると退会完了メールが届きます。届かない場合<a
+            自動更新停止手続きが成功すると完了メールが届きます。届かない場合<a
               href="mailto:daichi.ninomiya@deer.co.jp"
               target="_blank"
               >お問い合わせ</a
@@ -148,6 +148,15 @@
               user.currentPeriodEnd.toDate() | date: 'yyyy年MM月dd'
             }}に課金停止（フリープランに変更）予定
           </p>
+          <button
+            mat-raised-button
+            color="primary"
+            color="primary"
+            (click)="restart(user)"
+            [disabled]="restartProcessing"
+          >
+            自動更新を再開{{ restartProcessing && 'しています...' }}
+          </button>
         </ng-template>
       </ng-container>
     </section>

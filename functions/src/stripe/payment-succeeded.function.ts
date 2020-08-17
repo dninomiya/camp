@@ -5,11 +5,8 @@ import { db, toTimeStamp } from './../utils/db';
 export const paymentSucceeded = functions
   .region('asia-northeast1')
   .https.onRequest(async (req: any, res: any) => {
-    console.log(req.body.data.object);
+    functions.logger.info(req.body.data.object);
     const data = req.body.data.object;
-
-    console.log(data.lines.data[0].period);
-
     const payment = await db
       .collectionGroup('private')
       .where('customerId', '==', data.customer)

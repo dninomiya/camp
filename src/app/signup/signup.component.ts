@@ -27,7 +27,7 @@ export class SignupComponent implements OnInit {
   user: User;
   isUpgrade: boolean;
   method: Stripe.PaymentMethod;
-  loading: boolean;
+  isLoading: boolean;
   canceled: boolean;
   coupon: Stripe.Coupon;
   customer: Stripe.Customer;
@@ -126,10 +126,11 @@ export class SignupComponent implements OnInit {
   }
 
   createSubscription() {
-    const snackBar = this.snackBar.open('プランに登録しています...');
+    const snackBar = this.snackBar.open('プランに登録しています...', null, {
+      duration: null,
+    });
 
-    this.loading = true;
-
+    this.isLoading = true;
     this.paymentService
       .createSubscription({
         priceId: this.form.value.price[0].id,
@@ -138,10 +139,13 @@ export class SignupComponent implements OnInit {
       })
       .then(() => {
         snackBar.dismiss();
-        this.snackBar.open(`${this.plan.name}プランを開始しました`, null, {
-          duration: 2000,
-        });
+        this.snackBar.open(`${this.plan.name}プランを開始しました`);
         this.router.navigate(['/mypage']);
-      });
+      })
+      .catch((error) => {
+        this.snackBar.open('エラーが発生しました');
+        console.log(error);
+      })
+      .finally(() => (this.isLoading = false));
   }
 }
