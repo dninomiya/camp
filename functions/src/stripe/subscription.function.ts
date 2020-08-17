@@ -326,6 +326,8 @@ export const getStripeRetrieveUpcoming = functions
 
       const subs = customer.subscriptions?.data[0];
 
+      console.log(data.coupon);
+
       const res = await StripeService.client.invoices.retrieveUpcoming({
         customer: customer.id,
         subscription: subs?.id,
@@ -335,7 +337,7 @@ export const getStripeRetrieveUpcoming = functions
             price: data.price,
           },
         ],
-        coupon: data.coupon,
+        coupon: data.coupon || undefined,
       });
 
       return res;

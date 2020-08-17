@@ -7,3 +7,4 @@ export * from './customer-portal.function';
 export * from './product.function';
 export * from './price.function';
 export * from './coupon.function';
+export * from './payment-succeeded.function';

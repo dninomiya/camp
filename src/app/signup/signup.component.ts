@@ -76,13 +76,15 @@ export class SignupComponent implements OnInit {
 
     this.getMethod();
 
-    this.paymentService.getActiveCoupon().then((id) => {
-      if (id) {
-        this.paymentService
-          .getCoupon(id)
-          .then((coupon) => (this.coupon = coupon));
-      }
-    });
+    if (this.authService.user.plan !== 'free') {
+      this.paymentService.getActiveCoupon().then((id) => {
+        if (id) {
+          this.paymentService
+            .getCoupon(id)
+            .then((coupon) => (this.coupon = coupon));
+        }
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -94,7 +96,7 @@ export class SignupComponent implements OnInit {
           this.invoiceLoading = true;
           return this.paymentService.getStripeRetrieveUpcoming(
             value.price[0].id,
-            this.coupon.id
+            this.coupon?.id
           );
         })
       )
