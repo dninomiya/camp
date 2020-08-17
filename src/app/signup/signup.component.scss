@@ -8,6 +8,7 @@
   @include sp {
     grid-template-columns: 1fr;
     grid-template-rows: 160px auto;
+    height: auto;
   }
 }
 
@@ -80,4 +81,12 @@ h1 {
 
 mat-spinner {
   margin: 24px auto;
+}
+
+.loading-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(black, 0.38);
 }

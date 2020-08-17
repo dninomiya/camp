@@ -62,28 +62,32 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone
   ) {
-    this.route.queryParamMap.subscribe((queryMap) => {
-      this.loadingService.startLoading();
-      this.planId = queryMap.get('planId');
-      const productId = environment.stripe.product[this.planId].id;
+    this.route.queryParamMap
+      .pipe(
+        switchMap((queryMap) => {
+          this.planId = queryMap.get('planId');
+          return this.planService.getProductId(this.planId);
+        })
+      )
+      .subscribe((productId: string) => {
+        this.loadingService.startLoading();
+        this.paymentService.getPrices(productId).then((prices) => {
+          this.prices = prices;
+        });
 
-      this.paymentService.getPrices(productId).then((prices) => {
-        this.prices = prices;
-      });
+        this.paymentService.getProduct(productId).then((product) => {
+          this.product = product;
+          this.loadingService.endLoading();
+        });
 
-      this.paymentService.getProduct(productId).then((product) => {
-        this.product = product;
-        this.loadingService.endLoading();
-      });
+        this.planService.getPlan(this.planId).then((plan) => {
+          this.plan = plan;
+        });
 
-      this.planService.getPlan(this.planId).then((plan) => {
-        this.plan = plan;
+        this.paymentService.getActivePriceId().then((priceId) => {
+          this.activePrice = priceId;
+        });
       });
-
-      this.paymentService.getActivePriceId().then((priceId) => {
-        this.activePrice = priceId;
-      });
-    });
 
     this.getMethod();
 

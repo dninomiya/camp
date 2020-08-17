@@ -10,20 +10,6 @@ export const environment = {
     publicKey: 'pk_test_lKq5jlH5mdbAxDeBfB4f0sn400ZYUYdpvH',
     clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ',
     campaignCoupon: 'BbFMNqOS',
-    product: {
-      lite: {
-        id: 'prod_HmCWurmpvo2Nyr',
-        mainPrice: 'price_1HCe7HAg8h03lWNH1oJN8uz9',
-      },
-      solo: {
-        id: 'prod_HmCd17WUjIHy9B',
-        mainPrice: 'price_1HCeEIAg8h03lWNHtf5HiZlC',
-      },
-      mentor: {
-        id: 'prod_HmCfEoVUBgVxqG',
-        mainPrice: 'price_1HCeG8Ag8h03lWNH76LtWOER',
-      },
-    },
   },
   firebase: {
     apiKey: 'AIzaSyD4MlPYXXp9_bjLsGmgzGlRYTSrKUTCqzY',
