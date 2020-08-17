@@ -35,6 +35,12 @@ export const deleteUser = functions
   .https.onCall(async (data, context) => {
     const uid = data.uid;
 
+    if (!uid)
+      throw new functions.https.HttpsError(
+        'permission-denied',
+        '権限がありません'
+      );
+
     await checkPermission(uid, context);
     await StripeService.deleteCustomerByUid(uid);
 
@@ -62,6 +68,12 @@ export const deleteUser = functions
       .then(() => {
         functions.logger.info(`ID: ${uid} を完全に削除しました`);
       });
+
+    const customer = await StripeService.getStripeCustomer(uid);
+    if (customer) {
+      await StripeService.client.customers.del(customer.id);
+    }
+    await db.doc(`customers/${uid}`).delete();
 
     if (data && data.email) {
       await sendEmail({
