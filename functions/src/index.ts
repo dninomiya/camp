@@ -12,5 +12,4 @@ export * from './admin.function';
 export * from './zoom.function';
 export * from './github/best-answer.function';
 export * from './github/pull-request.function';
-// export * from './payments';
 export * from './stripe';
