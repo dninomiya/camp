@@ -82,7 +82,7 @@ export const getStripeInvoices = functions
       if (customer) {
         const params: Stripe.ChargeListParams = {
           customer: customer.customerId,
-          limit: 10,
+          limit: 20,
           expand: ['data.invoice'],
         };
 
