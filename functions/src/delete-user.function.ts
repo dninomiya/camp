@@ -56,17 +56,6 @@ export const deleteUser = functions
       await doc.ref.set({ deleted: true });
     }
 
-    const authorThreads = (
-      await db.collection('threads').where('authorId', '==', uid).get()
-    ).docs;
-    const targetThreads = (
-      await db.collection('threads').where('targetId', '==', uid).get()
-    ).docs;
-
-    for (const doc of authorThreads.concat(targetThreads)) {
-      await doc.ref.set({ status: 'closed' });
-    }
-
     await admin
       .auth()
       .deleteUser(uid)
