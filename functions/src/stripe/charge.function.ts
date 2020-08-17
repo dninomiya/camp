@@ -8,7 +8,6 @@ export const payStripeProduct = functions
     async (
       data: {
         priceId: string;
-        connectedAccountId?: string;
       },
       context
     ) => {
@@ -45,11 +44,6 @@ export const payStripeProduct = functions
         const params: Stripe.InvoiceCreateParams = {
           customer: customer.customerId,
         };
-
-        if (data.connectedAccountId) {
-          params.application_fee_amount = 10;
-          params.transfer_data = { destination: data.connectedAccountId };
-        }
 
         const invoice = await StripeService.client.invoices.create(params);
 
