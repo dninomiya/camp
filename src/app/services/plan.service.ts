@@ -1,7 +1,7 @@
 import { firestore } from 'firebase/app';
 import { PlanData, PlanOrder } from './../interfaces/plan';
 import { map, take } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 
@@ -57,5 +57,12 @@ export class PlanService {
         take(1)
       )
       .toPromise();
+  }
+
+  getProductId(id: string): Observable<string> {
+    return this.db
+      .doc<PlanData>(`plans/${id}`)
+      .valueChanges()
+      .pipe(map((data) => data.productId));
   }
 }
