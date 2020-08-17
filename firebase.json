@@ -17,6 +17,10 @@
       {
         "source": "/lesson",
         "function": "render"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   },
