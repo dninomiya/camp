@@ -1,3 +1,5 @@
+import { PaymentService } from 'src/app/services/stripe/payment.service';
+import { PlanData } from './../../interfaces/plan';
 import { take } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 import { ConfirmUnsubscribeDialogComponent } from './../../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
@@ -29,6 +31,7 @@ import { Router } from '@angular/router';
 export class AccountComponent implements OnInit {
   user$: Observable<User> = this.authService.authUser$;
   canceled: boolean;
+  restartProcessing: boolean;
   cancellationInProgress: boolean;
   uidInput: FormControl = new FormControl('', [
     Validators.required,
@@ -56,6 +59,8 @@ export class AccountComponent implements OnInit {
     },
   };
 
+  plan: PlanData;
+
   get linkControls(): FormArray {
     return this.profileForm.get('links') as FormArray;
   }
@@ -66,6 +71,7 @@ export class AccountComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private planService: PlanService,
+    private paymentService: PaymentService,
     private router: Router,
     private dialog: MatDialog,
     private planPipe: PlanPipe
@@ -82,14 +88,14 @@ export class AccountComponent implements OnInit {
       if (user && user.mailSettings) {
         this.mailForm.patchValue(user.mailSettings);
       }
+
+      this.planService.getPlan(user.plan).then((plan) => {
+        this.plan = plan;
+      });
     });
   }
 
   ngOnInit() {}
-
-  getPlan(planId: string) {
-    return this.planService.getPlan(planId);
-  }
 
   private idValidator(): ValidatorFn {
     return (control: FormControl): { [key: string]: any } | null => {
@@ -174,9 +180,7 @@ export class AccountComponent implements OnInit {
             })
             .afterClosed()
             .subscribe((unsubStatus) => {
-              if (!unsubStatus) {
-                this.cancellationInProgress = false;
-              }
+              this.cancellationInProgress = false;
             });
         } else {
           this.cancellationInProgress = false;
@@ -188,5 +192,34 @@ export class AccountComponent implements OnInit {
     this.userService.updateUser(this.authService.user.id, {
       avatarURL,
     });
+  }
+
+  restart(user: User) {
+    this.dialog
+      .open(SharedConfirmDialogComponent, {
+        data: {
+          title: '自動更新を再開しますか？',
+          description:
+            '自動更新を再開すると' +
+            formatDate(
+              user.currentPeriodEnd.toMillis(),
+              'yyyy年MM月dd日',
+              'ja'
+            ) +
+            'に契約が自動更新されます。',
+        },
+      })
+      .afterClosed()
+      .subscribe((status) => {
+        if (status) {
+          this.restartProcessing = true;
+          this.paymentService
+            .restartSubscription()
+            .then(() => {
+              this.snackBar.open('自動更新を再開しました');
+            })
+            .finally(() => (this.restartProcessing = false));
+        }
+      });
   }
 }

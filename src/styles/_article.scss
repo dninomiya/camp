@@ -269,7 +269,7 @@
     }
   }
 
-  iframe {
+  iframe:not(.embedly-card) {
     display: block;
     width: 100%;
     margin: 24px 0;
@@ -327,4 +327,13 @@
   .info * {
     font-size: 12px;
   }
+}
+
+.embedly-card {
+  border: 1px solid rgba(black, 0.12);
+  margin: 16px 0;
+  padding: 16px;
+  background: white;
+  border-radius: 3px;
+  overflow: hidden;
 }

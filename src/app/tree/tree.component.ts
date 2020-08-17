@@ -1,4 +1,3 @@
-import { PLAN } from 'src/app/services/plan.service';
 import { UiService } from './../services/ui.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,7 +8,7 @@ import { Lesson } from './../interfaces/lesson';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { LessonService } from 'src/app/services/lesson.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TreeSection, TreeItem, TreeGroup } from './../interfaces/tree';
+import { TreeSection, TreeItem } from './../interfaces/tree';
 import { Observable, combineLatest, of, ReplaySubject } from 'rxjs';
 import { TreeService } from './../services/tree.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -42,7 +41,6 @@ export class TreeComponent implements OnInit {
   private treeItem$: Observable<TreeItem> = this.treeItemSource.asObservable();
 
   lastPos: [number, number];
-  plan = PLAN;
   activeLessonId: string;
   active: {
     sectionId?: string;

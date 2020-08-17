@@ -1,152 +1,109 @@
-import { take } from 'rxjs/operators';
-import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {
-  MatSnackBar,
-  MatSnackBarRef,
-  SimpleSnackBar,
-} from '@angular/material/snack-bar';
-import {
-  StripeService,
-  Element as StripeElement,
-  ElementsOptions,
-} from 'ngx-stripe';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PaymentService } from 'src/app/services/payment.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, Validators } from '@angular/forms';
+import { PaymentService } from 'src/app/services/stripe/payment.service';
+import Stripe from 'stripe';
+import { StripeCardElement, Stripe as StripeClient } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-card-dialog',
   templateUrl: './card-dialog.component.html',
   styleUrls: ['./card-dialog.component.scss'],
 })
-export class CardDialogComponent implements OnInit, AfterViewInit {
-  isEdit: boolean;
-  user$ = this.authService.authUser$;
-  card: StripeElement;
-  stripeForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
+export class CardDialogComponent implements OnInit {
+  loading = true;
+  form = this.fb.group({
+    name: ['', [Validators.required, Validators.maxLength(60)]],
+    email: [
+      '',
+      [Validators.required, Validators.email, Validators.maxLength(254)],
+    ],
   });
-  isLoading = false;
-  elementsOptions: ElementsOptions = {
-    locale: 'ja',
-  };
-  invalidCard = true;
-  bar: MatSnackBarRef<SimpleSnackBar>;
-
-  get invalid() {
-    return this.invalidCard || this.stripeForm.invalid;
-  }
+  isComplete: boolean;
+  cardElement: StripeCardElement;
+  methods: Stripe.PaymentMethod[];
+  inProgress: boolean;
+  stripeClient: StripeClient;
 
   constructor(
     public dialogRef: MatDialogRef<CardDialogComponent>,
     private snackBar: MatSnackBar,
-    private authService: AuthService,
-    private paymentService: PaymentService,
     private fb: FormBuilder,
-    private stripeService: StripeService,
-    @Inject(MAT_DIALOG_DATA) public customerId?: string
+    public paymentService: PaymentService
   ) {}
 
-  ngOnInit() {
-    this.isEdit = !!this.customerId;
+  ngOnInit(): void {
+    this.buildForm();
+    this.getCard();
   }
 
-  ngAfterViewInit() {
-    this.stripeService
-      .elements(this.elementsOptions)
-      .pipe(take(1))
-      .subscribe((elements) => {
-        if (!this.card) {
-          this.card = elements.create('card', {
-            style: {
-              base: {
-                iconColor: '#666EE8',
-                color: '#000',
-                lineHeight: '40px',
-                fontWeight: 300,
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSize: '16px',
-                '::placeholder': {
-                  color: '#CFD7E0',
-                },
-              },
-            },
-          });
-          this.card.mount('#card-element');
-          this.card.on('change', (event) => {
-            this.invalidCard = !event.complete;
-          });
-        }
-      });
-  }
-
-  submit() {
-    this.isLoading = true;
-    const action = this.customerId ? '更新' : '登録';
-    this.bar = this.snackBar.open(`カード情報を${action}しています...`);
-    if (this.customerId) {
-      this.updateCustomer(this.customerId);
-    } else {
-      this.updateCustomer();
-    }
-  }
-
-  private updateCustomer(customerId?: string) {
-    const name = this.stripeForm.get('name').value;
-    this.stripeService
-      .createToken(this.card, { name })
-      .pipe(take(1))
-      .subscribe((result) => {
-        if (result.token) {
-          let request;
-
-          if (customerId) {
-            request = this.paymentService.updateCustomer({
-              customerId,
-              source: result.token.id,
-              card: result.token.card,
-              description: name,
-            });
-          } else {
-            request = this.paymentService.createCustomer({
-              source: result.token.id,
-              email: this.authService.afUser.email,
-              card: result.token.card,
-              description: name,
-            });
-          }
-
-          request
-            .then(() => this.onSuccess())
-            .catch((error) => this.onError(error))
-            .finally(() => {
-              this.bar.dismiss();
-              this.isLoading = false;
-            });
-        } else if (result.error) {
-          this.bar.dismiss();
-          this.isLoading = false;
-          this.onError(result.error);
-        }
-      });
-  }
-
-  private onSuccess() {
-    this.dialogRef.close(true);
-    this.snackBar.open(
-      `カードを${this.isEdit ? '変更' : '作成'}しました`,
-      null,
-      {
-        duration: 2000,
+  /**
+   * カード一覧を取得
+   */
+  getCard() {
+    this.paymentService.getPaymentMethod().then((method) => {
+      if (method) {
+        this.setCardToForm(method);
       }
+      this.loading = false;
+    });
+  }
+
+  async buildForm() {
+    this.stripeClient = await this.paymentService.getStripeClient();
+    const elements = this.stripeClient.elements();
+    this.cardElement = elements.create('card');
+    this.cardElement.mount('#card-element');
+    this.cardElement.on(
+      'change',
+      (event) => (this.isComplete = event.complete)
     );
   }
 
-  private onError(error: any) {
-    console.error(error);
-    this.snackBar.open('カード情報が不正です', null, {
-      duration: 2000,
+  /**
+   * カードを作成
+   */
+  saveCard() {
+    if (this.form.valid) {
+      this.inProgress = true;
+      this.snackBar.open('カードを登録しています', null, {
+        duration: null,
+      });
+      this.paymentService
+        .setPaymemtMethod(
+          this.stripeClient,
+          this.cardElement,
+          this.form.value.name,
+          this.form.value.email
+        )
+        .then(() => {
+          this.snackBar.open('カードを登録しました');
+          this.dialogRef.close(true);
+        })
+        .catch((error: Error) => {
+          console.error(error.message);
+          switch (error.message) {
+            case 'expired_card':
+              this.snackBar.open('カードの有効期限が切れています');
+              break;
+            default:
+              this.snackBar.open('登録に失敗しました');
+          }
+        })
+        .finally(() => {
+          this.inProgress = false;
+        });
+    }
+  }
+
+  /**
+   * 編集するカードをフォームの初期値にセット
+   */
+  private setCardToForm(paymentMethod: Stripe.PaymentMethod) {
+    this.form.patchValue({
+      name: paymentMethod.billing_details.name,
+      email: paymentMethod.billing_details.email,
     });
   }
 }

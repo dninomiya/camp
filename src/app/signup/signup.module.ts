@@ -4,10 +4,11 @@ import { NgModule } from '@angular/core';
 
 import { SignupRoutingModule } from './signup-routing.module';
 import { SignupComponent } from './signup.component';
+import { DealPipe } from './deal.pipe';
 
 
 @NgModule({
-  declarations: [SignupComponent],
+  declarations: [SignupComponent, DealPipe],
   imports: [
     SharedModule,
     SignupRoutingModule,

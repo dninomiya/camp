@@ -1,0 +1,74 @@
+<h1 matDialogTitle>ISAシミュレーション</h1>
+
+<mat-dialog-content>
+  <div class="demo">
+    <div class="demo__input">
+      <mat-form-field>
+        <mat-label>CAMP在籍日数</mat-label>
+        <input
+          matInput
+          [(ngModel)]="day"
+          #dayInput
+          type="number"
+          step="1"
+          autocomplete="off"
+        />
+        <span matSuffix>日</span>
+        <mat-hint>{{ dayInput.value / 30 | number: '1.0-1' }}ヶ月</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>年収</mat-label>
+        <input
+          matInput
+          value="350"
+          #income
+          type="number"
+          step="10"
+          autocomplete="off"
+        />
+        <span matSuffix>万円</span>
+      </mat-form-field>
+    </div>
+    <div class="demo__result">
+      <h4>シミュレーション結果</h4>
+      <p class="demo__detail">
+        CAMPに<strong>{{ dayInput.value }}日</strong>在籍した後5年以内に<strong
+          >年収{{ income.value }}万円</strong
+        >で就職した場合
+      </p>
+      <div
+        class="demo__calc"
+        *ngIf="income.value >= isaService.incomeLimit; else low"
+      >
+        <p>
+          月の分配金額:
+          {{ (income.value / 12) * 0.15 | number: '1.0-1' }}万円（年収{{
+            income.value
+          }}万円 ÷ 12 × 15%）
+        </p>
+        <p>
+          最大分配金額:
+          {{ isaService.getShareLimit(dayInput.value) | number: '1.0-1' }}万円
+        </p>
+        <p>
+          想定分配金額:
+          {{
+            isaService.getTotalCost(dayInput.value, income.value)
+              | number: '1.0-1'
+          }}万円（36か月間同一年収で勤続した場合）
+        </p>
+      </div>
+      <ng-template #low>
+        <p>
+          年収{{
+            isaService.incomeLimit
+          }}万円以下なので一切の支払いは発生しません
+        </p>
+      </ng-template>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose>閉じる</button>
+</mat-dialog-actions>

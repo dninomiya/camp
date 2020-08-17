@@ -97,20 +97,29 @@
         </dd>
         <dt>在籍日数</dt>
         <dd>{{ getDays(user.isa?.start, user.isa?.end) | number }}日</dd>
-        <dt>分配金額: ({{ dayCost | number }}円/日)</dt>
+        <dt>分配上限金額:</dt>
         <dd>
-          {{ getTotalPay(user.isa?.start, user.isa?.end) | number }}円 /
-          {{ maxCost | number }}円
+          {{
+            isaService.getShareLimit(getDays(user.isa?.start, user.isa?.end))
+              | number: '1.0-1'
+          }}万円（最大{{ isaService.maxCost / 10000 | number }}万円）
         </dd>
         <dt>分配期限</dt>
         <dd>
           {{
             user.isa?.end
               ? (getPayLimit(user.isa?.end) | date: 'yyyy年MM月dd日')
-              : '-'
+              : 'CAMP終了から' + isaService.limitYearCount + '年間'
           }}
         </dd>
       </dl>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openIsaCalc(getDays(user.isa?.start, user.isa?.end))"
+      >
+        シミュレーション
+      </button>
     </section>
   </mat-card>
 </div>

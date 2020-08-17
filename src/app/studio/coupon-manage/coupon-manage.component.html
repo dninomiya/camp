@@ -1,0 +1,13 @@
+<mat-form-field>
+  <mat-label>クーポンID</mat-label>
+  <mat-select [formControl]="couponControl">
+    <mat-option [value]="null">なし</mat-option>
+    <mat-option *ngFor="let coupon of coupons" [value]="coupon.id">{{
+      coupon.name
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="save()">
+  保存
+</button>

@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { Product } from './../interfaces/product';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from './../services/product.service';
 import { AuthService } from './../services/auth.service';

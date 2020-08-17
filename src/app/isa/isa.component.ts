@@ -1,22 +1,23 @@
+import { MatDialog } from '@angular/material/dialog';
+import { IsaCalcComponent } from './../shared/isa-calc/isa-calc.component';
+import { IsaService } from './../services/isa.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-isa',
   templateUrl: './isa.component.html',
-  styleUrls: ['./isa.component.scss']
+  styleUrls: ['./isa.component.scss'],
 })
 export class IsaComponent implements OnInit {
-  dayCost = 16666;
-
-  constructor() {}
+  constructor(public isaService: IsaService, private dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
-  getShareLimit(day) {
-    if (day) {
-      return Math.min(day.value * this.dayCost, 3000000);
-    } else {
-      return 0;
-    }
+  openIsaCalc(day: number) {
+    this.dialog.open(IsaCalcComponent, {
+      restoreFocus: false,
+      width: '800px',
+      data: day,
+    });
   }
 }

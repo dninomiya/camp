@@ -9,9 +9,12 @@ import { environment } from 'src/environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
-import { NgxStripeModule } from 'ngx-stripe';
 
-import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
+import {
+  AngularFireFunctionsModule,
+  REGION,
+  ORIGIN,
+} from '@angular/fire/functions';
 import { AppRoutingModule } from '../app-routing.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DatePipe } from '@angular/common';
@@ -68,7 +71,6 @@ import { PointDialogComponent } from '../point-dialog/point-dialog.component';
         useFactory: markedOptionsFactory,
       },
     }),
-    NgxStripeModule.forRoot(environment.stripe.publicKey),
     DeviceDetectorModule.forRoot(),
   ],
   exports: [
@@ -83,7 +85,15 @@ import { PointDialogComponent } from '../point-dialog/point-dialog.component';
     ConnectVimeoComponent,
     MatMomentDateModule,
   ],
-  providers: [{ provide: REGION, useValue: 'asia-northeast1' }, DatePipe],
+  providers: [
+    { provide: REGION, useValue: 'asia-northeast1' },
+    {
+      provide: ORIGIN,
+      useValue: environment.production ? undefined : 'http://localhost:5001',
+    },
+    ,
+    DatePipe,
+  ],
   entryComponents: [
     CardDialogComponent,
     ListEditDialogComponent,

@@ -1,3 +1,4 @@
+import { PlanData } from './../../interfaces/plan';
 import { firestore } from 'firebase/app';
 import { User } from './../../interfaces/user';
 import { UserService } from './../../services/user.service';
@@ -12,8 +13,7 @@ import { Component, OnInit, Inject } from '@angular/core';
   styleUrls: ['./user-editor.component.scss'],
 })
 export class UserEditorComponent implements OnInit {
-  plans = this.planService.plans;
-
+  plans: PlanData[];
   form: FormGroup = this.fb.group({
     plan: ['', Validators.required],
     isTrial: [''],
@@ -33,7 +33,9 @@ export class UserEditorComponent implements OnInit {
     private planService: PlanService,
     private userService: UserService,
     private dialog: MatDialogRef<UserEditorComponent>
-  ) {}
+  ) {
+    this.planService.getPlans().then((plans) => this.plans);
+  }
 
   ngOnInit(): void {
     this.form.patchValue({

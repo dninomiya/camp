@@ -51,6 +51,8 @@ import { FooterComponent } from './footer/footer.component';
 import { RatePipe } from './rate.pipe';
 import { PlanPipe } from './plan.pipe';
 import { CustomerPipe } from './customer.pipe';
+import { IntervalPipe } from './interval.pipe';
+import { IsaCalcComponent } from './isa-calc/isa-calc.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +76,8 @@ import { CustomerPipe } from './customer.pipe';
     PlanPipe,
     CustomerPipe,
     ResourceIconPipe,
+    IntervalPipe,
+    IsaCalcComponent,
   ],
   imports: [
     CommonModule,
@@ -97,6 +101,7 @@ import { CustomerPipe } from './customer.pipe';
     HttpClientJsonpModule,
     MatAutocompleteModule,
     NgxPicaModule,
+    MatDialogModule,
   ],
   exports: [
     CommonModule,
@@ -153,6 +158,7 @@ import { CustomerPipe } from './customer.pipe';
     RatePipe,
     PlanPipe,
     CustomerPipe,
+    IntervalPipe,
   ],
 })
 export class SharedModule {}

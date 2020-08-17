@@ -15,6 +15,13 @@ const routes: Routes = [
     loadChildren: () => import('./intl/intl.module').then((m) => m.IntlModule),
   },
   {
+    path: 'signup',
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./signup/signup.module').then((m) => m.SignupModule),
+  },
+  {
     path: '',
     component: MainShellComponent,
     data: {

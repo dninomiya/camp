@@ -3,7 +3,6 @@ import { UserService } from './../../services/user.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ChannelMeta } from 'src/app/interfaces/channel';
 import { PlanService } from 'src/app/services/plan.service';
-import { Plan } from 'src/app/interfaces/plan';
 import { MatDialog } from '@angular/material/dialog';
 import { MailDialogComponent } from 'src/app/core/mail-dialog/mail-dialog.component';
 import { environment } from 'src/environments/environment';
@@ -18,7 +17,6 @@ export class UserCardComponent implements OnInit {
   @Input() isOwner: boolean;
   @Output() loaded = new EventEmitter<boolean>();
 
-  plans: Plan[] = this.planService.plans;
   rate: number;
   data: {
     avatar: string;

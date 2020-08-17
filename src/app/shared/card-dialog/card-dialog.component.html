@@ -1,61 +1,71 @@
-<h1 matDialogTitle>クレジットカードを{{ isEdit ? '変更' : '登録' }}</h1>
+<h1 matDialogTitle>クレジットカードを登録</h1>
 
 <mat-dialog-content>
-  <ng-container *ngIf="user$ | async as user">
-    <form
-      class="form"
-      novalidate
-      (ngSubmit)="submit()"
-      [formGroup]="stripeForm"
-      [class.is-loading]="isLoading"
-    >
-      <div id="card-element" class="field"></div>
+  <form
+    class="form"
+    novalidate
+    (ngSubmit)="saveCard()"
+    [formGroup]="form"
+    [class.is-loading]="loading || inProgress"
+  >
+    <div id="card-element" class="field"></div>
 
-      <mat-form-field class="name">
-        <mat-label>カードの名義</mat-label>
-        <input
-          type="text"
-          matInput
-          autocomplete="off"
-          formControlName="name"
-          placeholder="TARO YAMADA"
+    <mat-form-field class="name">
+      <mat-label>カードの名義</mat-label>
+      <input
+        type="text"
+        matInput
+        autocomplete="off"
+        formControlName="name"
+        placeholder="TARO YAMADA"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="name">
+      <mat-label>メールアドレス</mat-label>
+      <input
+        type="text"
+        matInput
+        autocomplete="email"
+        formControlName="email"
+        placeholder="xxx@xxx.com"
+      />
+      <mat-hint>領収書などが届きます</mat-hint>
+    </mat-form-field>
+
+    <p class="form__notice">
+      <a href="https://stripe.com" target="_blank" rel="noopener">
+        <img
+          src="/assets/images/powered-by-stripe.svg"
+          alt="powered by stripe"
         />
-      </mat-form-field>
+      </a>
+    </p>
 
-      <p class="form__notice">
-        <a href="https://stripe.com" target="_blank" rel="noopener">
-          <img
-            src="/assets/images/powered-by-stripe.svg"
-            alt="powered by stripe"
-          />
-        </a>
-      </p>
+    <ul class="form__note">
+      <li>カード情報は世界的に信頼が厚いStripeで厳重に管理されます。</li>
+      <li>
+        サービスではクレジットカード情報を保持しないので漏洩の心配はありません。
+      </li>
+    </ul>
+  </form>
 
-      <ul class="form__note">
-        <li>カード情報は世界的に信頼が厚いStripeで厳重に管理されます。</li>
-        <li>
-          サービスではクレジットカード情報を保持しないので漏洩の心配はありません。
-        </li>
-      </ul>
-    </form>
-
-    <div *ngIf="isLoading">
-      <div class="doing">
-        <mat-spinner [diameter]="32"></mat-spinner>
-        <p>カード登録中です。</p>
-      </div>
+  <div *ngIf="inProgress">
+    <div class="doing">
+      <mat-spinner [diameter]="32"></mat-spinner>
+      <p>カード登録中です。</p>
     </div>
-  </ng-container>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <button mat-button matDialogClose>キャンセル</button>
   <button
-    (click)="submit()"
+    (click)="saveCard()"
     mat-raised-button
     color="primary"
-    [disabled]="invalid || isLoading"
+    [disabled]="!isComplete || loading || form.invalid || inProgress"
   >
-    {{ customerId ? '更新' : '登録' }}
+    登録
   </button>
 </mat-dialog-actions>

@@ -4,10 +4,11 @@
       <mat-label>プラン</mat-label>
       <mat-select [formControl]="plan">
         <mat-option>すべて</mat-option>
-        <mat-option [value]="'free'">フリー</mat-option>
-        <mat-option [value]="'customer'">カスタマー</mat-option>
+        <mat-option value="free">フリー</mat-option>
+        <mat-option value="customer">カスタマー</mat-option>
+        <mat-option value="isa">ISA</mat-option>
         <mat-option *ngFor="let plan of plans" [value]="plan.id">{{
-          plan.title
+          plan.name
         }}</mat-option>
         <mat-option [value]="'isa'">ISA</mat-option>
       </mat-select>

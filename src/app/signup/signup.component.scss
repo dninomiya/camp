@@ -1,17 +1,47 @@
+@import 'mixins';
+
 .wrap {
-  margin: 80px 0;
-  h1 {
-    margin-bottom: 40px;
-  }
-  p {
-    margin-bottom: 16px;
+  background: #000;
+  display: grid;
+  grid-template-columns: 1fr 800px;
+  height: 100%;
+  @include sp {
+    grid-template-columns: 1fr;
+    grid-template-rows: 160px auto;
   }
 }
 
-.default-price {
-  text-decoration: line-through;
-  color: rgba(black, 0.38);
-  margin-left: 8px;
+.back {
+  margin-bottom: 40px;
+  @include sp {
+    background: white;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 10;
+  }
+}
+
+h1 {
+  padding: 0 16px;
+  margin-bottom: 56px;
+  font-size: 24px;
+  @include sp {
+    margin: 40px 0 24px;
+  }
+}
+
+.background {
+  background: center top/cover;
+}
+
+.main {
+  background: #fff;
+  padding: 40px 80px;
+  overflow: auto;
+  @include sp {
+    padding: 24px;
+  }
 }
 
 .section {
@@ -21,15 +51,33 @@
 .notice {
   margin: 24px 0 40px;
   li {
+    position: relative;
+    font-size: 12px;
+    line-height: 1.8;
     &:before {
       content: '※';
       margin-right: 8px;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
+    padding-left: 1em;
     color: rgba(black, 0.38);
   }
 }
 
-.trial {
-  margin-top: 16px;
+.total {
+  margin: 40px 0;
+}
+
+.mat-list-single-selected-option {
+  background: rgba(#3f51b5, 0.12);
+}
+
+.off {
   color: rgba(black, 0.38);
+}
+
+mat-spinner {
+  margin: 24px auto;
 }

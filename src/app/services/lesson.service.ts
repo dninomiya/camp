@@ -63,12 +63,12 @@ export class LessonService {
       authorId,
     });
 
-    if (data.public) {
+    if (data.public && environment.production) {
       await this.http
         .post(
           'https://hooks.slack.com/services/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',
           {
-            text: `「${data.title}」が投稿されました。ためになったら「いいね」しましょう！（投稿者にポイントが付与されます）\n${environment.host}?v=${id}`,
+            text: `「${data.title}」が投稿されました。ためになったら「いいね」しましょう！（投稿者にポイントが付与されます）\n${environment.host}?lesson?v=${id}`,
           },
           {
             headers: new HttpHeaders({
@@ -204,7 +204,7 @@ export class LessonService {
       updatedAt: new Date(),
     });
 
-    if (data.public) {
+    if (data.public && environment.production) {
       await this.http
         .post(
           'https://hooks.slack.com/services/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',
@@ -255,9 +255,10 @@ export class LessonService {
     });
   }
 
-  getOGPs(urls: string[]): Observable<object[]> {
-    const collable = this.fns.httpsCallable('getOGP');
-    return collable(urls);
+  getOGPs(urls: string[]): string[] {
+    return urls.map((url) => {
+      return `<a class="embedly-card" data-card-align="left" data-card-controls="0" data-card-width="100%" href="${url}"></a>`;
+    });
   }
 
   checkPermission(lessonId: string): Observable<boolean> {

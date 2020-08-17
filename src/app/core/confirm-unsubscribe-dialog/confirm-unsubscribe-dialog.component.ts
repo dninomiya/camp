@@ -1,7 +1,7 @@
+import { PaymentService } from 'src/app/services/stripe/payment.service';
 import { PlanID } from './../../interfaces/plan';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PaymentService } from 'src/app/services/payment.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -60,13 +60,8 @@ export class ConfirmUnsubscribeDialogComponent implements OnInit {
 
   unsubscribe() {
     this.isLoading = true;
-    const body = {
-      userId: this.data.uid,
-      planId: this.data.planId,
-      reason: this.form.value,
-    };
     this.paymentService
-      .unsubscribePlan(body)
+      .cancelSubscription(this.form.value, this.data.planId)
       .then(() => {
         this.snackBar.open('停止しました', null, {
           duration: 2000,

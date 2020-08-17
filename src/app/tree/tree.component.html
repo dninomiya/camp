@@ -55,15 +55,12 @@
                   <button
                     mat-raised-button
                     color="primary"
-                    routerLink="/intl/signup"
+                    routerLink="/signup"
                     [queryParams]="{ planId: 'mentor' }"
                     fragment="plan"
                   >
                     プランを見る
                   </button>
-                  <span class="plan__price"
-                    >{{ plan.mentor.amount | number }}円/月</span
-                  >
                 </div>
               </div>
               <div class="plan">
@@ -78,15 +75,12 @@
                   <button
                     mat-stroked-button
                     color="primary"
-                    routerLink="/intl/signup"
+                    routerLink="/signup"
                     [queryParams]="{ planId: 'solo' }"
                     fragment="plan"
                   >
                     プランを見る
                   </button>
-                  <span class="plan__price"
-                    >{{ plan.solo.amount | number }}円/月</span
-                  >
                 </div>
               </div>
             </div>

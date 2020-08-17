@@ -1,14 +1,14 @@
+import { PlanDataWithPrice } from './../interfaces/plan';
+import { take } from 'rxjs/operators';
+import { PaymentService } from 'src/app/services/stripe/payment.service';
 import { PlanService } from 'src/app/services/plan.service';
 import { ASKS, PLAN_FEATURES, QUESTIONS, SKILLS } from './welcome-data';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { of } from 'rxjs';
-import { take, switchMap } from 'rxjs/operators';
-import { User, UserPayment } from './../interfaces/user';
+import { User } from './../interfaces/user';
 import { MatDialog } from '@angular/material/dialog';
 import * as AOS from 'aos';
-import { PaymentService } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
 import { SwiperOptions } from 'swiper';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
@@ -33,15 +33,12 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     autoplay: true,
     allowTouchMove: false,
   };
-  isCampaign = this.planService.isCampaign;
   isSwiperReady: boolean;
   asks = ASKS;
   planFeatures = PLAN_FEATURES;
   qas = QUESTIONS;
   skills = SKILLS;
-  plans = this.planService.plans;
   user: User;
-  payment: UserPayment;
   player: YT.Player;
   playerVars: YT.PlayerVars = {
     controls: 0,
@@ -49,25 +46,34 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
   user$ = this.authService.authUser$;
   loading: boolean;
   loginSnackBar: MatSnackBarRef<any>;
+  plans: PlanDataWithPrice[];
 
   constructor(
     private authService: AuthService,
-    private paymentService: PaymentService,
     private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute
+    private paymentService: PaymentService
   ) {
     this.authService.authUser$.subscribe((user) => {
       this.user = user;
-      if (user) {
-        this.paymentService
-          .getUserPayment(user.id)
-          .subscribe((payment) => (this.payment = payment));
-      } else {
-        this.payment = null;
-      }
+    });
+
+    this.getPlans();
+  }
+
+  private async getPlans() {
+    const plans = await this.planService.getPlans();
+    const prices = await Promise.all(
+      plans.map((plan) => this.paymentService.getPrice(plan.mainPriceId))
+    );
+
+    this.plans = plans.map((plan) => {
+      return {
+        ...plan,
+        price: prices.find((price) => price.id === plan.mainPriceId),
+      };
     });
   }
 
@@ -75,18 +81,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     document.body.appendChild(tag);
-
-    this.authService.authUser$
-      .pipe(
-        switchMap((user) => {
-          if (user) {
-            return this.paymentService.getUserPayment(user.id).pipe(take(1));
-          } else {
-            return of(null);
-          }
-        })
-      )
-      .subscribe((payment) => (this.payment = payment));
   }
 
   ngAfterViewInit() {
@@ -107,7 +101,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
 
   start(planId: string) {
     if (this.authService.user) {
-      this.router.navigateByUrl('/intl/signup?planId=' + planId);
+      this.router.navigateByUrl('/signup?planId=' + planId);
     } else {
       this.dialog
         .open(LoginDialogComponent)
@@ -119,7 +113,7 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
               'ログインしています',
               null,
               {
-                duration: 2000,
+                duration: null,
               }
             );
             this.authService
@@ -127,12 +121,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
               .then(() => {
                 this.user$.subscribe((user) => {
                   if (user) {
-                    this.loginSnackBar.dismiss();
-                    this.router.navigateByUrl('/intl/signup?planId=' + planId);
-                  } else {
-                    this.loginSnackBar.dismiss();
-                    this.loading = false;
+                    this.router.navigateByUrl('/signup?planId=' + planId);
                   }
+                  this.loginSnackBar.dismiss();
                 });
               })
               .catch(() => {

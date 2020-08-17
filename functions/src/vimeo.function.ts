@@ -43,7 +43,7 @@ export const connectVimeo = functions
         );
       });
     } catch (error) {
-      console.log(error);
+      functions.logger.error(error);
       throw new Error(error);
     }
 

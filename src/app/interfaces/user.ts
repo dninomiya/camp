@@ -32,21 +32,6 @@ export interface User {
   };
 }
 
-export interface PaymentCard {
-  address_zip: string;
-  exp_month: string;
-  exp_year: string;
-  last4: string;
-  brand: string;
-  id: string;
-}
-
-export interface UserPayment {
-  card: PaymentCard;
-  customerId: string;
-  subscriptionId?: string;
-}
-
 export interface UserConnect {
   taxId?: string;
   stripeUserId?: string;

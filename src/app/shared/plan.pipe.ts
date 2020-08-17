@@ -3,7 +3,7 @@ import { PlanID } from './../interfaces/plan';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'plan'
+  name: 'plan',
 })
 export class PlanPipe implements PipeTransform {
   constructor(private planService: PlanService) {}
@@ -13,15 +13,6 @@ export class PlanPipe implements PipeTransform {
       return 'フリー';
     }
 
-    switch (planId) {
-      case 'free':
-        return 'フリー';
-      case 'admin':
-        return '管理人';
-      case 'isa':
-        return 'ISA';
-      default:
-        return this.planService.plans.find(plan => plan.id === planId).title;
-    }
+    return this.planService.planLabel[planId];
   }
 }

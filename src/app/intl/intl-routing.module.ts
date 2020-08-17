@@ -18,49 +18,42 @@ const routes: Routes = [
     children: [
       {
         path: 'help',
-        component: HelpComponent
+        component: HelpComponent,
       },
       {
         path: 'press',
-        component: PressComponent
+        component: PressComponent,
       },
       {
         path: 'legal',
-        component: LegalComponent
-      },
-      {
-        path: 'signup',
-        canLoad: [AuthGuard],
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import('../signup/signup.module').then(m => m.SignupModule)
+        component: LegalComponent,
       },
       {
         path: 'guideline',
-        component: GuidelineComponent
+        component: GuidelineComponent,
       },
       {
         path: 'terms',
-        component: TermsComponent
+        component: TermsComponent,
       },
       {
         path: 'contact',
-        component: ContactComponent
+        component: ContactComponent,
       },
       {
         path: 'privacypolicy',
-        component: PrivacypolicyComponent
+        component: PrivacypolicyComponent,
       },
       {
         path: 'law',
-        component: LawComponent
-      }
-    ]
-  }
+        component: LawComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class IntlRoutingModule {}

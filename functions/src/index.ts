@@ -1,7 +1,6 @@
 export * from './delete-user.function';
 export * from './ogp.function';
 export * from './create-user.function';
-export * from './payments/index.function';
 export * from './lesson.function';
 export * from './count-up.function';
 export * from './count-down.function';
@@ -13,3 +12,4 @@ export * from './admin.function';
 export * from './zoom.function';
 export * from './github/best-answer.function';
 export * from './github/pull-request.function';
+export * from './stripe';

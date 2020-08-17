@@ -110,8 +110,6 @@ export class EditorComponent implements OnInit {
     ],
   };
 
-  plans = this.planService.plans;
-
   codemirrorOpts = {
     lineNumbers: false,
   };
@@ -272,7 +270,10 @@ export class EditorComponent implements OnInit {
   private createLesson(userId: string) {
     return this.lessonService.createLesson(
       userId,
-      this.form.value,
+      {
+        ...this.form.value,
+        free: this.authService.user.admin ? this.form.value.free : true,
+      },
       this.thumbnail
     );
   }
@@ -289,6 +290,7 @@ export class EditorComponent implements OnInit {
       ...newValue,
       title: this.form.value.title,
       body: this.form.value.body,
+      public: this.form.value.public,
     });
   }
 

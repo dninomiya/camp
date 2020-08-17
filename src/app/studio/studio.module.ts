@@ -13,7 +13,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ListDeleteDialogComponent } from './list-delete-dialog/list-delete-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { ConfirmDisconnectStripeDialogComponent } from './confirm-disconnect-stripe-dialog/confirm-disconnect-stripe-dialog.component';
 import { MultipleLessonEditDialogComponent } from './multiple-lesson-edit-dialog/multiple-lesson-edit-dialog.component';
 import { NgAisModule } from 'angular-instantsearch';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -24,6 +23,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { UserEditorComponent } from './user-editor/user-editor.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PlanManageComponent } from './plan-manage/plan-manage.component';
+import { PlanManageShellComponent } from './plan-manage-shell/plan-manage-shell.component';
+import { CouponManageComponent } from './coupon-manage/coupon-manage.component';
 
 @NgModule({
   declarations: [
@@ -32,12 +34,14 @@ import { MatNativeDateModule } from '@angular/material/core';
     AboutComponent,
     DashboardComponent,
     ListDeleteDialogComponent,
-    ConfirmDisconnectStripeDialogComponent,
     MultipleLessonEditDialogComponent,
     SearchLessonInputComponent,
     ImageDialogComponent,
     UserListComponent,
     UserEditorComponent,
+    PlanManageComponent,
+    PlanManageShellComponent,
+    CouponManageComponent,
   ],
   imports: [
     SharedModule,
@@ -57,7 +61,6 @@ import { MatNativeDateModule } from '@angular/material/core';
   ],
   entryComponents: [
     ListDeleteDialogComponent,
-    ConfirmDisconnectStripeDialogComponent,
     MultipleLessonEditDialogComponent,
     ImageDialogComponent,
   ],

@@ -1,11 +1,10 @@
+import { combineLatest } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserEditorComponent } from './../user-editor/user-editor.component';
 import { MatDialog } from '@angular/material/dialog';
-import { firestore } from 'firebase/app';
-import { combineLatest } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { Plan } from './../../interfaces/plan';
+import { PlanData } from './../../interfaces/plan';
 import { PlanService } from './../../services/plan.service';
 import { UserService } from 'src/app/services/user.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -30,7 +29,7 @@ export class UserListComponent implements OnInit {
     'currentPeriodEnd',
     'action',
   ];
-  plans: Plan[] = this.planService.plans;
+  plans: PlanData[];
   dataSource: MatTableDataSource<User> = new MatTableDataSource();
   counts: { label: string; count: number; trial?: number }[] = [];
 
@@ -39,7 +38,9 @@ export class UserListComponent implements OnInit {
     private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.planService.getPlans().then((plans) => (this.plans = plans));
+  }
 
   ngOnInit() {
     this.users$.subscribe((users) => {
@@ -53,7 +54,7 @@ export class UserListComponent implements OnInit {
         const hits = users.filter((user) => user.plan === plan.id);
         const count = hits ? hits.length : 0;
         this.counts.push({
-          label: plan.title,
+          label: plan.name,
           count: hits?.length,
           trial: hits?.filter((hit) => hit.isTrial).length,
         });

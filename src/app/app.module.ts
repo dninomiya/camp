@@ -39,7 +39,7 @@ registerLocaleData(localeJa);
     { provide: LOCALE_ID, useValue: 'ja-JP' },
     { provide: MAT_DATE_LOCALE, useValue: 'ja-JP' },
     { provide: 'googleTagManagerId', useValue: 'GTM-TVXJ56C' },
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2000 } },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
   ],
   bootstrap: [AppComponent],
 })

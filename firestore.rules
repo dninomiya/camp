@@ -38,7 +38,7 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    match /core/section {
+    match /core/{id} {
       allow read: if true;
       allow write: if isAdmin();
     }
@@ -51,6 +51,11 @@ service cloud.firestore {
     match /products/{doc} {
       allow read: if request.auth.uid != null;
       allow write: if request.auth.uid == doc;
+    }
+
+    match /plans/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     match /channels/{channelId} {
@@ -68,7 +73,7 @@ service cloud.firestore {
       }
       match /plans/{planId} {
         allow read: if true;
-        allow write: if isOwner(channelId);
+        allow write: if isAdmin();
       }
       match /jobs/data {
         allow read: if true;

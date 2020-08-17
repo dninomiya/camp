@@ -50,9 +50,9 @@ export function markedOptionsFactory(): MarkedOptions {
 
   renderer.link = (href: string, title: string, text: string) => {
     if (/http/.test(href)) {
-      return `<a target="_blank" rel="noopener" href="${href}">${text}</a><i class="material-icons">open_in_new</i>`;
+      return `<a target="_blank" rel="noopener noreferrer" href="${href}">${text}</a><i class="material-icons">open_in_new</i>`;
     } else if (/zip/.test(href)) {
-      return `<a target="_blank" rel="noopener" href="${href}">${text}</a><i class="material-icons">cloud_download
+      return `<a target="_blank" rel="noopener noreferrer" href="${href}">${text}</a><i class="material-icons">cloud_download
       </i>`;
     } else {
       return `<a data-link="${href}">${text}</a>`;
@@ -61,6 +61,13 @@ export function markedOptionsFactory(): MarkedOptions {
   renderer.image = (href: string, title: string, text: string) => {
     const caption = title ? `<figcaption>${title}</figcaption>` : '';
     return `<figure><a href="${href}" target="_blank"><img src="${href}"></a>${caption}</figure>`;
+  };
+  renderer.paragraph = (text: string) => {
+    if (text.match('embedly-card')) {
+      return text;
+    } else {
+      return `<p>${text}</p>`;
+    }
   };
   renderer.code = (t: string, l: string) => {
     let lang = l;
