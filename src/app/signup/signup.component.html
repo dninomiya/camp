@@ -58,8 +58,14 @@
     <section class="section">
       <mat-selection-list [multiple]="false" dense>
         <h2 matSubheader>キャンペーン</h2>
-        <mat-list-option *ngIf="!coupon" disabled>なし</mat-list-option>
-        <mat-list-option *ngIf="coupon" [value]="coupon.id" selected>
+        <mat-list-option *ngIf="!coupon || !isCouponTarget" disabled
+          >なし</mat-list-option
+        >
+        <mat-list-option
+          *ngIf="coupon && isCouponTarget"
+          [value]="coupon.id"
+          selected
+        >
           <span matLine
             >{{ coupon.name
             }}<span *ngIf="coupon.duration"
@@ -94,7 +100,7 @@
               >割引金額: -{{
                 invoice.total_discount_amounts[0]?.amount
               }}
-              円<span *ngIf="coupon.duration_in_months"
+              円<span *ngIf="isCouponTarget && coupon.duration_in_months"
                 >（{{ coupon.duration_in_months }}か月有効）</span
               ></span
             >
@@ -121,6 +127,7 @@
         トライアルがある場合、トライアル終了後に課金が開始されます。トライアル中に更新を停止した場合課金は発生しません。
       </li>
       <li>自動更新を停止しない限り契約は自動的に更新されます。</li>
+      <li>通常価格を超えた割引価格は翌月以降に引き継がれます。</li>
       <li>トライアルがない場合前払いで即座に決済が行われます。</li>
     </ul>
   </form>

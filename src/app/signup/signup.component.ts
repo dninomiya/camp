@@ -40,6 +40,17 @@ export class SignupComponent implements OnInit {
     price: [[], [Validators.required]],
   });
 
+  get isCouponTarget(): boolean {
+    const price: Stripe.Price = this.form.get('price').value[0];
+    if (!price) {
+      return false;
+    }
+    return (
+      price?.recurring?.interval === 'month' &&
+      price?.recurring?.interval_count === 1
+    );
+  }
+
   constructor(
     private route: ActivatedRoute,
     private planService: PlanService,
@@ -76,7 +87,7 @@ export class SignupComponent implements OnInit {
 
     this.getMethod();
 
-    if (this.authService.user.plan !== 'free') {
+    if (!this.authService.user.plan || this.authService.user.plan === 'free') {
       this.paymentService.getActiveCoupon().then((id) => {
         if (id) {
           this.paymentService
@@ -96,7 +107,7 @@ export class SignupComponent implements OnInit {
           this.invoiceLoading = true;
           return this.paymentService.getStripeRetrieveUpcoming(
             value.price[0].id,
-            this.coupon?.id
+            this.isCouponTarget && this.coupon?.id
           );
         })
       )
@@ -122,7 +133,7 @@ export class SignupComponent implements OnInit {
     this.paymentService
       .createSubscription({
         priceId: this.form.value.price[0].id,
-        couponId: this.coupon?.id,
+        couponId: this.isCouponTarget && this.coupon?.id,
         planId: this.planId,
       })
       .then(() => {

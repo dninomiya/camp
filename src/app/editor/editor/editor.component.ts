@@ -270,7 +270,10 @@ export class EditorComponent implements OnInit {
   private createLesson(userId: string) {
     return this.lessonService.createLesson(
       userId,
-      this.form.value,
+      {
+        ...this.form.value,
+        free: this.authService.user.admin ? this.form.value.free : true,
+      },
       this.thumbnail
     );
   }
