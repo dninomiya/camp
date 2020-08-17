@@ -26,9 +26,9 @@ export class StripeService {
     const uid = payment.docs[0].ref.parent.parent?.id;
 
     if (uid) {
-      return (await db.doc(`users/${uid}`).get()).data();
+      return uid;
     } else {
-      return null;
+      return undefined;
     }
   }
 

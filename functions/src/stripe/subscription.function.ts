@@ -267,7 +267,9 @@ export const deleteSubscription = functions
   .region('asia-northeast1')
   .https.onRequest(async (req: any, res: any) => {
     const data = req.body.data.object;
-    const uid = StripeService.getCampUidByCustomerId(data.customer);
+    const uid: string | undefined = await StripeService.getCampUidByCustomerId(
+      data.customer
+    );
 
     if (uid) {
       const user: any = (await db.doc(`users/${uid}`).get()).data();

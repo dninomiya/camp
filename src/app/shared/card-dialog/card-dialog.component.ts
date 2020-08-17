@@ -5,7 +5,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { PaymentService } from 'src/app/services/stripe/payment.service';
 import Stripe from 'stripe';
 import { StripeCardElement, Stripe as StripeClient } from '@stripe/stripe-js';
-import { CustomerService } from 'src/app/services/stripe/customer.service';
 
 @Component({
   selector: 'app-card-dialog',
