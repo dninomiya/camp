@@ -209,7 +209,7 @@ export class LessonService {
         .post(
           'https://hooks.slack.com/services/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',
           {
-            text: `「${data.title}」が更新されました。\n${environment.host}/lessonv?=${id}`,
+            text: `「${data.title}」が更新されました。\n${environment.host}/lesson?v=${id}`,
           },
           {
             headers: new HttpHeaders({
