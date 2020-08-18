@@ -2,7 +2,7 @@ import { PaymentService } from './../services/stripe/payment.service';
 import { CardDialogComponent } from 'src/app/shared/card-dialog/card-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import Stripe from 'stripe';
 
 @Component({
@@ -11,6 +11,8 @@ import Stripe from 'stripe';
   styleUrls: ['./credit-card.component.scss'],
 })
 export class CreditCardComponent implements OnInit {
+  @Output() private update = new EventEmitter();
+
   loading = true;
   user$ = this.authService.authUser$;
   method: Stripe.PaymentMethod;
@@ -41,7 +43,6 @@ export class CreditCardComponent implements OnInit {
       .open(CardDialogComponent, {
         width: '560px',
         data: this.method,
-        minHeight: '400px',
         autoFocus: false,
         restoreFocus: false,
       })
@@ -49,6 +50,7 @@ export class CreditCardComponent implements OnInit {
       .subscribe((reflesh) => {
         if (reflesh) {
           this.getPaymentMethod();
+          this.update.emit(true);
         }
       });
   }
