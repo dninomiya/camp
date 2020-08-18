@@ -1,3 +1,4 @@
+import { db } from './../utils/db';
 import { StripeService } from './service';
 import * as functions from 'firebase-functions';
 import Stripe from 'stripe';
@@ -15,14 +16,16 @@ export const createStripeSetupIntent = functions
       },
       context
     ): Promise<Stripe.SetupIntent> => {
-      if (!context.auth) {
+      const uid = context.auth?.uid;
+
+      if (!uid) {
         throw new functions.https.HttpsError(
           'permission-denied',
           '認証エラーが発生しました。'
         );
       }
 
-      const customer = await StripeService.getCampCustomer(context.auth.uid);
+      const customer = await StripeService.getCampCustomer(uid);
 
       let customerId = customer?.customerId;
 
@@ -31,6 +34,13 @@ export const createStripeSetupIntent = functions
           name: data.name,
           email: data.email,
         });
+
+        await db.doc(`users/${uid}/private/payment`).set(
+          {
+            customerId,
+          },
+          { merge: true }
+        );
       }
 
       return StripeService.client.setupIntents.create({
