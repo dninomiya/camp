@@ -26,14 +26,16 @@ export const setStripePaymentMethod = functions
         );
       }
 
-      if (!context.auth) {
+      const uid = context.auth?.uid;
+
+      if (!uid) {
         throw new functions.https.HttpsError(
           'permission-denied',
           '認証エラーが発生しました。'
         );
       }
 
-      const customer = await StripeService.getCampCustomer(context.auth.uid);
+      const customer = await StripeService.getCampCustomer(uid);
 
       if (!customer) {
         throw new functions.https.HttpsError(
@@ -48,7 +50,7 @@ export const setStripePaymentMethod = functions
         );
       }
 
-      await StripeService.updateCampCustomer(context.auth.uid, {
+      await StripeService.updateCampCustomer(uid, {
         paymentMethod: data.paymentMethod,
       });
 
@@ -57,46 +59,5 @@ export const setStripePaymentMethod = functions
           default_payment_method: data.paymentMethod,
         },
       });
-    }
-  );
-
-export const getStripeInvoices = functions
-  .region('asia-northeast1')
-  .https.onCall(
-    async (
-      data: {
-        startingAfter?: string;
-        endingBefore?: string;
-      },
-      context
-    ): Promise<Stripe.ApiList<Stripe.Charge> | null> => {
-      if (!context.auth) {
-        throw new functions.https.HttpsError(
-          'permission-denied',
-          '認証が必要です'
-        );
-      }
-
-      const customer = await StripeService.getCampCustomer(context.auth.uid);
-
-      if (customer) {
-        const params: Stripe.ChargeListParams = {
-          customer: customer.customerId,
-          limit: 20,
-          expand: ['data.invoice'],
-        };
-
-        if (data?.startingAfter) {
-          params.starting_after = data.startingAfter;
-        }
-
-        if (data?.endingBefore) {
-          params.ending_before = data.endingBefore;
-        }
-
-        return StripeService.client.charges.list(params);
-      } else {
-        return null;
-      }
     }
   );

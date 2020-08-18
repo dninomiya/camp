@@ -50,11 +50,13 @@
     </ul>
   </form>
 
-  <div *ngIf="inProgress">
-    <div class="doing">
-      <mat-spinner [diameter]="32"></mat-spinner>
-      <p>カード登録中です。</p>
-    </div>
+  <div class="doing" *ngIf="inProgress">
+    <mat-spinner [diameter]="40"></mat-spinner>
+    <p>カード登録中です。</p>
+  </div>
+
+  <div class="doing" *ngIf="loading">
+    <mat-spinner [diameter]="40"></mat-spinner>
   </div>
 </mat-dialog-content>
 

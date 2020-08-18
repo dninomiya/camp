@@ -9,6 +9,9 @@ export class StripeService {
   });
 
   static async getCampCustomer(uid: string): Promise<Customer | null> {
+    if (!uid) {
+      return null;
+    }
     const doc = await db.doc(`users/${uid}/private/payment`).get();
     if (doc.exists) {
       return doc.data() as Customer;
@@ -18,12 +21,16 @@ export class StripeService {
   }
 
   static async getCampUidByCustomerId(id: string) {
+    if (!id) {
+      return undefined;
+    }
+
     const payment = await db
       .collectionGroup('private')
       .where('customerId', '==', id)
       .get();
 
-    const uid = payment.docs[0].ref.parent.parent?.id;
+    const uid = payment.docs[0]?.ref?.parent?.parent?.id;
 
     if (uid) {
       return uid;
@@ -56,11 +63,15 @@ export class StripeService {
   ): Promise<Stripe.PaymentMethod | null> {
     const customer = await this.getCampCustomer(uid);
     if (customer?.customerId) {
-      const result = await this.client.paymentMethods.list({
-        customer: customer.customerId,
-        type: 'card',
-      });
-      return result.data[0];
+      try {
+        const result = await this.client.paymentMethods.list({
+          customer: customer.customerId,
+          type: 'card',
+        });
+        return result.data[0];
+      } catch (error) {
+        return null;
+      }
     } else {
       return null;
     }
