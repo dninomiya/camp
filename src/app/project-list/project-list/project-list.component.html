@@ -64,6 +64,13 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="point">
+        <th mat-header-cell *matHeaderCellDef>ポイント</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.user.point | number }}P
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         [class.warning]="row.sleepTime > 2 && row.sleepTime <= 4"
@@ -102,7 +109,9 @@
         ></mat-card-subtitle>
       </mat-card-header>
       <img
-        [src]="product.thumbnailURL || 'assets/images/product-dummy.png'"
+        [src]="
+          product.thumbnailURL || 'https://placehold.it/800x400?text=No%20Image'
+        "
         alt=""
         mat-card-image
       />

@@ -92,6 +92,7 @@ export class ProjectListComponent implements OnInit {
     'pullRequest',
     'amount',
     'goal',
+    'point',
   ];
 
   products$: Observable<
