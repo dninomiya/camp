@@ -4,7 +4,7 @@
   <mat-form-field>
     <mat-label>リポジトリ</mat-label>
     <mat-select [(value)]="selected">
-      <mat-option>-</mat-option>
+      <mat-option value="blank">-</mat-option>
       <mat-option *ngFor="let repo of repos$ | async" [value]="repo.id">
         {{ repo.name }}
       </mat-option>
@@ -14,12 +14,7 @@
 
 <mat-dialog-actions>
   <button mat-button matDialogClose>キャンセル</button>
-  <button
-    mat-raised-button
-    color="primary"
-    [matDialogClose]="selected"
-    [disabled]="!selected"
-  >
+  <button mat-raised-button color="primary" [matDialogClose]="selected">
     選択
   </button>
 </mat-dialog-actions>

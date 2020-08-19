@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { ApolloService } from './../../services/apollo.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,7 +11,12 @@ export class RepoSelectorComponent implements OnInit {
   repos$ = this.apolloService.getOwnRepos();
   selected: string;
 
-  constructor(private apolloService: ApolloService) {}
+  constructor(
+    private apolloService: ApolloService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.selected = this.authService.user.repoId;
+  }
 }
