@@ -270,6 +270,45 @@ export class ArticleComponent implements OnInit, OnDestroy {
     });
   }
 
+  private getOgpHTML(ogp: any) {
+    const data = ogp.data;
+    let imageURL: string;
+
+    if (data.ogImage && data.ogImage.url) {
+      imageURL = data.ogImage.url;
+    } else if (data.ogImage && data.ogImage[0]) {
+      imageURL = data.ogImage[0].url;
+    }
+
+    const title = data.ogTitle.replace(/`/g, '&#096;');
+    let thumbnail = '';
+
+    if (imageURL) {
+      thumbnail = `<figure class="ogp__thumbnail" style="background-image: url(${imageURL})"></figure>`;
+    }
+
+    let description = '';
+
+    if (data.ogDescription) {
+      description = `<p class="ogp__description">${data.ogDescription
+        .replace(/\n/gm, '')
+        .replace(/`/g, '&#096;')}</p>`;
+    }
+
+    const result = `<a href="${ogp.requestUrl}" target="_blank" class="ogp">
+      ${thumbnail}
+      <div class="ogp__body">
+        <p class="ogp__title">${title}</p>
+        ${description}
+        <p class="ogp__url">${ogp.requestUrl}</p>
+      </div>
+    </a>`
+      .replace(/\n|^ +/gm, '')
+      .replace(/\n/gm, '');
+
+    return '```ogp_export\n' + result + '\n```';
+  }
+
   ngOnInit() {
     combineLatest([this.permission$, this.lessonMeta$]).subscribe(
       ([permission]) => {
@@ -339,18 +378,26 @@ export class ArticleComponent implements OnInit, OnDestroy {
         }
 
         if (urlMap.externalUrls) {
-          const ogps = this.lessonService.getOGPs(urlMap.externalUrls);
-          console.log(ogps);
-          urlMap.externalUrls.forEach((url, i) => {
-            if (ogps[i]) {
-              const reg = new RegExp(
-                `^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`,
-                'gm'
-              );
-              lessonBody.body = lessonBody.body.replace(reg, ogps[i]);
-            }
-          });
-          return of(lessonBody);
+          return merge(
+            of(lessonBody),
+            this.lessonService.getOGPs(urlMap.externalUrls).pipe(
+              map((ogps) => {
+                urlMap.externalUrls.forEach((url, i) => {
+                  if (ogps[i]) {
+                    const reg = new RegExp(
+                      `^${url.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')}$`,
+                      'gm'
+                    );
+                    lessonBody.body = lessonBody.body.replace(
+                      reg,
+                      this.getOgpHTML(ogps[i])
+                    );
+                  }
+                });
+                return lessonBody;
+              })
+            )
+          );
         } else {
           return of(lessonBody);
         }
