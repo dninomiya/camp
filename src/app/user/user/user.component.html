@@ -38,12 +38,7 @@
         </button>
       </ng-container>
       <ng-template #connect>
-        <button
-          *ngIf="apolloService.authInvalid"
-          class="github"
-          mat-button
-          (click)="connectGitHub()"
-        >
+        <button class="github" mat-button (click)="connectGitHub()">
           <mat-icon svgIcon="github"></mat-icon>
           <span>連携</span>
         </button>
