@@ -41,7 +41,7 @@ export const repos = gql`
 export const ownRepos = gql`
   {
     organization(login: "camp-team") {
-      repositories(first: 30, affiliations: [OWNER]) {
+      repositories(first: 100, affiliations: [OWNER]) {
         nodes {
           id
           name
