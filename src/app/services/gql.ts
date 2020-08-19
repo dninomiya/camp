@@ -2,12 +2,16 @@ import gql from 'graphql-tag';
 
 export const repos = gql`
   {
-    organization(login: "camp-team") {
-      repositories(first: 100) {
-        totalCount
-        edges {
-          cursor
-          node {
+    search(
+      first: 100
+      type: REPOSITORY
+      query: "org:camp-team archived:false"
+    ) {
+      repositoryCount
+      edges {
+        cursor
+        node {
+          ... on Repository {
             labels(first: 30) {
               nodes {
                 name

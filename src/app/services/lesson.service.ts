@@ -255,10 +255,9 @@ export class LessonService {
     });
   }
 
-  getOGPs(urls: string[]): string[] {
-    return urls.map((url) => {
-      return `<a class="embedly-card" data-card-align="left" data-card-controls="0" data-card-width="100%" href="${url}"></a>`;
-    });
+  getOGPs(urls: string[]): Observable<object[]> {
+    const collable = this.fns.httpsCallable('getOGP');
+    return collable(urls);
   }
 
   checkPermission(lessonId: string): Observable<boolean> {
