@@ -8,7 +8,7 @@ const bucket = 'gs://3ml_backup';
 export const scheduledFirestoreExport = functions
   .region('asia-northeast1')
   // バックアップ頻度
-  .pubsub.schedule('schedule: 1,15,27 of month 09:00')
+  .pubsub.schedule('1,15,27 of month 09:00')
   .onRun((_) => {
     const databaseName = client.databasePath(
       process.env.GCP_PROJECT,
