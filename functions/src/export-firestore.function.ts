@@ -10,10 +10,7 @@ export const scheduledFirestoreExport = functions
   // バックアップ頻度
   .pubsub.schedule('1,15,27 of month 09:00')
   .onRun((_) => {
-    const databaseName = client.databasePath(
-      process.env.GCP_PROJECT,
-      '(default)'
-    );
+    const databaseName = client.databasePath('tml-prod-74d27', '(default)');
 
     return client
       .exportDocuments({
