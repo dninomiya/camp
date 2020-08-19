@@ -1,22 +1,26 @@
+import { FromNowPipe } from './../../shared/pipes/from-now.pipe';
+import { FormControl } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { ApolloService } from './../../services/apollo.service';
 import { tap, switchMap, map } from 'rxjs/operators';
 import { ProductWithAuthor } from './../../interfaces/product';
 import { Observable, of, combineLatest } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { ProductService } from './../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
+  providers: [FromNowPipe],
   styleUrls: ['./project-list.component.scss'],
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListComponent implements OnInit, AfterViewInit {
   loading = true;
   tableLoading = true;
-
-  repos$ = this.apolloService.isReady$.pipe(
+  filter = new FormControl('all');
+  data$ = this.apolloService.isReady$.pipe(
     switchMap((ready) => {
       if (ready) {
         return this.apolloService.getRepos();
@@ -82,6 +86,27 @@ export class ProjectListComponent implements OnInit {
     }),
     tap((res) => {
       this.tableLoading = false;
+    }),
+    shareReplay(1)
+  );
+
+  repos$ = combineLatest([this.data$, this.filter.valueChanges]).pipe(
+    map(([repos, filter]) => {
+      if (!filter || filter === 'all') {
+        return repos;
+      }
+      if (filter === 'denger') {
+        return repos.filter(
+          (repo) =>
+            this.fromNowPipe.transform(repo.user?.lastPullRequestDate) > 5
+        );
+      }
+      if (filter === 'day') {
+        return repos.filter((repo) => repo.user?.plan.match(/mentor$|isa/));
+      }
+      if (filter === 'week') {
+        return repos.filter((repo) => repo.user?.plan === 'mentorLite');
+      }
     })
   );
 
@@ -93,7 +118,7 @@ export class ProjectListComponent implements OnInit {
     'amount',
     'goal',
     'point',
-    'plan',
+    'mtg',
   ];
 
   products$: Observable<
@@ -105,8 +130,17 @@ export class ProjectListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private apolloService: ApolloService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private fromNowPipe: FromNowPipe
+  ) {
+    this.filter.valueChanges.subscribe((value) => {
+      localStorage.setItem('projectFilter', value);
+    });
+  }
 
   ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    this.filter.patchValue(localStorage.getItem('projectFilter') || 'all');
+  }
 }

@@ -1,6 +1,17 @@
 <div class="container">
   <section class="gant">
     <h2>ステータス</h2>
+
+    <mat-form-field>
+      <mat-label>絞り込み</mat-label>
+      <mat-select matInput [formControl]="filter">
+        <mat-option value="all">すべて</mat-option>
+        <mat-option value="denger">進捗停滞</mat-option>
+        <mat-option value="day">週末</mat-option>
+        <mat-option value="week">平日</mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <table
       mat-table
       [dataSource]="repos$ | async"
@@ -71,10 +82,12 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="plan">
-        <th mat-header-cell *matHeaderCellDef>プラン</th>
+      <ng-container matColumnDef="mtg">
+        <th mat-header-cell *matHeaderCellDef>
+          MTG頻度
+        </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.user?.plan | plan }}
+          {{ element.user?.plan | mtgType }}
         </td>
       </ng-container>
 
