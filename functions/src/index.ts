@@ -13,3 +13,4 @@ export * from './zoom.function';
 export * from './github/best-answer.function';
 export * from './github/pull-request.function';
 export * from './stripe';
+export * from './export-firestore.function';
