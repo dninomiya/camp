@@ -63,7 +63,7 @@ export class LessonService {
       authorId,
     });
 
-    if (data.public) {
+    if (data.public && environment.production) {
       await this.http
         .post(
           'https://hooks.slack.com/services/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',
@@ -204,7 +204,7 @@ export class LessonService {
       updatedAt: new Date(),
     });
 
-    if (data.public) {
+    if (data.public && environment.production) {
       await this.http
         .post(
           'https://hooks.slack.com/services/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',
