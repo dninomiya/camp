@@ -64,9 +64,7 @@ export class ApolloService {
       })
       .valueChanges.pipe(
         map(({ data }) => {
-          return data.organization.repositories.edges.map(
-            (iteme) => iteme.node
-          );
+          return data.search.edges.map((item) => item.node);
         })
       );
   }
