@@ -52,6 +52,9 @@ app.get('*', async (req: any, res: any) => {
     if (lesson && content) {
       res.send(buildHtml({ ...lesson, body: content.body }));
       return;
+    } else {
+      res.send(file);
+      return;
     }
   }
 
