@@ -99,18 +99,16 @@ export class UserComponent implements OnInit {
 
   connectRepo() {
     this.dialog
-      .open(RepoSelectorComponent, {
-        width: '640px',
-      })
+      .open(RepoSelectorComponent)
       .afterClosed()
       .subscribe((repoId?: string) => {
         if (repoId) {
           this.authService
             .updateUser({
-              repoId,
+              repoId: repoId === 'blank' ? null : repoId,
             })
             .then(() => {
-              this.snackBar.open('リポジトリを登録しました！');
+              this.snackBar.open('リポジトリを設定しました');
             });
         }
       });

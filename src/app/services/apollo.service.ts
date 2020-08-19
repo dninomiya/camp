@@ -24,10 +24,11 @@ export class ApolloService {
   ) {
     this.authService.getGitHubData().subscribe((data) => {
       this.apollo.removeClient();
-      if (data.github) {
+      if (data?.github) {
         console.log('set apollo');
         this.initApollo(data.github);
       } else {
+        this.authInvalid = true;
         this.readySource.next(true);
       }
     });
@@ -53,6 +54,7 @@ export class ApolloService {
     });
 
     this.getOwnRepos().subscribe((res) => {
+      this.authInvalid = false;
       this.readySource.next(true);
     });
   }
