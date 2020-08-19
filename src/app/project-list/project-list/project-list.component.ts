@@ -141,8 +141,6 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    this.filter.patchValue(localStorage.getItem('projectFilter') || 'all', {
-      emitEvent: true,
-    });
+    this.filter.patchValue(localStorage.getItem('projectFilter') || 'all');
   }
 }
