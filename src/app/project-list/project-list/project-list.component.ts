@@ -93,7 +93,7 @@ export class ProjectListComponent implements OnInit {
     'amount',
     'goal',
     'point',
-    'plan',
+    'mtg',
   ];
 
   products$: Observable<
