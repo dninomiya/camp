@@ -25,14 +25,17 @@
           mat-raised-button
           color="primary"
           (click)="connectRepo()"
-          *ngIf="(githubData$ | async)?.githubUniqueId; else connect"
+          *ngIf="
+            (githubData$ | async)?.githubUniqueId && !apolloService.authInvalid;
+            else connect
+          "
         >
           リポジトリ設定
         </button>
         <button
           (click)="importLabels(user.repoId)"
           mat-button
-          *ngIf="user.repoId && !apolloService.authInvalid"
+          *ngIf="user.repoId"
         >
           ラベルインポート
         </button>
