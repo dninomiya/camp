@@ -44,25 +44,23 @@ const app = express();
 app.use(useragent.express());
 
 app.get('*', async (req: any, res: any) => {
-  if (req.useragent.isBot && req.query.v) {
-    functions.logger.info(req.query.v);
-    const lesson = (await db.doc(`lessons/${req.query.v}`).get())?.data();
+  const id = req.query.v;
+  if (req.useragent.isBot && id) {
+    const lesson = (
+      await db.doc(`lessons/${id.replace('/', '')}`).get()
+    )?.data();
     const content = (
       await db.doc(`lessons/${req.query.v}/body/content`).get()
     )?.data() as { body: string };
     if (lesson && content) {
-      functions.logger.info('build');
-      res.send(buildHtml({ ...lesson, body: content.body }));
-      return;
-    } else {
-      functions.logger.info('no action');
-      res.send(file);
+      res
+        .set('Cache-Control', 'public, max-age=30000')
+        .send(buildHtml({ ...lesson, body: content.body }));
       return;
     }
   }
 
-  functions.logger.info('no action');
-  res.send(file);
+  res.set('Cache-Control', 'public, max-age=3000').send(file);
 });
 
 export const render = functions.https.onRequest(app);
