@@ -46,8 +46,9 @@ app.use(useragent.express());
 app.get('*', async (req: any, res: any) => {
   const id = req.query.v;
   if (req.useragent.isBot && id) {
+    functions.logger.info(id);
     const lesson = (
-      await db.doc(`lessons/${id.replace('/', '')}`).get()
+      await db.doc(`lessons/${id.replace(/\//g, '')}`).get()
     )?.data();
     const content = (
       await db.doc(`lessons/${req.query.v}/body/content`).get()
