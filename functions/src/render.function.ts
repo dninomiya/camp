@@ -44,14 +44,11 @@ const app = express();
 app.use(useragent.express());
 
 app.get('*', async (req: any, res: any) => {
-  const id = req.query.v;
+  const id = req.query.v?.replace(/\//g, '');
   if (req.useragent.isBot && id) {
-    functions.logger.info(id);
-    const lesson = (
-      await db.doc(`lessons/${id.replace(/\//g, '')}`).get()
-    )?.data();
+    const lesson = (await db.doc(`lessons/${id}`).get())?.data();
     const content = (
-      await db.doc(`lessons/${req.query.v}/body/content`).get()
+      await db.doc(`lessons/${id}/body/content`).get()
     )?.data() as { body: string };
     if (lesson && content) {
       res
