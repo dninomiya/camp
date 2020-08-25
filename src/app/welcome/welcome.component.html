@@ -21,21 +21,16 @@
       <div class="hero__wrap">
         <div class="hero__body">
           <p class="hero__msg">
-            <span>Webサービスを作りたい</span>
-            <span>すべての方へ</span>
+            <span>Webフロントの</span>
+            <span>実務経験を積める場所</span>
           </p>
           <p class="hero__sub">
             <span
               >現役エンジニアが最新技術を使ったWebサービス開発を教えます。週末起業したい人、エンジニアになりたい人が利用しています。</span
             >
           </p>
-          <button
-            (click)="scrollToElement(plan)"
-            fragment="plans"
-            mat-raised-button
-            color="primary"
-          >
-            無料ではじめる
+          <button routerLink="/" mat-raised-button color="primary">
+            無料教材を見る
           </button>
         </div>
         <app-mock class="hero__mock"></app-mock>
