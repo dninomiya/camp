@@ -60,15 +60,22 @@ export const createStripeSubscription = functions
         );
       }
 
-      const subscriptionId = await StripeService.getSubscriptionId(uid);
+      const oldSubscription = await StripeService.getSubscription(uid);
       let subscription: Stripe.Subscription;
 
-      if (subscriptionId) {
-        functions.logger.info('プラン変更: ' + subscriptionId);
+      if (oldSubscription) {
+        functions.logger.info('プラン変更: ' + oldSubscription.id);
         subscription = await StripeService.client.subscriptions.update(
-          subscriptionId,
+          oldSubscription.id,
           {
-            items: [{ price: data.priceId }],
+            cancel_at_period_end: false,
+            proration_behavior: 'create_prorations',
+            items: [
+              {
+                id: oldSubscription.items.data[0].id,
+                price: data.priceId,
+              },
+            ],
             expand: ['latest_invoice.payment_intent'],
           }
         );

@@ -74,7 +74,9 @@
           >
           <span matLine>{{ coupon.percent_off }}%OFF</span>
           <span matLine *ngIf="coupon.max_redemptions"
-            >残り{{ coupon.max_redemptions | number }}名</span
+            >残り{{
+              coupon.max_redemptions - coupon.times_redeemed | number
+            }}名</span
           >
         </mat-list-option>
       </mat-selection-list>
@@ -83,7 +85,7 @@
     <mat-divider></mat-divider>
 
     <mat-list class="total" dense>
-      <h2 matSubheader>合計</h2>
+      <h2 matSubheader>請求金額</h2>
       <ng-template #loadingInvoice>
         <mat-spinner [diameter]="40"></mat-spinner>
       </ng-template>
@@ -92,22 +94,21 @@
           <mat-list-item disabled>プランを選択してください</mat-list-item>
         </ng-template>
         <ng-container *ngIf="invoice; else needChoice">
-          <mat-list-item>
-            <span matLine>通常価格: {{ invoice.subtotal | number }} 円</span>
+          <mat-list-item *ngFor="let line of invoice.lines.data">
+            <span matLine>{{ line.description }}</span>
+            <span matLine>{{ line.amount }}円</span>
           </mat-list-item>
-          <mat-list-item *ngIf="coupon">
-            <span matLine
-              >割引金額: -{{
-                invoice.total_discount_amounts[0]?.amount
-              }}
-              円<span *ngIf="isCouponTarget && coupon.duration_in_months"
-                >（{{ coupon.duration_in_months }}か月有効）</span
-              ></span
+          <mat-list-item *ngIf="invoice.discount?.coupon as activeCoupon">
+            <span matLine *ngIf="activeCoupon.percent_off"
+              >クーポン: {{ activeCoupon.percent_off }}%OFF</span
+            >
+            <span matLine *ngIf="activeCoupon.amount_off"
+              >クーポン: {{ activeCoupon.amount_off }}円OFF</span
             >
           </mat-list-item>
           <mat-list-item>
             <span matLine
-              >初回請求:
+              >合計:
               {{ (invoice.total > 0 ? invoice.total : 0) | number }}円</span
             >
           </mat-list-item>

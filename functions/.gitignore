@@ -11,3 +11,4 @@ firebase-debug.log
 index.html
 gcpkey.json
 .runtimeconfig.json
+ui-debug.log

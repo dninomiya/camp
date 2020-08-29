@@ -82,6 +82,13 @@ export class StripeService {
     return stripeCustomer?.subscriptions?.data[0]?.id;
   }
 
+  static async getSubscription(
+    uid: string
+  ): Promise<Stripe.Subscription | undefined> {
+    const stripeCustomer = await this.getStripeCustomer(uid);
+    return stripeCustomer?.subscriptions?.data[0];
+  }
+
   static async getActivePriceId(uid: string): Promise<string | undefined> {
     const stripeCustomer = await this.getStripeCustomer(uid);
     return stripeCustomer?.subscriptions?.data[0]?.plan?.id;
