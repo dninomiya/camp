@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 import { sendSlack } from './utils/slack';
 
 const slackURL =
-  'https://hooks.slack.com/services/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';
+  'https://hooks.slack.com/services/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';
 
 export const onRecordMeetingFromZoom = functions
   .region('asia-northeast1')
