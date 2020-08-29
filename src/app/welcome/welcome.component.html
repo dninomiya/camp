@@ -21,12 +21,12 @@
       <div class="hero__wrap">
         <div class="hero__body">
           <p class="hero__msg">
-            <span>Webフロントの</span>
-            <span>実務経験を積める場所</span>
+            <span>ほしいWebサービスを</span>
+            <span>CAMPで作ろう</span>
           </p>
           <p class="hero__sub">
             <span
-              >現役エンジニアが最新技術を使ったWebサービス開発を教えます。週末起業したい人、エンジニアになりたい人が利用しています。</span
+              >現役エンジニアが最新技術を使ったWebサービス開発を教えます。週末起業したい人や実績が欲しい未経験者が利用しています。</span
             >
           </p>
           <button routerLink="/" mat-raised-button color="primary">
@@ -173,9 +173,7 @@
     <div #flow></div>
     <mat-card class="section">
       <h2>2つのスタイルから選べます</h2>
-      <p class="lead">
-        ひとりで進めるか、メンターと進めるか
-      </p>
+      <p class="lead">ひとりで進めるか、メンターと進めるか</p>
       <div class="causes">
         <div class="cause">
           <figure class="cause__image">
@@ -242,13 +240,13 @@
         <div class="mentor__body">
           <h2>CAMPのミッション</h2>
           <p>
-            CAMPのミッションは最先端の技術を使ってしっかりとしたWEBサービスを作れる人材を増やすことです。
+            CAMPのミッションは本格的なWebアプリ（サービス）の開発をサポートすることです。
           </p>
           <p>
-            多くのスクールがPHPやRubyを軸としたMPA開発を教えていますが、TwitterやYouTubeをはじめ、海外ではSPAの採用事例が増えています。しかし現在国内でSPA開発ができる人材が少なく、SPAサービスを作りたくても作れない現状があります。
+            多くのプログラミングスクールは実質的に就職予備校となっており、就活基準で設計されています。しかし実際のサービス開発ではスクールで扱われるより遥かに多くのことを知り、実践できる必要があります。そして、現在本番のサービス開発を想定した開発コーチングサービスはほとんどありません。
           </p>
           <p>
-            その課題を解決すべく、CAMPではSPAに特化したサービス開発を教えています。自分の個人サービスを実務として進めるので、実務経験と実際のサービス開発経験が身につきます。
+            その課題を解決すべく、CAMPでは本格的かつ超実務的なサービス開発をレクチャーしています。目的は就職ではなく本格的なオリジナルサービスをリリースすることですが、同時にそれは就活ツールとしても非常に強力に機能します。どんな些細なネタでも良いので、自分で作りたいサービスがある方のご参加をお待ちしています。
           </p>
         </div>
       </div>
@@ -257,9 +255,7 @@
     <div #voiceArea></div>
     <mat-card class="section">
       <h2>ユーザーボイス</h2>
-      <p class="lead">
-        様々な声をいただいています。
-      </p>
+      <p class="lead">様々な声をいただいています。</p>
       <div class="voices">
         <div>
           <blockquote class="twitter-tweet">
@@ -376,9 +372,7 @@
     <div #plan id="plan"></div>
     <mat-card class="section">
       <h2>プラン</h2>
-      <p class="lead">
-        自分に合ったプランを選択してください。
-      </p>
+      <p class="lead">自分に合ったプランを選択してください。</p>
       <ng-template #planLoading>
         <mat-spinner class="plan-loader" [diameter]="40"></mat-spinner>
       </ng-template>
@@ -453,9 +447,7 @@
               経済的に授業料が払えない学生の方や社会人の方を対象としたプランです。就職後に給与の一部をシェアしてもらうことを条件に、無料でメンタープランと同等の訓練を受けることができます。
             </p>
             <div class="isa__button">
-              <a routerLink="/isa" mat-button color="primary">
-                詳細を見る
-              </a>
+              <a routerLink="/isa" mat-button color="primary"> 詳細を見る </a>
             </div>
           </div>
         </div>
@@ -465,9 +457,7 @@
     <div #faq></div>
     <mat-card class="section">
       <h2>Q&A</h2>
-      <p class="lead">
-        ご不明な点はお気軽にお問い合わせください。
-      </p>
+      <p class="lead">ご不明な点はお気軽にお問い合わせください。</p>
       <div class="qa-grid">
         <div class="qa" *ngFor="let qa of qas">
           <h3 class="qa__question">{{ qa.q }}</h3>
