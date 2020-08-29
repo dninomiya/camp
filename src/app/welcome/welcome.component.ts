@@ -20,11 +20,11 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit, AfterViewInit {
   videos = [
-    'Dey97I72JtI',
+    '4ZwkWAAz8s0',
     'QCJ1THnyAec',
     'MDyCX0d-NOE',
     'P1dPxsu-kyI',
-    'nww-Y7HiaGE',
+    'pDhmhB1qI-0',
   ];
   swiperConfig: SwiperOptions = {
     slidesPerView: 3,

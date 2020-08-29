@@ -94,9 +94,9 @@ export class SignupComponent implements OnInit {
     if (!this.authService.user.plan || this.authService.user.plan === 'free') {
       this.paymentService.getActiveCoupon().then((id) => {
         if (id) {
-          this.paymentService
-            .getCoupon(id)
-            .then((coupon) => (this.coupon = coupon));
+          this.paymentService.getCoupon(id).then((coupon) => {
+            this.coupon = coupon;
+          });
         }
       });
     }
@@ -148,7 +148,7 @@ export class SignupComponent implements OnInit {
       })
       .catch((error) => {
         this.snackBar.open('エラーが発生しました');
-        console.log(error);
+        console.error(error);
       })
       .finally(() => (this.isLoading = false));
   }
