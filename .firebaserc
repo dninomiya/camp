@@ -1,7 +1,6 @@
 {
   "projects": {
     "dev": "dev-update",
-    "prod": "tml-prod-74d27",
-    "default": "dev-update"
+    "prod": "tml-prod-74d27"
   }
 }

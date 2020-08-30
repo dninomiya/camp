@@ -8,6 +8,32 @@
   margin-bottom: -80px;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background: #fff;
+  align-items: center;
+  @include sp {
+    display: block;
+  }
+  &__logo {
+    margin: 0;
+    @include sp {
+      margin-bottom: 16px;
+    }
+    a {
+      padding: 8px 16px;
+      display: block;
+      height: 100%;
+    }
+    img {
+      display: block;
+      height: 24px;
+    }
+  }
+}
+
 .wrap {
   position: relative;
   &:before {
@@ -160,125 +186,6 @@ h2 {
   }
 }
 
-.plans {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  @include sp {
-    grid-template-columns: 1fr;
-  }
-}
-
-.plan {
-  text-align: center;
-  padding: 40px 24px;
-  border: 1px solid rgba(black, 0.12);
-  border-radius: 3px;
-  display: flex;
-  flex-flow: column;
-  &__title {
-    font-size: 24px;
-    line-height: 1;
-    margin: 0 0 16px;
-  }
-  &__sub-title {
-    color: rgba(black, 0.6);
-  }
-  &__price-label {
-    margin: 40px 0 16px;
-    font-weight: 500;
-    @include sp {
-      margin-top: 24px;
-    }
-  }
-  &__points {
-    margin: 24px 0 32px;
-    color: rgba(black, 0.6);
-    flex: 1;
-  }
-  &__campaign {
-    margin-top: 24px;
-    color: #3f51b5;
-    span {
-      display: block;
-    }
-  }
-  &__price {
-    font-size: 40px;
-    margin: 0;
-    line-height: 1;
-    font-weight: 500;
-    @include tablet {
-      font-size: 24px;
-    }
-    small {
-      font-size: 24px;
-      margin: 0 8px;
-      @include tablet {
-        font-size: 14px;
-      }
-      &:first-child {
-        margin-left: 0;
-        font-size: 32px;
-        font-weight: normal;
-        @include tablet {
-          font-size: 24px;
-        }
-      }
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-    .isa {
-      font-size: 32px;
-    }
-  }
-  &__fact-price {
-    margin-top: 16px;
-    font-size: 13px;
-    text-decoration: line-through;
-    color: rgba(black, 0.38);
-  }
-  &__action {
-    @include sp {
-      margin-top: 0;
-    }
-  }
-  &__trial {
-    font-size: 13px;
-    margin-top: 8px;
-    color: rgba(black, 0.6);
-    @include tablet {
-      font-size: 11px;
-    }
-  }
-  &__isa-label {
-    font-size: 32px;
-  }
-}
-
-.examples {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.example {
-  text-align: center;
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-  }
-  &__title {
-    font-weight: 500;
-  }
-  &__description {
-    color: rgba(black, 0.6);
-  }
-}
-
 .lead {
   text-align: center;
   margin: -40px 0 80px;
@@ -425,17 +332,6 @@ h2 {
   border: 1px solid rgba(black, 0.12);
   &__hdg {
     font-weight: 500;
-  }
-}
-
-.notice {
-  margin: 24px 0 40px;
-  li {
-    &:before {
-      content: '※';
-      margin-right: 8px;
-    }
-    color: rgba(black, 0.38);
   }
 }
 
@@ -777,46 +673,6 @@ button mat-icon {
   }
 }
 
-.price-up {
-  background: #fafafa;
-  border-radius: 3px;
-  display: grid;
-  grid-template-columns: 400px 1fr;
-  padding: 40px;
-  gap: 80px;
-  align-items: center;
-  margin-bottom: 80px;
-  @include tablet {
-    grid-template-columns: 200px 1fr;
-    grid-area: 40px;
-  }
-  @include sp {
-    padding: 16px;
-    display: block;
-  }
-  &__hdg {
-    font-weight: 500;
-  }
-  &__detail {
-    color: rgba(black, 0.6);
-  }
-  figure {
-    text-align: center;
-    height: 240px;
-    @include sp {
-      height: auto;
-      margin-bottom: 16px;
-    }
-  }
-}
-
-.plan-features {
-  margin-bottom: 80px;
-  &__hdg {
-    margin-bottom: 40px;
-  }
-}
-
 .contact {
   padding: 80px 0;
   color: white;
@@ -877,80 +733,4 @@ button mat-icon {
     border: 1px solid rgba(black, 0.12);
     color: rgba(black, 0.38);
   }
-}
-
-.isa {
-  border: 4px solid #455a64;
-  padding: 40px;
-  border-radius: 4px;
-  @include sp {
-    padding: 16px;
-    border-width: 2px;
-  }
-  &__wrap {
-    display: flex;
-    align-items: center;
-    @include sp {
-      display: block;
-    }
-  }
-  &__image {
-    width: 240px;
-    @include sp {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 16px;
-      img {
-        width: 70%;
-      }
-    }
-  }
-
-  &__body {
-    padding-left: 24px;
-    @include sp {
-      padding-left: 0;
-    }
-    flex: 1;
-  }
-  &__title {
-    margin: 0 0 16px;
-    @include sp {
-      text-align: center;
-    }
-  }
-  &__description {
-    color: rgba(black, 0.6);
-    margin-bottom: 16px;
-  }
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px;
-  background: #fff;
-  align-items: center;
-  @include sp {
-    display: block;
-  }
-  &__logo {
-    margin: 0;
-    @include sp {
-      margin-bottom: 16px;
-    }
-    a {
-      padding: 8px 16px;
-      display: block;
-      height: 100%;
-    }
-    img {
-      display: block;
-      height: 24px;
-    }
-  }
-}
-
-.plan-loader {
-  margin: 40px auto;
 }

@@ -115,4 +115,48 @@ export class StripeService {
     });
     return customer.id;
   }
+
+  static async charge(uid: string | undefined, priceId: string): Promise<void> {
+    if (!priceId) {
+      throw new functions.https.HttpsError(
+        'data-loss',
+        '必要なデータがありません'
+      );
+    }
+
+    if (!uid) {
+      throw new functions.https.HttpsError(
+        'permission-denied',
+        '認証が必要です'
+      );
+    }
+
+    const customer = await StripeService.getCampCustomer(uid);
+
+    if (!customer) {
+      throw new functions.https.HttpsError(
+        'permission-denied',
+        'カスタマーが存在しません'
+      );
+    }
+
+    try {
+      await StripeService.client.invoiceItems.create({
+        customer: customer.customerId,
+        price: priceId,
+        tax_rates: [functions.config().stripe.tax],
+      });
+
+      const params: Stripe.InvoiceCreateParams = {
+        customer: customer.customerId,
+      };
+
+      const invoice = await StripeService.client.invoices.create(params);
+
+      await StripeService.client.invoices.pay(invoice.id);
+      return;
+    } catch (error) {
+      throw new functions.https.HttpsError('unauthenticated', error.code);
+    }
+  }
 }

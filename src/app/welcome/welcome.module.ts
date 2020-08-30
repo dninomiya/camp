@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MockComponent } from './mock/mock.component';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
+import { PlanListModule } from '../plan-list/plan-list.module';
 
 @NgModule({
   declarations: [WelcomeComponent, MockComponent],
@@ -13,7 +14,8 @@ import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
     SharedModule,
     WelcomeRoutingModule,
     NgxYoutubePlayerModule.forRoot(),
-    NgxUsefulSwiperModule
-  ]
+    NgxUsefulSwiperModule,
+    PlanListModule,
+  ],
 })
 export class WelcomeModule {}

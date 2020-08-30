@@ -20,6 +20,9 @@ export interface User {
   readonly point?: number;
   readonly links?: string[];
   readonly lastPullRequestDate?: firestore.Timestamp;
+  readonly ticket?: {
+    [keyName: string]: boolean;
+  };
   readonly isa?: {
     start: firestore.Timestamp;
     end?: firestore.Timestamp;
