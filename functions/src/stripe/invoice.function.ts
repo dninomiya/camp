@@ -47,9 +47,9 @@ export const getStripeInvoices = functions
 export const usePoint = functions
   .region('asia-northeast1')
   .https.onRequest(async (req, res) => {
-    const data: Stripe.Invoice = req.body.data.object;
+    const invoice: Stripe.Invoice = req.body.data.object;
     const uid: string | undefined = await StripeService.getCampUidByCustomerId(
-      data.customer as string
+      invoice.customer as string
     );
     if (!uid) {
       res.status(200).send('no-user');
@@ -57,21 +57,22 @@ export const usePoint = functions
     }
 
     const user = (await db.doc(`users/${uid}`).get()).data();
+
     if (
-      user &&
-      user.point &&
-      data.ending_balance === null &&
-      data.amount_due > 0
+      user?.point &&
+      invoice.ending_balance === null &&
+      invoice.amount_due > 0 &&
+      invoice.status === 'draft'
     ) {
       await StripeService.client.invoiceItems.create({
-        invoice: data.id,
-        customer: data.customer as string,
+        invoice: invoice.id,
+        customer: invoice.customer as string,
         amount: -user.point,
         currency: 'jpy',
         description: 'ポイント割引',
       });
       res.status(200).send('success');
     } else {
-      res.status(200).send('user undefined');
+      res.status(200).send('user undefined or invoice is not editable');
     }
   });
