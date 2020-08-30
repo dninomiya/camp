@@ -74,6 +74,11 @@ const routes: Routes = [
         canLoad: [AuthGuard],
       },
       {
+        path: 'plans',
+        loadChildren: () =>
+          import('./plan-list/plan-list.module').then((m) => m.PlanListModule),
+      },
+      {
         path: 'new',
         canLoad: [AuthGuard],
         data: {

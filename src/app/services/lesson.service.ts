@@ -269,7 +269,11 @@ export class LessonService {
         .pipe(take(1)),
     ]).pipe(
       map(([user, lesson]) => {
-        return lesson.free || (user?.plan && user.plan !== 'free');
+        return (
+          lesson.free ||
+          (user?.plan && user.plan !== 'free') ||
+          user.ticket?.document
+        );
       })
     );
   }

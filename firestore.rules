@@ -5,8 +5,12 @@ service cloud.firestore {
       return request.auth.uid != null;
     }
 
+    function getUser() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
     function isAdmin() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true
+      return getUser().admin == true
     }
 
     function isOwner(id) {
@@ -64,39 +68,15 @@ service cloud.firestore {
       match /likes/{lessonId} {
         allow read, write: if isOwner(channelId)
       }
-      match /followers/{uid} {
-        allow read: if true
-        allow write: if isOwner(uid);
-      }
-      match /follows/{uid} {
-        allow read: if true
-      }
-      match /plans/{planId} {
-        allow read: if true;
-        allow write: if isAdmin();
-      }
-      match /jobs/data {
-        allow read: if true;
-        allow write: if isOwner(channelId);
-      }
-      match /reviews/{reviewId} {
-        allow read: if true;
-        allow write: if isSignIn();
-      }
     }
     match /lessons/{lessonId} {
       allow read: if resource.data.public == true || isOwner(resource.data.authorId);
       allow create: if isSignIn();
       allow update: if isAdmin() || (isOwner(resource.data.authorId) && safeId() && safeKey('authorId'));
       match /body/content {
-        allow read: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.free == true || (request.auth != null && !(isUndefined(get(/databases/$(database)/documents/users/$(request.auth.uid)).data, 'plan')) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.plan != 'free');
+        allow read: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.free == true || (isSignIn() && !(isUndefined(getUser(), 'plan')) && getUser().plan != 'free' || (isSignIn() && !(isUndefined(getUser(), 'ticket')) && getUser().ticket.document == true));
         allow create: if isSignIn();
         allow update: if isAdmin() || (isOwner(get(/databases/$(database)/documents/lessons/$(lessonId)).data.authorId));
-      }
-      match /revisions/{revisionId} {
-        allow read: if isSignIn()
-        allow create: if isSignIn();
-        allow update: if get(/databases/$(database)/documents/lessons/$(lessonId)).data.authorId == request.auth.uid;
       }
     }
     match /lists/{listId} {

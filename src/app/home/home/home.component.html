@@ -1,4 +1,4 @@
-<div class="hero" style="background-image: url(assets/images/cover.png);">
+<div class="hero" style="background-image: url(assets/images/cover.png)">
   <div class="hero__body">
     <h1 class="hero__title">リニューアル</h1>
     <p class="hero__lead">
@@ -41,7 +41,7 @@
 
 <section>
   <h2>新着</h2>
-  <mat-spinner *ngIf="!(likedLessons$ | async)" [diameter]="40"></mat-spinner>
+  <mat-spinner *ngIf="!(latestLessons$ | async)" [diameter]="40"></mat-spinner>
   <swiper
     class="swiper"
     [config]="swiperConfig"
@@ -65,7 +65,7 @@
 
 <section>
   <h2>アップデート</h2>
-  <mat-spinner *ngIf="!(likedLessons$ | async)" [diameter]="40"></mat-spinner>
+  <mat-spinner *ngIf="!(updatedLessons$ | async)" [diameter]="40"></mat-spinner>
   <swiper
     class="swiper"
     [config]="swiperConfig"

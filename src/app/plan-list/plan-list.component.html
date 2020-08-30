@@ -1,0 +1,119 @@
+<div [class.wrap]="!isEmbed">
+  <div [class.mat-card]="!isEmbed" [class.wrap-card]="!isEmbed">
+    <h2>プラン</h2>
+    <p class="lead">自分に合ったプランを選択してください。</p>
+    <ng-template #planLoading>
+      <mat-spinner class="plan-loader" [diameter]="40"></mat-spinner>
+    </ng-template>
+    <div class="plans" *ngIf="plans?.length; else planLoading">
+      <div class="plan" *ngFor="let plan of plans; index as i">
+        <h3 class="plan__title">{{ plan.price.product.name }}</h3>
+        <p class="plan__sub-title">{{ plan.price.product.description }}</p>
+        <p class="plan__price-label">月額料金</p>
+        <p class="plan__price">
+          <small>¥</small><span>{{ plan.price.unit_amount | number }}</span
+          ><small>/月</small>
+        </p>
+        <ul class="plan__points">
+          <li *ngFor="let feature of plans[i].features">{{ feature }}</li>
+        </ul>
+
+        <button
+          (click)="signupPlan(plans[i].id)"
+          class="plan__action"
+          mat-raised-button
+          color="primary"
+          [disabled]="loading"
+        >
+          {{ plan.price.recurring.trial_period_days && '無料で' }}はじめる
+        </button>
+        <p class="plan__trial" *ngIf="plan.price.recurring.trial_period_days">
+          {{ plan.price.recurring.trial_period_days }}日間の無料トライアルあり
+        </p>
+      </div>
+    </div>
+
+    <ul class="notice">
+      <li>価格はすべて税込です。</li>
+      <li>入会金、退会金はありません</li>
+      <li>PC、ネット代は自己負担です。</li>
+      <li>追加教材費等はありません。上記の金額がすべてです。</li>
+    </ul>
+
+    <div class="price-up">
+      <figure>
+        <img src="assets/images/welcome/price-system.png" alt="" />
+      </figure>
+      <div>
+        <h3 class="price-up__hdg">早期入会者特典</h3>
+        <p class="price-up__detail">
+          CAMPは正しい知識をしっかりと教えるため、アルバイトではなく経験豊富なメンターが限られたリソースで運営しています。ユーザーの増加に伴いより多くの工数が発生するため、人数に比例して<strong>新規入会者に対する</strong>授業料が変動します。すでに入会された方については途中から月額料金が上がることはないのでご安心ください。つまり早期にご参加いただくほどお得なシステムとなっています。
+        </p>
+      </div>
+    </div>
+
+    <div class="plan-features">
+      <h3 class="plan-features__hdg">プラン詳細</h3>
+
+      <div class="grid grid--sm">
+        <div class="skill" *ngFor="let planFeature of planFeatures">
+          <h3 class="skill__title">{{ planFeature.title }}</h3>
+          <p class="skill__description">
+            {{ planFeature.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="isa">
+      <div class="isa__wrap">
+        <figure class="isa__image">
+          <img src="assets/images/welcome/isa.png" alt="" />
+        </figure>
+        <div class="isa__body">
+          <h3 class="isa__title">ISAプラン</h3>
+          <p class="isa__description">
+            経済的に授業料が払えない学生の方や社会人の方を対象としたプランです。就職後に給与の一部をシェアしてもらうことを条件に、無料でメンタープランと同等の訓練を受けることができます。
+          </p>
+          <div class="isa__button">
+            <a routerLink="/isa" mat-button color="primary"> 詳細を見る </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2>買い切りチケット</h2>
+
+    <mat-card class="ticket" *ngFor="let ticket of ticketService.tickets">
+      <h3 class="ticket__name">{{ ticket.name }}チケット</h3>
+      <p class="ticket__description">{{ ticket.description }}</p>
+      <p class="ticket__amount">{{ ticket.amount | number }}円（税込）</p>
+      <button
+        class="ticket__action"
+        mat-flat-button
+        color="primary"
+        (click)="getTicket(ticket)"
+        [disabled]="
+          loading ||
+          ((authService.authUser$ | async)?.ticket &&
+            (authService.authUser$ | async)?.ticket[ticket.id])
+        "
+      >
+        購入
+      </button>
+      <a
+        class="ticket__action"
+        mat-stroked-button
+        color="primary"
+        *ngFor="let link of ticket.links"
+        [href]="link.url"
+        [disabled]="
+          !(authService.authUser$ | async)?.ticket ||
+          !(authService.authUser$ | async)?.ticket[ticket.id]
+        "
+      >
+        {{ link.label }}
+      </a>
+    </mat-card>
+  </div>
+</div>

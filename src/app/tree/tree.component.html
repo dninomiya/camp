@@ -52,13 +52,7 @@
                   <p class="plan__description">
                     メンターが徹底サポート。ソースレビューや毎日の進捗ミーティングなど、完全に実務として進めます。
                   </p>
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    routerLink="/signup"
-                    [queryParams]="{ planId: 'mentor' }"
-                    fragment="plan"
-                  >
+                  <button mat-raised-button color="primary" routerLink="/plans">
                     プランを見る
                   </button>
                 </div>
@@ -75,9 +69,7 @@
                   <button
                     mat-stroked-button
                     color="primary"
-                    routerLink="/signup"
-                    [queryParams]="{ planId: 'solo' }"
-                    fragment="plan"
+                    routerLink="/plans"
                   >
                     プランを見る
                   </button>
@@ -104,9 +96,7 @@
               >
               <span matLine class="resource__title">{{ resource.title }}</span>
               <span>
-                <mat-icon inline>
-                  open_in_new
-                </mat-icon>
+                <mat-icon inline> open_in_new </mat-icon>
               </span>
             </a>
           </mat-nav-list>
@@ -227,9 +217,7 @@
                               resource.title
                             }}</span>
                             <span>
-                              <mat-icon inline>
-                                open_in_new
-                              </mat-icon>
+                              <mat-icon inline> open_in_new </mat-icon>
                             </span>
                           </a>
                         </mat-nav-list>
