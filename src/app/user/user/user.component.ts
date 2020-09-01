@@ -1,3 +1,4 @@
+import { TicketService } from './../../services/ticket.service';
 import { IsaCalcComponent } from './../../shared/isa-calc/isa-calc.component';
 import { IsaService } from './../../services/isa.service';
 import { RepoSelectorComponent } from './../repo-selector/repo-selector.component';
@@ -50,13 +51,18 @@ export class UserComponent implements OnInit {
     },
   ];
 
+  freeTasks = ['slack', 'tutorial', 'develop', 'release'].map((task) => {
+    return this.tasks.find((item) => item.id === task);
+  });
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     public apolloService: ApolloService,
-    public isaService: IsaService
+    public isaService: IsaService,
+    private ticketService: TicketService
   ) {}
 
   ngOnInit() {}
@@ -126,5 +132,16 @@ export class UserComponent implements OnInit {
       width: '800px',
       data: day,
     });
+  }
+
+  getTickets(user: User): string[] {
+    return Object.entries(user.ticket)
+      .filter(([_, value]) => {
+        return value;
+      })
+      .map(([key]) => {
+        return this.ticketService.tickets.find((ticket) => ticket.id === key)
+          .name;
+      });
   }
 }

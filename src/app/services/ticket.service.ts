@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Ticket } from './../interfaces/ticket';
 import { Injectable } from '@angular/core';
@@ -18,7 +19,9 @@ export class TicketService {
       description:
         '今後追加される教材も含め、すべての教材を永久に閲覧することができます。ライトプランに1年以上加入する場合、買い切りプランの方がお得になります。',
       amount: 120000,
-      priceId: 'price_1HLXEuAg8h03lWNH6D3KpPHB',
+      priceId: environment.production
+        ? 'price_1HMSGZAg8h03lWNHQe3eLlGn'
+        : 'price_1HMLXeAg8h03lWNHsOvOWAMk',
     },
     {
       id: 'meeting',
@@ -26,7 +29,9 @@ export class TicketService {
       description:
         'キャリア相談、技術相談、コーチングなどあらゆる相談に1時間Zoomで対応します（1チケットにつき1回）。チケット購入後にSlackに参加し、メンターにDMを送ってください。',
       amount: 50000,
-      priceId: 'price_1HLXEuAg8h03lWNH6D3KpPHB',
+      priceId: environment.production
+        ? 'price_1HHFJNAg8h03lWNHENwZ4sFu'
+        : 'price_1HLXEuAg8h03lWNH6D3KpPHB',
       links: [
         {
           url:
@@ -45,7 +50,9 @@ export class TicketService {
       description:
         'ソースやデザイン、プロダクト、アーキテクチャなどについて細かくレビューします（1チケットにつき1回）。チケット購入後にSlackに参加し、メンターにDMを送ってください。',
       amount: 50000,
-      priceId: 'price_1HLXEuAg8h03lWNH6D3KpPHB',
+      priceId: environment.production
+        ? 'price_1HMSPjAg8h03lWNHK6PiRJJG'
+        : 'price_1HMLYXAg8h03lWNHU7v7cDbv',
       links: [
         {
           url:

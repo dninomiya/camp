@@ -38,11 +38,11 @@ export class UserListComponent implements OnInit {
     private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {
-    this.planService.getPlans().then((plans) => (this.plans = plans));
-  }
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.plans = await this.planService.getPlans();
+
     this.users$.subscribe((users) => {
       this.counts = [];
       this.counts.push({
