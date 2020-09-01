@@ -1,7 +1,7 @@
 <h1 matDialogTitle>{{ user.name }} - {{ user.email }}</h1>
 
 <mat-dialog-content>
-  <form [formGroup]="form">
+  <form [formGroup]="form" *ngIf="isReady; else loading">
     <mat-form-field>
       <mat-label>プラン</mat-label>
       <mat-select formControlName="plan">
@@ -63,6 +63,16 @@
         <mat-option [value]="false">false</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>ポイント</mat-label>
+      <input
+        type="number"
+        matInput
+        step="100"
+        autocomplete="off"
+        formControlName="point"
+      />
+    </mat-form-field>
     <div formGroupName="isa">
       <mat-form-field>
         <mat-label>ISAスタート</mat-label>
@@ -95,7 +105,20 @@
         <mat-datepicker #endPicker></mat-datepicker>
       </mat-form-field>
     </div>
+    <h2>チケット</h2>
+    <div formGroupName="ticket">
+      <mat-checkbox
+        *ngFor="let ticket of tickets"
+        [formControlName]="ticket.id"
+      >
+        {{ ticket.name }}
+      </mat-checkbox>
+    </div>
   </form>
+
+  <ng-template #loading>
+    <mat-spinner [diameter]="40"></mat-spinner>
+  </ng-template>
 </mat-dialog-content>
 
 <mat-dialog-actions>

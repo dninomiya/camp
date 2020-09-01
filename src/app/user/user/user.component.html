@@ -7,6 +7,9 @@
         <p class="user__plan">
           <span>{{ user.plan | plan }}プラン</span>
         </p>
+        <span class="user__ticket" *ngFor="let ticket of getTickets(user)">{{
+          ticket
+        }}</span>
       </div>
     </div>
 
@@ -69,12 +72,18 @@
     </mat-nav-list>
 
     <ng-template #notMentor>
-      <mat-list>
+      <mat-nav-list>
         <h3 matSubheader>フロー</h3>
-        <mat-list-item>1. Slackに登録</mat-list-item>
-        <mat-list-item>2. チュートリアルを進める</mat-list-item>
-        <mat-list-item>3. プロダクト開発を進める</mat-list-item>
-      </mat-list>
+        <mat-list-item
+          (click)="openTaskDialog(task)"
+          *ngFor="let task of freeTasks; index as i"
+        >
+          <span matLine> {{ i + 1 }}. {{ task.label }} </span>
+          <mat-icon *ngIf="isDone(user.tasks, task.id)" color="primary"
+            >done</mat-icon
+          >
+        </mat-list-item>
+      </mat-nav-list>
     </ng-template>
 
     <section *ngIf="user.plan === 'isa'">

@@ -1,5 +1,5 @@
-import { map, take } from 'rxjs/operators';
-import { Observable, ReplaySubject, combineLatest } from 'rxjs';
+import { map, take, catchError } from 'rxjs/operators';
+import { Observable, ReplaySubject, combineLatest, of } from 'rxjs';
 import { repos, ownRepos, OwnRepos, createLabel } from './gql';
 import { AuthService } from 'src/app/services/auth.service';
 import { Injectable } from '@angular/core';
@@ -34,7 +34,7 @@ export class ApolloService {
     });
   }
 
-  async initApollo(token: string) {
+  async initApollo(token: string): Promise<void> {
     const http = this.httpLink.create({
       uri: 'https://api.github.com/graphql',
       headers: new HttpHeaders()
@@ -53,10 +53,16 @@ export class ApolloService {
       cache: new InMemoryCache(),
     });
 
-    this.getOwnRepos().subscribe((res) => {
-      this.authInvalid = false;
-      this.readySource.next(true);
-    });
+    this.getOwnRepos().subscribe(
+      () => {
+        this.authInvalid = false;
+        this.readySource.next(true);
+      },
+      (error) => {
+        this.authInvalid = true;
+        this.readySource.next(true);
+      }
+    );
   }
 
   getRepos() {

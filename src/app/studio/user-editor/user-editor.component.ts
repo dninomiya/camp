@@ -1,9 +1,16 @@
+import { Ticket } from './../../interfaces/ticket';
+import { TicketService } from './../../services/ticket.service';
 import { PlanData } from './../../interfaces/plan';
 import { firestore } from 'firebase/app';
 import { User } from './../../interfaces/user';
 import { UserService } from './../../services/user.service';
 import { PlanService } from 'src/app/services/plan.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
 
@@ -20,24 +27,38 @@ export class UserEditorComponent implements OnInit {
     trialUsed: [''],
     currentPeriodStart: [''],
     currentPeriodEnd: [''],
+    point: [0],
     isCaneclSubscription: [''],
     isa: this.fb.group({
       start: [''],
       end: [''],
     }),
   });
+  tickets: Ticket[];
+  isReady: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public user: User,
     private fb: FormBuilder,
     private planService: PlanService,
     private userService: UserService,
+    private ticketService: TicketService,
     private dialog: MatDialogRef<UserEditorComponent>
-  ) {
-    this.planService.getPlans().then((plans) => this.plans);
-  }
+  ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.plans = await this.planService.getPlans();
+
+    const ticketGroup = this.fb.group(
+      this.ticketService.tickets.reduce((obj, value) => {
+        obj[value.id] = new FormControl(false);
+        return obj;
+      }, {})
+    );
+
+    this.tickets = this.ticketService.tickets;
+    this.form.addControl('ticket', ticketGroup);
+
     this.form.patchValue({
       ...this.user,
       currentPeriodStart: this.user.currentPeriodStart?.toDate(),
@@ -47,6 +68,8 @@ export class UserEditorComponent implements OnInit {
         end: this.user.isa?.end?.toDate(),
       },
     });
+
+    this.isReady = true;
   }
 
   updateUser() {
@@ -58,6 +81,7 @@ export class UserEditorComponent implements OnInit {
       currentPeriodEnd,
       isCaneclSubscription,
       isa,
+      ticket,
     } = this.form.value;
     this.userService
       .updateUser(this.user.id, {
@@ -65,6 +89,7 @@ export class UserEditorComponent implements OnInit {
         isTrial,
         trialUsed,
         isCaneclSubscription,
+        ticket,
         isa: {
           start: isa.start ? firestore.Timestamp.fromDate(isa.start) : null,
           end: isa.end ? firestore.Timestamp.fromDate(isa.end) : null,
