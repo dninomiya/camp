@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./repo-selector.component.scss'],
 })
 export class RepoSelectorComponent implements OnInit {
-  repos$ = this.apolloService.getOwnRepos();
+  repos: {
+    id: string;
+    name: string;
+  }[];
   selected: string;
 
   constructor(
@@ -16,7 +19,8 @@ export class RepoSelectorComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.selected = this.authService.user.repoId;
+    this.repos = await this.apolloService.getOwnRepos();
   }
 }
