@@ -135,7 +135,7 @@ export class UserComponent implements OnInit {
   }
 
   getTickets(user: User): string[] {
-    return Object.entries(user.ticket)
+    return Object.entries(user.ticket || {})
       .filter(([_, value]) => {
         return value;
       })

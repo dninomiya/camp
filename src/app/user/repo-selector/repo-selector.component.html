@@ -5,7 +5,7 @@
     <mat-label>リポジトリ</mat-label>
     <mat-select [(value)]="selected">
       <mat-option value="blank">-</mat-option>
-      <mat-option *ngFor="let repo of repos$ | async" [value]="repo.id">
+      <mat-option *ngFor="let repo of repos" [value]="repo.id">
         {{ repo.name }}
       </mat-option>
     </mat-select>

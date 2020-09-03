@@ -1,5 +1,5 @@
-import { map, take, catchError } from 'rxjs/operators';
-import { Observable, ReplaySubject, combineLatest, of } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { Observable, ReplaySubject, combineLatest } from 'rxjs';
 import { repos, ownRepos, OwnRepos, createLabel } from './gql';
 import { AuthService } from 'src/app/services/auth.service';
 import { Injectable } from '@angular/core';
@@ -53,41 +53,40 @@ export class ApolloService {
       cache: new InMemoryCache(),
     });
 
-    this.getOwnRepos().subscribe(
-      () => {
-        this.authInvalid = false;
-        this.readySource.next(true);
-      },
-      (error) => {
-        this.authInvalid = true;
-        this.readySource.next(true);
-      }
-    );
+    try {
+      await this.getOwnRepos();
+      this.authInvalid = false;
+      this.readySource.next(true);
+    } catch {
+      this.authInvalid = true;
+      this.readySource.next(true);
+    }
   }
 
   getRepos() {
     return this.apollo
-      .watchQuery<any>({
+      .query<any>({
         query: repos,
       })
-      .valueChanges.pipe(
+      .pipe(
         map(({ data }) => {
           return data.search.edges.map((item) => item.node);
         })
       );
   }
 
-  getOwnRepos(): Observable<{ id: string; name: string }[]> {
+  getOwnRepos(): Promise<{ id: string; name: string }[]> {
     return this.apollo
-      .watchQuery<any>({
+      .query<any>({
         query: ownRepos,
       })
-      .valueChanges.pipe(
+      .pipe(
         map((res) => {
           const data = res.data as OwnRepos;
           return data.organization.repositories.nodes;
         })
-      );
+      )
+      .toPromise();
   }
 
   createLabel(repoId: string): Promise<any> {
