@@ -21,5 +21,7 @@ export const onRecordMeetingFromZoom = functions
       });
 
       res.status(200).send(true);
+    } else {
+      res.status(200).send('not CAMP MTG');
     }
   });
