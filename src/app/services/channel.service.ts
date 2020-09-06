@@ -63,24 +63,4 @@ export class ChannelService {
         })
       );
   }
-
-  updateJobs(channelId: string, items: Job[]): Promise<void> {
-    return this.db.doc(`channels/${channelId}/jobs/data`).set({ items });
-  }
-
-  getJobs(channelId): Observable<Job[]> {
-    return this.db
-      .doc<Jobs>(`channels/${channelId}/jobs/data`)
-      .valueChanges()
-      .pipe(
-        take(1),
-        map((result) => {
-          if (result) {
-            return result.items;
-          } else {
-            return [];
-          }
-        })
-      );
-  }
 }

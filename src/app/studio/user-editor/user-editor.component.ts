@@ -82,6 +82,7 @@ export class UserEditorComponent implements OnInit {
       isCaneclSubscription,
       isa,
       ticket,
+      point,
     } = this.form.value;
     this.userService
       .updateUser(this.user.id, {
@@ -90,6 +91,7 @@ export class UserEditorComponent implements OnInit {
         trialUsed,
         isCaneclSubscription,
         ticket,
+        point,
         isa: {
           start: isa.start ? firestore.Timestamp.fromDate(isa.start) : null,
           end: isa.end ? firestore.Timestamp.fromDate(isa.end) : null,
