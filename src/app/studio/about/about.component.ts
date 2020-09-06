@@ -97,8 +97,6 @@ export class AboutComponent implements OnInit {
     })
   );
 
-  jobForm = this.fb.array([]);
-
   adsOptions = {
     path: '',
     size: {
@@ -121,15 +119,7 @@ export class AboutComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
-  ngOnInit() {
-    this.channelService.getJobs(this.authService.user.id).subscribe((jobs) => {
-      if (jobs && jobs.length) {
-        jobs.forEach((job) => this.addJob(job));
-      } else {
-        this.addJob();
-      }
-    });
-  }
+  ngOnInit() {}
 
   update(cid: string) {
     if (this.form.valid) {
@@ -279,16 +269,6 @@ export class AboutComponent implements OnInit {
     this.form.markAsDirty();
   }
 
-  saveJob() {
-    const channelId = this.authService.user.id;
-    this.channelService.updateJobs(channelId, this.jobForm.value).then(() => {
-      this.jobForm.markAsPristine();
-      this.snackBar.open('案件相談窓口を更新しました', null, {
-        duration: 2000,
-      });
-    });
-  }
-
   uploadAds(imageURL) {
     this.adsSrc = imageURL;
     this.channelService.updateChannel(this.authService.user.id, {
@@ -319,22 +299,6 @@ export class AboutComponent implements OnInit {
           duration: 2000,
         });
       });
-  }
-
-  addJob(job?: Job) {
-    this.jobForm.push(
-      this.fb.group({
-        title: [job && job.title, Validators.required],
-        amount: [job && job.amount, Validators.required],
-        style: [job && job.style, Validators.required],
-        description: [job && job.description, Validators.required],
-        public: [job && job.public],
-      })
-    );
-  }
-
-  removeJob(i: number) {
-    this.jobForm.removeAt(i);
   }
 
   openImageDialog(file: File) {
