@@ -172,7 +172,7 @@ export class PaymentService {
     const result = (await callable(params).toPromise()) as Stripe.ApiList<
       ChargeWithInvoice
     >;
-    return result.data;
+    return result.data.filter((charge) => charge.status === 'succeeded');
   }
 
   async getPlansWithOrder(): Promise<PlanModel> {
