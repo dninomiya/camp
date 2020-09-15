@@ -52,10 +52,10 @@ export class AccountComponent implements OnInit {
   avatarOptions = {
     path: `users/${this.authService.user.id}`,
     label: 'プロフィール画像',
+    crop: true,
     size: {
       width: 80,
       height: 80,
-      crop: true,
     },
   };
 
