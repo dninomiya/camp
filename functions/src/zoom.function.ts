@@ -9,7 +9,7 @@ export const onRecordMeetingFromZoom = functions
   .https.onRequest(async (req: any, res) => {
     const data = req.body.payload.object;
 
-    if (data.topic === 'CAMP MTG') {
+    if (data.match('CAMP:')) {
       const message = [
         'MTGアーカイブです。1日で削除されます。外部公開は禁止です。',
         `PW: ${data.password}`,
