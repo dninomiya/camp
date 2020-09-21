@@ -30,6 +30,7 @@ export function markedOptionsFactory(): MarkedOptions {
         /((\d\d:)?\d\d:\d\d)/gm,
         '<a class="seek">$1</a>'
       );
+      newText = newText.replace(/\\:/gm, ':');
       return '<p>' + newText + '</p>';
     }
   };
