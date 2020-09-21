@@ -213,7 +213,7 @@
   margin: 40px auto;
 }
 
-h2 {
+.heading {
   font-size: 32px;
   text-align: center;
   letter-spacing: 2px;
@@ -264,6 +264,40 @@ h2 {
   &__action {
     & + & {
       margin-left: 16px;
+    }
+  }
+}
+
+.loan {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  border-radius: 3px;
+  text-align: left;
+  padding: 40px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(black, 0.12);
+  @include sp {
+    flex-flow: column;
+    padding: 32px 24px 24px;
+    gap: 24px;
+  }
+  &__image {
+    text-align: center;
+    img {
+      display: block;
+      width: 320px;
+      @include sp {
+        width: 160px;
+      }
+    }
+  }
+  &__title {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 16px;
+    @include sp {
+      font-size: 18px;
     }
   }
 }

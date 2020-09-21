@@ -1,0 +1,820 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="301.563" height="217.14" viewBox="0 0 301.563 217.14">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.28" y1="1.187" x2="0.663" y2="0.055" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a1a1bd"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.313" y1="1.025" x2="0.672" y2="0.014" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="0.365" y1="0.865" x2="0.625" y2="0.153" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff8b5b"/>
+      <stop offset="1" stop-color="#8b0f61"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="0.046" y1="0.5" x2="1.133" y2="0.5" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-6" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#9346a0"/>
+      <stop offset="1" stop-color="#480d7e"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-7" x1="0.957" y1="0.308" x2="0.621" y2="0.479" xlink:href="#linear-gradient-6"/>
+    <linearGradient id="linear-gradient-8" x1="0.353" y1="0.256" x2="0.46" y2="0.563" xlink:href="#linear-gradient-6"/>
+    <linearGradient id="linear-gradient-9" x1="0.601" y1="0.125" x2="0.486" y2="0.623" xlink:href="#linear-gradient-6"/>
+    <linearGradient id="linear-gradient-10" x1="0.816" y1="0.224" x2="0.463" y2="0.636" xlink:href="#linear-gradient-6"/>
+    <linearGradient id="linear-gradient-11" x1="0" y1="0.5" x2="0.857" y2="0.5" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-12" x1="-1.198" y1="0.407" x2="18.608" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-13" x1="-18.605" y1="-0.073" x2="1.199" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-14" x1="-17.059" y1="-0.008" x2="2.744" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-15" x1="-24.462" y1="-0.455" x2="-4.658" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-16" x1="-15.508" y1="0.044" x2="4.292" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-17" x1="-25.882" y1="-0.646" x2="-6.056" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-18" x1="-21.606" y1="-0.231" x2="-1.776" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-19" x1="-20.102" y1="-0.154" x2="-0.294" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-20" x1="-23.033" y1="-0.327" x2="-3.228" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-21" x1="-6.149" y1="0.266" x2="13.663" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-22" x1="-12.413" y1="0.128" x2="7.385" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-23" x1="-13.968" y1="0.088" x2="5.841" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-24" x1="0.594" y1="0.477" x2="18.629" y2="1.518" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-25" x1="-32.076" y1="-1.026" x2="-8.694" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-26" x1="-2.883" y1="0.354" x2="16.945" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-27" x1="-10.872" y1="0.165" x2="8.937" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-28" x1="-4.528" y1="0.308" x2="15.295" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-29" x1="-7.756" y1="0.228" x2="12.048" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-30" x1="-9.32" y1="0.197" x2="10.481" y2="0.793" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-31" x1="0.149" y1="0.234" x2="0.966" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-32" x1="-0.051" y1="0.251" x2="1.523" y2="0.908" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-33" x1="-0.694" y1="0.056" x2="1.165" y2="0.782" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-34" x1="-0.045" y1="0.175" x2="0.999" y2="1.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-35" x1="0.053" y1="-0.78" x2="0.957" y2="1.465" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-36" x1="0" y1="0.5" x2="0.857" y2="0.5" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-37" x1="-1.2" y1="0.407" x2="18.606" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-38" x1="-18.61" y1="-0.074" x2="1.201" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-39" x1="-17.059" y1="-0.008" x2="2.745" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-40" x1="-24.49" y1="-0.455" x2="-4.663" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-41" x1="-15.508" y1="0.044" x2="4.291" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-42" x1="-25.827" y1="-0.647" x2="-6.042" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-43" x1="-21.578" y1="-0.231" x2="-1.772" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-44" x1="-20.093" y1="-0.153" x2="-0.294" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-45" x1="-23.034" y1="-0.327" x2="-3.229" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-46" x1="-6.145" y1="0.267" x2="13.652" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-47" x1="-12.417" y1="0.128" x2="7.388" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-48" x1="-13.967" y1="0.088" x2="5.842" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-49" x1="0.593" y1="0.477" x2="18.628" y2="1.517" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-50" x1="-32.077" y1="-1.026" x2="-8.695" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-51" x1="-2.88" y1="0.354" x2="16.924" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-52" x1="-10.87" y1="0.165" x2="8.932" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-53" x1="-4.522" y1="0.308" x2="15.278" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-54" x1="-7.76" y1="0.228" x2="12.052" y2="0.854" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-55" x1="-9.324" y1="0.196" x2="10.484" y2="0.794" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-58" x1="-1.199" y1="0.406" x2="18.607" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-59" x1="-18.603" y1="-0.073" x2="1.201" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-60" x1="-17.053" y1="-0.008" x2="2.744" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-61" x1="-24.463" y1="-0.455" x2="-4.659" y2="0.302" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-62" x1="-15.508" y1="0.044" x2="4.291" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-63" x1="-25.852" y1="-0.646" x2="-6.048" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-65" x1="-20.093" y1="-0.153" x2="-0.294" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-66" x1="-23.032" y1="-0.327" x2="-3.227" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-67" x1="-6.139" y1="0.266" x2="13.643" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-68" x1="-12.434" y1="0.129" x2="7.396" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-69" x1="-13.985" y1="0.088" x2="5.847" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-70" x1="0.593" y1="0.476" x2="18.61" y2="1.518" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-71" x1="-32.077" y1="-1.026" x2="-8.695" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-72" x1="-2.884" y1="0.354" x2="16.944" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-73" x1="-10.87" y1="0.165" x2="8.932" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-74" x1="-4.522" y1="0.308" x2="15.278" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-75" x1="-7.771" y1="0.228" x2="12.065" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-76" x1="-9.331" y1="0.197" x2="10.494" y2="0.793" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-77" x1="0.149" y1="0.234" x2="0.966" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-79" x1="-1.199" y1="0.407" x2="18.629" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-80" x1="-18.605" y1="-0.073" x2="1.199" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-81" x1="-17.057" y1="-0.008" x2="2.747" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-82" x1="-24.492" y1="-0.455" x2="-4.665" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-83" x1="-15.535" y1="0.044" x2="4.296" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-84" x1="-25.881" y1="-0.646" x2="-6.055" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-85" x1="-21.578" y1="-0.231" x2="-1.772" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-86" x1="-20.127" y1="-0.154" x2="-0.296" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-87" x1="-23.06" y1="-0.327" x2="-3.232" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-88" x1="-6.15" y1="0.266" x2="13.662" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-89" x1="-12.414" y1="0.128" x2="7.384" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-90" x1="-13.967" y1="0.088" x2="5.841" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-91" x1="0.593" y1="0.477" x2="18.628" y2="1.518" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-92" x1="-32.015" y1="-1.026" x2="-8.677" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-93" x1="-2.88" y1="0.354" x2="16.924" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-94" x1="-10.883" y1="0.165" x2="8.944" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-95" x1="-4.522" y1="0.308" x2="15.278" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-96" x1="-7.759" y1="0.228" x2="12.046" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-97" x1="-9.319" y1="0.196" x2="10.482" y2="0.793" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-98" x1="0.149" y1="0.234" x2="0.966" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-100" x1="-1.199" y1="0.407" x2="18.629" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-101" x1="-18.61" y1="-0.073" x2="1.201" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-102" x1="-17.057" y1="-0.008" x2="2.746" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-103" x1="-24.463" y1="-0.455" x2="-4.659" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-104" x1="-15.527" y1="0.044" x2="4.297" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-105" x1="-25.852" y1="-0.646" x2="-6.048" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-106" x1="-21.578" y1="-0.231" x2="-1.772" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-107" x1="-20.102" y1="-0.154" x2="-0.295" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-108" x1="-23.033" y1="-0.327" x2="-3.227" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-109" x1="-6.157" y1="0.266" x2="13.672" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-110" x1="-12.423" y1="0.128" x2="7.389" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-111" x1="-13.967" y1="0.088" x2="5.841" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-112" x1="0.593" y1="0.477" x2="18.628" y2="1.517" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-113" x1="-32.075" y1="-1.026" x2="-8.693" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-114" x1="-2.881" y1="0.354" x2="16.932" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-115" x1="-10.882" y1="0.165" x2="8.944" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-116" x1="-4.531" y1="0.308" x2="15.301" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-117" x1="-7.747" y1="0.228" x2="12.035" y2="0.854" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-118" x1="-9.324" y1="0.196" x2="10.484" y2="0.794" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-119" x1="0.149" y1="0.234" x2="0.966" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-121" x1="-1.199" y1="0.407" x2="18.606" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-122" x1="-18.604" y1="-0.073" x2="1.2" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-123" x1="-17.081" y1="-0.008" x2="2.748" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-124" x1="-24.462" y1="-0.455" x2="-4.658" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-125" x1="-15.534" y1="0.044" x2="4.297" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-126" x1="-25.853" y1="-0.646" x2="-6.049" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-127" x1="-21.606" y1="-0.231" x2="-1.776" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-128" x1="-20.126" y1="-0.153" x2="-0.295" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-129" x1="-23.032" y1="-0.327" x2="-3.227" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-130" x1="-6.146" y1="0.266" x2="13.658" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-131" x1="-12.418" y1="0.128" x2="7.387" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-132" x1="-13.963" y1="0.088" x2="5.839" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-133" x1="0.594" y1="0.477" x2="18.629" y2="1.517" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-134" x1="-32.016" y1="-1.026" x2="-8.677" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-135" x1="-2.88" y1="0.354" x2="16.925" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-136" x1="-10.882" y1="0.165" x2="8.945" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-137" x1="-4.526" y1="0.308" x2="15.282" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-138" x1="-7.756" y1="0.229" x2="12.048" y2="0.854" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-139" x1="-9.325" y1="0.196" x2="10.483" y2="0.794" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-140" x1="0.149" y1="0.234" x2="0.966" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-142" x1="-1.199" y1="0.407" x2="18.607" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-143" x1="-18.582" y1="-0.073" x2="1.2" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-144" x1="-17.086" y1="-0.008" x2="2.749" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-145" x1="-24.464" y1="-0.455" x2="-4.659" y2="0.302" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-146" x1="-15.532" y1="0.044" x2="4.299" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-147" x1="-25.852" y1="-0.646" x2="-6.048" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-148" x1="-21.569" y1="-0.231" x2="-1.771" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-149" x1="-20.118" y1="-0.153" x2="-0.294" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-150" x1="-23.022" y1="-0.327" x2="-3.225" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-151" x1="-6.146" y1="0.266" x2="13.659" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-152" x1="-12.417" y1="0.128" x2="7.388" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-153" x1="-13.963" y1="0.088" x2="5.839" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-154" x1="0.593" y1="0.477" x2="18.628" y2="1.518" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-155" x1="-32.038" y1="-1.027" x2="-8.683" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-156" x1="-2.881" y1="0.354" x2="16.923" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-157" x1="-10.886" y1="0.165" x2="8.947" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-158" x1="-4.522" y1="0.308" x2="15.278" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-159" x1="-7.758" y1="0.228" x2="12.047" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-160" x1="-9.323" y1="0.197" x2="10.485" y2="0.794" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-163" x1="-1.199" y1="0.407" x2="18.607" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-164" x1="-18.605" y1="-0.073" x2="1.199" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-165" x1="-17.058" y1="-0.008" x2="2.746" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-166" x1="-24.463" y1="-0.455" x2="-4.659" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-167" x1="-15.533" y1="0.044" x2="4.298" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-168" x1="-25.852" y1="-0.646" x2="-6.048" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-169" x1="-21.577" y1="-0.231" x2="-1.771" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-170" x1="-20.127" y1="-0.153" x2="-0.296" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-171" x1="-23.033" y1="-0.327" x2="-3.228" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-172" x1="-6.156" y1="0.266" x2="13.673" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-173" x1="-12.419" y1="0.128" x2="7.386" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-174" x1="-13.968" y1="0.088" x2="5.841" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-175" x1="0.595" y1="0.476" x2="18.629" y2="1.517" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-176" x1="-32.075" y1="-1.026" x2="-8.693" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-177" x1="-2.881" y1="0.354" x2="16.923" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-178" x1="-10.881" y1="0.165" x2="8.945" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-179" x1="-4.531" y1="0.308" x2="15.301" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-180" x1="-7.757" y1="0.228" x2="12.047" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-181" x1="-9.324" y1="0.196" x2="10.484" y2="0.794" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-182" x1="0.149" y1="0.234" x2="0.966" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-183" x1="-0.051" y1="0.251" x2="1.523" y2="0.908" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-184" x1="-0.694" y1="0.056" x2="1.165" y2="0.782" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-185" x1="-0.045" y1="0.175" x2="0.999" y2="1.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-186" x1="0.053" y1="-0.779" x2="0.957" y2="1.466" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-188" x1="-1.202" y1="0.407" x2="18.627" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-189" x1="-18.604" y1="-0.073" x2="1.2" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-190" x1="-17.079" y1="-0.008" x2="2.749" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-191" x1="-24.463" y1="-0.455" x2="-4.658" y2="0.302" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-192" x1="-15.508" y1="0.044" x2="4.292" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-193" x1="-25.853" y1="-0.646" x2="-6.049" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-194" x1="-21.576" y1="-0.231" x2="-1.77" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-195" x1="-20.102" y1="-0.153" x2="-0.295" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-196" x1="-23.032" y1="-0.327" x2="-3.227" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-197" x1="-6.156" y1="0.266" x2="13.672" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-198" x1="-12.418" y1="0.128" x2="7.387" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-199" x1="-13.952" y1="0.088" x2="5.834" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-200" x1="0.593" y1="0.477" x2="18.611" y2="1.518" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-201" x1="-32.016" y1="-1.026" x2="-8.678" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-202" x1="-2.885" y1="0.354" x2="16.951" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-203" x1="-10.882" y1="0.165" x2="8.944" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-204" x1="-4.521" y1="0.308" x2="15.265" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-205" x1="-7.766" y1="0.229" x2="12.063" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-206" x1="-9.312" y1="0.196" x2="10.473" y2="0.794" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-207" x1="0.149" y1="0.234" x2="0.966" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-209" x1="-1.2" y1="0.406" x2="18.606" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-210" x1="-18.604" y1="-0.073" x2="1.2" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-211" x1="-17.057" y1="-0.008" x2="2.747" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-212" x1="-24.463" y1="-0.455" x2="-4.658" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-213" x1="-15.513" y1="0.044" x2="4.294" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-214" x1="-25.851" y1="-0.646" x2="-6.047" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-216" x1="-20.102" y1="-0.154" x2="-0.295" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-217" x1="-23.061" y1="-0.327" x2="-3.233" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-218" x1="-6.139" y1="0.266" x2="13.644" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-219" x1="-12.435" y1="0.128" x2="7.395" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-220" x1="-13.985" y1="0.088" x2="5.847" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-221" x1="0.594" y1="0.477" x2="18.627" y2="1.518" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-222" x1="-32.096" y1="-1.027" x2="-8.699" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-223" x1="-2.883" y1="0.354" x2="16.944" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-224" x1="-10.869" y1="0.165" x2="8.933" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-225" x1="-4.526" y1="0.308" x2="15.282" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-226" x1="-7.766" y1="0.228" x2="12.063" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-227" x1="-9.337" y1="0.196" x2="10.496" y2="0.793" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-230" x1="-1.202" y1="0.407" x2="18.627" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-232" x1="-17.057" y1="-0.008" x2="2.747" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-233" x1="-24.463" y1="-0.455" x2="-4.658" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-235" x1="-25.851" y1="-0.646" x2="-6.047" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-236" x1="-21.569" y1="-0.231" x2="-1.77" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-237" x1="-20.094" y1="-0.153" x2="-0.295" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-238" x1="-23.023" y1="-0.327" x2="-3.226" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-239" x1="-6.155" y1="0.267" x2="13.674" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-240" x1="-12.416" y1="0.128" x2="7.389" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-241" x1="-13.964" y1="0.088" x2="5.838" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-242" x1="0.592" y1="0.476" x2="18.636" y2="1.518" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-243" x1="-32.078" y1="-1.026" x2="-8.696" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-244" x1="-2.876" y1="0.354" x2="16.907" y2="1.101" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-245" x1="-10.872" y1="0.164" x2="8.936" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-246" x1="-4.53" y1="0.308" x2="15.294" y2="0.996" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-247" x1="-7.745" y1="0.229" x2="12.03" y2="0.854" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-248" x1="-9.32" y1="0.196" x2="10.481" y2="0.794" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-249" x1="0.149" y1="0.234" x2="0.966" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-250" x1="0" y1="0.5" x2="0.857" y2="0.5" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-251" x1="-1.198" y1="0.407" x2="18.607" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-252" x1="-18.597" y1="-0.073" x2="1.2" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-253" x1="-17.058" y1="-0.008" x2="2.745" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-254" x1="-24.463" y1="-0.455" x2="-4.658" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-255" x1="-15.508" y1="0.044" x2="4.292" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-256" x1="-25.852" y1="-0.647" x2="-6.048" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-257" x1="-21.578" y1="-0.231" x2="-1.772" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-258" x1="-20.093" y1="-0.153" x2="-0.293" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-259" x1="-23.034" y1="-0.327" x2="-3.228" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-260" x1="-6.147" y1="0.266" x2="13.658" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-261" x1="-12.417" y1="0.128" x2="7.388" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-262" x1="-13.986" y1="0.088" x2="5.845" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-263" x1="0.593" y1="0.477" x2="18.643" y2="1.517" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-264" x1="-32.016" y1="-1.026" x2="-8.678" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-265" x1="-2.88" y1="0.354" x2="16.924" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-266" x1="-10.869" y1="0.164" x2="8.933" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-267" x1="-4.527" y1="0.308" x2="15.297" y2="0.996" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-268" x1="-7.745" y1="0.229" x2="12.03" y2="0.854" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-269" x1="-9.331" y1="0.197" x2="10.495" y2="0.793" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-272" x1="-1.2" y1="0.407" x2="18.615" y2="1.249" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-273" x1="-18.604" y1="-0.073" x2="1.2" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-274" x1="-17.057" y1="-0.008" x2="2.747" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-275" x1="-24.435" y1="-0.455" x2="-4.652" y2="0.303" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-276" x1="-15.514" y1="0.044" x2="4.292" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-277" x1="-25.881" y1="-0.646" x2="-6.055" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-278" x1="-21.605" y1="-0.231" x2="-1.775" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-279" x1="-20.102" y1="-0.154" x2="-0.295" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-280" x1="-23.062" y1="-0.327" x2="-3.233" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-281" x1="-6.148" y1="0.266" x2="13.656" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-282" x1="-12.418" y1="0.128" x2="7.387" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-283" x1="-13.967" y1="0.088" x2="5.842" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-284" x1="0.593" y1="0.477" x2="18.628" y2="1.518" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-285" x1="-32.078" y1="-1.026" x2="-8.696" y2="0.069" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-286" x1="-2.88" y1="0.354" x2="16.924" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-287" x1="-10.87" y1="0.165" x2="8.932" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-288" x1="-4.525" y1="0.308" x2="15.283" y2="0.997" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-289" x1="-7.757" y1="0.228" x2="12.048" y2="0.853" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-290" x1="-9.322" y1="0.196" x2="10.486" y2="0.794" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-293" x1="-1.198" y1="0.407" x2="18.608" y2="1.248" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-294" x1="-18.604" y1="-0.073" x2="1.2" y2="0.528" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-295" x1="-17.058" y1="-0.008" x2="2.746" y2="0.571" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-296" x1="-24.462" y1="-0.455" x2="-4.658" y2="0.302" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-297" x1="-15.512" y1="0.044" x2="4.295" y2="0.611" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-298" x1="-25.852" y1="-0.646" x2="-6.048" y2="0.215" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-299" x1="-21.569" y1="-0.231" x2="-1.771" y2="0.425" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-300" x1="-20.094" y1="-0.153" x2="-0.294" y2="0.475" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-301" x1="-23.033" y1="-0.327" x2="-3.228" y2="0.369" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-302" x1="-6.146" y1="0.266" x2="13.659" y2="0.917" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-303" x1="-12.417" y1="0.128" x2="7.387" y2="0.695" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-304" x1="-13.98" y1="0.088" x2="5.845" y2="0.653" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-305" x1="0.592" y1="0.477" x2="18.642" y2="1.517" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-306" x1="-32.076" y1="-1.026" x2="-8.693" y2="0.07" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-307" x1="-2.884" y1="0.354" x2="16.943" y2="1.1" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-308" x1="-10.872" y1="0.164" x2="8.937" y2="0.741" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-309" x1="-4.531" y1="0.308" x2="15.301" y2="0.996" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-310" x1="-7.758" y1="0.229" x2="12.047" y2="0.854" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-311" x1="-9.332" y1="0.197" x2="10.494" y2="0.794" xlink:href="#linear-gradient-4"/>
+  </defs>
+  <g id="グループ_7285" data-name="グループ 7285" transform="translate(-742.172 -402.613)">
+    <path id="パス_19427" data-name="パス 19427" d="M854.845,501.01l-54.058,30.549c-.643.367-1.334.726-2.075,1.069-11.8,5.489-30.936,5.489-42.744,0-4.729-2.208-7.57-4.965-8.5-7.83a.347.347,0,0,1-.024-.083c-.074-.26-.138-.516-.2-.775a1.391,1.391,0,0,1-.029-.152,12.687,12.687,0,0,1,6.348-13.8l60.053-32.731Z" fill="url(#linear-gradient)"/>
+    <path id="パス_19428" data-name="パス 19428" d="M743.6,578.674l68.352,39.807a9.36,9.36,0,0,0,9.378.025l134.545-77.38a2.868,2.868,0,0,0-.015-4.98l-71.21-40.395a2.866,2.866,0,0,0-2.824,0L743.632,573.7A2.868,2.868,0,0,0,743.6,578.674Z" fill="url(#linear-gradient-2)"/>
+    <path id="パス_19429" data-name="パス 19429" d="M813.173,492.785l123.16,71.777a4.716,4.716,0,0,0,4.764-.011l100.316-59.045a4.713,4.713,0,0,0-.024-8.137L920.529,427.2a4.712,4.712,0,0,0-4.668-.036L813.245,484.6A4.713,4.713,0,0,0,813.173,492.785Z" fill="url(#linear-gradient-3)"/>
+    <g id="グループ_7284" data-name="グループ 7284">
+      <g id="グループ_7219" data-name="グループ 7219">
+        <g id="グループ_7217" data-name="グループ 7217">
+          <path id="パス_19430" data-name="パス 19430" d="M745.14,576.823c-3.508-2.1-3.452-5.448.122-7.433l117.4-65.227a14.289,14.289,0,0,1,12.877.215l64.051,38.4c3.508,2.1,3.453,5.447-.121,7.433L822.065,615.437a14.272,14.272,0,0,1-12.872-.211Z" fill="#d0d5ff"/>
+          <path id="パス_19431" data-name="パス 19431" d="M745.222,575.1c-3.506-2.1-3.45-5.447.125-7.433l117.4-65.226a14.282,14.282,0,0,1,12.875.213l64.051,38.4c3.508,2.1,3.452,5.447-.12,7.434L822.149,613.714a14.268,14.268,0,0,1-12.874-.212Z" fill="url(#linear-gradient-4)"/>
+          <path id="パス_19432" data-name="パス 19432" d="M939.676,541.057,903.9,519.6c-.844,4.219-1.924,8.723-4.48,12.121-13.319,17.7-49.955,13.343-62.6,12.467-45.762-3.17-25.161,29.745-62.067,36.3-5.095.9-10.543,2.432-16.137,2.641L809.275,613.5a14.274,14.274,0,0,0,12.874.213l117.407-65.225C943.128,546.5,943.184,543.159,939.676,541.057Z" fill="url(#linear-gradient-5)"/>
+        </g>
+        <g id="グループ_7218" data-name="グループ 7218">
+          <path id="パス_19433" data-name="パス 19433" d="M856.451,531.621l6.041-3.295-2.126-1.274-6.035,3.3Z" fill="#710844"/>
+          <path id="パス_19434" data-name="パス 19434" d="M866.726,526.038l4.476-2.44-2.124-1.275-4.473,2.444Z" fill="#710844"/>
+          <path id="パス_19435" data-name="パス 19435" d="M886.968,533.049l-5.164-3.1-14.286,7.8,5.158,3.093Z" fill="#710844"/>
+          <path id="パス_19436" data-name="パス 19436" d="M838.989,536.029,866.707,520.9l-2.7-1.618-27.716,15.129Z" fill="#710844"/>
+          <path id="パス_19437" data-name="パス 19437" d="M859.731,548.179l-5.162-3.1-14.288,7.8,5.159,3.093Z" fill="#710844"/>
+          <path id="パス_19438" data-name="パス 19438" d="M832.773,563.156l-5.164-3.1-14.563,7.951L818.2,571.1Z" fill="#710844"/>
+          <path id="パス_19439" data-name="パス 19439" d="M805.676,578.211l-5.164-3.1-14.7,8.027,5.158,3.093Z" fill="#710844"/>
+        </g>
+        <path id="パス_19440" data-name="パス 19440" d="M884.231,547.2a.716.716,0,0,1,.023-1.353l17.836-9.907a2.6,2.6,0,0,1,2.339.039l11.651,6.985a.715.715,0,0,1-.021,1.352l-17.833,9.909a2.6,2.6,0,0,1-2.345-.04Z" fill="#d0d5ff"/>
+      </g>
+      <g id="グループ_7226" data-name="グループ 7226">
+        <g id="グループ_7224" data-name="グループ 7224">
+          <path id="パス_19441" data-name="パス 19441" d="M942.835,556.465c0,4.09-4.156,7.048-7.7,5L820.084,493.031a14.288,14.288,0,0,1-6.438-11.155l-1.988-73.9c0-4.936,4.884-6.545,8.426-4.5L936.4,470.634a14.277,14.277,0,0,1,6.438,11.148v74.683Z" fill="#92a1fd"/>
+          <path id="パス_19442" data-name="パス 19442" d="M940.829,557.766c0,4.087-2.9,5.76-6.438,3.715L818.078,494.329a14.282,14.282,0,0,1-6.438-11.151V408.5c0-4.089,2.9-5.762,6.438-3.72l116.313,67.156a14.269,14.269,0,0,1,6.438,11.15Z" fill="url(#linear-gradient-6)"/>
+          <g id="グループ_7220" data-name="グループ 7220" opacity="0.52">
+            <path id="パス_19443" data-name="パス 19443" d="M866.36,473.078c0,20.91,9.742,44.809,24.268,63.138l43.763,25.265c3.542,2.045,6.438.372,6.438-3.715V483.082a14.268,14.268,0,0,0-6.438-11.15L880.9,441.047C871.918,446.2,866.36,457.282,866.36,473.078Z" opacity="0.52" fill="url(#linear-gradient-7)"/>
+          </g>
+          <g id="グループ_7221" data-name="グループ 7221" opacity="0.52">
+            <path id="パス_19444" data-name="パス 19444" d="M855.9,448.809c0-8.426-2.581-17.645-6.877-26.17l-30.942-17.863c-3.541-2.042-6.438-.369-6.438,3.72V454.33a54.392,54.392,0,0,0,13.947,11.978C842.327,475.975,855.9,468.139,855.9,448.809Z" opacity="0.52" fill="url(#linear-gradient-8)"/>
+          </g>
+          <g id="グループ_7222" data-name="グループ 7222">
+            <path id="パス_19445" data-name="パス 19445" d="M900.157,520.6c0-28.222-19.816-62.544-44.26-76.654S811.64,441.272,811.64,469.5a76.769,76.769,0,0,0,3.669,22.5,11.354,11.354,0,0,0,2.769,2.334l78.12,45.1C898.731,534.456,900.156,528.131,900.157,520.6Z" opacity="0.52" fill="url(#linear-gradient-9)"/>
+          </g>
+          <g id="グループ_7223" data-name="グループ 7223">
+            <path id="パス_19446" data-name="パス 19446" d="M940.829,557.766v-21.74c-9.016-19.092-23.385-36.374-39.573-45.721-25.829-14.913-47.02-4.263-49.228,23.625l82.362,47.551C937.933,563.525,940.829,561.853,940.829,557.766Z" opacity="0.52" fill="url(#linear-gradient-10)"/>
+          </g>
+        </g>
+        <g id="グループ_7225" data-name="グループ 7225">
+          <path id="パス_19447" data-name="パス 19447" d="M845.374,491.726l-5.932-3.488v2.479l5.932,3.48Z" fill="#fff"/>
+          <path id="パス_19448" data-name="パス 19448" d="M835.3,485.783l-4.4-2.584v2.478l4.4,2.579Z" fill="#fff"/>
+          <path id="パス_19449" data-name="パス 19449" d="M830.907,464.818v6.021l14.035,8.241v-6.014Z" fill="#ff3d8a"/>
+          <path id="パス_19450" data-name="パス 19450" d="M858.134,504.436l-27.227-15.995v3.145l27.227,15.991Z" fill="#fff"/>
+          <path id="パス_19451" data-name="パス 19451" d="M857.888,480.4v6.019l14.036,8.244v-6.014Z" fill="#ff3d8a"/>
+          <path id="パス_19452" data-name="パス 19452" d="M884.6,495.816v6.022l14.307,8.4v-6.012Z" fill="#ff3d8a"/>
+          <path id="パス_19453" data-name="パス 19453" d="M911.441,511.315v6.022l14.445,8.481V519.8Z" fill="#ff3d8a"/>
+        </g>
+        <path id="パス_19454" data-name="パス 19454" d="M843.554,463.786c0,.742-.529,1.045-1.172.675l-17.669-10.2a2.6,2.6,0,0,1-1.169-2.027V438.648c0-.742.526-1.047,1.169-.677l17.669,10.2a2.6,2.6,0,0,1,1.172,2.031Z" fill="#1e2a7b"/>
+      </g>
+      <g id="グループ_7283" data-name="グループ 7283">
+        <g id="グループ_7230" data-name="グループ 7230">
+          <path id="パス_19455" data-name="パス 19455" d="M774.709,506.015a20.523,20.523,0,0,0-3.686.324h-6.615v2.53h.008c.163,2.18,4.343,4.55,10.293,4.55s10.131-2.37,10.294-4.55h.008v-2.53H778.4A20.524,20.524,0,0,0,774.709,506.015Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7227" data-name="グループ 7227">
+            <path id="パス_19456" data-name="パス 19456" d="M765.582,510.807a6.5,6.5,0,0,0,.653.5v-4.967h-.653Z" fill="url(#linear-gradient-12)"/>
+            <path id="パス_19457" data-name="パス 19457" d="M777.8,506.243v6.951c.222-.033.439-.07.653-.11v-6.745H778.4C778.2,506.3,778,506.273,777.8,506.243Z" fill="url(#linear-gradient-13)"/>
+            <path id="パス_19458" data-name="パス 19458" d="M776.686,513.328c.221-.021.438-.043.653-.07V506.18c-.215-.027-.432-.053-.653-.074Z" fill="url(#linear-gradient-14)"/>
+            <path id="パス_19459" data-name="パス 19459" d="M782.237,511.856c.23-.116.448-.238.653-.362v-5.155h-.653Z" fill="url(#linear-gradient-15)"/>
+            <path id="パス_19460" data-name="パス 19460" d="M775.575,513.4q.33-.012.653-.035v-7.293c-.216-.015-.432-.029-.653-.039Z" fill="url(#linear-gradient-16)"/>
+            <path id="パス_19461" data-name="パス 19461" d="M783.348,511.191a6.026,6.026,0,0,0,.652-.533v-4.319h-.652Z" fill="url(#linear-gradient-17)"/>
+            <path id="パス_19462" data-name="パス 19462" d="M780.017,512.714c.225-.064.441-.133.652-.205v-6.17h-.652Z" fill="url(#linear-gradient-18)"/>
+            <path id="パス_19463" data-name="パス 19463" d="M778.906,512.992c.223-.048.44-.1.653-.154v-6.5h-.653Z" fill="url(#linear-gradient-19)"/>
+            <path id="パス_19464" data-name="パス 19464" d="M781.127,512.344c.227-.086.444-.176.653-.27v-5.735h-.653Z" fill="url(#linear-gradient-20)"/>
+            <path id="パス_19465" data-name="パス 19465" d="M768.913,512.564q.318.1.653.2v-6.422h-.653Z" fill="url(#linear-gradient-21)"/>
+            <path id="パス_19466" data-name="パス 19466" d="M773.354,513.376q.323.021.653.03v-7.377c-.221.008-.438.019-.653.032Z" fill="url(#linear-gradient-22)"/>
+            <path id="パス_19467" data-name="パス 19467" d="M774.465,506.02v7.4c.082,0,.162,0,.244,0,.138,0,.273,0,.409-.005v-7.391c-.137,0-.271-.009-.409-.009C774.626,506.015,774.547,506.02,774.465,506.02Z" fill="url(#linear-gradient-23)"/>
+            <path id="パス_19468" data-name="パス 19468" d="M764.408,508.869h.008a2.6,2.6,0,0,0,.709,1.484v-4.015h-.717Z" fill="url(#linear-gradient-24)"/>
+            <path id="パス_19469" data-name="パス 19469" d="M784.458,510.154a2.441,2.441,0,0,0,.545-1.285h.008v-2.53h-.553Z" fill="url(#linear-gradient-25)"/>
+            <path id="パス_19470" data-name="パス 19470" d="M766.693,511.592c.205.119.423.235.652.346v-5.6h-.652Z" fill="url(#linear-gradient-26)"/>
+            <path id="パス_19471" data-name="パス 19471" d="M772.244,513.277c.215.024.432.047.653.065v-7.251c-.222.019-.438.044-.653.069Z" fill="url(#linear-gradient-27)"/>
+            <path id="パス_19472" data-name="パス 19472" d="M767.8,512.146c.209.09.427.177.652.26v-6.067H767.8Z" fill="url(#linear-gradient-28)"/>
+            <path id="パス_19473" data-name="パス 19473" d="M770.023,512.879q.32.081.653.148v-6.688h-.653Z" fill="url(#linear-gradient-29)"/>
+            <path id="パス_19474" data-name="パス 19474" d="M771.134,513.114c.213.038.433.072.653.1v-7c-.222.031-.439.066-.653.1Z" fill="url(#linear-gradient-30)"/>
+          </g>
+          <path id="パス_19475" data-name="パス 19475" d="M774.709,501.461c-6.07,0-10.3,2.467-10.3,4.682s4.23,4.682,10.3,4.682,10.3-2.467,10.3-4.682S780.78,501.461,774.709,501.461Z" fill="url(#linear-gradient-31)"/>
+          <path id="パス_19476" data-name="パス 19476" d="M768,509.636a14.583,14.583,0,0,0,2.2.694l8.484-8.486a19.417,19.417,0,0,0-2.561-.335Z" fill="url(#linear-gradient-32)"/>
+          <path id="パス_19477" data-name="パス 19477" d="M773.881,510.809c.272.01.548.016.828.016s.557-.007.829-.017l7.394-7.395a9.656,9.656,0,0,0-1.081-.575Z" fill="url(#linear-gradient-33)"/>
+          <g id="グループ_7228" data-name="グループ 7228">
+            <path id="パス_19478" data-name="パス 19478" d="M771.421,510.4c-.18-.043-.362-.071-.539-.125-.354-.1-.715-.172-1.061-.293-.353-.1-.7-.22-1.04-.339-.174-.054-.34-.13-.51-.194l-.254-.1c-.083-.038-.165-.077-.249-.113-.337-.138-.658-.309-.983-.475a10.866,10.866,0,0,1-1.841-1.221,5.557,5.557,0,0,0,1.6,1.609,5.276,5.276,0,0,0,.482.311c.162.1.333.188.5.277.084.045.171.087.256.129l.264.112c.178.071.351.155.531.216l.543.181c.182.059.368.1.553.145a9.992,9.992,0,0,0,1.121.206c.375.057.756.063,1.132.086.378,0,.756-.017,1.132-.05-.368-.1-.735-.16-1.1-.237Z" fill="url(#linear-gradient-34)"/>
+          </g>
+          <g id="グループ_7229" data-name="グループ 7229">
+            <path id="パス_19479" data-name="パス 19479" d="M776.547,510.449l-1.484.146-.75.074c-.254.034-.508.065-.762.125.251.071.5.116.752.164l.377.058c.13.021.259.031.388.042a9.252,9.252,0,0,0,1.535-.024,10.265,10.265,0,0,0,1.511-.262,7.414,7.414,0,0,0,1.446-.527c-.52-.005-1.021.036-1.521.073S777.042,510.4,776.547,510.449Z" fill="url(#linear-gradient-35)"/>
+          </g>
+        </g>
+        <g id="グループ_7234" data-name="グループ 7234">
+          <path id="パス_19480" data-name="パス 19480" d="M772.146,500.616a20.426,20.426,0,0,0-3.687.324h-6.615v2.53h.008c.163,2.179,4.343,4.55,10.294,4.55s10.13-2.371,10.293-4.55h.008v-2.53h-6.615A20.432,20.432,0,0,0,772.146,500.616Z" fill="url(#linear-gradient-36)"/>
+          <g id="グループ_7231" data-name="グループ 7231">
+            <path id="パス_19481" data-name="パス 19481" d="M763.018,505.408a6.386,6.386,0,0,0,.653.5V500.94h-.653Z" fill="url(#linear-gradient-37)"/>
+            <path id="パス_19482" data-name="パス 19482" d="M775.231,500.845V507.8c.222-.034.439-.07.653-.11v-6.745h-.054C775.636,500.9,775.433,500.875,775.231,500.845Z" fill="url(#linear-gradient-38)"/>
+            <path id="パス_19483" data-name="パス 19483" d="M774.121,507.93c.221-.021.439-.043.653-.07v-7.079c-.216-.026-.432-.053-.653-.073Z" fill="url(#linear-gradient-39)"/>
+            <path id="パス_19484" data-name="パス 19484" d="M779.673,506.457c.23-.116.448-.237.652-.361v-5.155h-.652Z" fill="url(#linear-gradient-40)"/>
+            <path id="パス_19485" data-name="パス 19485" d="M773.011,508c.221-.009.438-.02.653-.035v-7.293c-.216-.016-.432-.029-.653-.039Z" fill="url(#linear-gradient-41)"/>
+            <path id="パス_19486" data-name="パス 19486" d="M780.782,505.793a6.159,6.159,0,0,0,.654-.533v-4.319h-.654Z" fill="url(#linear-gradient-42)"/>
+            <path id="パス_19487" data-name="パス 19487" d="M777.452,507.315c.224-.065.441-.134.653-.2v-6.17h-.653Z" fill="url(#linear-gradient-43)"/>
+            <path id="パス_19488" data-name="パス 19488" d="M776.342,507.594c.223-.048.44-.1.653-.154v-6.5h-.653Z" fill="url(#linear-gradient-44)"/>
+            <path id="パス_19489" data-name="パス 19489" d="M778.563,506.945q.339-.129.653-.27V500.94h-.653Z" fill="url(#linear-gradient-45)"/>
+            <path id="パス_19490" data-name="パス 19490" d="M766.349,507.166c.212.068.43.134.653.2V500.94h-.653Z" fill="url(#linear-gradient-46)"/>
+            <path id="パス_19491" data-name="パス 19491" d="M770.79,507.978q.323.02.653.03v-7.376c-.221.007-.438.018-.653.031Z" fill="url(#linear-gradient-47)"/>
+            <path id="パス_19492" data-name="パス 19492" d="M771.9,500.621v7.4c.082,0,.162,0,.245,0,.137,0,.272,0,.408-.005v-7.391c-.137,0-.27-.009-.408-.009C772.063,500.616,771.982,500.62,771.9,500.621Z" fill="url(#linear-gradient-48)"/>
+            <path id="パス_19493" data-name="パス 19493" d="M761.844,503.471h.008a2.6,2.6,0,0,0,.709,1.485V500.94h-.717Z" fill="url(#linear-gradient-49)"/>
+            <path id="パス_19494" data-name="パス 19494" d="M781.894,504.756a2.441,2.441,0,0,0,.545-1.285h.008v-2.53h-.553Z" fill="url(#linear-gradient-50)"/>
+            <path id="パス_19495" data-name="パス 19495" d="M764.128,506.192q.309.18.653.347v-5.6h-.653Z" fill="url(#linear-gradient-51)"/>
+            <path id="パス_19496" data-name="パス 19496" d="M769.68,507.878c.215.024.433.047.653.065v-7.25c-.223.019-.438.043-.653.068Z" fill="url(#linear-gradient-52)"/>
+            <path id="パス_19497" data-name="パス 19497" d="M765.238,506.748c.21.09.427.177.653.26v-6.067h-.653Z" fill="url(#linear-gradient-53)"/>
+            <path id="パス_19498" data-name="パス 19498" d="M767.459,507.481c.213.052.431.1.653.147V500.94h-.653Z" fill="url(#linear-gradient-54)"/>
+            <path id="パス_19499" data-name="パス 19499" d="M768.569,507.716c.214.038.432.071.653.1v-7c-.222.031-.439.066-.653.1Z" fill="url(#linear-gradient-55)"/>
+          </g>
+          <path id="パス_19500" data-name="パス 19500" d="M772.146,496.063c-6.071,0-10.3,2.467-10.3,4.682s4.23,4.682,10.3,4.682,10.3-2.467,10.3-4.682S778.216,496.063,772.146,496.063Z" fill="url(#linear-gradient-31)"/>
+          <path id="パス_19501" data-name="パス 19501" d="M765.435,504.238a14.7,14.7,0,0,0,2.2.692l8.485-8.485a19.621,19.621,0,0,0-2.562-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19502" data-name="パス 19502" d="M771.316,505.41c.272.01.548.016.829.016s.555-.007.828-.018l7.394-7.394a9.656,9.656,0,0,0-1.081-.575Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7232" data-name="グループ 7232">
+            <path id="パス_19503" data-name="パス 19503" d="M768.856,505c-.181-.043-.362-.071-.539-.125-.354-.1-.714-.172-1.061-.293-.353-.1-.7-.221-1.04-.34-.174-.054-.34-.129-.511-.193l-.253-.1c-.083-.039-.165-.077-.249-.113-.337-.137-.658-.309-.983-.475a10.871,10.871,0,0,1-1.842-1.221,5.572,5.572,0,0,0,1.6,1.609,5.276,5.276,0,0,0,.482.311c.161.1.333.188.5.277.084.045.171.087.257.129l.263.111c.178.072.351.156.531.217l.543.181c.182.059.368.1.553.145a10.179,10.179,0,0,0,1.121.2c.375.058.756.063,1.132.087.378,0,.756-.016,1.131-.05-.368-.1-.734-.16-1.1-.237Z" fill="#fff" opacity="0.25"/>
+          </g>
+          <g id="グループ_7233" data-name="グループ 7233">
+            <path id="パス_19504" data-name="パス 19504" d="M773.982,505.051l-1.485.146-.75.074c-.253.033-.507.065-.761.124.251.072.5.117.752.164l.377.059c.13.02.259.031.387.041a9.173,9.173,0,0,0,1.537-.024,10.021,10.021,0,0,0,1.51-.261,7.5,7.5,0,0,0,1.446-.527c-.52-.005-1.021.036-1.521.072S774.479,505,773.982,505.051Z" fill="#fff" opacity="0.25"/>
+          </g>
+        </g>
+        <g id="グループ_7238" data-name="グループ 7238">
+          <path id="パス_19505" data-name="パス 19505" d="M792.563,512.369a20.417,20.417,0,0,0-3.686.324h-6.616v2.529h.008c.163,2.18,4.343,4.551,10.294,4.551s10.131-2.371,10.293-4.551h.008v-2.529h-6.615A20.41,20.41,0,0,0,792.563,512.369Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7235" data-name="グループ 7235">
+            <path id="パス_19506" data-name="パス 19506" d="M783.437,517.161a6.386,6.386,0,0,0,.653.5v-4.967h-.653Z" fill="url(#linear-gradient-58)"/>
+            <path id="パス_19507" data-name="パス 19507" d="M795.649,512.6v6.951c.222-.033.439-.07.653-.11v-6.745h-.054C796.054,512.657,795.852,512.628,795.649,512.6Z" fill="url(#linear-gradient-59)"/>
+            <path id="パス_19508" data-name="パス 19508" d="M794.539,519.683c.221-.021.439-.043.653-.07v-7.079c-.215-.026-.432-.053-.653-.072Z" fill="url(#linear-gradient-60)"/>
+            <path id="パス_19509" data-name="パス 19509" d="M800.091,518.211c.23-.117.449-.238.653-.363v-5.154h-.653Z" fill="url(#linear-gradient-61)"/>
+            <path id="パス_19510" data-name="パス 19510" d="M793.429,519.755c.221-.009.438-.021.653-.035v-7.293c-.216-.015-.432-.03-.653-.038Z" fill="url(#linear-gradient-62)"/>
+            <path id="パス_19511" data-name="パス 19511" d="M801.2,517.546a6.137,6.137,0,0,0,.653-.533v-4.319H801.2Z" fill="url(#linear-gradient-63)"/>
+            <path id="パス_19512" data-name="パス 19512" d="M797.87,519.068c.225-.064.442-.133.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-43)"/>
+            <path id="パス_19513" data-name="パス 19513" d="M796.76,519.347c.223-.048.44-.1.653-.153v-6.5h-.653Z" fill="url(#linear-gradient-65)"/>
+            <path id="パス_19514" data-name="パス 19514" d="M798.98,518.7c.227-.086.444-.176.653-.27v-5.735h-.653Z" fill="url(#linear-gradient-66)"/>
+            <path id="パス_19515" data-name="パス 19515" d="M786.767,518.919q.318.1.654.2v-6.422h-.654Z" fill="url(#linear-gradient-67)"/>
+            <path id="パス_19516" data-name="パス 19516" d="M791.209,519.73q.323.02.652.031v-7.377c-.221.007-.438.018-.652.031Z" fill="url(#linear-gradient-68)"/>
+            <path id="パス_19517" data-name="パス 19517" d="M792.319,512.374v7.4l.244,0c.137,0,.273,0,.408-.005v-7.391c-.137,0-.271-.009-.408-.009C792.48,512.369,792.4,512.373,792.319,512.374Z" fill="url(#linear-gradient-69)"/>
+            <path id="パス_19518" data-name="パス 19518" d="M782.262,515.223h.008a2.6,2.6,0,0,0,.71,1.486v-4.016h-.718Z" fill="url(#linear-gradient-70)"/>
+            <path id="パス_19519" data-name="パス 19519" d="M802.312,516.509a2.441,2.441,0,0,0,.545-1.286h.008v-2.529h-.553Z" fill="url(#linear-gradient-71)"/>
+            <path id="パス_19520" data-name="パス 19520" d="M784.547,517.945c.205.12.423.235.652.348v-5.6h-.652Z" fill="url(#linear-gradient-72)"/>
+            <path id="パス_19521" data-name="パス 19521" d="M790.1,519.631q.323.038.653.065v-7.25c-.222.019-.438.044-.653.069Z" fill="url(#linear-gradient-73)"/>
+            <path id="パス_19522" data-name="パス 19522" d="M785.657,518.5c.209.091.427.177.653.26v-6.067h-.653Z" fill="url(#linear-gradient-74)"/>
+            <path id="パス_19523" data-name="パス 19523" d="M787.878,519.234c.213.052.43.1.652.147v-6.688h-.652Z" fill="url(#linear-gradient-75)"/>
+            <path id="パス_19524" data-name="パス 19524" d="M788.988,519.469c.213.038.432.072.652.1v-7c-.222.031-.438.066-.652.1Z" fill="url(#linear-gradient-76)"/>
+          </g>
+          <path id="パス_19525" data-name="パス 19525" d="M792.563,507.815c-6.071,0-10.3,2.468-10.3,4.682s4.23,4.683,10.3,4.683,10.3-2.468,10.3-4.683S798.634,507.815,792.563,507.815Z" fill="url(#linear-gradient-77)"/>
+          <path id="パス_19526" data-name="パス 19526" d="M785.853,515.99a14.471,14.471,0,0,0,2.2.693l8.485-8.484a19.428,19.428,0,0,0-2.562-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19527" data-name="パス 19527" d="M791.734,517.162c.272.011.548.018.829.018s.556-.008.828-.018l7.4-7.395a9.514,9.514,0,0,0-1.082-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7236" data-name="グループ 7236">
+            <path id="パス_19528" data-name="パス 19528" d="M789.274,516.754c-.18-.042-.362-.07-.538-.125-.354-.1-.715-.171-1.061-.291-.353-.1-.7-.221-1.04-.34-.175-.055-.341-.13-.511-.193l-.254-.1c-.083-.038-.165-.077-.248-.112-.338-.139-.659-.311-.983-.476a10.83,10.83,0,0,1-1.842-1.221,5.569,5.569,0,0,0,1.6,1.609,5.407,5.407,0,0,0,.482.311c.162.1.333.188.5.276.085.046.171.088.257.131l.263.111c.178.071.351.155.531.216l.543.181c.182.059.368.1.554.145a9.938,9.938,0,0,0,1.12.205c.375.058.756.063,1.132.088.379,0,.757-.018,1.132-.051-.368-.1-.735-.16-1.1-.236Z" fill="#fff" opacity="0.25"/>
+          </g>
+          <g id="グループ_7237" data-name="グループ 7237">
+            <path id="パス_19529" data-name="パス 19529" d="M794.4,516.8l-1.485.146-.75.074c-.254.034-.507.065-.761.124.25.072.5.117.752.164l.376.059c.13.02.259.031.388.041a9.262,9.262,0,0,0,1.536-.023,10.311,10.311,0,0,0,1.511-.262,7.433,7.433,0,0,0,1.445-.527c-.52,0-1.021.035-1.521.072S794.9,516.756,794.4,516.8Z" fill="#fff" opacity="0.25"/>
+          </g>
+        </g>
+        <g id="グループ_7242" data-name="グループ 7242">
+          <path id="パス_19530" data-name="パス 19530" d="M798.024,522.793a20.426,20.426,0,0,0-3.686.324h-6.615v2.529h.008c.162,2.18,4.342,4.551,10.293,4.551s10.131-2.371,10.294-4.551h.008v-2.529H801.71A20.4,20.4,0,0,0,798.024,522.793Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7239" data-name="グループ 7239">
+            <path id="パス_19531" data-name="パス 19531" d="M788.9,527.585a6.369,6.369,0,0,0,.652.5v-4.967H788.9Z" fill="url(#linear-gradient-79)"/>
+            <path id="パス_19532" data-name="パス 19532" d="M801.111,523.021v6.951c.222-.033.438-.07.653-.11v-6.745h-.055C801.516,523.081,801.313,523.052,801.111,523.021Z" fill="url(#linear-gradient-80)"/>
+            <path id="パス_19533" data-name="パス 19533" d="M800,530.106q.332-.031.653-.07v-7.079c-.216-.026-.432-.053-.653-.073Z" fill="url(#linear-gradient-81)"/>
+            <path id="パス_19534" data-name="パス 19534" d="M805.553,528.635c.229-.117.448-.238.652-.363v-5.154h-.652Z" fill="url(#linear-gradient-82)"/>
+            <path id="パス_19535" data-name="パス 19535" d="M798.891,530.179q.332-.013.652-.035v-7.293c-.215-.015-.431-.03-.652-.039Z" fill="url(#linear-gradient-83)"/>
+            <path id="パス_19536" data-name="パス 19536" d="M806.663,527.97a6.115,6.115,0,0,0,.652-.533v-4.319h-.652Z" fill="url(#linear-gradient-84)"/>
+            <path id="パス_19537" data-name="パス 19537" d="M803.332,529.492c.224-.064.441-.133.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-85)"/>
+            <path id="パス_19538" data-name="パス 19538" d="M802.222,529.771c.223-.048.44-.1.652-.153v-6.5h-.652Z" fill="url(#linear-gradient-86)"/>
+            <path id="パス_19539" data-name="パス 19539" d="M804.442,529.122c.226-.086.443-.177.652-.271v-5.734h-.652Z" fill="url(#linear-gradient-87)"/>
+            <path id="パス_19540" data-name="パス 19540" d="M792.229,529.343c.211.069.43.134.653.2v-6.422h-.653Z" fill="url(#linear-gradient-88)"/>
+            <path id="パス_19541" data-name="パス 19541" d="M796.67,530.153c.216.014.433.024.653.031v-7.376c-.221.006-.438.018-.653.031Z" fill="url(#linear-gradient-89)"/>
+            <path id="パス_19542" data-name="パス 19542" d="M797.78,522.8v7.4c.081,0,.162,0,.244,0,.138,0,.273,0,.409-.005V522.8c-.137,0-.271-.009-.409-.009C797.942,522.793,797.862,522.8,797.78,522.8Z" fill="url(#linear-gradient-90)"/>
+            <path id="パス_19543" data-name="パス 19543" d="M787.724,525.646h.008a2.589,2.589,0,0,0,.709,1.485v-4.015h-.717Z" fill="url(#linear-gradient-91)"/>
+            <path id="パス_19544" data-name="パス 19544" d="M807.772,526.933a2.438,2.438,0,0,0,.546-1.286h.008v-2.529h-.554Z" fill="url(#linear-gradient-92)"/>
+            <path id="パス_19545" data-name="パス 19545" d="M790.008,528.369c.206.12.424.235.653.348v-5.6h-.653Z" fill="url(#linear-gradient-93)"/>
+            <path id="パス_19546" data-name="パス 19546" d="M795.56,530.055c.215.025.433.047.652.065v-7.25c-.221.019-.437.044-.652.069Z" fill="url(#linear-gradient-94)"/>
+            <path id="パス_19547" data-name="パス 19547" d="M791.118,528.925c.21.09.427.177.653.26v-6.067h-.653Z" fill="url(#linear-gradient-95)"/>
+            <path id="パス_19548" data-name="パス 19548" d="M793.339,529.658c.213.052.431.1.653.147v-6.688h-.653Z" fill="url(#linear-gradient-96)"/>
+            <path id="パス_19549" data-name="パス 19549" d="M794.449,529.893c.214.038.432.072.653.1v-7c-.222.031-.439.066-.653.1Z" fill="url(#linear-gradient-97)"/>
+          </g>
+          <path id="パス_19550" data-name="パス 19550" d="M798.024,518.239c-6.07,0-10.3,2.468-10.3,4.682s4.23,4.682,10.3,4.682,10.3-2.467,10.3-4.682S804.095,518.239,798.024,518.239Z" fill="url(#linear-gradient-98)"/>
+          <path id="パス_19551" data-name="パス 19551" d="M791.314,526.414a14.581,14.581,0,0,0,2.2.693L802,518.622a19.757,19.757,0,0,0-2.561-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19552" data-name="パス 19552" d="M797.2,527.586q.408.016.828.017c.281,0,.556-.007.828-.017l7.4-7.4a9.571,9.571,0,0,0-1.081-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7240" data-name="グループ 7240">
+            <path id="パス_19553" data-name="パス 19553" d="M794.735,527.178c-.18-.042-.361-.07-.538-.125-.354-.1-.714-.171-1.061-.291-.353-.1-.7-.221-1.04-.34-.174-.055-.34-.131-.511-.193l-.254-.1c-.082-.038-.164-.078-.248-.113-.337-.138-.658-.31-.983-.475a10.892,10.892,0,0,1-1.842-1.221,5.572,5.572,0,0,0,1.6,1.609,5.407,5.407,0,0,0,.482.311c.161.1.333.188.5.276.085.046.17.088.256.13l.264.112c.178.071.35.154.531.216l.543.181c.182.059.368.1.553.144a9.73,9.73,0,0,0,1.121.206c.374.058.756.063,1.131.087.38,0,.757-.017,1.132-.05-.368-.1-.735-.16-1.1-.236Z" fill="#fff" opacity="0.25"/>
+          </g>
+          <g id="グループ_7241" data-name="グループ 7241">
+            <path id="パス_19554" data-name="パス 19554" d="M799.862,527.227l-1.485.147-.75.074c-.253.034-.507.065-.761.124.25.072.5.117.752.164l.377.059c.129.02.259.031.387.041a9.274,9.274,0,0,0,1.537-.023,10.3,10.3,0,0,0,1.51-.262,7.473,7.473,0,0,0,1.445-.527c-.52-.005-1.021.035-1.521.072S800.357,527.18,799.862,527.227Z" fill="#fff" opacity="0.25"/>
+          </g>
+        </g>
+        <g id="グループ_7246" data-name="グループ 7246">
+          <path id="パス_19555" data-name="パス 19555" d="M757.273,519.646a20.526,20.526,0,0,0-3.687.324h-6.615v2.53h.008c.163,2.18,4.343,4.551,10.294,4.551s10.13-2.371,10.293-4.551h.008v-2.53h-6.615A20.6,20.6,0,0,0,757.273,519.646Z" fill="url(#linear-gradient-36)"/>
+          <g id="グループ_7243" data-name="グループ 7243">
+            <path id="パス_19556" data-name="パス 19556" d="M748.146,524.439a6.643,6.643,0,0,0,.652.5V519.97h-.652Z" fill="url(#linear-gradient-100)"/>
+            <path id="パス_19557" data-name="パス 19557" d="M760.359,519.875v6.952c.223-.033.439-.071.653-.11v-6.746h-.054C760.764,519.936,760.562,519.906,760.359,519.875Z" fill="url(#linear-gradient-101)"/>
+            <path id="パス_19558" data-name="パス 19558" d="M759.249,526.96c.221-.021.439-.043.653-.069v-7.079c-.215-.027-.432-.053-.653-.073Z" fill="url(#linear-gradient-102)"/>
+            <path id="パス_19559" data-name="パス 19559" d="M764.8,525.488c.23-.116.449-.237.653-.362v-5.155H764.8Z" fill="url(#linear-gradient-103)"/>
+            <path id="パス_19560" data-name="パス 19560" d="M758.14,527.033c.22-.009.438-.021.652-.035v-7.293c-.216-.016-.432-.03-.652-.039Z" fill="url(#linear-gradient-104)"/>
+            <path id="パス_19561" data-name="パス 19561" d="M765.911,524.824a6.259,6.259,0,0,0,.653-.533v-4.32h-.653Z" fill="url(#linear-gradient-105)"/>
+            <path id="パス_19562" data-name="パス 19562" d="M762.58,526.346c.224-.064.441-.133.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-106)"/>
+            <path id="パス_19563" data-name="パス 19563" d="M761.47,526.625c.223-.048.44-.1.653-.154v-6.5h-.653Z" fill="url(#linear-gradient-107)"/>
+            <path id="パス_19564" data-name="パス 19564" d="M763.69,525.977c.227-.087.444-.176.653-.27v-5.736h-.653Z" fill="url(#linear-gradient-108)"/>
+            <path id="パス_19565" data-name="パス 19565" d="M751.478,526.2c.211.068.43.133.652.2V519.97h-.652Z" fill="url(#linear-gradient-109)"/>
+            <path id="パス_19566" data-name="パス 19566" d="M755.918,527.008c.216.014.433.024.653.031v-7.377c-.221.008-.438.019-.653.031Z" fill="url(#linear-gradient-110)"/>
+            <path id="パス_19567" data-name="パス 19567" d="M757.028,519.652v7.4c.082,0,.162,0,.245,0,.138,0,.272,0,.408-.005v-7.391c-.137,0-.27-.01-.408-.01C757.19,519.646,757.111,519.651,757.028,519.652Z" fill="url(#linear-gradient-111)"/>
+            <path id="パス_19568" data-name="パス 19568" d="M746.972,522.5h.008a2.6,2.6,0,0,0,.709,1.485V519.97h-.717Z" fill="url(#linear-gradient-112)"/>
+            <path id="パス_19569" data-name="パス 19569" d="M767.021,523.787a2.436,2.436,0,0,0,.545-1.286h.008v-2.53h-.553Z" fill="url(#linear-gradient-113)"/>
+            <path id="パス_19570" data-name="パス 19570" d="M749.257,525.225q.308.179.653.346v-5.6h-.653Z" fill="url(#linear-gradient-114)"/>
+            <path id="パス_19571" data-name="パス 19571" d="M754.809,526.909c.214.024.432.047.652.065v-7.25c-.222.019-.438.043-.652.068Z" fill="url(#linear-gradient-115)"/>
+            <path id="パス_19572" data-name="パス 19572" d="M750.367,525.779c.21.09.427.178.652.26v-6.068h-.652Z" fill="url(#linear-gradient-116)"/>
+            <path id="パス_19573" data-name="パス 19573" d="M752.587,526.512c.213.053.431.1.654.147v-6.688h-.654Z" fill="url(#linear-gradient-117)"/>
+            <path id="パス_19574" data-name="パス 19574" d="M753.7,526.746c.214.038.433.072.653.1v-7c-.222.032-.439.066-.653.1Z" fill="url(#linear-gradient-118)"/>
+          </g>
+          <path id="パス_19575" data-name="パス 19575" d="M757.273,515.093c-6.07,0-10.3,2.468-10.3,4.683s4.23,4.682,10.3,4.682,10.3-2.468,10.3-4.682S763.344,515.093,757.273,515.093Z" fill="url(#linear-gradient-119)"/>
+          <path id="パス_19576" data-name="パス 19576" d="M750.563,523.269a14.581,14.581,0,0,0,2.2.693l8.485-8.485a19.438,19.438,0,0,0-2.562-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19577" data-name="パス 19577" d="M756.444,524.44c.272.011.549.017.829.017s.556-.007.828-.017l7.394-7.4a9.725,9.725,0,0,0-1.081-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7244" data-name="グループ 7244" opacity="0.25">
+            <path id="パス_19578" data-name="パス 19578" d="M753.984,524.032c-.181-.043-.362-.07-.539-.125-.354-.1-.714-.171-1.061-.292-.353-.1-.7-.22-1.04-.339-.174-.054-.34-.13-.51-.194l-.254-.1c-.082-.038-.164-.077-.248-.112-.338-.138-.659-.309-.984-.476a10.8,10.8,0,0,1-1.841-1.22,5.581,5.581,0,0,0,1.6,1.609c.153.116.319.211.482.311s.333.187.5.276c.085.046.171.087.257.13l.264.112c.177.071.35.154.53.216l.544.18c.182.059.368.1.552.145a9.985,9.985,0,0,0,1.121.206c.375.058.756.063,1.132.087.379,0,.757-.017,1.131-.051-.367-.1-.734-.16-1.1-.236Z" fill="#fff"/>
+          </g>
+          <g id="グループ_7245" data-name="グループ 7245">
+            <path id="パス_19579" data-name="パス 19579" d="M759.11,524.082l-1.484.146-.75.074a7.467,7.467,0,0,0-.762.124c.251.072.5.117.752.164l.377.059c.13.02.259.031.388.042a9.261,9.261,0,0,0,1.536-.025,10.027,10.027,0,0,0,1.511-.262,7.425,7.425,0,0,0,1.445-.526c-.52-.005-1.021.035-1.521.072S759.606,524.034,759.11,524.082Z" fill="#fff" opacity="0.25"/>
+          </g>
+        </g>
+        <g id="グループ_7250" data-name="グループ 7250">
+          <path id="パス_19580" data-name="パス 19580" d="M758.209,515.742a20.417,20.417,0,0,0-3.686.324h-6.615v2.529h.008c.162,2.18,4.342,4.551,10.293,4.551s10.131-2.371,10.293-4.551h.009v-2.529H761.9A20.418,20.418,0,0,0,758.209,515.742Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7247" data-name="グループ 7247">
+            <path id="パス_19581" data-name="パス 19581" d="M749.082,520.533a6.254,6.254,0,0,0,.653.5v-4.967h-.653Z" fill="url(#linear-gradient-121)"/>
+            <path id="パス_19582" data-name="パス 19582" d="M761.295,515.971v6.951c.223-.033.439-.07.653-.11v-6.745h-.054C761.7,516.03,761.5,516,761.295,515.971Z" fill="url(#linear-gradient-122)"/>
+            <path id="パス_19583" data-name="パス 19583" d="M760.186,523.056c.22-.021.438-.043.652-.07v-7.079c-.215-.026-.432-.053-.652-.072Z" fill="url(#linear-gradient-123)"/>
+            <path id="パス_19584" data-name="パス 19584" d="M765.736,521.584c.23-.117.449-.238.653-.363v-5.154h-.653Z" fill="url(#linear-gradient-124)"/>
+            <path id="パス_19585" data-name="パス 19585" d="M759.075,523.129c.22-.01.438-.021.652-.036V515.8c-.216-.015-.432-.03-.652-.039Z" fill="url(#linear-gradient-125)"/>
+            <path id="パス_19586" data-name="パス 19586" d="M766.847,520.919a6.137,6.137,0,0,0,.653-.533v-4.319h-.653Z" fill="url(#linear-gradient-126)"/>
+            <path id="パス_19587" data-name="パス 19587" d="M763.517,522.441c.224-.064.441-.133.652-.205v-6.17h-.652Z" fill="url(#linear-gradient-127)"/>
+            <path id="パス_19588" data-name="パス 19588" d="M762.406,522.72c.223-.048.439-.1.652-.153v-6.5h-.652Z" fill="url(#linear-gradient-128)"/>
+            <path id="パス_19589" data-name="パス 19589" d="M764.626,522.071c.227-.086.444-.176.653-.27v-5.735h-.653Z" fill="url(#linear-gradient-129)"/>
+            <path id="パス_19590" data-name="パス 19590" d="M752.413,522.291c.211.069.43.135.653.2v-6.422h-.653Z" fill="url(#linear-gradient-130)"/>
+            <path id="パス_19591" data-name="パス 19591" d="M756.854,523.1c.215.013.432.023.653.031v-7.377c-.222.007-.438.018-.653.031Z" fill="url(#linear-gradient-131)"/>
+            <path id="パス_19592" data-name="パス 19592" d="M757.965,515.748v7.4c.081,0,.162,0,.244,0,.138,0,.272,0,.409-.005v-7.391c-.138,0-.271-.009-.409-.009C758.126,515.742,758.047,515.746,757.965,515.748Z" fill="url(#linear-gradient-132)"/>
+            <path id="パス_19593" data-name="パス 19593" d="M747.908,518.6h.008a2.594,2.594,0,0,0,.709,1.486v-4.016h-.717Z" fill="url(#linear-gradient-133)"/>
+            <path id="パス_19594" data-name="パス 19594" d="M767.957,519.882a2.425,2.425,0,0,0,.545-1.286h.009v-2.529h-.554v3.815Z" fill="url(#linear-gradient-134)"/>
+            <path id="パス_19595" data-name="パス 19595" d="M750.192,521.318c.206.12.423.235.653.348v-5.6h-.653Z" fill="url(#linear-gradient-135)"/>
+            <path id="パス_19596" data-name="パス 19596" d="M755.744,523c.215.025.433.047.652.065v-7.25c-.222.019-.438.044-.652.069Z" fill="url(#linear-gradient-136)"/>
+            <path id="パス_19597" data-name="パス 19597" d="M751.3,521.874c.21.09.427.177.653.26v-6.067H751.3Z" fill="url(#linear-gradient-137)"/>
+            <path id="パス_19598" data-name="パス 19598" d="M753.523,522.607c.213.052.431.1.653.146v-6.688h-.653Z" fill="url(#linear-gradient-138)"/>
+            <path id="パス_19599" data-name="パス 19599" d="M754.634,522.842c.213.038.432.072.653.1v-7c-.222.031-.439.066-.653.1Z" fill="url(#linear-gradient-139)"/>
+          </g>
+          <path id="パス_19600" data-name="パス 19600" d="M758.209,511.188c-6.07,0-10.3,2.468-10.3,4.683s4.23,4.683,10.3,4.683,10.3-2.468,10.3-4.683S764.279,511.188,758.209,511.188Z" fill="url(#linear-gradient-140)"/>
+          <path id="パス_19601" data-name="パス 19601" d="M751.5,519.363a14.531,14.531,0,0,0,2.2.693l8.485-8.484a19.239,19.239,0,0,0-2.562-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19602" data-name="パス 19602" d="M757.38,520.535c.272.011.549.018.829.018s.556-.008.828-.018l7.4-7.4a9.731,9.731,0,0,0-1.081-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7248" data-name="グループ 7248" opacity="0.25">
+            <path id="パス_19603" data-name="パス 19603" d="M754.92,520.127c-.18-.042-.361-.07-.538-.125-.354-.1-.714-.17-1.061-.292-.353-.1-.7-.22-1.04-.339-.175-.055-.34-.13-.511-.193l-.254-.1c-.082-.038-.164-.077-.248-.112-.338-.139-.658-.31-.983-.476a10.83,10.83,0,0,1-1.842-1.221,5.56,5.56,0,0,0,1.6,1.609,5.485,5.485,0,0,0,.482.311c.161.1.333.188.5.276.084.046.17.088.256.13l.264.112c.177.07.35.155.53.216l.544.181c.182.059.368.1.553.145a9.978,9.978,0,0,0,1.12.205c.375.057.757.063,1.132.087.379,0,.757-.017,1.132-.051-.368-.1-.735-.159-1.1-.235Z" fill="#fff"/>
+          </g>
+          <g id="グループ_7249" data-name="グループ 7249" opacity="0.25">
+            <path id="パス_19604" data-name="パス 19604" d="M760.047,520.177l-1.485.146-.75.074c-.254.034-.507.065-.761.124.25.072.5.117.752.164l.377.059c.129.02.258.031.387.041a9.261,9.261,0,0,0,1.536-.023,10.16,10.16,0,0,0,1.511-.262,7.409,7.409,0,0,0,1.445-.527c-.52,0-1.021.035-1.521.072S760.542,520.129,760.047,520.177Z" fill="#fff"/>
+          </g>
+        </g>
+        <g id="グループ_7254" data-name="グループ 7254">
+          <path id="パス_19605" data-name="パス 19605" d="M759.575,509.384a20.423,20.423,0,0,0-3.686.324h-6.615v2.53h.008c.162,2.179,4.342,4.55,10.293,4.55s10.131-2.371,10.293-4.55h.009v-2.53h-6.616A20.413,20.413,0,0,0,759.575,509.384Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7251" data-name="グループ 7251">
+            <path id="パス_19606" data-name="パス 19606" d="M750.448,514.176a6.386,6.386,0,0,0,.653.5v-4.967h-.653Z" fill="url(#linear-gradient-142)"/>
+            <path id="パス_19607" data-name="パス 19607" d="M762.661,509.612v6.951c.223-.033.439-.07.654-.11v-6.745h-.055C763.065,509.672,762.863,509.643,762.661,509.612Z" fill="url(#linear-gradient-143)"/>
+            <path id="パス_19608" data-name="パス 19608" d="M761.552,516.7c.22-.021.439-.043.652-.07v-7.078c-.215-.027-.432-.053-.652-.074Z" fill="url(#linear-gradient-144)"/>
+            <path id="パス_19609" data-name="パス 19609" d="M767.1,515.226c.23-.117.449-.238.653-.363v-5.154H767.1Z" fill="url(#linear-gradient-145)"/>
+            <path id="パス_19610" data-name="パス 19610" d="M760.441,516.77c.22-.009.438-.02.652-.035v-7.293c-.216-.015-.432-.03-.652-.039Z" fill="url(#linear-gradient-146)"/>
+            <path id="パス_19611" data-name="パス 19611" d="M768.213,514.561a5.926,5.926,0,0,0,.653-.533v-4.319h-.653Z" fill="url(#linear-gradient-147)"/>
+            <path id="パス_19612" data-name="パス 19612" d="M764.882,516.083c.225-.064.442-.133.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-148)"/>
+            <path id="パス_19613" data-name="パス 19613" d="M763.772,516.361c.223-.047.439-.1.652-.153v-6.5h-.652Z" fill="url(#linear-gradient-149)"/>
+            <path id="パス_19614" data-name="パス 19614" d="M765.992,515.713c.227-.086.444-.176.653-.27v-5.735h-.653Z" fill="url(#linear-gradient-150)"/>
+            <path id="パス_19615" data-name="パス 19615" d="M753.779,515.934c.211.068.43.134.653.2v-6.422h-.653Z" fill="url(#linear-gradient-151)"/>
+            <path id="パス_19616" data-name="パス 19616" d="M758.221,516.745c.215.014.432.024.653.031V509.4c-.222.007-.438.018-.653.031Z" fill="url(#linear-gradient-152)"/>
+            <path id="パス_19617" data-name="パス 19617" d="M759.331,509.39v7.4c.081,0,.162,0,.244,0,.138,0,.273,0,.409-.005v-7.391c-.138,0-.271-.009-.409-.009C759.492,509.384,759.413,509.389,759.331,509.39Z" fill="url(#linear-gradient-153)"/>
+            <path id="パス_19618" data-name="パス 19618" d="M749.274,512.238h.008a2.594,2.594,0,0,0,.709,1.485v-4.016h-.717Z" fill="url(#linear-gradient-154)"/>
+            <path id="パス_19619" data-name="パス 19619" d="M769.323,513.523a2.425,2.425,0,0,0,.545-1.285h.009v-2.53h-.554v3.815Z" fill="url(#linear-gradient-155)"/>
+            <path id="パス_19620" data-name="パス 19620" d="M751.559,514.961c.206.119.423.234.653.347v-5.6h-.653Z" fill="url(#linear-gradient-156)"/>
+            <path id="パス_19621" data-name="パス 19621" d="M757.11,516.646c.215.025.433.048.652.065v-7.25c-.221.02-.438.044-.652.069Z" fill="url(#linear-gradient-157)"/>
+            <path id="パス_19622" data-name="パス 19622" d="M752.669,515.516c.21.09.427.178.653.26v-6.067h-.653Z" fill="url(#linear-gradient-158)"/>
+            <path id="パス_19623" data-name="パス 19623" d="M754.89,516.249c.213.052.431.1.653.147v-6.688h-.653Z" fill="url(#linear-gradient-159)"/>
+            <path id="パス_19624" data-name="パス 19624" d="M756,516.484c.213.037.432.071.653.1v-7c-.222.031-.439.066-.653.1Z" fill="url(#linear-gradient-160)"/>
+          </g>
+          <path id="パス_19625" data-name="パス 19625" d="M759.575,504.83c-6.07,0-10.3,2.467-10.3,4.682s4.23,4.683,10.3,4.683,10.3-2.468,10.3-4.683S765.646,504.83,759.575,504.83Z" fill="url(#linear-gradient-31)"/>
+          <path id="パス_19626" data-name="パス 19626" d="M752.864,513.005a14.341,14.341,0,0,0,2.205.693l8.484-8.484a19.413,19.413,0,0,0-2.561-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19627" data-name="パス 19627" d="M758.746,514.178c.272.01.549.017.829.017s.556-.007.828-.018l7.4-7.395a9.747,9.747,0,0,0-1.081-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7252" data-name="グループ 7252" opacity="0.25">
+            <path id="パス_19628" data-name="パス 19628" d="M756.286,513.77c-.18-.043-.361-.071-.538-.125-.354-.1-.714-.172-1.061-.293-.353-.1-.7-.22-1.04-.339-.175-.054-.34-.13-.511-.193l-.254-.1c-.082-.038-.164-.078-.248-.112-.338-.139-.658-.31-.983-.476a10.832,10.832,0,0,1-1.842-1.221,5.569,5.569,0,0,0,1.6,1.609,5.431,5.431,0,0,0,.483.311c.161.1.333.188.5.277.084.045.17.087.256.129l.264.112c.177.071.35.155.53.216l.544.181c.182.059.368.1.553.145a9.968,9.968,0,0,0,1.12.206c.375.057.756.062,1.132.086.379,0,.757-.017,1.132-.051-.368-.1-.735-.159-1.1-.235Z" fill="#fff"/>
+          </g>
+          <g id="グループ_7253" data-name="グループ 7253" opacity="0.25">
+            <path id="パス_19629" data-name="パス 19629" d="M761.413,513.818l-1.485.146-.75.074c-.254.034-.507.066-.761.125.25.071.5.117.752.164l.377.058c.129.021.258.031.387.042a9.261,9.261,0,0,0,1.536-.024,10.287,10.287,0,0,0,1.511-.262,7.409,7.409,0,0,0,1.445-.527c-.52,0-1.021.036-1.521.073S761.908,513.771,761.413,513.818Z" fill="#fff"/>
+          </g>
+        </g>
+        <g id="グループ_7258" data-name="グループ 7258">
+          <path id="パス_19630" data-name="パス 19630" d="M780.114,518.74a20.506,20.506,0,0,0-3.686.324h-6.615v2.531h.008c.162,2.179,4.342,4.55,10.293,4.55s10.131-2.371,10.293-4.55h.008v-2.531H783.8A20.514,20.514,0,0,0,780.114,518.74Z" fill="url(#linear-gradient-36)"/>
+          <g id="グループ_7255" data-name="グループ 7255">
+            <path id="パス_19631" data-name="パス 19631" d="M770.987,523.533a6.382,6.382,0,0,0,.653.5v-4.967h-.653Z" fill="url(#linear-gradient-163)"/>
+            <path id="パス_19632" data-name="パス 19632" d="M783.2,518.97v6.95c.223-.033.439-.069.653-.11v-6.745H783.8C783.6,519.029,783.4,519,783.2,518.97Z" fill="url(#linear-gradient-164)"/>
+            <path id="パス_19633" data-name="パス 19633" d="M782.09,526.055q.332-.031.653-.07v-7.079c-.215-.026-.432-.053-.653-.073Z" fill="url(#linear-gradient-165)"/>
+            <path id="パス_19634" data-name="パス 19634" d="M787.642,524.582c.23-.116.449-.237.653-.362v-5.155h-.653Z" fill="url(#linear-gradient-166)"/>
+            <path id="パス_19635" data-name="パス 19635" d="M780.98,526.127c.22-.009.438-.02.652-.035V518.8c-.216-.016-.432-.03-.652-.039Z" fill="url(#linear-gradient-167)"/>
+            <path id="パス_19636" data-name="パス 19636" d="M788.752,523.918a6.259,6.259,0,0,0,.653-.533v-4.32h-.653Z" fill="url(#linear-gradient-168)"/>
+            <path id="パス_19637" data-name="パス 19637" d="M785.421,525.439c.225-.064.441-.133.653-.2v-6.171h-.653Z" fill="url(#linear-gradient-169)"/>
+            <path id="パス_19638" data-name="パス 19638" d="M784.312,525.719c.223-.048.439-.1.652-.154v-6.5h-.652Z" fill="url(#linear-gradient-170)"/>
+            <path id="パス_19639" data-name="パス 19639" d="M786.531,525.07c.227-.086.444-.176.653-.27v-5.736h-.653Z" fill="url(#linear-gradient-171)"/>
+            <path id="パス_19640" data-name="パス 19640" d="M774.318,525.291c.211.068.43.133.652.2v-6.422h-.652Z" fill="url(#linear-gradient-172)"/>
+            <path id="パス_19641" data-name="パス 19641" d="M778.759,526.1c.216.014.433.024.653.031v-7.377c-.221.008-.438.019-.653.031Z" fill="url(#linear-gradient-173)"/>
+            <path id="パス_19642" data-name="パス 19642" d="M779.869,518.746v7.4c.082,0,.162,0,.245,0,.138,0,.272,0,.408-.005v-7.391c-.136,0-.27-.01-.408-.01C780.031,518.74,779.952,518.745,779.869,518.746Z" fill="url(#linear-gradient-174)"/>
+            <path id="パス_19643" data-name="パス 19643" d="M769.813,521.6h.008a2.592,2.592,0,0,0,.709,1.484v-4.016h-.717Z" fill="url(#linear-gradient-175)"/>
+            <path id="パス_19644" data-name="パス 19644" d="M789.862,522.881a2.436,2.436,0,0,0,.545-1.285h.008v-2.531h-.553Z" fill="url(#linear-gradient-176)"/>
+            <path id="パス_19645" data-name="パス 19645" d="M772.1,524.317c.205.12.423.235.653.347v-5.6H772.1Z" fill="url(#linear-gradient-177)"/>
+            <path id="パス_19646" data-name="パス 19646" d="M777.649,526c.214.024.432.047.652.065v-7.25c-.222.019-.438.043-.652.068Z" fill="url(#linear-gradient-178)"/>
+            <path id="パス_19647" data-name="パス 19647" d="M773.208,524.873q.315.135.652.26v-6.068h-.652Z" fill="url(#linear-gradient-179)"/>
+            <path id="パス_19648" data-name="パス 19648" d="M775.429,525.6q.32.079.653.147v-6.688h-.653Z" fill="url(#linear-gradient-180)"/>
+            <path id="パス_19649" data-name="パス 19649" d="M776.538,525.841c.214.038.433.071.653.1v-7c-.222.031-.439.066-.653.1Z" fill="url(#linear-gradient-181)"/>
+          </g>
+          <path id="パス_19650" data-name="パス 19650" d="M780.114,514.188c-6.07,0-10.3,2.467-10.3,4.682s4.23,4.682,10.3,4.682,10.3-2.467,10.3-4.682S786.185,514.188,780.114,514.188Z" fill="url(#linear-gradient-182)"/>
+          <path id="パス_19651" data-name="パス 19651" d="M773.4,522.361a14.47,14.47,0,0,0,2.2.694l8.485-8.485a19.6,19.6,0,0,0-2.562-.336Z" fill="url(#linear-gradient-183)"/>
+          <path id="パス_19652" data-name="パス 19652" d="M779.285,523.534c.272.01.549.017.829.017s.556-.007.828-.018l7.4-7.394a9.673,9.673,0,0,0-1.082-.575Z" fill="url(#linear-gradient-184)"/>
+          <g id="グループ_7256" data-name="グループ 7256">
+            <path id="パス_19653" data-name="パス 19653" d="M776.825,523.127c-.18-.043-.361-.072-.539-.125-.354-.1-.714-.172-1.061-.293-.353-.1-.7-.221-1.04-.34-.174-.054-.339-.129-.51-.193l-.254-.1c-.082-.039-.164-.078-.249-.113-.337-.138-.658-.309-.982-.475a10.892,10.892,0,0,1-1.842-1.221,6.653,6.653,0,0,0,2.084,1.92c.162.1.334.187.5.277.084.045.17.086.256.129l.264.112c.177.071.35.154.53.216l.543.181c.183.059.369.1.553.144a9.985,9.985,0,0,0,1.121.206c.375.058.756.063,1.132.087.379,0,.757-.017,1.132-.051-.368-.1-.735-.16-1.1-.236Z" fill="url(#linear-gradient-185)"/>
+          </g>
+          <g id="グループ_7257" data-name="グループ 7257">
+            <path id="パス_19654" data-name="パス 19654" d="M781.951,523.175l-1.484.147-.75.074c-.254.033-.508.065-.762.124.251.071.5.117.753.164l.376.058c.13.021.259.031.388.042a9.261,9.261,0,0,0,1.536-.024,10.16,10.16,0,0,0,1.511-.262,7.343,7.343,0,0,0,1.445-.527c-.52,0-1.021.037-1.521.073S782.447,523.128,781.951,523.175Z" fill="url(#linear-gradient-186)"/>
+          </g>
+        </g>
+        <g id="グループ_7262" data-name="グループ 7262">
+          <path id="パス_19655" data-name="パス 19655" d="M777.55,513.342a20.5,20.5,0,0,0-3.686.324h-6.616v2.53h.009c.162,2.18,4.342,4.55,10.293,4.55s10.131-2.37,10.293-4.55h.009v-2.53h-6.616A20.528,20.528,0,0,0,777.55,513.342Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7259" data-name="グループ 7259">
+            <path id="パス_19656" data-name="パス 19656" d="M768.423,518.135a6.638,6.638,0,0,0,.652.5v-4.967h-.652Z" fill="url(#linear-gradient-188)"/>
+            <path id="パス_19657" data-name="パス 19657" d="M780.636,513.57v6.951c.223-.033.439-.07.653-.109v-6.746h-.054C781.04,513.631,780.838,513.6,780.636,513.57Z" fill="url(#linear-gradient-189)"/>
+            <path id="パス_19658" data-name="パス 19658" d="M779.526,520.655c.22-.021.438-.043.652-.069v-7.079c-.215-.027-.432-.054-.652-.073Z" fill="url(#linear-gradient-190)"/>
+            <path id="パス_19659" data-name="パス 19659" d="M785.077,519.184q.345-.176.653-.362v-5.155h-.653Z" fill="url(#linear-gradient-191)"/>
+            <path id="パス_19660" data-name="パス 19660" d="M778.415,520.729c.221-.009.438-.021.653-.035V513.4c-.216-.016-.432-.03-.653-.039Z" fill="url(#linear-gradient-192)"/>
+            <path id="パス_19661" data-name="パス 19661" d="M786.188,518.52a6.394,6.394,0,0,0,.653-.533v-4.32h-.653Z" fill="url(#linear-gradient-193)"/>
+            <path id="パス_19662" data-name="パス 19662" d="M782.856,520.041c.225-.064.442-.133.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-194)"/>
+            <path id="パス_19663" data-name="パス 19663" d="M781.746,520.32c.223-.049.44-.1.653-.154v-6.5h-.653Z" fill="url(#linear-gradient-195)"/>
+            <path id="パス_19664" data-name="パス 19664" d="M783.967,519.672c.227-.087.444-.176.653-.27v-5.736h-.653Z" fill="url(#linear-gradient-196)"/>
+            <path id="パス_19665" data-name="パス 19665" d="M771.754,519.892c.211.069.43.134.652.2v-6.422h-.652Z" fill="url(#linear-gradient-197)"/>
+            <path id="パス_19666" data-name="パス 19666" d="M776.194,520.7c.216.014.433.023.653.031v-7.377c-.221.008-.438.018-.653.031Z" fill="url(#linear-gradient-198)"/>
+            <path id="パス_19667" data-name="パス 19667" d="M777.3,513.348v7.4l.245,0c.138,0,.272,0,.409,0v-7.391c-.138,0-.271-.01-.409-.01C777.467,513.342,777.388,513.347,777.3,513.348Z" fill="url(#linear-gradient-199)"/>
+            <path id="パス_19668" data-name="パス 19668" d="M767.248,516.2h.009a2.594,2.594,0,0,0,.709,1.485v-4.016h-.718V516.2Z" fill="url(#linear-gradient-200)"/>
+            <path id="パス_19669" data-name="パス 19669" d="M787.3,517.482a2.431,2.431,0,0,0,.545-1.286h.009v-2.53H787.3v3.816Z" fill="url(#linear-gradient-201)"/>
+            <path id="パス_19670" data-name="パス 19670" d="M769.533,518.919c.205.119.423.235.652.347v-5.6h-.652Z" fill="url(#linear-gradient-202)"/>
+            <path id="パス_19671" data-name="パス 19671" d="M775.085,520.6c.214.025.432.048.652.066v-7.251c-.222.019-.438.044-.652.069Z" fill="url(#linear-gradient-203)"/>
+            <path id="パス_19672" data-name="パス 19672" d="M770.643,519.475c.21.09.428.176.654.26v-6.068h-.654Z" fill="url(#linear-gradient-204)"/>
+            <path id="パス_19673" data-name="パス 19673" d="M772.864,520.207q.32.079.652.147v-6.688h-.652Z" fill="url(#linear-gradient-205)"/>
+            <path id="パス_19674" data-name="パス 19674" d="M773.974,520.441c.214.038.433.072.654.1v-7c-.222.032-.439.066-.654.1Z" fill="url(#linear-gradient-206)"/>
+          </g>
+          <path id="パス_19675" data-name="パス 19675" d="M777.55,508.788c-6.071,0-10.3,2.468-10.3,4.683s4.23,4.682,10.3,4.682,10.3-2.468,10.3-4.682S783.62,508.788,777.55,508.788Z" fill="url(#linear-gradient-207)"/>
+          <path id="パス_19676" data-name="パス 19676" d="M770.839,516.964a14.581,14.581,0,0,0,2.2.693l8.485-8.485a19.413,19.413,0,0,0-2.561-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19677" data-name="パス 19677" d="M776.722,518.136q.406.016.828.017c.28,0,.556-.008.828-.018l7.4-7.395a9.677,9.677,0,0,0-1.082-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7260" data-name="グループ 7260" opacity="0.25">
+            <path id="パス_19678" data-name="パス 19678" d="M774.261,517.728c-.18-.043-.361-.07-.538-.125-.354-.1-.715-.171-1.061-.292-.353-.1-.7-.221-1.04-.34-.175-.054-.34-.129-.511-.193l-.254-.1c-.082-.038-.164-.077-.248-.112-.338-.138-.658-.31-.983-.476a10.772,10.772,0,0,1-1.842-1.221,6.6,6.6,0,0,0,2.084,1.92c.162.1.333.188.5.277.084.046.17.087.256.13l.264.111c.177.072.35.155.53.217l.544.18c.181.059.368.1.553.145a9.928,9.928,0,0,0,1.12.206c.375.057.756.063,1.132.087.379,0,.756-.017,1.132-.051-.369-.1-.735-.16-1.1-.236Z" fill="#fff"/>
+          </g>
+          <g id="グループ_7261" data-name="グループ 7261">
+            <path id="パス_19679" data-name="パス 19679" d="M779.388,517.776l-1.486.147-.749.073c-.254.034-.507.065-.761.125.25.071.5.116.752.163l.376.059c.13.021.259.031.388.042a9.262,9.262,0,0,0,1.536-.024,10.05,10.05,0,0,0,1.511-.262,7.388,7.388,0,0,0,1.445-.527c-.52,0-1.021.036-1.521.073S779.883,517.729,779.388,517.776Z" fill="#fff" opacity="0.25"/>
+          </g>
+        </g>
+        <g id="グループ_7266" data-name="グループ 7266">
+          <path id="パス_19680" data-name="パス 19680" d="M780.718,508.059a20.506,20.506,0,0,0-3.686.324h-6.615v2.529h.007c.163,2.181,4.343,4.551,10.294,4.551s10.131-2.37,10.294-4.551h.007v-2.529H784.4A20.514,20.514,0,0,0,780.718,508.059Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7263" data-name="グループ 7263">
+            <path id="パス_19681" data-name="パス 19681" d="M771.591,512.851a6.386,6.386,0,0,0,.653.5v-4.967h-.653Z" fill="url(#linear-gradient-209)"/>
+            <path id="パス_19682" data-name="パス 19682" d="M783.8,508.287v6.951c.222-.033.439-.07.653-.11v-6.745H784.4C784.209,508.347,784.006,508.317,783.8,508.287Z" fill="url(#linear-gradient-210)"/>
+            <path id="パス_19683" data-name="パス 19683" d="M782.693,515.372c.222-.021.439-.043.653-.07v-7.079c-.215-.026-.431-.053-.653-.072Z" fill="url(#linear-gradient-211)"/>
+            <path id="パス_19684" data-name="パス 19684" d="M788.245,513.9c.23-.117.449-.238.653-.363v-5.154h-.653Z" fill="url(#linear-gradient-212)"/>
+            <path id="パス_19685" data-name="パス 19685" d="M781.583,515.444c.221-.009.438-.021.653-.035v-7.293c-.216-.015-.432-.03-.653-.038Z" fill="url(#linear-gradient-213)"/>
+            <path id="パス_19686" data-name="パス 19686" d="M789.355,513.235a6.262,6.262,0,0,0,.653-.532v-4.32h-.653Z" fill="url(#linear-gradient-214)"/>
+            <path id="パス_19687" data-name="パス 19687" d="M786.024,514.758c.225-.064.442-.133.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-194)"/>
+            <path id="パス_19688" data-name="パス 19688" d="M784.914,515.036c.223-.048.44-.1.653-.153v-6.5h-.653Z" fill="url(#linear-gradient-216)"/>
+            <path id="パス_19689" data-name="パス 19689" d="M787.136,514.388q.339-.129.652-.27v-5.735h-.652Z" fill="url(#linear-gradient-217)"/>
+            <path id="パス_19690" data-name="パス 19690" d="M774.921,514.608q.318.1.654.2v-6.422h-.654Z" fill="url(#linear-gradient-218)"/>
+            <path id="パス_19691" data-name="パス 19691" d="M779.363,515.42c.215.014.433.023.652.031v-7.377c-.221.007-.438.018-.652.031Z" fill="url(#linear-gradient-219)"/>
+            <path id="パス_19692" data-name="パス 19692" d="M780.474,508.063v7.4l.244,0c.137,0,.273,0,.408,0v-7.392c-.137,0-.27-.009-.408-.009C780.635,508.059,780.556,508.063,780.474,508.063Z" fill="url(#linear-gradient-220)"/>
+            <path id="パス_19693" data-name="パス 19693" d="M770.417,510.912h.007a2.6,2.6,0,0,0,.71,1.486v-4.016h-.717v2.53Z" fill="url(#linear-gradient-221)"/>
+            <path id="パス_19694" data-name="パス 19694" d="M790.466,512.2a2.451,2.451,0,0,0,.546-1.286h.007v-2.529h-.553V512.2Z" fill="url(#linear-gradient-222)"/>
+            <path id="パス_19695" data-name="パス 19695" d="M772.7,513.636c.205.119.423.234.652.347v-5.6H772.7Z" fill="url(#linear-gradient-223)"/>
+            <path id="パス_19696" data-name="パス 19696" d="M778.252,515.32q.323.038.653.065v-7.25c-.222.019-.438.044-.653.069Z" fill="url(#linear-gradient-224)"/>
+            <path id="パス_19697" data-name="パス 19697" d="M773.812,514.19c.209.091.427.177.653.261v-6.068h-.653Z" fill="url(#linear-gradient-225)"/>
+            <path id="パス_19698" data-name="パス 19698" d="M776.032,514.924c.213.052.43.1.652.147v-6.688h-.652Z" fill="url(#linear-gradient-226)"/>
+            <path id="パス_19699" data-name="パス 19699" d="M777.143,515.158c.213.038.432.072.652.1v-7c-.222.031-.438.066-.652.1Z" fill="url(#linear-gradient-227)"/>
+          </g>
+          <path id="パス_19700" data-name="パス 19700" d="M780.718,503.505c-6.071,0-10.3,2.468-10.3,4.682s4.229,4.683,10.3,4.683,10.3-2.468,10.3-4.683S786.788,503.505,780.718,503.505Z" fill="url(#linear-gradient-140)"/>
+          <path id="パス_19701" data-name="パス 19701" d="M774.008,511.68a14.314,14.314,0,0,0,2.2.693l8.485-8.484a19.428,19.428,0,0,0-2.562-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19702" data-name="パス 19702" d="M779.889,512.852c.272.011.548.018.829.018s.556-.008.828-.018l7.4-7.395a9.677,9.677,0,0,0-1.082-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7264" data-name="グループ 7264">
+            <path id="パス_19703" data-name="パス 19703" d="M777.429,512.443c-.18-.042-.362-.07-.538-.125-.354-.1-.715-.171-1.061-.291-.353-.1-.7-.221-1.04-.34-.175-.055-.341-.13-.511-.193l-.254-.1c-.083-.038-.165-.077-.248-.112-.338-.139-.659-.31-.983-.476a10.832,10.832,0,0,1-1.842-1.221,5.569,5.569,0,0,0,1.6,1.609,5.414,5.414,0,0,0,.482.311c.162.1.334.188.5.276.085.046.171.088.257.131l.264.111c.177.071.35.155.53.216l.543.181c.182.059.368.1.554.145a9.711,9.711,0,0,0,1.12.205c.375.058.756.063,1.132.087.379,0,.757-.017,1.132-.05-.368-.1-.735-.16-1.1-.236Z" fill="#fff" opacity="0.25"/>
+          </g>
+          <g id="グループ_7265" data-name="グループ 7265">
+            <path id="パス_19704" data-name="パス 19704" d="M782.556,512.493l-1.485.147-.75.073c-.254.034-.507.065-.761.124.25.072.5.117.752.164l.376.059c.13.02.259.031.388.041a9.261,9.261,0,0,0,1.536-.023,10.056,10.056,0,0,0,1.511-.262,7.433,7.433,0,0,0,1.445-.527c-.52,0-1.021.035-1.521.072S783.051,512.445,782.556,512.493Z" fill="#fff" opacity="0.25"/>
+          </g>
+        </g>
+        <g id="グループ_7270" data-name="グループ 7270">
+          <path id="パス_19705" data-name="パス 19705" d="M763.135,526.662a20.417,20.417,0,0,0-3.686.324h-6.616v2.529h.008c.163,2.18,4.343,4.551,10.294,4.551s10.13-2.371,10.293-4.551h.008v-2.529h-6.615A20.435,20.435,0,0,0,763.135,526.662Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7267" data-name="グループ 7267">
+            <path id="パス_19706" data-name="パス 19706" d="M754.008,531.454a6.643,6.643,0,0,0,.652.5v-4.967h-.652Z" fill="url(#linear-gradient-230)"/>
+            <path id="パス_19707" data-name="パス 19707" d="M766.221,526.891v6.951c.223-.033.439-.07.653-.11v-6.745h-.054C766.625,526.95,766.423,526.921,766.221,526.891Z" fill="url(#linear-gradient-189)"/>
+            <path id="パス_19708" data-name="パス 19708" d="M765.11,533.975q.332-.03.653-.069v-7.079c-.215-.027-.432-.053-.653-.073Z" fill="url(#linear-gradient-232)"/>
+            <path id="パス_19709" data-name="パス 19709" d="M770.662,532.5c.23-.116.449-.237.653-.362v-5.154h-.653Z" fill="url(#linear-gradient-233)"/>
+            <path id="パス_19710" data-name="パス 19710" d="M764,534.048c.221-.009.438-.021.653-.035V526.72c-.216-.016-.432-.03-.653-.039Z" fill="url(#linear-gradient-213)"/>
+            <path id="パス_19711" data-name="パス 19711" d="M771.772,531.839a6.137,6.137,0,0,0,.653-.533v-4.319h-.653Z" fill="url(#linear-gradient-235)"/>
+            <path id="パス_19712" data-name="パス 19712" d="M768.441,533.361c.224-.065.441-.134.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-236)"/>
+            <path id="パス_19713" data-name="パス 19713" d="M767.331,533.64c.223-.048.44-.1.653-.154v-6.5h-.653Z" fill="url(#linear-gradient-237)"/>
+            <path id="パス_19714" data-name="パス 19714" d="M769.552,532.991c.227-.087.444-.176.653-.27v-5.735h-.653Z" fill="url(#linear-gradient-238)"/>
+            <path id="パス_19715" data-name="パス 19715" d="M757.339,533.212c.211.068.43.134.652.2v-6.421h-.652Z" fill="url(#linear-gradient-239)"/>
+            <path id="パス_19716" data-name="パス 19716" d="M761.779,534.023c.216.013.433.023.653.03v-7.376c-.221.007-.438.018-.653.031Z" fill="url(#linear-gradient-240)"/>
+            <path id="パス_19717" data-name="パス 19717" d="M762.89,526.667v7.4c.082,0,.162,0,.245,0,.138,0,.272,0,.408-.005V526.67c-.137,0-.27-.009-.408-.009C763.052,526.662,762.973,526.666,762.89,526.667Z" fill="url(#linear-gradient-241)"/>
+            <path id="パス_19718" data-name="パス 19718" d="M752.833,529.516h.008A2.6,2.6,0,0,0,753.55,531v-4.016h-.717Z" fill="url(#linear-gradient-242)"/>
+            <path id="パス_19719" data-name="パス 19719" d="M772.883,530.8a2.436,2.436,0,0,0,.545-1.286h.008v-2.529h-.553Z" fill="url(#linear-gradient-243)"/>
+            <path id="パス_19720" data-name="パス 19720" d="M755.117,532.239q.309.179.654.346v-5.6h-.654Z" fill="url(#linear-gradient-244)"/>
+            <path id="パス_19721" data-name="パス 19721" d="M760.669,533.924q.323.038.653.065v-7.25c-.222.019-.438.043-.653.068Z" fill="url(#linear-gradient-245)"/>
+            <path id="パス_19722" data-name="パス 19722" d="M756.229,532.794c.21.091.427.177.652.26v-6.067h-.652Z" fill="url(#linear-gradient-246)"/>
+            <path id="パス_19723" data-name="パス 19723" d="M758.448,533.527c.213.052.431.1.654.146v-6.688h-.654Z" fill="url(#linear-gradient-247)"/>
+            <path id="パス_19724" data-name="パス 19724" d="M759.559,533.762c.214.037.433.072.653.1v-7c-.222.031-.439.065-.653.1Z" fill="url(#linear-gradient-248)"/>
+          </g>
+          <path id="パス_19725" data-name="パス 19725" d="M763.135,522.107c-6.07,0-10.3,2.468-10.3,4.683s4.23,4.683,10.3,4.683,10.3-2.469,10.3-4.683S769.205,522.107,763.135,522.107Z" fill="url(#linear-gradient-249)"/>
+          <path id="パス_19726" data-name="パス 19726" d="M756.424,530.283a14.471,14.471,0,0,0,2.2.693l8.485-8.485a19.626,19.626,0,0,0-2.562-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19727" data-name="パス 19727" d="M762.306,531.455c.272.011.549.018.829.018s.556-.008.828-.018l7.394-7.4a9.814,9.814,0,0,0-1.081-.575Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7268" data-name="グループ 7268">
+            <path id="パス_19728" data-name="パス 19728" d="M759.846,531.047c-.181-.043-.362-.07-.539-.125-.354-.1-.714-.17-1.061-.292-.353-.1-.7-.22-1.04-.339-.174-.054-.34-.13-.51-.193l-.254-.1c-.082-.038-.164-.076-.248-.111-.338-.139-.659-.31-.984-.477a10.861,10.861,0,0,1-1.841-1.22,5.569,5.569,0,0,0,1.6,1.609c.153.116.319.211.482.311s.333.187.5.277c.085.045.171.087.257.129l.264.112c.177.071.35.154.53.216l.544.181c.182.059.368.1.552.145a10.221,10.221,0,0,0,1.121.205c.375.057.756.063,1.132.087.379,0,.757-.017,1.131-.05-.367-.1-.734-.16-1.1-.237Z" fill="#fff" opacity="0.25"/>
+          </g>
+          <g id="グループ_7269" data-name="グループ 7269" opacity="0.25">
+            <path id="パス_19729" data-name="パス 19729" d="M764.972,531.1l-1.484.146-.75.074c-.254.033-.508.065-.762.124.251.072.5.117.752.164l.377.059c.13.02.259.031.388.042a9.375,9.375,0,0,0,1.536-.024,10.287,10.287,0,0,0,1.511-.262,7.5,7.5,0,0,0,1.445-.527c-.52-.005-1.021.035-1.521.072S765.468,531.049,764.972,531.1Z" fill="#fff"/>
+          </g>
+        </g>
+        <g id="グループ_7274" data-name="グループ 7274">
+          <path id="パス_19730" data-name="パス 19730" d="M764.18,522.38a20.408,20.408,0,0,0-3.686.325h-6.615v2.529h.007c.163,2.18,4.343,4.551,10.294,4.551s10.131-2.371,10.293-4.551h.009v-2.529h-6.616A20.425,20.425,0,0,0,764.18,522.38Z" fill="url(#linear-gradient-250)"/>
+          <g id="グループ_7271" data-name="グループ 7271">
+            <path id="パス_19731" data-name="パス 19731" d="M755.053,527.172a6.254,6.254,0,0,0,.653.5v-4.967h-.653Z" fill="url(#linear-gradient-251)"/>
+            <path id="パス_19732" data-name="パス 19732" d="M767.266,522.609v6.951c.223-.033.439-.07.653-.111V522.7h-.054C767.67,522.669,767.468,522.64,767.266,522.609Z" fill="url(#linear-gradient-252)"/>
+            <path id="パス_19733" data-name="パス 19733" d="M766.155,529.694q.332-.031.653-.07v-7.079c-.215-.026-.432-.053-.653-.073Z" fill="url(#linear-gradient-253)"/>
+            <path id="パス_19734" data-name="パス 19734" d="M771.707,528.223c.23-.117.449-.238.653-.363v-5.154h-.653Z" fill="url(#linear-gradient-254)"/>
+            <path id="パス_19735" data-name="パス 19735" d="M765.045,529.767c.221-.009.438-.021.653-.035v-7.293c-.216-.015-.432-.03-.653-.039Z" fill="url(#linear-gradient-255)"/>
+            <path id="パス_19736" data-name="パス 19736" d="M772.817,527.558a6.137,6.137,0,0,0,.653-.533v-4.319h-.653Z" fill="url(#linear-gradient-256)"/>
+            <path id="パス_19737" data-name="パス 19737" d="M769.486,529.08c.225-.064.441-.133.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-257)"/>
+            <path id="パス_19738" data-name="パス 19738" d="M768.376,529.358c.223-.048.44-.1.653-.153v-6.5h-.653Z" fill="url(#linear-gradient-258)"/>
+            <path id="パス_19739" data-name="パス 19739" d="M770.6,528.71c.227-.086.444-.177.653-.271v-5.734H770.6Z" fill="url(#linear-gradient-259)"/>
+            <path id="パス_19740" data-name="パス 19740" d="M758.384,528.93c.211.069.43.135.653.2v-6.422h-.653Z" fill="url(#linear-gradient-260)"/>
+            <path id="パス_19741" data-name="パス 19741" d="M762.824,529.741c.216.014.433.024.653.031V522.4c-.221.007-.438.019-.653.032Z" fill="url(#linear-gradient-261)"/>
+            <path id="パス_19742" data-name="パス 19742" d="M763.936,522.386v7.4c.081,0,.162,0,.244,0,.138,0,.272,0,.408-.006v-7.39c-.137,0-.27-.01-.408-.01C764.1,522.38,764.018,522.385,763.936,522.386Z" fill="url(#linear-gradient-262)"/>
+            <path id="パス_19743" data-name="パス 19743" d="M753.879,525.234h.007a2.6,2.6,0,0,0,.709,1.485V522.7h-.716Z" fill="url(#linear-gradient-263)"/>
+            <path id="パス_19744" data-name="パス 19744" d="M773.928,526.521a2.444,2.444,0,0,0,.545-1.286h.009v-2.529h-.554v3.815Z" fill="url(#linear-gradient-264)"/>
+            <path id="パス_19745" data-name="パス 19745" d="M756.163,527.957c.205.12.423.235.653.347v-5.6h-.653Z" fill="url(#linear-gradient-265)"/>
+            <path id="パス_19746" data-name="パス 19746" d="M761.714,529.643q.323.038.653.065v-7.25c-.222.019-.438.044-.653.069Z" fill="url(#linear-gradient-266)"/>
+            <path id="パス_19747" data-name="パス 19747" d="M757.273,528.513q.315.135.652.26v-6.067h-.652Z" fill="url(#linear-gradient-267)"/>
+            <path id="パス_19748" data-name="パス 19748" d="M759.493,529.245c.214.053.432.1.654.147V522.7h-.654Z" fill="url(#linear-gradient-268)"/>
+            <path id="パス_19749" data-name="パス 19749" d="M760.6,529.48c.213.038.432.072.652.1v-7q-.333.047-.652.1Z" fill="url(#linear-gradient-269)"/>
+          </g>
+          <path id="パス_19750" data-name="パス 19750" d="M764.18,517.826c-6.07,0-10.3,2.468-10.3,4.683s4.23,4.682,10.3,4.682,10.3-2.467,10.3-4.682S770.25,517.826,764.18,517.826Z" fill="url(#linear-gradient-207)"/>
+          <path id="パス_19751" data-name="パス 19751" d="M757.469,526a14.581,14.581,0,0,0,2.2.693l8.485-8.485a19.6,19.6,0,0,0-2.562-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19752" data-name="パス 19752" d="M763.351,527.174c.272.01.549.017.829.017s.556-.007.828-.017l7.394-7.4a9.483,9.483,0,0,0-1.081-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7272" data-name="グループ 7272">
+            <path id="パス_19753" data-name="パス 19753" d="M760.891,526.766c-.18-.043-.362-.07-.539-.125-.354-.1-.714-.171-1.06-.292-.353-.1-.7-.22-1.041-.339-.174-.055-.34-.131-.51-.193l-.254-.1c-.083-.038-.164-.078-.249-.113-.337-.138-.658-.309-.983-.475a10.926,10.926,0,0,1-1.841-1.221,5.581,5.581,0,0,0,1.6,1.609c.153.116.319.211.482.311s.334.187.5.276c.085.045.171.088.257.13l.264.112c.177.07.35.154.53.216l.544.18c.182.06.367.1.552.145a9.769,9.769,0,0,0,1.121.206c.375.057.756.063,1.132.087.379,0,.757-.017,1.132-.051-.368-.1-.735-.159-1.1-.235Z" fill="#fff" opacity="0.25"/>
+          </g>
+          <g id="グループ_7273" data-name="グループ 7273" opacity="0.25">
+            <path id="パス_19754" data-name="パス 19754" d="M766.017,526.814l-1.484.147-.75.074c-.254.034-.508.065-.761.124.25.072.5.117.752.164l.376.059c.13.02.259.031.388.041a9.261,9.261,0,0,0,1.536-.023,10.287,10.287,0,0,0,1.511-.262,7.473,7.473,0,0,0,1.445-.527c-.52-.005-1.021.035-1.521.072S766.513,526.768,766.017,526.814Z" fill="#fff"/>
+          </g>
+        </g>
+        <g id="グループ_7278" data-name="グループ 7278">
+          <path id="パス_19755" data-name="パス 19755" d="M783.811,528.563a20.514,20.514,0,0,0-3.686.324H773.51v2.53h.008c.163,2.18,4.343,4.551,10.293,4.551s10.131-2.371,10.294-4.551h.008v-2.53H787.5A20.541,20.541,0,0,0,783.811,528.563Z" fill="url(#linear-gradient-11)"/>
+          <g id="グループ_7275" data-name="グループ 7275">
+            <path id="パス_19756" data-name="パス 19756" d="M774.684,533.355a6.819,6.819,0,0,0,.653.5v-4.968h-.653Z" fill="url(#linear-gradient-272)"/>
+            <path id="パス_19757" data-name="パス 19757" d="M786.9,528.791v6.952c.222-.033.439-.071.653-.11v-6.746H787.5C787.3,528.852,787.1,528.822,786.9,528.791Z" fill="url(#linear-gradient-273)"/>
+            <path id="パス_19758" data-name="パス 19758" d="M785.787,535.876c.221-.021.438-.043.653-.069v-7.079c-.215-.027-.432-.053-.653-.073Z" fill="url(#linear-gradient-274)"/>
+            <path id="パス_19759" data-name="パス 19759" d="M791.338,534.4q.347-.174.654-.362v-5.155h-.654Z" fill="url(#linear-gradient-275)"/>
+            <path id="パス_19760" data-name="パス 19760" d="M784.677,535.949q.33-.013.653-.035v-7.293c-.216-.016-.433-.03-.653-.039Z" fill="url(#linear-gradient-276)"/>
+            <path id="パス_19761" data-name="パス 19761" d="M792.449,533.74a6.136,6.136,0,0,0,.652-.533v-4.32h-.652Z" fill="url(#linear-gradient-277)"/>
+            <path id="パス_19762" data-name="パス 19762" d="M789.118,535.262c.224-.064.441-.133.652-.205v-6.17h-.652Z" fill="url(#linear-gradient-278)"/>
+            <path id="パス_19763" data-name="パス 19763" d="M788.008,535.541c.223-.049.44-.1.653-.154v-6.5h-.653Z" fill="url(#linear-gradient-279)"/>
+            <path id="パス_19764" data-name="パス 19764" d="M790.229,534.893c.227-.087.444-.176.652-.27v-5.736h-.652Z" fill="url(#linear-gradient-280)"/>
+            <path id="パス_19765" data-name="パス 19765" d="M778.015,535.113q.318.1.653.2v-6.422h-.653Z" fill="url(#linear-gradient-281)"/>
+            <path id="パス_19766" data-name="パス 19766" d="M782.456,535.924q.323.021.653.031v-7.377c-.221.008-.438.019-.653.031Z" fill="url(#linear-gradient-282)"/>
+            <path id="パス_19767" data-name="パス 19767" d="M783.566,528.568v7.4c.082,0,.162,0,.244,0,.138,0,.273,0,.409-.005v-7.391c-.137,0-.271-.01-.409-.01C783.728,528.563,783.648,528.567,783.566,528.568Z" fill="url(#linear-gradient-283)"/>
+            <path id="パス_19768" data-name="パス 19768" d="M773.51,531.417h.008a2.591,2.591,0,0,0,.709,1.485v-4.016h-.717Z" fill="url(#linear-gradient-284)"/>
+            <path id="パス_19769" data-name="パス 19769" d="M793.56,532.7a2.447,2.447,0,0,0,.545-1.286h.008v-2.53h-.553Z" fill="url(#linear-gradient-285)"/>
+            <path id="パス_19770" data-name="パス 19770" d="M775.794,534.14c.206.12.423.235.653.347v-5.6h-.653Z" fill="url(#linear-gradient-286)"/>
+            <path id="パス_19771" data-name="パス 19771" d="M781.346,535.825c.215.024.432.047.653.065v-7.25c-.222.019-.438.043-.653.068Z" fill="url(#linear-gradient-287)"/>
+            <path id="パス_19772" data-name="パス 19772" d="M776.9,534.7q.315.135.653.26v-6.068H776.9Z" fill="url(#linear-gradient-288)"/>
+            <path id="パス_19773" data-name="パス 19773" d="M779.125,535.428c.213.053.431.1.653.147v-6.688h-.653Z" fill="url(#linear-gradient-289)"/>
+            <path id="パス_19774" data-name="パス 19774" d="M780.235,535.662c.214.038.433.072.653.1v-7c-.222.032-.439.067-.653.1Z" fill="url(#linear-gradient-290)"/>
+          </g>
+          <path id="パス_19775" data-name="パス 19775" d="M783.811,524.009c-6.07,0-10.3,2.468-10.3,4.683s4.23,4.682,10.3,4.682,10.3-2.468,10.3-4.682S789.882,524.009,783.811,524.009Z" fill="url(#linear-gradient-140)"/>
+          <path id="パス_19776" data-name="パス 19776" d="M777.1,532.185a14.581,14.581,0,0,0,2.2.693l8.484-8.485a19.423,19.423,0,0,0-2.561-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19777" data-name="パス 19777" d="M782.982,533.356q.408.016.828.017c.28,0,.557-.007.829-.017l7.394-7.4a9.908,9.908,0,0,0-1.081-.574Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7276" data-name="グループ 7276">
+            <path id="パス_19778" data-name="パス 19778" d="M780.521,532.948c-.18-.043-.361-.07-.538-.125-.354-.1-.715-.171-1.061-.292-.353-.1-.7-.22-1.04-.34-.174-.053-.34-.129-.51-.193l-.254-.1c-.083-.038-.165-.077-.249-.112-.338-.138-.658-.309-.983-.476a10.759,10.759,0,0,1-1.841-1.22,6.68,6.68,0,0,0,2.083,1.92c.163.1.334.187.5.276.084.046.17.087.256.13l.264.111c.177.072.351.155.531.217l.543.18c.182.059.368.1.553.145a9.944,9.944,0,0,0,1.121.206c.375.058.756.063,1.132.087.378,0,.756-.017,1.131-.051-.368-.1-.735-.16-1.1-.236Z" fill="#fff" opacity="0.25"/>
+          </g>
+          <g id="グループ_7277" data-name="グループ 7277" opacity="0.25">
+            <path id="パス_19779" data-name="パス 19779" d="M785.648,533l-1.485.146-.75.074a7.444,7.444,0,0,0-.761.124c.251.072.5.117.752.164l.377.059c.13.02.259.031.388.041a9.144,9.144,0,0,0,1.535-.024,10.006,10.006,0,0,0,1.511-.262,7.434,7.434,0,0,0,1.446-.526c-.521-.005-1.021.035-1.521.072S786.144,532.95,785.648,533Z" fill="#fff"/>
+          </g>
+        </g>
+        <g id="グループ_7282" data-name="グループ 7282">
+          <path id="パス_19780" data-name="パス 19780" d="M782.162,523.053a20.417,20.417,0,0,0-3.686.324h-6.615v2.53h.007c.163,2.179,4.343,4.551,10.294,4.551s10.131-2.372,10.293-4.551h.008v-2.53h-6.615A20.427,20.427,0,0,0,782.162,523.053Z" fill="url(#linear-gradient-36)"/>
+          <g id="グループ_7279" data-name="グループ 7279">
+            <path id="パス_19781" data-name="パス 19781" d="M773.035,527.845a6.249,6.249,0,0,0,.653.5v-4.967h-.653Z" fill="url(#linear-gradient-293)"/>
+            <path id="パス_19782" data-name="パス 19782" d="M785.248,523.281v6.951c.222-.033.439-.07.653-.11v-6.745h-.054C785.652,523.342,785.45,523.313,785.248,523.281Z" fill="url(#linear-gradient-294)"/>
+            <path id="パス_19783" data-name="パス 19783" d="M784.138,530.367q.332-.031.653-.07v-7.079c-.215-.026-.432-.053-.653-.073Z" fill="url(#linear-gradient-295)"/>
+            <path id="パス_19784" data-name="パス 19784" d="M789.689,528.9c.23-.117.449-.237.653-.362v-5.155h-.653Z" fill="url(#linear-gradient-296)"/>
+            <path id="パス_19785" data-name="パス 19785" d="M783.027,530.439c.221-.01.438-.021.653-.035v-7.293c-.216-.016-.432-.03-.653-.039Z" fill="url(#linear-gradient-297)"/>
+            <path id="パス_19786" data-name="パス 19786" d="M790.8,528.23a6.259,6.259,0,0,0,.653-.533v-4.32H790.8Z" fill="url(#linear-gradient-298)"/>
+            <path id="パス_19787" data-name="パス 19787" d="M787.469,529.752c.225-.064.441-.133.653-.205v-6.17h-.653Z" fill="url(#linear-gradient-299)"/>
+            <path id="パス_19788" data-name="パス 19788" d="M786.358,530.031c.223-.048.44-.1.653-.154v-6.5h-.653Z" fill="url(#linear-gradient-300)"/>
+            <path id="パス_19789" data-name="パス 19789" d="M788.579,529.383c.227-.086.444-.176.653-.271v-5.735h-.653Z" fill="url(#linear-gradient-301)"/>
+            <path id="パス_19790" data-name="パス 19790" d="M776.366,529.6c.211.069.43.134.653.2v-6.422h-.653Z" fill="url(#linear-gradient-302)"/>
+            <path id="パス_19791" data-name="パス 19791" d="M780.807,530.414c.216.014.433.024.653.031v-7.377c-.221.007-.438.018-.653.032Z" fill="url(#linear-gradient-303)"/>
+            <path id="パス_19792" data-name="パス 19792" d="M781.918,523.059v7.4c.081,0,.162,0,.244,0,.138,0,.272,0,.408-.006v-7.39c-.137,0-.27-.01-.408-.01C782.079,523.053,782,523.058,781.918,523.059Z" fill="url(#linear-gradient-304)"/>
+            <path id="パス_19793" data-name="パス 19793" d="M771.861,525.907h.007a2.6,2.6,0,0,0,.709,1.485v-4.016h-.716Z" fill="url(#linear-gradient-305)"/>
+            <path id="パス_19794" data-name="パス 19794" d="M791.91,527.193a2.447,2.447,0,0,0,.545-1.286h.008v-2.53h-.553Z" fill="url(#linear-gradient-306)"/>
+            <path id="パス_19795" data-name="パス 19795" d="M774.146,528.63c.205.12.423.235.652.347v-5.6h-.652Z" fill="url(#linear-gradient-307)"/>
+            <path id="パス_19796" data-name="パス 19796" d="M779.7,530.314c.215.025.433.048.653.066v-7.25c-.222.019-.438.043-.653.068Z" fill="url(#linear-gradient-308)"/>
+            <path id="パス_19797" data-name="パス 19797" d="M775.256,529.186q.315.135.652.26v-6.068h-.652Z" fill="url(#linear-gradient-309)"/>
+            <path id="パス_19798" data-name="パス 19798" d="M777.476,529.918q.321.079.653.147v-6.688h-.653Z" fill="url(#linear-gradient-310)"/>
+            <path id="パス_19799" data-name="パス 19799" d="M778.587,530.153c.213.038.432.071.652.1v-7q-.333.047-.652.1Z" fill="url(#linear-gradient-311)"/>
+          </g>
+          <path id="パス_19800" data-name="パス 19800" d="M782.162,518.5c-6.071,0-10.3,2.468-10.3,4.683s4.229,4.682,10.3,4.682,10.3-2.467,10.3-4.682S788.232,518.5,782.162,518.5Z" fill="url(#linear-gradient-249)"/>
+          <path id="パス_19801" data-name="パス 19801" d="M775.451,526.674a14.363,14.363,0,0,0,2.2.693l8.485-8.484a19.6,19.6,0,0,0-2.562-.336Z" fill="#fff" opacity="0.25"/>
+          <path id="パス_19802" data-name="パス 19802" d="M781.333,527.847c.272.01.549.017.829.017s.556-.007.828-.018l7.394-7.394a9.651,9.651,0,0,0-1.081-.575Z" fill="#fff" opacity="0.25"/>
+          <g id="グループ_7280" data-name="グループ 7280" opacity="0.25">
+            <path id="パス_19803" data-name="パス 19803" d="M778.873,527.438c-.18-.043-.362-.071-.539-.125-.354-.1-.714-.171-1.06-.292-.353-.1-.7-.221-1.041-.34-.174-.054-.34-.13-.51-.193l-.254-.1c-.082-.039-.164-.078-.248-.113-.338-.138-.659-.309-.984-.475a10.926,10.926,0,0,1-1.841-1.221,6.653,6.653,0,0,0,2.084,1.92c.162.1.334.187.5.276.085.045.171.087.257.13l.264.111c.177.071.35.155.53.217l.543.18c.182.059.368.1.553.145a9.985,9.985,0,0,0,1.121.206c.375.057.756.062,1.132.086.379,0,.757-.016,1.132-.05-.368-.1-.735-.16-1.1-.236Z" fill="#fff"/>
+          </g>
+          <g id="グループ_7281" data-name="グループ 7281" opacity="0.25">
+            <path id="パス_19804" data-name="パス 19804" d="M784,527.487l-1.484.147-.75.074a7.677,7.677,0,0,0-.761.124c.25.071.5.117.752.164l.376.058c.13.021.259.031.388.042a9.261,9.261,0,0,0,1.536-.024,10.16,10.16,0,0,0,1.511-.262,7.343,7.343,0,0,0,1.445-.527c-.52,0-1.021.036-1.521.073S784.495,527.439,784,527.487Z" fill="#fff"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

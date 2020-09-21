@@ -1,6 +1,6 @@
 <div [class.wrap]="!isEmbed">
   <div [class.mat-card]="!isEmbed" [class.wrap-card]="!isEmbed">
-    <h2>プラン</h2>
+    <h2 class="heading">プラン</h2>
     <p class="lead">自分に合ったプランを選択してください。</p>
     <ng-template #planLoading>
       <mat-spinner class="plan-loader" [diameter]="40"></mat-spinner>
@@ -39,6 +39,18 @@
       <li>PC、ネット代は自己負担です。</li>
       <li>追加教材費等はありません。上記の金額がすべてです。</li>
     </ul>
+
+    <div class="loan">
+      <figure class="loan__image">
+        <img src="assets/images/loan.svg" alt="" />
+      </figure>
+      <div>
+        <h2 class="loan__title">毎月の出費を抑えたい方へ</h2>
+        <p class="loan__description">
+          CAMPは割賦払いに対応していませんが、カード会社の割賦払いサービス（リポ払い等）をご利用いただくことで毎月の支出を抑えることができます。
+        </p>
+      </div>
+    </div>
 
     <div class="price-up">
       <figure>
@@ -82,7 +94,7 @@
       </div>
     </div>
 
-    <h2>買い切りチケット</h2>
+    <h2 class="heading">買い切りチケット</h2>
 
     <mat-card class="ticket" *ngFor="let ticket of ticketService.tickets">
       <h3 class="ticket__name">{{ ticket.name }}チケット</h3>
