@@ -16,10 +16,12 @@ import { SwiperOptions } from 'swiper';
 })
 export class HomeComponent implements OnInit {
   isMobile = this.uiService.isMobile;
+  breakpoints = this.uiService.breakpoints;
+  columns = this.breakpoints.large ? 4 : this.breakpoints.xsmall ? 1 : 2;
   swiperConfig: SwiperOptions = {
     allowTouchMove: this.isMobile,
-    slidesPerView: this.isMobile ? 1 : 4,
-    slidesPerGroup: this.isMobile ? 1 : 4,
+    slidesPerView: this.columns,
+    slidesPerGroup: this.columns,
     navigation: {
       nextEl: '.swiper__arrow--next',
       prevEl: '.swiper__arrow--prev',

@@ -36,6 +36,7 @@ import { TagEditorDialogComponent } from './tag-editor-dialog/tag-editor-dialog.
 import { NgAisModule } from 'angular-instantsearch';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { PointDialogComponent } from '../point-dialog/point-dialog.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { PointDialogComponent } from '../point-dialog/point-dialog.component';
     HttpClientModule,
     NgAisModule,
     AngularFireAnalyticsModule,
+    LayoutModule,
     RecaptchaModule,
     MarkdownModule.forRoot({
       loader: HttpClient,

@@ -7,8 +7,8 @@
 ></mat-progress-bar>
 <mat-sidenav-container>
   <mat-sidenav
-    [opened]="!isMobile && !hideNav"
-    [mode]="isMobile ? 'over' : 'side'"
+    [opened]="uiService.breakpoints.large && !hideNav"
+    [mode]="uiService.breakpoints.large ? 'side' : 'over'"
     class="side"
     #sideNav
     [autoFocus]="false"

@@ -1,5 +1,12 @@
 import { BehaviorSubject } from 'rxjs';
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  AfterViewInit,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { LoadingService } from 'src/app/services/loading.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, ActivationEnd, ActivatedRoute } from '@angular/router';
@@ -9,7 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-main-shell',
   templateUrl: './main-shell.component.html',
-  styleUrls: ['./main-shell.component.scss']
+  styleUrls: ['./main-shell.component.scss'],
 })
 export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('sideNav', { static: true }) sideNav: MatSidenav;
@@ -24,9 +31,9 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
   causeLoading$ = new BehaviorSubject(true);
 
   constructor(
+    public uiService: UiService,
     private loadingService: LoadingService,
     private cd: ChangeDetectorRef,
-    private uiService: UiService,
     private router: Router,
     private authService: AuthService,
     private route: ActivatedRoute
@@ -34,7 +41,7 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
     const getLastChild = (parent) => {
       return parent.firstChild ? getLastChild(parent.firstChild) : parent;
     };
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof ActivationEnd) {
         const lastChild = getLastChild(this.route.firstChild).snapshot;
         this.noHeader = lastChild.data.noHeader;
@@ -48,18 +55,15 @@ export class MainShellComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.cd.detectChanges();
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 
   completeCauseList() {
     this.causeLoading$.next(false);
   }
-
 }
