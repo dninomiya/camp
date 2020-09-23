@@ -22,15 +22,20 @@ const replacer = (data: string) => {
 };
 
 const buildHtml = (lesson: { [key: string]: string }) => {
+  const description = lesson.body?.substr(0, 200).replace(/^#+ |^- /gm, '');
   return file
     .replace(
       /<meta name="description" content="(.+)" \/>/gm,
-      replacer(lesson.body?.substr(0, 200).replace(/^#+ |^- /gm, ''))
+      replacer(description)
+    )
+    .replace(
+      /<meta property="og:description" content="(.+)" \/>/gm,
+      replacer(description)
     )
     .replace(/content="(.+ogp-cover.png)"/gm, replacer(lesson.thumbnailURL))
     .replace(/<title>(.+)<\/title>"/gm, replacer(lesson.title))
     .replace(
-      /<meta property="og:title" content="(.+)" \/>"/gm,
+      /<meta property="og:title" content="(.+)" \/>/gm,
       replacer(lesson.title)
     )
     .replace(
