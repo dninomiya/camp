@@ -272,7 +272,7 @@ export class LessonService {
         return (
           lesson.free ||
           (user?.plan && user.plan !== 'free') ||
-          user.ticket?.document
+          user?.ticket?.document
         );
       })
     );
