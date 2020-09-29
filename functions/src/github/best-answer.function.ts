@@ -6,6 +6,8 @@ import * as functions from 'firebase-functions';
 export const getBestAnswer = functions
   .region('asia-northeast1')
   .https.onRequest(async (req, resp) => {
+    resp.set('Access-Control-Allow-Origin', '*');
+
     const githubId = req.body.githubId;
     const issueId = req.body.issueId;
     const commentId = req.body.commentId;
@@ -38,6 +40,7 @@ export const getBestAnswer = functions
 export const sendBestAnswer = functions
   .region('asia-northeast1')
   .https.onRequest(async (req, resp) => {
+    resp.set('Access-Control-Allow-Origin', '*');
     const issueId = req.body.issueId;
     if (!issueId) {
       resp.status(200).end();
