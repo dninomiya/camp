@@ -76,7 +76,7 @@ export function markedOptionsFactory(): MarkedOptions {
     let text = t;
 
     const info = lang && lang.match(/note|denger|notice/);
-    const dod = label && label.match(/dont|do/);
+    const dod = label && label.match(/^dont$|^do$/);
 
     if (label === 'ogp_export') {
       return text;
