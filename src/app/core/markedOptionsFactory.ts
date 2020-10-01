@@ -76,7 +76,7 @@ export function markedOptionsFactory(): MarkedOptions {
     let text = t;
 
     const info = lang && lang.match(/note|denger|notice/);
-    const dod = label && label.match(/^dont$|^do$/);
+    const dod = label && label.match(/(^dont|^do)\./);
 
     if (label === 'ogp_export') {
       return text;
@@ -89,9 +89,9 @@ export function markedOptionsFactory(): MarkedOptions {
         renderer,
       })}</div>`;
     } else if (dod) {
-      const dodLabel = dod[0] === 'do' ? 'Do' : `Don't`;
+      const dodLabel = dod[1] === 'do' ? 'Do' : `Don't`;
       return (
-        `<pre class="language-${lang} ${dod[0]}">` +
+        `<pre class="language-${lang} ${dod[1]}">` +
         `<span class="lang">${dodLabel}</span><code class="language-${lang}">` +
         text +
         '</code></pre>'
