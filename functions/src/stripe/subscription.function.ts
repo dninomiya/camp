@@ -87,7 +87,7 @@ export const createStripeSubscription = functions
             items: [{ price: data.priceId }],
             default_tax_rates: [functions.config().stripe.tax],
             coupon: data.couponId || undefined,
-            trial_from_plan: user.trialUsed,
+            trial_from_plan: !user.trialUsed,
             expand: ['latest_invoice.payment_intent'],
           },
           {
