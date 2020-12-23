@@ -24,7 +24,7 @@ export class ProjectEditorComponent implements OnInit {
       '',
       [Validators.required, Validators.pattern('^https://github.com/.*')],
     ],
-    url: ['', [Validators.required, Validators.pattern('^https?://.*')]],
+    url: ['', [Validators.pattern('^https?://.*')]],
     twitter: ['', [Validators.pattern('^https://twitter.com/.*')]],
     status: ['progress', [Validators.required]],
     links: this.fb.array([]),

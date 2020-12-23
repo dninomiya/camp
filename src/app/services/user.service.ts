@@ -1,3 +1,4 @@
+import { PlanID } from './../interfaces/plan';
 import { map } from 'rxjs/operators';
 import { firestore } from 'firebase/app';
 import { Injectable } from '@angular/core';
@@ -30,8 +31,15 @@ export class UserService {
       .valueChanges();
   }
 
-  getUsers(): Observable<User[]> {
-    return this.db.collection<User>('users').valueChanges();
+  getUsers(planId?: PlanID): Observable<User[]> {
+    return this.db
+      .collection<User>('users', (ref) => {
+        if (planId) {
+          return ref.where('plan', '==', planId).orderBy('createdAt', 'desc');
+        }
+        return ref;
+      })
+      .valueChanges();
   }
 
   async createInviteCode(): Promise<string> {
