@@ -144,10 +144,6 @@ const routes: Routes = [
       import('./welcome/welcome.module').then((m) => m.WelcomeModule),
   },
   {
-    path: 'isa',
-    loadChildren: () => import('./isa/isa.module').then((m) => m.IsaModule),
-  },
-  {
     path: 'connect-stripe',
     component: ConnectStripeComponent,
     canActivate: [AuthGuard],
@@ -184,4 +180,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
