@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  title: 'CAMP',
+  title: 'Flock',
   hostChannel: 'ypPxvg7WBUPkYZDN7ao3VyLs9OL2',
   stripe: {
     publicKey: 'pk_live_PRahgFHJRpGZkMYMDUdSHkLQ00AEbGkN6b',
@@ -21,6 +21,6 @@ export const environment = {
     apiKey: 'e4a4e27ff57df999aae2dda4f3ad367d',
     indexName: 'lessons',
   },
-  host: 'https://to.camp',
+  host: 'https://to.]',
   captchaKey: '6LdxgLIUAAAAAG7VOix4btA1S51f5kYqPugCNPeu',
 };

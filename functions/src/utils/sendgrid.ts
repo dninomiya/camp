@@ -16,7 +16,7 @@ export const sendEmail = (data: {
   return sgMail.send({
     from: {
       email: 'noreply@deer.co.jp',
-      name: 'CAMP'
+      name: 'Flock'
     },
     to: data.to,
     dynamicTemplateData: data.dynamicTemplateData,

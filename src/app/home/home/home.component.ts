@@ -60,6 +60,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.createCanonicalURL();
-    this.titleService.setTitle('CAMP');
+    this.titleService.setTitle('Flock');
   }
 }
