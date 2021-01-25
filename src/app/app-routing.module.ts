@@ -1,4 +1,3 @@
-import { CustomerGuard } from './guards/customer.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -86,17 +85,6 @@ const routes: Routes = [
         },
         loadChildren: () =>
           import('./editor/editor.module').then((m) => m.EditorModule),
-      },
-      {
-        path: 'projects',
-        canLoad: [CustomerGuard],
-        data: {
-          hideNav: true,
-        },
-        loadChildren: () =>
-          import('./project-list/project-list.module').then(
-            (m) => m.ProjectListModule
-          ),
       },
       {
         path: 'edit',

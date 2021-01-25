@@ -37,15 +37,6 @@
           <button
             class="toolbar__item"
             mat-icon-button
-            routerLink="/projects"
-            matTooltip="プロジェクトリスト"
-            *ngIf="user.plan && user.plan !== 'free'"
-          >
-            <mat-icon>group</mat-icon>
-          </button>
-          <button
-            class="toolbar__item"
-            mat-icon-button
             routerLink="/new"
             matTooltip="投稿"
             *ngIf="user.plan && user.plan !== 'free'"
