@@ -11,7 +11,7 @@
         <mat-icon class="mat-18">menu</mat-icon>
       </button>
       <a class="logo" routerLink="/">
-        <img src="/assets/images/logo.png" alt="CAMP" />
+        <img src="/assets/images/logo.png" alt="Flock" />
       </a>
     </div>
     <ais-instantsearch
@@ -34,15 +34,6 @@
     <ng-container *ngIf="user$ | async as user; else loginButton">
       <div class="btns">
         <div class="toolbar">
-          <button
-            class="toolbar__item"
-            mat-icon-button
-            routerLink="/projects"
-            matTooltip="プロジェクトリスト"
-            *ngIf="user.plan && user.plan !== 'free'"
-          >
-            <mat-icon>group</mat-icon>
-          </button>
           <button
             class="toolbar__item"
             mat-icon-button

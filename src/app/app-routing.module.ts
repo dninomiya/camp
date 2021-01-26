@@ -1,4 +1,3 @@
-import { CustomerGuard } from './guards/customer.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -88,17 +87,6 @@ const routes: Routes = [
           import('./editor/editor.module').then((m) => m.EditorModule),
       },
       {
-        path: 'projects',
-        canLoad: [CustomerGuard],
-        data: {
-          hideNav: true,
-        },
-        loadChildren: () =>
-          import('./project-list/project-list.module').then(
-            (m) => m.ProjectListModule
-          ),
-      },
-      {
         path: 'edit',
         canLoad: [AuthGuard],
         data: {
@@ -144,10 +132,6 @@ const routes: Routes = [
       import('./welcome/welcome.module').then((m) => m.WelcomeModule),
   },
   {
-    path: 'isa',
-    loadChildren: () => import('./isa/isa.module').then((m) => m.IsaModule),
-  },
-  {
     path: 'connect-stripe',
     component: ConnectStripeComponent,
     canActivate: [AuthGuard],
@@ -184,4 +168,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
