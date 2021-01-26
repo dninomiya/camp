@@ -109,7 +109,7 @@ export const createStripeSubscription = functions
 
       try {
         await sendEmail({
-          to: 'daichi.ninomiya@deer.co.jp',
+          to: 'flock@deer.co.jp',
           templateId: 'registerToAdmin',
           dynamicTemplateData: {
             email: user.email,

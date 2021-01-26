@@ -1,6 +1,6 @@
 export const config: any = {
   fee: 0.15,
-  adminEmail: 'daichi.ninomiya@deer.co.jp',
+  adminEmail: 'flock@deer.co.jp',
   mailTemplate: {
     unRegisterToAdmin: 'd-5b2b3960502e434c8bb4340c52721d29',
     registerToAdmin: 'd-72d77ec137ff4d8188156fc652d76c5b',
