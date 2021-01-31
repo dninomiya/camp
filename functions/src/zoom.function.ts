@@ -1,8 +1,11 @@
 import * as functions from 'firebase-functions';
 import { sendSlack } from './utils/slack';
+import { sendDiscord } from './utils/discord';
 
 const slackURL =
   'https://hooks.slack.com/services/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';
+const discordURL =
+  'https://discord.com/api/webhooks/805393253746343936/k0gHWCuT02zFzZ1HOXnst2Mmwkd40dW3xwJIGfg5BVc0bWNVETh1AGOH_EJVd8zb9bK0';
 
 export const onRecordMeetingFromZoom = functions
   .region('asia-northeast1')
@@ -18,6 +21,10 @@ export const onRecordMeetingFromZoom = functions
 
       await sendSlack(slackURL, {
         text: message,
+      });
+
+      await sendDiscord(discordURL, {
+        content: message,
       });
 
       res.status(200).send(true);
