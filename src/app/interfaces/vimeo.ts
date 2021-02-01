@@ -12,13 +12,13 @@ export interface VimeoPostResponse {
   created_time: string;
   modified_time: string;
   release_time: string;
-  content_rating?: (string)[] | null;
+  content_rating?: string[] | null;
   license?: null;
   privacy: Privacy;
   pictures: Pictures;
-  tags?: (null)[] | null;
+  tags?: null[] | null;
   stats: Stats;
-  categories?: (null)[] | null;
+  categories?: null[] | null;
   metadata: Metadata;
   user: User;
   review_page: ReviewPage;
@@ -30,7 +30,6 @@ export interface VimeoPostResponse {
   upload: Upload;
   transcode: Transcode;
 }
-
 
 interface Embed {
   buttons: Buttons;
@@ -95,7 +94,7 @@ interface Pictures {
   uri?: null;
   active: boolean;
   type: string;
-  sizes?: (SizesEntity)[] | null;
+  sizes?: SizesEntity[] | null;
   resource_key: string;
 }
 interface SizesEntity {
@@ -125,12 +124,12 @@ interface Connections {
 }
 interface CommentsOrCreditsOrLikesOrPicturesOrTexttracksOrAlbumsOrAvailableAlbumsOrVersionsOrAppearancesOrCategoriesOrChannelsOrFollowersOrFollowingOrGroupsOrModeratedChannelsOrPortfoliosOrVideosOrWatchlaterOrSharedOrWatchedVideosOrFoldersOrBlock {
   uri: string;
-  options?: (string)[] | null;
+  options?: string[] | null;
   total: number;
 }
 interface RecommendationsOrFeedOrMembership {
   uri: string;
-  options?: (string)[] | null;
+  options?: string[] | null;
 }
 interface Interactions {
   watchlater: Watchlater;
@@ -138,14 +137,14 @@ interface Interactions {
 }
 interface Watchlater {
   uri: string;
-  options?: (string)[] | null;
+  options?: string[] | null;
   added: boolean;
   added_time?: null;
 }
 interface Report {
   uri: string;
-  options?: (string)[] | null;
-  reason?: (string)[] | null;
+  options?: string[] | null;
+  reason?: string[] | null;
 }
 interface User {
   uri: string;
@@ -156,10 +155,10 @@ interface User {
   short_bio?: null;
   created_time: string;
   pictures: Pictures1;
-  websites?: (WebsitesEntity)[] | null;
+  websites?: WebsitesEntity[] | null;
   metadata: Metadata1;
   preferences: Preferences;
-  content_filter?: (string)[] | null;
+  content_filter?: string[] | null;
   upload_quota: UploadQuota;
   resource_key: string;
   account: string;
@@ -168,7 +167,7 @@ interface Pictures1 {
   uri: string;
   active: boolean;
   type: string;
-  sizes?: (SizesEntity1)[] | null;
+  sizes?: SizesEntity1[] | null;
   resource_key: string;
 }
 interface SizesEntity1 {
@@ -256,7 +255,5 @@ interface Transcode {
 }
 
 export interface VimeoUser {
-  token: string;
-  account: string;
   uploadQuota: UploadQuota;
 }

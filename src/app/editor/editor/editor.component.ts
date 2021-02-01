@@ -1,47 +1,39 @@
-import { User } from 'src/app/interfaces/user';
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   NgxPicaErrorInterface,
   NgxPicaService,
 } from '@digitalascetic/ngx-pica';
-import { of, Observable, combineLatest } from 'rxjs';
-import {
-  switchMap,
-  tap,
-  take,
-  shareReplay,
-  debounceTime,
-  map,
-  catchError,
-} from 'rxjs/operators';
-import {
-  FormBuilder,
-  Validators,
-  FormControl,
-  AbstractControl,
-} from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StorageService } from 'src/app/services/storage.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ChannelService } from 'src/app/services/channel.service';
-import { Lesson } from 'src/app/interfaces/lesson';
-import { LessonList } from 'src/app/interfaces/lesson-list';
-import { AuthService } from 'src/app/services/auth.service';
-import { LessonService } from 'src/app/services/lesson.service';
-import { Location } from '@angular/common';
-import { ListService } from 'src/app/services/list.service';
-import { LessonGuideComponent } from '../lesson-guide/lesson-guide.component';
-import { EditorHelpComponent } from '../editor-help/editor-help.component';
-import { PlanService } from 'src/app/services/plan.service';
-import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
-import { VimeoService } from 'src/app/services/vimeo.service';
-import { Simplemde } from 'ng2-simplemde';
 import { addedDiff, updatedDiff } from 'deep-object-diff';
-import { VimeoUser } from 'src/app/interfaces/vimeo';
-import { environment } from 'src/environments/environment';
+import { Simplemde } from 'ng2-simplemde';
+import { combineLatest, Observable, of } from 'rxjs';
+import {
+  debounceTime,
+  shareReplay,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { ListEditDialogComponent } from 'src/app/core/list-edit-dialog/list-edit-dialog.component';
 import { TagEditorDialogComponent } from 'src/app/core/tag-editor-dialog/tag-editor-dialog.component';
+import { Lesson } from 'src/app/interfaces/lesson';
+import { LessonList } from 'src/app/interfaces/lesson-list';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { ChannelService } from 'src/app/services/channel.service';
+import { LessonService } from 'src/app/services/lesson.service';
+import { ListService } from 'src/app/services/list.service';
+import { PlanService } from 'src/app/services/plan.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { VimeoService } from 'src/app/services/vimeo.service';
+import { environment } from 'src/environments/environment';
+import { EditorHelpComponent } from '../editor-help/editor-help.component';
+import { LessonGuideComponent } from '../lesson-guide/lesson-guide.component';
+import { VimeoDialogComponent } from '../vimeo-dialog/vimeo-dialog.component';
 import { VimeoHelpDialogComponent } from '../vimeo-help-dialog/vimeo-help-dialog.component';
 
 @Component({
@@ -114,7 +106,6 @@ export class EditorComponent implements OnInit {
     lineNumbers: false,
   };
 
-  vimeoUser: VimeoUser;
   oldLesson$: Observable<Lesson>;
   isValidWaiting: boolean;
   revisionId: string;
@@ -148,12 +139,6 @@ export class EditorComponent implements OnInit {
     private listService: ListService,
     private vimeoService: VimeoService
   ) {
-    this.user$
-      .pipe(switchMap((user) => this.vimeoService.getVimeoAccount(user.id)))
-      .subscribe((vimeoUser) => {
-        this.vimeoUser = vimeoUser || null;
-      });
-
     this.route.queryParamMap.subscribe((params) => {
       const tag = params.get('tag');
       this.revisionId = params.get('r');
@@ -213,24 +198,6 @@ export class EditorComponent implements OnInit {
     if (this.form.dirty) {
       $event.preventDefault();
       $event.returnValue = true;
-    }
-  }
-
-  validateVimeoId(control: AbstractControl) {
-    if (this.vimeoUser) {
-      this.isValidWaiting = true;
-      return this.vimeoService
-        .checkVimeoId({
-          id: control.value,
-          token: this.vimeoUser.token,
-        })
-        .pipe(
-          tap(() => (this.isValidWaiting = false)),
-          map((data) => null),
-          catchError(() => of({ videoId: true }))
-        );
-    } else {
-      return of(null);
     }
   }
 

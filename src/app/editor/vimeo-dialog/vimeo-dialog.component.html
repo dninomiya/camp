@@ -1,68 +1,43 @@
 <h1 matDialogTitle>動画アップロード</h1>
 
-<mat-dialog-content>
-  <div *ngIf="vimeoAccount$ | async as user; else getVimeo">
-    <div class="status">
-      <p class="status__account">{{ user.account }}<small>プラン</small></p>
-      <mat-progress-bar
-        [value]="(uploadQuota.used / uploadQuota.max) * 100"
-        color="primary"
-      ></mat-progress-bar>
-      <p class="status__size">
-        <span
-          >{{ uploadQuota.used | filesize }} /
-          {{ uploadQuota.max | filesize }}</span
-        >
-        <span>{{ uploadQuota.reset_date | date: 'M月d日' }}にリセット</span>
-      </p>
-    </div>
-    <label
-      *ngIf="!createWaiting"
-      class="placeholder"
-      [class.over]="isOver"
-      (dragover)="onDragOver($event)"
-      (dragleave)="onDragLeave($event)"
-      (drop)="onDrop($event)"
-    >
-      <p *ngIf="file" class="placeholder__ready">
-        <span>アップロード準備が整いました</span>
-        <span>ファイルサイズ: {{ size | filesize }}</span>
-      </p>
-      <div class="placeholder__icon" *ngIf="!file">
-        <i class="fab fa-vimeo-v"></i>
-        <span>クリックか動画をドロップ</span>
-      </div>
-      <input
-        type="file"
-        (change)="handleFileSelected($event)"
-        #input
-        accept="video/*"
-        style="display: none;"
-      />
-    </label>
+<mat-dialog-content *ngIf="uploadQuota">
+  <div class="status">
+    <mat-progress-bar
+      [value]="(uploadQuota.used / uploadQuota.max) * 100"
+      color="primary"
+    ></mat-progress-bar>
+    <p class="status__size">
+      <span
+        >{{ uploadQuota.used | filesize }} /
+        {{ uploadQuota.max | filesize }}</span
+      >
+      <span>{{ uploadQuota.reset_date | date: 'M月d日' }}にリセット</span>
+    </p>
   </div>
-  <ng-template #getVimeo>
-    <div *ngIf="!loading">
-      <div class="vimeo">
-        <img
-          src="/assets/images/vimeo-logo.png"
-          alt="vimeo"
-          class="vimeo__logo"
-        />
-        <p class="vimeo__info">
-          動画をアップロードするためにVimeoに登録&連携してください。有料動画を販売するためにはPROプラン以上である必要があります。
-        </p>
-        <button
-          class="vimeo__button"
-          color="primary"
-          (click)="connectVimeo()"
-          mat-raised-button
-        >
-          Vimeo登録＆連携
-        </button>
-      </div>
+  <label
+    *ngIf="!createWaiting"
+    class="placeholder"
+    [class.over]="isOver"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <p *ngIf="file" class="placeholder__ready">
+      <span>アップロード準備が整いました</span>
+      <span>ファイルサイズ: {{ size | filesize }}</span>
+    </p>
+    <div class="placeholder__icon" *ngIf="!file">
+      <i class="fab fa-vimeo-v"></i>
+      <span>クリックか動画をドロップ</span>
     </div>
-  </ng-template>
+    <input
+      type="file"
+      (change)="handleFileSelected($event)"
+      #input
+      accept="video/*"
+      style="display: none"
+    />
+  </label>
   <div class="dialog-loading" *ngIf="loading">
     <mat-spinner [diameter]="40"></mat-spinner>
   </div>
@@ -72,14 +47,12 @@
   <button mat-button [disabled]="createWaiting" matDialogClose>
     キャンセル
   </button>
-  <ng-container *ngIf="vimeoAccount$ | async as user">
-    <button
-      [disabled]="!size || createWaiting"
-      color="primary"
-      (click)="createVideo(user)"
-      mat-raised-button
-    >
-      アップロード{{ createWaiting && '中' }}
-    </button>
-  </ng-container>
+  <button
+    [disabled]="!size || createWaiting"
+    color="primary"
+    (click)="createVideo()"
+    mat-raised-button
+  >
+    アップロード{{ createWaiting && '中' }}
+  </button>
 </mat-dialog-actions>
