@@ -59,11 +59,8 @@
       >
         コースを作成
       </button>
-      <mat-form-field *ngIf="vimeoUser">
+      <mat-form-field>
         <mat-label>動画ID</mat-label>
-        <mat-error *ngIf="form.get('videoId').hasError('videoId')"
-          >自分の動画ではありません</mat-error
-        >
         <input
           type="text"
           formControlName="videoId"
@@ -73,15 +70,6 @@
         />
         <mat-icon (click)="openVideoUploader()" matSuffix>video_call</mat-icon>
       </mat-form-field>
-      <button
-        *ngIf="vimeoUser === null && user.admin"
-        type="button"
-        mat-raised-button
-        (click)="openVideoUploader()"
-        color="primary"
-      >
-        Vimeoと接続
-      </button>
     </div>
     <div class="wrap">
       <div class="body">
@@ -120,9 +108,7 @@
             削除
           </button>
         </ng-container>
-        <button type="button" mat-button (click)="cancel()">
-          キャンセル
-        </button>
+        <button type="button" mat-button (click)="cancel()">キャンセル</button>
         <button
           mat-raised-button
           color="primary"

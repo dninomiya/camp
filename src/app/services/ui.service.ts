@@ -30,7 +30,6 @@ export class UiService {
       .observe([Breakpoints.Medium])
       .subscribe((result) => {
         this.breakpoints.medium = result.matches;
-        console.log(this.breakpoints.medium);
       });
     this.breakpointObserver.observe([Breakpoints.Large]).subscribe((result) => {
       this.breakpoints.large = result.matches;
