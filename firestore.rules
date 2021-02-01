@@ -47,19 +47,32 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    match /csrf/{doc} {
-      allow create: if request.auth.uid == request.resource.data.uid;
-      allow read, delete: if request.auth.uid == resource.data.uid;
-    }
-
     match /products/{doc} {
       allow read: if request.auth.uid != null;
       allow write: if request.auth.uid == doc;
     }
 
-    match /plans/{doc} {
+    match /customers/{uid} {
+      allow read: if request.auth.uid == uid;
+
+      match /checkout_sessions/{id} {
+        allow read, write: if request.auth.uid == uid;
+      }
+      match /subscriptions/{id} {
+        allow read: if request.auth.uid == uid;
+      }
+    }
+
+    match /stripeProducts/{id} {
       allow read: if true;
-      allow write: if isAdmin();
+
+      match /prices/{id} {
+        allow read: if true;
+      }
+
+      match /tax_rates/{id} {
+        allow read: if true;
+      }
     }
 
     match /channels/{channelId} {

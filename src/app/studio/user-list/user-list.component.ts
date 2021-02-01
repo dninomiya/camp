@@ -1,15 +1,15 @@
-import { combineLatest } from 'rxjs';
-import { User } from 'src/app/interfaces/user';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserEditorComponent } from './../user-editor/user-editor.component';
-import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
-import { PlanData } from './../../interfaces/plan';
-import { PlanService } from './../../services/plan.service';
-import { UserService } from 'src/app/services/user.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { combineLatest } from 'rxjs';
+import { User } from 'src/app/interfaces/user';
+import { PlanService } from 'src/app/services/plan.service';
+import { UserService } from 'src/app/services/user.service';
+import { PlanData } from './../../interfaces/plan';
+import { UserEditorComponent } from './../user-editor/user-editor.component';
 
 @Component({
   selector: 'app-user-list',

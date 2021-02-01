@@ -10,6 +10,7 @@ export const environment = {
     publicKey: 'pk_test_lKq5jlH5mdbAxDeBfB4f0sn400ZYUYdpvH',
     clientId: 'ca_G18JYjlRlMAVsLJftLeRGhV6Z3jMXRcQ',
     campaignCoupon: 'BbFMNqOS',
+    taxRate: 'txr_1GByBvAg8h03lWNH7xRaTAQ1',
   },
   firebase: {
     apiKey: 'AIzaSyD4MlPYXXp9_bjLsGmgzGlRYTSrKUTCqzY',

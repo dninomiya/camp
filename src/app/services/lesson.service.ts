@@ -1,17 +1,17 @@
-import { User } from 'src/app/interfaces/user';
-import { environment } from 'src/environments/environment';
-import { Revision, LessonMetaWithUser } from './../interfaces/lesson';
-import { AuthService } from './auth.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { LessonMeta, Lesson, LessonBody } from '../interfaces/lesson';
-import { Observable, combineLatest, of } from 'rxjs';
-import { switchMap, map, first, take } from 'rxjs/operators';
-import { ChannelMeta } from '../interfaces/channel';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { LessonList } from '../interfaces/lesson-list';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firestore } from 'firebase/app';
+import { combineLatest, Observable, of } from 'rxjs';
+import { first, map, switchMap, take } from 'rxjs/operators';
+import { User } from 'src/app/interfaces/user';
+import { environment } from 'src/environments/environment';
+import { ChannelMeta } from '../interfaces/channel';
+import { Lesson, LessonBody, LessonMeta } from '../interfaces/lesson';
+import { LessonList } from '../interfaces/lesson-list';
+import { LessonMetaWithUser, Revision } from './../interfaces/lesson';
+import { AuthService } from './auth.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -376,7 +376,7 @@ export class LessonService {
           return metas.map((meta) => {
             return {
               ...meta,
-              author: users.find((user) => user.id === meta.authorId),
+              author: users.find((user) => user?.id === meta.authorId),
             };
           });
         })

@@ -1,32 +1,23 @@
-import { PaymentService } from 'src/app/services/stripe/payment.service';
-import { PlanData } from './../../interfaces/plan';
-import { take } from 'rxjs/operators';
-import { formatDate } from '@angular/common';
-import { ConfirmUnsubscribeDialogComponent } from './../../core/confirm-unsubscribe-dialog/confirm-unsubscribe-dialog.component';
-import { PlanPipe } from './../../shared/plan.pipe';
-import { MatDialog } from '@angular/material/dialog';
-import { SharedConfirmDialogComponent } from './../../core/shared-confirm-dialog/shared-confirm-dialog.component';
-import { PlanService } from './../../services/plan.service';
 import { Component, OnInit } from '@angular/core';
 import {
-  FormControl,
-  Validators,
-  ValidatorFn,
-  FormBuilder,
   FormArray,
+  FormBuilder,
+  FormControl,
+  ValidatorFn,
+  Validators,
 } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/interfaces/user';
-import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
-  providers: [PlanPipe],
 })
 export class AccountComponent implements OnInit {
   user$: Observable<User> = this.authService.authUser$;
@@ -59,8 +50,6 @@ export class AccountComponent implements OnInit {
     },
   };
 
-  plan: PlanData;
-
   get linkControls(): FormArray {
     return this.profileForm.get('links') as FormArray;
   }
@@ -70,11 +59,7 @@ export class AccountComponent implements OnInit {
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private userService: UserService,
-    private planService: PlanService,
-    private paymentService: PaymentService,
-    private router: Router,
-    private dialog: MatDialog,
-    private planPipe: PlanPipe
+    private router: Router
   ) {
     this.user$.pipe(take(1)).subscribe((user) => {
       this.profileForm.patchValue(user);
@@ -88,10 +73,6 @@ export class AccountComponent implements OnInit {
       if (user && user.mailSettings) {
         this.mailForm.patchValue(user.mailSettings);
       }
-
-      this.planService.getPlan(user.plan).then((plan) => {
-        this.plan = plan;
-      });
     });
   }
 
@@ -150,76 +131,9 @@ export class AccountComponent implements OnInit {
       });
   }
 
-  openUnsubscribeDialog(user: User) {
-    this.cancellationInProgress = true;
-    this.dialog
-      .open(SharedConfirmDialogComponent, {
-        data: {
-          title: '自動更新を停止しますか？',
-          description:
-            '自動更新を停止すると' +
-            formatDate(
-              user.currentPeriodEnd.toMillis(),
-              'yyyy年MM月dd日',
-              'ja'
-            ) +
-            '以降フリープランになります。それまでは引き続き' +
-            this.planPipe.transform(user.plan) +
-            'プランをご利用いただけます。',
-        },
-      })
-      .afterClosed()
-      .subscribe((status) => {
-        if (status) {
-          this.dialog
-            .open(ConfirmUnsubscribeDialogComponent, {
-              data: {
-                uid: user.id,
-                planId: user.plan,
-              },
-            })
-            .afterClosed()
-            .subscribe((unsubStatus) => {
-              this.cancellationInProgress = false;
-            });
-        } else {
-          this.cancellationInProgress = false;
-        }
-      });
-  }
-
   updateAvatar(avatarURL: string) {
     this.userService.updateUser(this.authService.user.id, {
       avatarURL,
     });
-  }
-
-  restart(user: User) {
-    this.dialog
-      .open(SharedConfirmDialogComponent, {
-        data: {
-          title: '自動更新を再開しますか？',
-          description:
-            '自動更新を再開すると' +
-            formatDate(
-              user.currentPeriodEnd.toMillis(),
-              'yyyy年MM月dd日',
-              'ja'
-            ) +
-            'に契約が自動更新されます。',
-        },
-      })
-      .afterClosed()
-      .subscribe((status) => {
-        if (status) {
-          this.restartProcessing = true;
-          this.paymentService
-            .restartSubscription()
-            .then(() => {
-              this.snackBar.open('自動更新を再開しました');
-            })
-            .finally(() => (this.restartProcessing = false));
-        }
-      });
   }
 }

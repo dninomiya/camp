@@ -1,5 +1,3 @@
-import { PriceWithProduct } from './price';
-
 export type PlanID =
   | 'free'
   | 'lite'
@@ -25,8 +23,4 @@ export interface PlanModel {
 
 export interface PlanOrder {
   order: string[];
-}
-
-export interface PlanDataWithPrice extends PlanData {
-  price: PriceWithProduct;
 }

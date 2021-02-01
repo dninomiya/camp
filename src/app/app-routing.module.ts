@@ -1,24 +1,15 @@
-import { AdminGuard } from './guards/admin.guard';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
+import { RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './core/not-found/not-found.component';
+import { AdminGuard } from './guards/admin.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { StudioGuard } from './guards/studio.guard';
 import { MainShellComponent } from './shell/main-shell/main-shell.component';
-import { ConnectStripeComponent } from './core/connect-stripe/connect-stripe.component';
-import { ConnectVimeoComponent } from './core/connect-vimeo/connect-vimeo.component';
 
 const routes: Routes = [
   {
     path: 'intl',
     loadChildren: () => import('./intl/intl.module').then((m) => m.IntlModule),
-  },
-  {
-    path: 'signup',
-    canLoad: [AuthGuard],
-    canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./signup/signup.module').then((m) => m.SignupModule),
   },
   {
     path: '',
@@ -132,16 +123,6 @@ const routes: Routes = [
       import('./welcome/welcome.module').then((m) => m.WelcomeModule),
   },
   {
-    path: 'connect-stripe',
-    component: ConnectStripeComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'connect-vimeo',
-    component: ConnectVimeoComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'studio/:id',
     loadChildren: () =>
       import('./studio/studio.module').then((m) => m.StudioModule),
@@ -168,4 +149,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

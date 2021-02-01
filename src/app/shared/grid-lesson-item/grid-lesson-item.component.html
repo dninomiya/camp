@@ -19,10 +19,10 @@
   </figure>
   <div class="lesson__meta">
     <div *ngIf="!simple" class="lesson__avatar">
-      <img [src]="lesson.author.avatarURL | safe: 'url'" alt="" />
+      <img [src]="lesson.author?.avatarURL | safe: 'url'" alt="" />
     </div>
     <div class="lesson__body">
-      <h3 class="lesson__title" style="-webkit-box-orient: vertical;">
+      <h3 class="lesson__title" style="-webkit-box-orient: vertical">
         {{ lesson.title }}
       </h3>
       <p class="lesson__sub" *ngIf="!noDate">

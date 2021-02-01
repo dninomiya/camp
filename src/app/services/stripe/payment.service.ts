@@ -1,11 +1,5 @@
-import { take, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { PlanModel } from './../../interfaces/plan';
-import { PriceWithProduct } from './../../interfaces/price';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { ChargeWithInvoice } from 'src/app/interfaces/charge';
-import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
@@ -13,7 +7,12 @@ import {
   Stripe as StripeClient,
   StripeCardElement,
 } from '@stripe/stripe-js';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { ChargeWithInvoice } from 'src/app/interfaces/charge';
+import { environment } from 'src/environments/environment';
 import Stripe from 'stripe';
+import { PlanModel } from './../../interfaces/plan';
 
 @Injectable({
   providedIn: 'root',
@@ -35,21 +34,6 @@ export class PaymentService {
   }): Promise<Stripe.SetupIntent> {
     const callable = this.fns.httpsCallable('createStripeSetupIntent');
     return callable(params).toPromise();
-  }
-
-  getAllPrices(): Promise<PriceWithProduct[]> {
-    const callable = this.fns.httpsCallable('getAllStripePrices');
-    return callable({}).toPromise();
-  }
-
-  getPrices(productId: string): Promise<PriceWithProduct[]> {
-    const callable = this.fns.httpsCallable('getStripePrices');
-    return callable(productId).toPromise();
-  }
-
-  getPrice(priceId: string): Promise<PriceWithProduct> {
-    const callable = this.fns.httpsCallable('getStripePrice');
-    return callable(priceId).toPromise();
   }
 
   getProduct(productId: string): Promise<Stripe.Product> {
@@ -169,9 +153,9 @@ export class PaymentService {
     stripeAccountId?: string;
   }): Promise<ChargeWithInvoice[]> {
     const callable = this.fns.httpsCallable('getStripeInvoices');
-    const result = (await callable(params).toPromise()) as Stripe.ApiList<
-      ChargeWithInvoice
-    >;
+    const result = (await callable(
+      params
+    ).toPromise()) as Stripe.ApiList<ChargeWithInvoice>;
     return result.data.filter((charge) => charge.status === 'succeeded');
   }
 

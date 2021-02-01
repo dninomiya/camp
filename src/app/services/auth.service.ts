@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { auth, User as AfUser } from 'firebase/app';
 import { Observable, of } from 'rxjs';
 import {
+  distinctUntilChanged,
+  map,
+  shareReplay,
   switchMap,
   tap,
-  shareReplay,
-  map,
-  distinctUntilChanged,
 } from 'rxjs/operators';
-import { User as AfUser, auth } from 'firebase/app';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
-import { AngularFireFunctions } from '@angular/fire/functions';
-import { User } from '../interfaces/user';
-import * as moment from 'moment';
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
+import { User } from '../interfaces/user';
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -70,90 +69,27 @@ export class AuthService {
     this.afAuth.signOut().then(() => this.router.navigate(['/']));
   }
 
-  async deleteAccount(user: AfUser): Promise<void> {
+  async deleteMyAccount(): Promise<void> {
+    const user = this.afUser;
     const deleteFn = this.fns.httpsCallable('deleteUser');
-    return deleteFn({
+    deleteFn({
       uid: user.uid,
       email: user.email,
-    }).toPromise();
-  }
-
-  deleteMyAccount(): Promise<void> {
-    return this.deleteAccount(this.afUser).then(() => {
-      this.router.navigate(['/']);
-    });
+    })
+      .toPromise()
+      .then(() => {
+        this.router.navigate(['/']);
+      });
   }
 
   updateUser(data: any): Promise<void> {
     return this.db.doc(`users/${this.afUser.uid}`).update(data);
   }
 
-  async connectStripe(code: string, scrf: string): Promise<string> {
-    const data = (await this.db.doc(`csrf/${scrf}`).ref.get()).data();
-
-    if (data) {
-      await this.db.doc(`csrf/${scrf}`).delete();
-
-      if (data.uid !== this.user.id) {
-        throw new Error('ユーザーが不正です');
-      }
-
-      const now = moment();
-      const diffHours = now.diff(moment(data.createdAt.toDate()), 'hours');
-
-      if (diffHours > 2) {
-        throw new Error(`トークンの有効期限が切れました:${data.path}`);
-      } else {
-        const callable = this.fns.httpsCallable('connectStripe');
-        await callable({
-          code,
-          email: this.user.email,
-        }).toPromise();
-        return data.path;
-      }
-    } else {
-      throw new Error(`トークンが存在しません:/studio/${this.user.id}/plans`);
-    }
-  }
-
-  async connectVimeo(code: string, scrf: string): Promise<string> {
-    const data = (await this.db.doc(`csrf/${scrf}`).ref.get()).data();
-
-    if (data) {
-      await this.db.doc(`csrf/${scrf}`).delete();
-
-      if (data.uid !== this.user.id) {
-        throw new Error('ユーザーが不正です');
-      }
-
-      const now = moment();
-      const diffHours = now.diff(moment(data.createdAt.toDate()), 'hours');
-
-      if (diffHours > 2) {
-        throw new Error(`トークンの有効期限が切れました:${data.path}`);
-      } else {
-        const callable = this.fns.httpsCallable('connectVimeo');
-        await callable({ code }).toPromise();
-        return data.path;
-      }
-    } else {
-      throw new Error(`トークンが存在しません:/studio/${this.user.id}/plans`);
-    }
-  }
-
   setFCMToken(fcmToken: string): Promise<void> {
     return this.db.doc(`users/${this.user.id}`).update({
       fcmToken,
     });
-  }
-
-  async createSCRF(body: { uid: string; path: string }): Promise<string> {
-    const id = this.db.createId();
-    await this.db.doc(`csrf/${id}`).set({
-      ...body,
-      createdAt: new Date(),
-    });
-    return id;
   }
 
   openLoginDialog() {

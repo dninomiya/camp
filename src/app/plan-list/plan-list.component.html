@@ -5,31 +5,27 @@
     <ng-template #planLoading>
       <mat-spinner class="plan-loader" [diameter]="40"></mat-spinner>
     </ng-template>
-    <div class="plans" *ngIf="plans?.length; else planLoading">
-      <div class="plan" *ngFor="let plan of plans; index as i">
-        <h3 class="plan__title">{{ plan.price.product.name }}</h3>
-        <p class="plan__sub-title">{{ plan.price.product.description }}</p>
-        <p class="plan__price-label">月額料金</p>
-        <p class="plan__price">
-          <small>¥</small><span>{{ plan.price.unit_amount | number }}</span
-          ><small>/月</small>
-        </p>
-        <ul class="plan__points">
-          <li *ngFor="let feature of plans[i].features">{{ feature }}</li>
-        </ul>
+    <div *ngIf="prices$ | async as prices; else planLoading">
+      <div class="plans" *ngIf="prices.length">
+        <div class="plan" *ngFor="let price of prices; index as i">
+          <h3 class="plan__title">{{ price.name }}</h3>
+          <p class="plan__sub-title">{{ price.description }}</p>
+          <p class="plan__price-label">月額料金</p>
+          <p class="plan__price">
+            <small>¥</small><span>{{ price.unit_amount | number }}</span
+            ><small>/月</small>
+          </p>
 
-        <button
-          (click)="signupPlan(plans[i].id)"
-          class="plan__action"
-          mat-raised-button
-          color="primary"
-          [disabled]="loading"
-        >
-          {{ plan.price.recurring.trial_period_days && '無料で' }}はじめる
-        </button>
-        <p class="plan__trial" *ngIf="plan.price.recurring.trial_period_days">
-          {{ plan.price.recurring.trial_period_days }}日間の無料トライアルあり
-        </p>
+          <button
+            (click)="subscribe(price.id)"
+            class="plan__action"
+            mat-raised-button
+            color="primary"
+            [disabled]="loading"
+          >
+            はじめる
+          </button>
+        </div>
       </div>
     </div>
 
@@ -76,39 +72,5 @@
         </div>
       </div>
     </div>
-
-    <h2 class="heading">買い切りチケット</h2>
-
-    <mat-card class="ticket" *ngFor="let ticket of ticketService.tickets">
-      <h3 class="ticket__name">{{ ticket.name }}チケット</h3>
-      <p class="ticket__description">{{ ticket.description }}</p>
-      <p class="ticket__amount">{{ ticket.amount | number }}円（税込）</p>
-      <button
-        class="ticket__action"
-        mat-flat-button
-        color="primary"
-        (click)="getTicket(ticket)"
-        [disabled]="
-          loading ||
-          ((authService.authUser$ | async)?.ticket &&
-            (authService.authUser$ | async)?.ticket[ticket.id])
-        "
-      >
-        購入
-      </button>
-      <a
-        class="ticket__action"
-        mat-stroked-button
-        color="primary"
-        *ngFor="let link of ticket.links"
-        [href]="link.url"
-        [disabled]="
-          !(authService.authUser$ | async)?.ticket ||
-          !(authService.authUser$ | async)?.ticket[ticket.id]
-        "
-      >
-        {{ link.label }}
-      </a>
-    </mat-card>
   </div>
 </div>

@@ -8,13 +8,13 @@ export class StripeService {
     apiVersion: '2020-03-02',
   });
 
-  static async getCampCustomer(uid: string): Promise<Customer | null> {
+  static async getCustomerIdByUid(uid: string): Promise<string | null> {
     if (!uid) {
       return null;
     }
-    const doc = await db.doc(`users/${uid}/private/payment`).get();
+    const doc = await db.doc(`users/${uid}`).get();
     if (doc.exists) {
-      return doc.data() as Customer;
+      return (doc.data() as Customer).stripeId;
     } else {
       return null;
     }
@@ -47,10 +47,10 @@ export class StripeService {
   }
 
   static async getStripeCustomer(uid: string): Promise<Stripe.Customer | null> {
-    const campCustomer = await this.getCampCustomer(uid);
+    const stripeId = await this.getCustomerIdByUid(uid);
 
-    if (campCustomer) {
-      return this.client.customers.retrieve(campCustomer.customerId, {
+    if (stripeId) {
+      return this.client.customers.retrieve(stripeId, {
         expand: ['subscriptions'],
       }) as Promise<Stripe.Customer>;
     } else {
@@ -61,11 +61,11 @@ export class StripeService {
   static async getPaymentMethod(
     uid: string
   ): Promise<Stripe.PaymentMethod | null> {
-    const customer = await this.getCampCustomer(uid);
-    if (customer?.customerId) {
+    const stripeId = await this.getCustomerIdByUid(uid);
+    if (stripeId) {
       try {
         const result = await this.client.paymentMethods.list({
-          customer: customer.customerId,
+          customer: stripeId,
           type: 'card',
         });
         return result.data[0];
@@ -99,9 +99,9 @@ export class StripeService {
   }
 
   static async deleteCustomerByUid(uid: string): Promise<void> {
-    const customer = await this.getCampCustomer(uid);
-    if (customer) {
-      await this.client.customers.del(customer.customerId);
+    const stripeId = await this.getCustomerIdByUid(uid);
+    if (stripeId) {
+      await this.client.customers.del(stripeId);
     }
   }
 
@@ -131,9 +131,9 @@ export class StripeService {
       );
     }
 
-    const customer = await StripeService.getCampCustomer(uid);
+    const stripeId = await StripeService.getCustomerIdByUid(uid);
 
-    if (!customer) {
+    if (!stripeId) {
       throw new functions.https.HttpsError(
         'permission-denied',
         'カスタマーが存在しません'
@@ -142,13 +142,13 @@ export class StripeService {
 
     try {
       await StripeService.client.invoiceItems.create({
-        customer: customer.customerId,
+        customer: stripeId,
         price: priceId,
         tax_rates: [functions.config().stripe.tax],
       });
 
       const params: Stripe.InvoiceCreateParams = {
-        customer: customer.customerId,
+        customer: stripeId,
       };
 
       const invoice = await StripeService.client.invoices.create(params);

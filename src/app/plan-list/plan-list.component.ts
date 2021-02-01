@@ -1,19 +1,14 @@
-import { Ticket } from './../interfaces/ticket';
-import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
-import { CardDialogComponent } from './../shared/card-dialog/card-dialog.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { StripePrice } from '../interfaces/price';
+import { CheckoutService } from '../services/checkout.service';
+import { StripeProductService } from '../services/stripe-product.service';
+import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
+import { AuthService } from './../services/auth.service';
 import { TicketService } from './../services/ticket.service';
 import { PLAN_FEATURES } from './../welcome/welcome-data';
-import { AuthService } from './../services/auth.service';
-import { Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
-import { PaymentService } from './../services/stripe/payment.service';
-import { PlanService } from './../services/plan.service';
-import { PlanDataWithPrice } from './../interfaces/plan';
-import { Component, OnInit, Input } from '@angular/core';
-import Stripe from 'stripe';
-import { formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-plan-list',
@@ -25,44 +20,23 @@ export class PlanListComponent implements OnInit {
 
   readonly planFeatures = PLAN_FEATURES;
 
-  plans: PlanDataWithPrice[];
+  prices$: Observable<StripePrice[]> = this.stripeProductService.getPrices();
   loading: boolean;
   loginSnackBar: MatSnackBarRef<any>;
-  method: Stripe.PaymentMethod;
 
   constructor(
     public authService: AuthService,
-    private planService: PlanService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router,
-    private paymentService: PaymentService,
+    private checkoutService: CheckoutService,
+    private stripeProductService: StripeProductService,
     public ticketService: TicketService
   ) {}
 
-  ngOnInit(): void {
-    this.getPlans();
-    this.getMethod();
-  }
+  ngOnInit(): void {}
 
-  private getMethod() {
-    this.paymentService
-      .getPaymentMethod()
-      .then((method) => (this.method = method));
-  }
-
-  private async getPlans() {
-    const plans = await this.planService.getPlans();
-    const prices = await Promise.all(
-      plans.map((plan) => this.paymentService.getPrice(plan.mainPriceId))
-    );
-
-    this.plans = plans.map((plan) => {
-      return {
-        ...plan,
-        price: prices.find((price) => price.id === plan.mainPriceId),
-      };
-    });
+  async subscribe(priceId: string) {
+    this.checkoutService.addSession(this.authService.user.id, priceId);
   }
 
   private loginAndAction(action: () => void) {
@@ -95,61 +69,5 @@ export class PlanListComponent implements OnInit {
           }
         });
     }
-  }
-
-  signupPlan(planId: string) {
-    this.loginAndAction(() => {
-      this.router.navigateByUrl('/signup?planId=' + planId);
-    });
-  }
-
-  private openTicketDialog(ticket: Ticket) {
-    this.dialog
-      .open(SharedConfirmDialogComponent, {
-        data: {
-          title: `${ticket.name}チケットを${formatNumber(
-            ticket.amount,
-            'ja-JP'
-          )}円で購入します`,
-          description: ticket.description,
-        },
-      })
-      .afterClosed()
-      .subscribe((status) => {
-        if (status) {
-          this.snackBar.open('チケットを購入しています...', null, {
-            duration: null,
-          });
-          this.loading = true;
-          this.ticketService
-            .getTicket(ticket.id, ticket.priceId)
-            .then(() => {
-              this.snackBar.open('チケットを購入しました!');
-            })
-            .catch(() => {
-              this.snackBar.open('購入できませんでした');
-            })
-            .finally(() => {
-              this.loading = false;
-            });
-        }
-      });
-  }
-
-  getTicket(ticket: Ticket) {
-    this.loginAndAction(() => {
-      if (this.method) {
-        this.openTicketDialog(ticket);
-      } else {
-        this.dialog
-          .open(CardDialogComponent)
-          .afterClosed()
-          .subscribe((status) => {
-            if (status) {
-              this.openTicketDialog(ticket);
-            }
-          });
-      }
-    });
   }
 }
