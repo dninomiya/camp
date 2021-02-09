@@ -1,9 +1,8 @@
-import { ASKS, QUESTIONS, SKILLS } from './welcome-data';
-import { User } from './../interfaces/user';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as AOS from 'aos';
-import { AuthService } from './../services/auth.service';
 import { SwiperOptions } from 'swiper';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { User } from './../interfaces/user';
+import { AuthService } from './../services/auth.service';
 
 @Component({
   selector: 'app-welcome',
@@ -26,9 +25,6 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     allowTouchMove: false,
   };
   isSwiperReady: boolean;
-  asks = ASKS;
-  qas = QUESTIONS;
-  skills = SKILLS;
   user: User;
   player: YT.Player;
   playerVars: YT.PlayerVars = {
@@ -42,14 +38,9 @@ export class WelcomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.body.appendChild(tag);
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
-    (window as any).twttr.widgets.load();
     setTimeout(() => {
       this.isSwiperReady = true;
       AOS.init();

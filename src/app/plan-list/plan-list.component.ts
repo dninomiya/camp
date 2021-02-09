@@ -8,7 +8,6 @@ import { StripeProductService } from '../services/stripe-product.service';
 import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
 import { AuthService } from './../services/auth.service';
 import { TicketService } from './../services/ticket.service';
-import { PLAN_FEATURES } from './../welcome/welcome-data';
 
 @Component({
   selector: 'app-plan-list',
@@ -17,8 +16,6 @@ import { PLAN_FEATURES } from './../welcome/welcome-data';
 })
 export class PlanListComponent implements OnInit {
   @Input() isEmbed: boolean;
-
-  readonly planFeatures = PLAN_FEATURES;
 
   prices$: Observable<StripePrice[]> = this.stripeProductService.getPrices();
   loading: boolean;

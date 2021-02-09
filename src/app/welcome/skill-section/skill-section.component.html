@@ -1,0 +1,17 @@
+<section class="skills">
+  <h2 class="left">身に付くスキル</h2>
+  <p class="lead left">
+    Angular x Firebaseを軸とした最先端のサービス開発スキルが身につきます。
+  </p>
+  <div class="grid">
+    <div class="skill" *ngFor="let skill of skills">
+      <figure class="skill__icon" *ngIf="skill.image">
+        <img src="assets/images/welcome/{{ skill.image }}.svg" alt="" />
+      </figure>
+      <h3 class="skill__title">{{ skill.title }}</h3>
+      <p class="skill__description">
+        {{ skill.description }}
+      </p>
+    </div>
+  </div>
+</section>

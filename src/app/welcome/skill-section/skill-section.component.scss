@@ -1,0 +1,39 @@
+@import 'mixins';
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 80px;
+  &--sm {
+    gap: 40px 80px;
+  }
+  @include sp {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.skills {
+  margin: 160px 0;
+}
+
+.skill {
+  &__icon {
+    height: 40px;
+    &--lg {
+      height: 80px;
+    }
+    img {
+      max-height: 100%;
+      height: 100%;
+    }
+  }
+  &__title {
+    line-height: 1;
+    margin: 16px 0 12px;
+    font-weight: 500;
+  }
+  &__description {
+    color: rgba(black, 0.6);
+  }
+}

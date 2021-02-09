@@ -1,0 +1,82 @@
+@import 'mixins';
+
+.special {
+  padding: 120px 0;
+  display: flex;
+  position: relative;
+  perspective: 1500px;
+  @include sp {
+    padding: 0 0 40px;
+    flex-flow: column;
+  }
+  &--chat {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 520px;
+      height: 520px;
+      transform: translateY(-50%) skew(10deg, 10deg);
+      border-radius: 50%;
+      display: block;
+      background: #fafafa;
+    }
+  }
+  &--center {
+    align-items: center;
+  }
+  &__image {
+    position: relative;
+    width: 60%;
+    padding-right: 80px;
+    box-sizing: border-box;
+    @include tablet {
+      width: 50%;
+      padding-right: 40px;
+    }
+    @include sp {
+      width: 100%;
+      padding-right: 0;
+    }
+    &--videos {
+      @include sp {
+        height: 400px;
+      }
+    }
+    &--right {
+      padding-left: 80px;
+      padding-right: 0;
+      order: 2;
+      @include tablet {
+        padding-left: 40px;
+      }
+      @include sp {
+        padding-left: 0;
+        order: 1;
+      }
+    }
+  }
+  &__body {
+    flex: 1;
+    position: relative;
+    @include sp {
+      order: 2;
+    }
+  }
+  &__hdg {
+    text-align: left;
+    margin-bottom: 40px;
+    span {
+      display: block;
+    }
+  }
+  &__description {
+    opacity: 0.6;
+    font-size: 16px;
+    margin-bottom: 24px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+@import 'mixins';
+
+.hero {
+  position: relative;
+  z-index: 2;
+  margin: 80px 0 160px;
+  @include sp {
+    margin: 80px 0;
+  }
+  span {
+    display: block;
+  }
+  &__wrap {
+    display: flex;
+    align-items: center;
+    @include tablet {
+      flex-flow: column;
+    }
+    @include sp {
+      flex-flow: column;
+    }
+  }
+  &__body {
+    flex: 1;
+    order: 1;
+    @include tablet {
+      order: 2;
+    }
+  }
+  &__mock {
+    order: 2;
+    @include tablet {
+      order: 1;
+      margin-bottom: 140px;
+    }
+    @include sp {
+      transform: scale(0.5) translateX(-70px);
+      transform-origin: center center;
+      margin: -200px 0 -100px;
+    }
+  }
+  &__msg {
+    font-weight: bold;
+    font-size: 40px;
+    letter-spacing: 2px;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+    @include sp {
+      font-size: 24px;
+    }
+  }
+  &__sub {
+    line-height: 1.8;
+    margin-bottom: 32px;
+    font-size: 16px;
+    width: 400px;
+    color: rgba(black, 0.6);
+    @include sp {
+      width: auto;
+    }
+  }
+  &__img {
+    flex: 1;
+  }
+}

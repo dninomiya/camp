@@ -1,0 +1,10 @@
+<mat-card class="section">
+  <h2>Q&A</h2>
+  <p class="lead">ご不明な点はお気軽にお問い合わせください。</p>
+  <div class="qa-grid">
+    <div class="qa" *ngFor="let qa of qas">
+      <h3 class="qa__question">{{ qa.q }}</h3>
+      <p class="qa__answer" [innerHTML]="qa.a"></p>
+    </div>
+  </div>
+</mat-card>

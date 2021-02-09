@@ -1,0 +1,29 @@
+@import 'mixins';
+
+.qa-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  @include sp {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.qa {
+  &__question {
+    font-weight: 500;
+    margin-top: 0;
+  }
+  &__answer {
+    color: rgba(black, 0.6);
+    ::ng-deep a {
+      color: #0288d1;
+      margin: 0 8px;
+      &:after {
+        font-family: 'Material Icons';
+        content: 'open_in_new';
+      }
+    }
+  }
+}

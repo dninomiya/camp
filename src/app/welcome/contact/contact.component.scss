@@ -1,0 +1,49 @@
+@import 'mixins';
+
+.contact {
+  padding: 80px 0;
+  color: white;
+  background: center/cover url(/assets/images/welcome/contact-bg.png);
+  text-align: center;
+  &__profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  &__profile-body {
+    flex: 1;
+    padding-left: 16px;
+  }
+  &__name {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  &__sub-title {
+    color: rgba(white, 0.6);
+  }
+  &__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  &__buttons {
+    text-align: center;
+    a + a {
+      margin-left: 16px;
+    }
+    i {
+      margin-right: 8px;
+    }
+    @include sp {
+      a {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}
+
+.contact-wrap {
+  display: inline-block;
+}
