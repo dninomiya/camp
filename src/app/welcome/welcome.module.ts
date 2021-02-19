@@ -18,9 +18,10 @@ import { FaqSectionComponent } from './faq-section/faq-section.component';
 import { MessageSectionComponent } from './message-section/message-section.component';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { SkillSectionComponent } from './skill-section/skill-section.component';
+import { HeadingComponent } from './heading/heading.component';
 
 @NgModule({
-  declarations: [WelcomeComponent, MockComponent, ServicesComponent, BuddyComponent, FeaturesComponent, ContactComponent, FlowComponent, VoicesComponent, WorksComponent, FaqSectionComponent, MessageSectionComponent, HeroSectionComponent, SkillSectionComponent],
+  declarations: [WelcomeComponent, MockComponent, ServicesComponent, BuddyComponent, FeaturesComponent, ContactComponent, FlowComponent, VoicesComponent, WorksComponent, FaqSectionComponent, MessageSectionComponent, HeroSectionComponent, SkillSectionComponent, HeadingComponent],
   imports: [
     SharedModule,
     WelcomeRoutingModule,
