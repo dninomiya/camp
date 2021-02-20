@@ -15,7 +15,7 @@
 
 .plans {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: auto 1fr;
   gap: 16px;
   @include sp {
     grid-template-columns: 1fr;
@@ -248,4 +248,12 @@
       font-size: 18px;
     }
   }
+}
+
+.waiting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(black, 0.12);
+  padding: 24px;
 }

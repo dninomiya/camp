@@ -1,19 +1,19 @@
-import { Ticket } from './../interfaces/ticket';
-import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
-import { CardDialogComponent } from './../shared/card-dialog/card-dialog.component';
-import { TicketService } from './../services/ticket.service';
-import { PLAN_FEATURES } from './../welcome/welcome-data';
-import { AuthService } from './../services/auth.service';
-import { Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
-import { PaymentService } from './../services/stripe/payment.service';
-import { PlanService } from './../services/plan.service';
-import { PlanDataWithPrice } from './../interfaces/plan';
-import { Component, OnInit, Input } from '@angular/core';
-import Stripe from 'stripe';
 import { formatNumber } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import Stripe from 'stripe';
+import { SharedConfirmDialogComponent } from './../core/shared-confirm-dialog/shared-confirm-dialog.component';
+import { PlanDataWithPrice } from './../interfaces/plan';
+import { Ticket } from './../interfaces/ticket';
+import { LoginDialogComponent } from './../login-dialog/login-dialog.component';
+import { AuthService } from './../services/auth.service';
+import { PlanService } from './../services/plan.service';
+import { PaymentService } from './../services/stripe/payment.service';
+import { TicketService } from './../services/ticket.service';
+import { CardDialogComponent } from './../shared/card-dialog/card-dialog.component';
+import { PLAN_FEATURES } from './../welcome/welcome-data';
 
 @Component({
   selector: 'app-plan-list',
@@ -54,14 +54,24 @@ export class PlanListComponent implements OnInit {
   private async getPlans() {
     const plans = await this.planService.getPlans();
     const prices = await Promise.all(
-      plans.map((plan) => this.paymentService.getPrice(plan.mainPriceId))
+      plans.map((plan) => {
+        if (plan) {
+          return this.paymentService.getPrice(plan.mainPriceId);
+        } else {
+          return;
+        }
+      })
     );
 
     this.plans = plans.map((plan) => {
-      return {
-        ...plan,
-        price: prices.find((price) => price.id === plan.mainPriceId),
-      };
+      if (plan) {
+        return {
+          ...plan,
+          price: prices.find((price) => price.id === plan.mainPriceId),
+        };
+      } else {
+        return;
+      }
     });
   }
 
