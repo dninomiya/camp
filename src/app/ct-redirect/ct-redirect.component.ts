@@ -7,8 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CtRedirectComponent implements OnInit {
   constructor() {
-    location.href = 'http://localhost:3000/';
+    console.log(document.referrer);
     alert(document.referrer);
+    // location.href = 'http://localhost:3000/';
   }
 
   ngOnInit(): void {}
