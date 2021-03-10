@@ -17,11 +17,12 @@ import { registerLocaleData, ViewportScroller } from '@angular/common';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
+import { CtRedirectComponent } from './ct-redirect/ct-redirect.component';
 
 registerLocaleData(localeJa);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CtRedirectComponent],
   imports: [
     NgAisModule.forRoot(),
     BrowserModule,

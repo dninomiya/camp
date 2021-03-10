@@ -1,14 +1,19 @@
-import { AdminGuard } from './guards/admin.guard';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
-import { NotFoundComponent } from './core/not-found/not-found.component';
-import { StudioGuard } from './guards/studio.guard';
-import { MainShellComponent } from './shell/main-shell/main-shell.component';
+import { RouterModule, Routes } from '@angular/router';
 import { ConnectStripeComponent } from './core/connect-stripe/connect-stripe.component';
 import { ConnectVimeoComponent } from './core/connect-vimeo/connect-vimeo.component';
+import { NotFoundComponent } from './core/not-found/not-found.component';
+import { CtRedirectComponent } from './ct-redirect/ct-redirect.component';
+import { AdminGuard } from './guards/admin.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { StudioGuard } from './guards/studio.guard';
+import { MainShellComponent } from './shell/main-shell/main-shell.component';
 
 const routes: Routes = [
+  {
+    path: 'ct',
+    component: CtRedirectComponent,
+  },
   {
     path: 'intl',
     loadChildren: () => import('./intl/intl.module').then((m) => m.IntlModule),
@@ -168,4 +173,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
