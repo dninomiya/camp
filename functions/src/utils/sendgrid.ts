@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions';
 import * as sgMail from '@sendgrid/mail';
+import * as functions from 'firebase-functions';
 import { config } from '../config';
 import { MailTemplate } from '../interfaces';
 import { FOOTER_HTML } from './footer.html';
@@ -16,7 +16,7 @@ export const sendEmail = (data: {
   return sgMail.send({
     from: {
       email: 'noreply@deer.co.jp',
-      name: 'Flock'
+      name: 'CAMP',
     },
     to: data.to,
     dynamicTemplateData: data.dynamicTemplateData,
@@ -28,8 +28,8 @@ export const sendEmail = (data: {
         text: `株式会社Deer\n
         info@deer.co.jp\n
         〒174-0041 東京都新宿区新宿1-36-4-9\n
-        https://to.camp/company`
-      }
-    }
+        https://to.camp/company`,
+      },
+    },
   });
 };

@@ -1,10 +1,10 @@
+import * as functions from 'firebase-functions';
+import * as moment from 'moment';
+import Stripe from 'stripe';
 import { config } from './../config';
+import { db, toTimeStamp } from './../utils/db';
 import { sendEmail } from './../utils/sendgrid';
 import { StripeService } from './service';
-import { db, toTimeStamp } from './../utils/db';
-import * as functions from 'firebase-functions';
-import Stripe from 'stripe';
-import * as moment from 'moment';
 
 const REASONS = [
   {
@@ -109,7 +109,7 @@ export const createStripeSubscription = functions
 
       try {
         await sendEmail({
-          to: 'flock@deer.co.jp',
+          to: 'info@deer.co.jp',
           templateId: 'registerToAdmin',
           dynamicTemplateData: {
             email: user.email,

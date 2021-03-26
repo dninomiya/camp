@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  title: 'Flock',
+  title: 'CAMP',
   hostChannel: 'ypPxvg7WBUPkYZDN7ao3VyLs9OL2',
   stripe: {
     publicKey: 'pk_live_PRahgFHJRpGZkMYMDUdSHkLQ00AEbGkN6b',
