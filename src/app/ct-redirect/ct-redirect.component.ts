@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CtRedirectComponent implements OnInit {
   constructor() {
-    location.href = 'https://CAMP.codes';
+    location.href = 'https://flock.codes';
   }
 
   ngOnInit(): void {}
