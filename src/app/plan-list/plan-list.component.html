@@ -1,50 +1,13 @@
 <div [class.wrap]="!isEmbed">
   <div [class.mat-card]="!isEmbed" [class.wrap-card]="!isEmbed">
     <h2 class="heading">プラン</h2>
-    <p class="lead">自分に合ったプランを選択してください。</p>
-    <ng-template #planLoading>
-      <mat-spinner class="plan-loader" [diameter]="40"></mat-spinner>
-    </ng-template>
-    <div class="plans" *ngIf="plans?.length; else planLoading">
-      <ng-container *ngFor="let plan of plans; index as i">
-        <div class="plan" *ngIf="plan">
-          <h3 class="plan__title">{{ plan.price.product.name }}</h3>
-          <p class="plan__sub-title">{{ plan.price.product.description }}</p>
-          <p class="plan__price-label">月額料金</p>
-          <p class="plan__price">
-            <small>¥</small><span>{{ plan.price.unit_amount | number }}</span
-            ><small>/月</small>
-          </p>
-          <ul class="plan__points">
-            <li *ngFor="let feature of plans[i].features">{{ feature }}</li>
-          </ul>
 
-          <button
-            (click)="signupPlan(plans[i].id)"
-            class="plan__action"
-            mat-raised-button
-            color="primary"
-            [disabled]="loading"
-          >
-            {{ plan.price.recurring.trial_period_days && '無料で' }}はじめる
-          </button>
-          <p class="plan__trial" *ngIf="plan.price.recurring.trial_period_days">
-            {{ plan.price.recurring.trial_period_days }}日間の無料トライアルあり
-          </p>
-        </div>
-      </ng-container>
-      <div class="waiting">
-        <p>
-          現在リニューアルに向け、ライトプラン以外の受け入れを停止しています。
-        </p>
-      </div>
+    <div class="waiting">
+      <p>
+        弊社の推奨技術が Next.js にシフトし、かつコンテンツプラットフォームを
+        YouTube に集約することとなったため CAMP
+        は全プランにおいて新規会員募集を停止し、2022年12月末をもって閉鎖させていただきます。これまでのご利用、ありがとうございました。
+      </p>
     </div>
-
-    <ul class="notice">
-      <li>価格はすべて税込です。</li>
-      <li>入会金、退会金はありません</li>
-      <li>PC、ネット代は自己負担です。</li>
-      <li>追加教材費等はありません。上記の金額がすべてです。</li>
-    </ul>
   </div>
 </div>
